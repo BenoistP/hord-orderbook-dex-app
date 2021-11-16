@@ -15,7 +15,7 @@ export const connectWallet = async () => {
 
       const signerAddress = await signer.getAddress();
 
-      return { signerAddress };
+      return { signerAddress, provider };
     } else {
       // store.dispatch(
       //   createNotification(
