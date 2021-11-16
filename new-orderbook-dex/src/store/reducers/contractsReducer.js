@@ -2,14 +2,8 @@ import * as types from '../actionTypes/contractActionTypes';
 
 const initialState = {
   signerAddress: 'Not connected',
-  LpUniswapTokenFarmContract: false,
-  LpSakeswapTokenFarmContract: false,
-  UmiTokenFarmContract: false,
-  UmiTokenContract: false,
-  LpUniswapContract: false,
-  LpSakeswapContract: false,
-  ERC1155Contract: false,
-  NftMinterContract: false,
+  MatchingMarket: false,
+  UniswapSimplePriceOracle: false,
   provider: false,
 };
 
@@ -24,15 +18,10 @@ export default (state = initialState, action) => {
       };
     case types.REMOVE_CONTRACT:
       return {
-        ...state,
-        signerAddress: 'Not connected',
-        LpUniswapTokenFarmContract: false,
-        LpSakeswapTokenFarmContract: false,
-        UmiTokenFarmContract: false,
-        UmiTokenContract: false,
-        LpUniswapContract: false,
-        LpSakeswapContract: false,
-        ERC1155Contract: false,
+       signerAddress: 'Not connected',
+       MatchingMarket: false,
+       UniswapSimplePriceOracle: false,
+       provider: false,
       };
     case types.ADD_SIGNERADDRESS:
       return {
