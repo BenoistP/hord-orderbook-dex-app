@@ -1,18 +1,21 @@
 import { Contract } from 'ethers';
 import { contracts } from './contracts';
 
-export const loadContract = (contract, signer) => {
+export const loadContract = (address, abi, provider) => {
   return new Contract(
-    contract.address,
-    contract.abi,
-    signer,
+    address,
+    abi,
+    provider,
   );
 };
 
-export const loadedContracts = (signerAddress) => {
-  return contracts.map((contract) => {
-        contract = { [contract.name]: loadContract(contract, signerAddress) };
-        return contract;
-      });
+export const loadContracts = (provider) => {
+  const loadedContracts = {};
+  contracts.map((contract) => {
+    loadedContracts[contract.name] = loadContract(contract.address, contract.abi, provider);
+    return contract;
+  });
+
+  return loadedContracts;
 }
 
