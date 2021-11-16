@@ -1,0 +1,2 @@
+export const GET_BALANCES = 'GET_BALANCES';
+export const REMOVE_BALANCES = 'REMOVE_BALANCES';
