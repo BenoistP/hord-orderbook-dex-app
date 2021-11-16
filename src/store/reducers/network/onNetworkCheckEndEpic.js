@@ -128,19 +128,19 @@ export const onNetworkCheckEndEpic = (
       dispatch(platformReducer.actions.setGlobalFormLockDisabled());
     });
 
-    registerSubscription(
-      SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS,
-      () => {
-        dispatch(
-          balancesReducer.actions.subscribeTokenTransfersEventsEpic(
-            getTokenContractsList(),
-            defaultAccount
-          )
-        );
-      },
-      { dispatch, getState },
-      SUBSCRIPTIONS_GROUP_ACCOUNT_SPECIFIC_INITIAL
-    );
+    // registerSubscription(
+    //   SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS,
+    //   () => {
+    //     dispatch(
+    //       balancesReducer.actions.subscribeTokenTransfersEventsEpic(
+    //         getTokenContractsList(),
+    //         defaultAccount
+    //       )
+    //     );
+    //   },
+    //   { dispatch, getState },
+    //   SUBSCRIPTIONS_GROUP_ACCOUNT_SPECIFIC_INITIAL
+    // );
     dispatch(tokensReducer.actions.getActiveTradingPairAllowanceStatus());
   }
 

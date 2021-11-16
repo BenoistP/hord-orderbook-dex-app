@@ -140,11 +140,11 @@ const fetchLogTakeEventsEpic = ({ fromBlock, toBlock }) => (dispatch, getState) 
             getTradeHistoryStartingBlockTimestamp(first(logTakesList).blockNumber)
           );
         }
-        dispatch(
-          loadInitialTradeHistory(
-            logTakesList, limits.tokenLimitsList(getState())
-          )
-        );
+        // dispatch(
+        //   loadInitialTradeHistory(
+        //     logTakesList, limits.tokenLimitsList(getState())
+        //   )
+        // );
         resolve(toBlock);
       });
   });
@@ -199,7 +199,7 @@ const reducer = handleActions({
         )
         .setIn(['volumes', tradingPair, 'latestPrice'], latestPrice),
   [logTakeEvent]: (state, { payload }) => state.setIn(['latestEventsBlocks', 'LogTake'], payload.blockNumber),
-  [loadInitialTradeHistory]: (state, { payload }) => state.updateIn(['marketHistory'], () => List(payload)),
+  // [loadInitialTradeHistory]: (state, { payload }) => state.updateIn(['marketHistory'], () => List(payload)),
   [addTradeHistoryEntry]: (state, { payload }) =>
     state.updateIn(
       ['marketHistory'], marketHistory => marketHistory.push(payload)

@@ -62,9 +62,9 @@ export const OFFER_STATUS_INACTIVE = "OFFERS/OFFER_STATUS_INACTIVE";
 
 const subscribeOffersEventsEpic = () => async (dispatch, getState) => {
   const latestBlockNumber = network.latestBlockNumber(getState());
-  dispatch(subscribeNewOffersFilledInEpic(latestBlockNumber));
-  dispatch(subscribeFilledOffersEpic(latestBlockNumber));
-  dispatch(subscribeCancelledOrdersEpic(latestBlockNumber));
+  // dispatch(subscribeNewOffersFilledInEpic(latestBlockNumber));
+  // dispatch(subscribeFilledOffersEpic(latestBlockNumber));
+  // dispatch(subscribeCancelledOrdersEpic(latestBlockNumber));
 };
 
 const initOffers = createAction(

@@ -120,8 +120,8 @@ const reducer = handleActions(
       state
         .update("latestBlockNumber", () => latestBlockNumber)
         .set("latestBlockReceivedAt", latestBlockReceivedAt),
-    [fulfilled(fetchEthereumPrice)]: (state, { payload }) =>
-      state.set("latestEthereumPrice", payload[0]),
+    // [fulfilled(fetchEthereumPrice)]: (state, { payload }) =>
+    //   state.set("latestEthereumPrice", payload[0]),
     [fulfilled(getLatestBlock)]: (state, { payload }) => state.set("latestBlock", payload)
   },
   initialState

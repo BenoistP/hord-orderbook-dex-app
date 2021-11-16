@@ -70,7 +70,7 @@ export const subscribeLatestBlockFilterEpic = () => async (
 
   const update = () => {
     dispatch(checkIfOutOfSyncEpic());
-    dispatch(fetchEthereumPrice());
+    // dispatch(fetchEthereumPrice());
     dispatch(transactionsReducer.actions.getCurrentTxNonceEpic());
     dispatch(transactionsReducer.actions.getCurrentGasPrice());
     if (areContractsInitialized && tokens.activeTradingPair(getState())) {
