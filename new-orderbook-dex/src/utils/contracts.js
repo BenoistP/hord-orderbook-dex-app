@@ -1,5 +1,6 @@
 import MatchingMarket from './contracts/MatchingMarket.json';
 import UniswapSimplePriceOracle from './contracts/UniswapSimplePriceOracle.json';
+import ERC20 from './contracts/ERC20.json';
 
 export const contracts = [
         {
@@ -14,4 +15,17 @@ export const contracts = [
           abi: UniswapSimplePriceOracle.abi,
           link: `https://testnet.bscscan.com/address/${UniswapSimplePriceOracle.address}`,
         },
+        {
+          name: 'BUSD',
+          address: '0x78867bbeef44f2326bf8ddd1941a4439382ef2a7',
+          abi: ERC20.abi,
+          link: `https://testnet.bscscan.com/address/0x78867bbeef44f2326bf8ddd1941a4439382ef2a7`,
+        },
+        {
+          name: 'HPoolToken',
+          address: '0x39a8f0f941bcb56ff0f19371a366496dfc948704',
+          abi: ERC20.abi,
+          link: `https://testnet.bscscan.com/address/0x39a8f0f941bcb56ff0f19371a366496dfc948704`,
+        },
+        
 ];
