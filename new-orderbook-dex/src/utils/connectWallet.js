@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 // import { store } from '../App';
 // import { createNotification } from 'store/actions/uiActions';
 
-const connectWallet = async () => {
+export const connectWallet = async () => {
   try {
     if (window.ethereum) {
       await window.ethereum.request({
