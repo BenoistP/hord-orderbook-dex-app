@@ -9,10 +9,7 @@ const defaultProps = {};
 
 class OasisTransferTransfer extends PureComponent {
   render() {
-    return (
-      <div className={styles.base}>
-      </div>
-    );
+    return <div className={styles.base}></div>;
   }
 }
 

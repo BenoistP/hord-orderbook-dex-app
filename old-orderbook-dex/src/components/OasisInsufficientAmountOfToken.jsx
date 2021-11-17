@@ -1,10 +1,10 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import { InfoBoxWithIco } from "./InfoBoxWithIco";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import { InfoBoxWithIco } from './InfoBoxWithIco';
 
 const propTypes = PropTypes && {
   tokenName: PropTypes.string.isRequired,
-  noBorder: PropTypes.bool
+  noBorder: PropTypes.bool,
 };
 const defaultProps = {};
 
@@ -14,8 +14,8 @@ class OasisInsufficientAmountOfToken extends PureComponent {
     return (
       <InfoBoxWithIco
         noBorder={noBorder}
-        color="danger"
-        icon="warning"
+        color='danger'
+        icon='warning'
         {...props}
       >
         <span>
@@ -26,7 +26,7 @@ class OasisInsufficientAmountOfToken extends PureComponent {
   }
 }
 
-OasisInsufficientAmountOfToken.displayName = "OasisInsufficientAmountOfToken";
+OasisInsufficientAmountOfToken.displayName = 'OasisInsufficientAmountOfToken';
 OasisInsufficientAmountOfToken.propTypes = propTypes;
 OasisInsufficientAmountOfToken.defaultProps = defaultProps;
 export default OasisInsufficientAmountOfToken;

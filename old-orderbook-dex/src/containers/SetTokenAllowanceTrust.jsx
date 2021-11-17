@@ -1,36 +1,36 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import balances from "../store/selectors/balances";
-import balancesReducer from "../store/reducers/balances";
-import platform from "../store/selectors/platform";
-import OasisButton from "../components/OasisButton";
-import OasisAccordion from "../components/OasisAccordion";
-import OasisTransactionStatusWrapper from "./OasisTransactionStatus";
-import styles from "./SetTokenAllowanceTrust.scss";
-import CSSModules from "react-css-modules";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import balances from '../store/selectors/balances';
+import balancesReducer from '../store/reducers/balances';
+import platform from '../store/selectors/platform';
+import OasisButton from '../components/OasisButton';
+import OasisAccordion from '../components/OasisAccordion';
+import OasisTransactionStatusWrapper from './OasisTransactionStatus';
+import styles from './SetTokenAllowanceTrust.scss';
+import CSSModules from 'react-css-modules';
 import {
   TX_ALLOWANCE_TRUST_TOGGLE,
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
-  TX_STATUS_REJECTED
-} from "../store/reducers/transactions";
-import network from "../store/selectors/network";
-import FlexBox from "../components/FlexBox";
+  TX_STATUS_REJECTED,
+} from '../store/reducers/transactions';
+import network from '../store/selectors/network';
+import FlexBox from '../components/FlexBox';
 import {
   TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
   TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
   TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN,
-  TOKEN_ALLOWANCE_TRUST_STATUS_LOADING
-} from "../constants";
+  TOKEN_ALLOWANCE_TRUST_STATUS_LOADING,
+} from '../constants';
 
-import OasisIcon from "../components/OasisIcon";
-import OasisYourTransactionFailed from "../components/OasisYourTransactionFailed";
+import OasisIcon from '../components/OasisIcon';
+import OasisYourTransactionFailed from '../components/OasisYourTransactionFailed';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
@@ -41,23 +41,21 @@ const propTypes = PropTypes && {
   onTransactionPending: PropTypes.func,
   onTransactionCompleted: PropTypes.func,
   onTransactionRejected: PropTypes.func,
-  onCancelCleanup: PropTypes.func
+  onCancelCleanup: PropTypes.func,
 };
 
 export class SetTokenAllowanceTrustWrapper extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      isToggleAllowanceTxPending: false
+      isToggleAllowanceTxPending: false,
     };
 
-    this.onRejectedByUserOrFailedDismissMsg = this.onRejectedByUserOrFailedDismissMsg.bind(
-      this
-    );
+    this.onRejectedByUserOrFailedDismissMsg =
+      this.onRejectedByUserOrFailedDismissMsg.bind(this);
 
-    this.toggleTokenAllowanceTrustStatus = this.toggleTokenAllowanceTrustStatus.bind(
-      this
-    );
+    this.toggleTokenAllowanceTrustStatus =
+      this.toggleTokenAllowanceTrustStatus.bind(this);
     this.getAllowanceStatus();
   }
 
@@ -65,12 +63,12 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     const {
       actions: { getDefaultAccountTokenAllowanceForAddress },
       tokenName,
-      allowanceSubjectAddress
+      allowanceSubjectAddress,
     } = this.props;
     if (this.props.contractsLoaded) {
       return getDefaultAccountTokenAllowanceForAddress(
         tokenName,
-        allowanceSubjectAddress
+        allowanceSubjectAddress,
       );
     }
   }
@@ -83,7 +81,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     const {
       tokenName,
       allowanceSubjectAddress,
-      actions: { setTokenAllowanceTrustStatus }
+      actions: { setTokenAllowanceTrustStatus },
     } = this.props;
 
     this.setState({ disableActionDispatchButton: true });
@@ -92,22 +90,22 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
       {
         tokenName,
         newAllowanceTrustStatus,
-        allowanceSubjectAddress
+        allowanceSubjectAddress,
       },
       {
         onStart: this.onTransactionAwaitingSign.bind(this),
         onPending: this.onTransactionPending.bind(this),
         onCompleted: this.onTransactionCompleted.bind(this),
         onFailed: this.onTransactionRejected.bind(this),
-        onCancelCleanup: this.onUserCancel.bind(this)
-      }
+        onCancelCleanup: this.onUserCancel.bind(this),
+      },
     );
   }
 
   onTransactionPending({ txStartTimestamp }) {
     this.setState({
       txTimestamp: txStartTimestamp,
-      txStatus: TX_STATUS_AWAITING_CONFIRMATION
+      txStatus: TX_STATUS_AWAITING_CONFIRMATION,
     });
     this.props.onTransactionPending();
   }
@@ -117,7 +115,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     this.setState({ disableActionDispatchButton: false });
     this.setState({
       txStatus: TX_STATUS_CONFIRMED,
-      collapseAccordion: true
+      collapseAccordion: true,
     });
 
     if (subjectTrustStatus === TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED) {
@@ -127,7 +125,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     }
 
     (await this.getAllowanceStatus()).value.gt(
-      TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN
+      TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN,
     );
   }
 
@@ -135,14 +133,14 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     this.setState({ disableActionDispatchButton: false });
     this.props.onTransactionRejected();
     this.setState({
-      txStatus: TX_STATUS_REJECTED
+      txStatus: TX_STATUS_REJECTED,
     });
   }
 
   onUserCancel() {
     this.setState({
       disableActionDispatchButton: false,
-      txStatus: TX_STATUS_CANCELLED_BY_USER
+      txStatus: TX_STATUS_CANCELLED_BY_USER,
     });
     this.props.onCancelCleanup();
   }
@@ -158,11 +156,11 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
 
   getLabel() {
     if (this.isAllowanceLoading()) {
-      return "Loading";
+      return 'Loading';
     } else if (this.props.isToggleEnabled) {
-      return this.isAllowanceEnabled() ? "Disable" : "Enable";
+      return this.isAllowanceEnabled() ? 'Disable' : 'Enable';
     } else {
-      return "Enable";
+      return 'Enable';
     }
   }
 
@@ -196,8 +194,8 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     return this.isAllowanceLoading()
       ? false
       : this.props.isToggleEnabled
-        ? true
-        : !this.isAllowanceEnabled() || this.state.txStatus;
+      ? true
+      : !this.isAllowanceEnabled() || this.state.txStatus;
   }
 
   mainInfoBoxContent() {
@@ -217,13 +215,15 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
     const { isToggleEnabled } = this.props;
     return disableActionDispatchButton
       ? disableActionDispatchButton
-      : isToggleEnabled ? false : this.isAllowanceEnabled();
+      : isToggleEnabled
+      ? false
+      : this.isAllowanceEnabled();
   }
 
   onRejectedByUserOrFailedDismissMsg() {
     if (
       [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(
-        this.state.txStatus
+        this.state.txStatus,
       )
     ) {
       this.setState({ txStatus: undefined });
@@ -232,22 +232,24 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
 
   transactionTooltip() {
     return [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(
-      this.state.txStatus
+      this.state.txStatus,
     )
-      ? "click to dismiss"
-      : "";
+      ? 'click to dismiss'
+      : '';
   }
 
   renderAccordionHeading() {
     const { txStatus } = this.state;
     const isAllowanceEnabled = this.isAllowanceEnabled();
     const prefix = !this.props.isToggleEnabled
-      ? "Enable"
-      : isAllowanceEnabled ? "Disable" : "Enable";
+      ? 'Enable'
+      : isAllowanceEnabled
+      ? 'Disable'
+      : 'Enable';
     return (
       <FlexBox
-        justifyContent="space-between"
-        alignItems="center"
+        justifyContent='space-between'
+        alignItems='center'
         className={styles.accordionHeading}
       >
         <div className={styles.infoText}>
@@ -255,12 +257,12 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
         </div>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
-            minHeight: "24px",
-            position: "relative",
-            top: "1px",
-            cursor: this.transactionTooltip() ? "pointer" : "default"
+            display: 'flex',
+            alignItems: 'center',
+            minHeight: '24px',
+            position: 'relative',
+            top: '1px',
+            cursor: this.transactionTooltip() ? 'pointer' : 'default',
           }}
           title={this.transactionTooltip()}
           onClick={this.onRejectedByUserOrFailedDismissMsg}
@@ -270,11 +272,11 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
         <div hidden={txStatus}>
           <OasisButton
             onClick={this.toggleTokenAllowanceTrustStatus}
-            size="md"
+            size='md'
             color={
               isAllowanceEnabled || this.shouldDisableActionDispatch()
-                ? "default"
-                : "success"
+                ? 'default'
+                : 'success'
             }
           >
             {this.getLabel()}
@@ -293,8 +295,8 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
 
   renderAccordionContent() {
     return (
-      <FlexBox alignItems="center">
-        <OasisIcon icon="idle" />
+      <FlexBox alignItems='center'>
+        <OasisIcon icon='idle' />
         <div className={styles.accordingText}>
           You need first grant access to withdraw from your personal account. To
           disable {this.props.tokenName} trading use Allowance widget on the
@@ -318,10 +320,10 @@ export function mapStateToProps(state, { allowanceSubjectAddress, tokenName }) {
   return {
     subjectTrustStatus: balances.tokenAllowanceTrustStatus(state, {
       allowanceSubjectAddress,
-      tokenName
+      tokenName,
     }),
     contractsLoaded: platform.contractsLoaded(state),
-    latestBlockNumber: network.latestBlockNumber(state)
+    latestBlockNumber: network.latestBlockNumber(state),
   };
 }
 
@@ -330,13 +332,14 @@ export function mapDispatchToProps(dispatch) {
     setTokenAllowanceTrustStatus:
       balancesReducer.actions.setTokenAllowanceTrustEpic,
     getDefaultAccountTokenAllowanceForAddress:
-      balancesReducer.actions.getDefaultAccountTokenAllowanceForAddress
+      balancesReducer.actions.getDefaultAccountTokenAllowanceForAddress,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 SetTokenAllowanceTrustWrapper.propTypes = propTypes;
-SetTokenAllowanceTrustWrapper.displayName = "SetTokenAllowanceTrust";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(SetTokenAllowanceTrustWrapper, styles)
-);
+SetTokenAllowanceTrustWrapper.displayName = 'SetTokenAllowanceTrust';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(SetTokenAllowanceTrustWrapper, styles));

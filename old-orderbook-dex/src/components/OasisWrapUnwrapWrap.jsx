@@ -1,23 +1,23 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import OasisTokenWrapFormWrapper from "../containers/OasisTokenWrapForm";
-import OasisTokenBalanceWrapper from "../containers/OasisTokenBalance";
+import OasisTokenWrapFormWrapper from '../containers/OasisTokenWrapForm';
+import OasisTokenBalanceWrapper from '../containers/OasisTokenBalance';
 import { TOKEN_ETHER, TOKEN_GOLEM } from '../constants';
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import OasisEtherBalanceWrapper from "../containers/OasisEtherBalance";
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import OasisEtherBalanceWrapper from '../containers/OasisEtherBalance';
 import {
   WRAP_STATUS_VIEW_TYPE_WRAP,
-  WrapUnwrapStatusWrapper
-} from "../containers/WrapUnwrapStatus";
-import OasisTokenBalanceSummary from "../containers/OasisTokenBalanceSummary";
-import styles from "./OasisWrapUnwrapWrap.scss";
-import CSSModules from "react-css-modules";
+  WrapUnwrapStatusWrapper,
+} from '../containers/WrapUnwrapStatus';
+import OasisTokenBalanceSummary from '../containers/OasisTokenBalanceSummary';
+import styles from './OasisWrapUnwrapWrap.scss';
+import CSSModules from 'react-css-modules';
 import {
   TX_WRAP_ETHER,
-  TX_WRAP_TOKEN_WRAPPER
-} from "../store/reducers/transactions";
+  TX_WRAP_TOKEN_WRAPPER,
+} from '../store/reducers/transactions';
 
 const propTypes = PropTypes && {
   activeUnwrappedToken: PropTypes.string,
@@ -28,9 +28,7 @@ const propTypes = PropTypes && {
   disableForm: PropTypes.bool,
   hidden: PropTypes.bool.isRequired,
   txType: PropTypes.oneOf([TX_WRAP_ETHER, TX_WRAP_TOKEN_WRAPPER]),
-  unwrappedToken: PropTypes.oneOf([
-    TOKEN_ETHER, TOKEN_GOLEM
-  ])
+  unwrappedToken: PropTypes.oneOf([TOKEN_ETHER, TOKEN_GOLEM]),
 };
 const defaultProps = {};
 
@@ -38,7 +36,7 @@ class OasisWrapUnwrapWrap extends PureComponent {
   constructor(props) {
     super(props);
     this.onFormChange = this.onFormChange.bind(this);
-    this.componentIsUnmounted = false
+    this.componentIsUnmounted = false;
   }
 
   getBalance() {
@@ -68,16 +66,16 @@ class OasisWrapUnwrapWrap extends PureComponent {
   }
 
   render() {
-    const {
-      unwrappedToken,
-      hidden,
-      txType,
-      form,
-      transactionState
-    } = this.props;
+    const { unwrappedToken, hidden, txType, form, transactionState } =
+      this.props;
     return (
-      <OasisWidgetFrame hidden={hidden} heading={"Wrap"} spaceForContent={true} className={styles.frame}>
-        <OasisTokenBalanceSummary summary="Wallet" className={styles.balance}>
+      <OasisWidgetFrame
+        hidden={hidden}
+        heading={'Wrap'}
+        spaceForContent={true}
+        className={styles.frame}
+      >
+        <OasisTokenBalanceSummary summary='Wallet' className={styles.balance}>
           {this.getBalance()}
         </OasisTokenBalanceSummary>
         <OasisTokenWrapFormWrapper
@@ -99,7 +97,7 @@ class OasisWrapUnwrapWrap extends PureComponent {
   }
 }
 
-OasisWrapUnwrapWrap.displayName = "OasisWrapUnwrapWrap";
+OasisWrapUnwrapWrap.displayName = 'OasisWrapUnwrapWrap';
 OasisWrapUnwrapWrap.propTypes = propTypes;
 OasisWrapUnwrapWrap.defaultProps = defaultProps;
 export default CSSModules(OasisWrapUnwrapWrap, styles);

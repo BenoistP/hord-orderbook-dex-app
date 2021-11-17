@@ -1,35 +1,35 @@
-import React from "react";
-import { PropTypes } from "prop-types";
+import React from 'react';
+import { PropTypes } from 'prop-types';
 // import throttle from 'lodash/throttle';
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Field, reduxForm } from "redux-form/immutable";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Field, reduxForm } from 'redux-form/immutable';
 
-import offerMakes from "../store/selectors/offerMakes";
+import offerMakes from '../store/selectors/offerMakes';
 import {
   MAKE_BUY_OFFER,
   MAKE_SELL_OFFER,
-  SETMAXBTN_HIDE_DELAY_MS
-} from "../constants";
-import offerMakesReducer from "../store/reducers/offerMakes";
-import tokens from "../store/selectors/tokens";
-import balances from "../store/selectors/balances";
+  SETMAXBTN_HIDE_DELAY_MS,
+} from '../constants';
+import offerMakesReducer from '../store/reducers/offerMakes';
+import tokens from '../store/selectors/tokens';
+import balances from '../store/selectors/balances';
 import {
   greaterThanZeroValidator,
-  numericFormatValidator
-} from "../utils/forms/offers";
+  numericFormatValidator,
+} from '../utils/forms/offers';
 
-import OasisButton from "../components/OasisButton";
+import OasisButton from '../components/OasisButton';
 
-import styles from "./OasisOfferMakeForm.scss";
-import tableStyles from "../styles/modules/_table.scss";
-import CSSModules from "react-css-modules";
-import OasisVolumeIsGreaterThanUserBalance from "../components/OasisVolumeIsGreaterThanUserBalance";
+import styles from './OasisOfferMakeForm.scss';
+import tableStyles from '../styles/modules/_table.scss';
+import CSSModules from 'react-css-modules';
+import OasisVolumeIsGreaterThanUserBalance from '../components/OasisVolumeIsGreaterThanUserBalance';
 // import { formatAmount, PRICE_DECIMAL } from '../utils/tokens/pair';
 // import isNumeric from '../utils/numbers/isNumeric';
-import MaskedTokenAmountInput from "../components/MaskedTokenAmountInput";
-import platform from "../store/selectors/platform";
-import isNumericAndGreaterThanZero from "../utils/numbers/isNumericAndGreaterThanZero";
+import MaskedTokenAmountInput from '../components/MaskedTokenAmountInput';
+import platform from '../store/selectors/platform';
+import isNumericAndGreaterThanZero from '../utils/numbers/isNumericAndGreaterThanZero';
 
 const propTypes = PropTypes && {
   // activeOfferMakeOfferData: ImmutablePropTypes.map.isRequired,
@@ -39,11 +39,11 @@ const propTypes = PropTypes && {
   activeQuoteTokenBalance: PropTypes.string,
   disableForm: PropTypes.bool,
   shouldFormUpdate: PropTypes.bool.isRequired,
-  onFormChange: PropTypes.func
+  onFormChange: PropTypes.func,
 };
 
 const defaultProps = {
-  shouldFormUpdate: true
+  shouldFormUpdate: true,
 };
 
 const validateVolume = [greaterThanZeroValidator, numericFormatValidator];
@@ -56,7 +56,7 @@ export class OfferMakeForm extends React.Component {
     this.currentSetMaxTimeout = null;
 
     this.state = {
-      showMaxButton: false
+      showMaxButton: false,
     };
 
     this.onVolumeFieldChange = this.onVolumeFieldChange.bind(this);
@@ -116,7 +116,7 @@ export class OfferMakeForm extends React.Component {
       disableForm,
       globalFormLock,
       activeBaseTokenBalance,
-      activeQuoteTokenBalance
+      activeQuoteTokenBalance,
     } = this.props;
     switch (this.props.offerMakeType) {
       case MAKE_BUY_OFFER:
@@ -129,9 +129,9 @@ export class OfferMakeForm extends React.Component {
               globalFormLock ||
               !isNumericAndGreaterThanZero(activeQuoteTokenBalance)
             }
-            type="button"
-            color="success"
-            size="xs"
+            type='button'
+            color='success'
+            size='xs'
             onClick={this.onSetBuyMax}
             onFocus={this.onSetMaxFocus}
             onBlur={this.onSetMaxBlur}
@@ -149,9 +149,9 @@ export class OfferMakeForm extends React.Component {
               globalFormLock ||
               !isNumericAndGreaterThanZero(activeBaseTokenBalance)
             }
-            type="button"
-            color="danger"
-            size="xs"
+            type='button'
+            color='danger'
+            size='xs'
             onClick={this.onSetSellMax}
             onFocus={this.onSetMaxFocus}
             onBlur={this.onSetMaxBlur}
@@ -179,14 +179,11 @@ export class OfferMakeForm extends React.Component {
 
   onTotalFieldSectionBlur() {
     if (this.componentIsUnmounted === false) {
-      this.currentSetMaxTimeout = setTimeout(
-        () => {
-          if (this.componentIsUnmounted === false) {
-            this.setState({ showMaxButton: false });
-          }
-        },
-        SETMAXBTN_HIDE_DELAY_MS
-      );
+      this.currentSetMaxTimeout = setTimeout(() => {
+        if (this.componentIsUnmounted === false) {
+          this.setState({ showMaxButton: false });
+        }
+      }, SETMAXBTN_HIDE_DELAY_MS);
     }
   }
 
@@ -194,12 +191,12 @@ export class OfferMakeForm extends React.Component {
     const { disableForm, globalFormLock } = this.props;
     return (
       <Field
-        autoComplete="off"
-        name="price"
+        autoComplete='off'
+        name='price'
         component={MaskedTokenAmountInput}
         placeholder={0}
         disabled={disableForm || globalFormLock}
-        type="text"
+        type='text'
         onChange={this.onPriceFieldChange}
       />
     );
@@ -209,10 +206,10 @@ export class OfferMakeForm extends React.Component {
     const { currentFormValues = {}, disableForm, globalFormLock } = this.props;
     return (
       <Field
-        autoComplete="off"
-        name="volume"
+        autoComplete='off'
+        name='volume'
         component={MaskedTokenAmountInput}
-        type="text"
+        type='text'
         validate={validateVolume}
         min={0}
         placeholder={0}
@@ -235,12 +232,12 @@ export class OfferMakeForm extends React.Component {
         onBlur={this.onTotalFieldSectionBlur}
       >
         <Field
-          autoComplete="off"
+          autoComplete='off'
           min={0}
           onChange={this.onTotalFieldChange}
-          name="total"
+          name='total'
           component={MaskedTokenAmountInput}
-          type="text"
+          type='text'
           validate={validateTotal}
           placeholder={0}
           disabled={
@@ -256,7 +253,7 @@ export class OfferMakeForm extends React.Component {
 
   onFormChange() {
     const { onFormChange } = this.props;
-    if(this.componentIsUnmounted === false) {
+    if (this.componentIsUnmounted === false) {
       onFormChange && onFormChange();
     }
   }
@@ -266,7 +263,7 @@ export class OfferMakeForm extends React.Component {
       baseToken,
       quoteToken,
       handleSubmit,
-      isUserTokenBalanceSufficient
+      isUserTokenBalanceSufficient,
     } = this.props;
 
     return (
@@ -328,7 +325,7 @@ export class OfferMakeForm extends React.Component {
   }
 }
 
-OfferMakeForm.displayName = "OfferMakeForm";
+OfferMakeForm.displayName = 'OfferMakeForm';
 OfferMakeForm.propTypes = propTypes;
 OfferMakeForm.defaultProps = defaultProps;
 
@@ -336,10 +333,12 @@ export function mapStateToProps(state, props) {
   return {
     currentFormValues: offerMakes.currentFormValues(state)(props.form),
     activeTradingPairPrecision: tokens.precision(state),
-    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(props.offerMakeType),
+    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(
+      props.offerMakeType,
+    ),
     activeBaseTokenBalance: balances.activeBaseTokenBalance(state),
     activeQuoteTokenBalance: balances.activeQuoteTokenBalance(state),
-    globalFormLock: platform.globalFormLock(state)
+    globalFormLock: platform.globalFormLock(state),
   };
 }
 
@@ -351,13 +350,16 @@ export function mapDispatchToProps(dispatch) {
     totalFieldValueChanged:
       offerMakesReducer.actions.totalFieldValueChangedEpic,
     buyMax: offerMakesReducer.actions.buyMaxEpic,
-    sellMax: offerMakesReducer.actions.sellMaxEpic
+    sellMax: offerMakesReducer.actions.sellMaxEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
   reduxForm({})(
-    CSSModules(OfferMakeForm, { styles, tableStyles }, { allowMultiple: true })
-  )
+    CSSModules(OfferMakeForm, { styles, tableStyles }, { allowMultiple: true }),
+  ),
 );

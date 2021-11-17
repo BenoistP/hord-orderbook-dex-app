@@ -14,21 +14,22 @@ const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
   maxAmountLimit: PropTypes.string,
   disabled: PropTypes.bool,
-  onValidityChange: PropTypes.func
+  onValidityChange: PropTypes.func,
 };
 
-export const VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE = 'VALIDATION_ERROR/VALUE_GREATER_THAN_BALANCE';
-export const VALIDATION_ERROR__NON_NUMERIC_VALUE = 'VALIDATION_ERROR/NON_NUMERIC_VALUE';
+export const VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE =
+  'VALIDATION_ERROR/VALUE_GREATER_THAN_BALANCE';
+export const VALIDATION_ERROR__NON_NUMERIC_VALUE =
+  'VALIDATION_ERROR/NON_NUMERIC_VALUE';
 
-const validateIsNonZeroNumber = value => {
+const validateIsNonZeroNumber = (value) => {
   const parsedValue = parseFloat(value);
   if (isNaN(parsedValue) || parsedValue === 0) {
-    return [VALIDATION_ERROR__NON_NUMERIC_VALUE]
+    return [VALIDATION_ERROR__NON_NUMERIC_VALUE];
   }
 };
 
 export class TokenAmountInputFieldWrapper extends PureComponent {
-
   constructor(props) {
     super(props);
     this.validateTokenAmount = this.validateTokenAmount.bind(this);
@@ -42,7 +43,7 @@ export class TokenAmountInputFieldWrapper extends PureComponent {
   validateTokenAmount(value) {
     if (web3.toBigNumber(this.props.maxAmountLimit).lt(value)) {
       this.onValidityChange(false);
-      return [ VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE ];
+      return [VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE];
     } else {
       return this.onValidityChange(true);
     }
@@ -52,7 +53,7 @@ export class TokenAmountInputFieldWrapper extends PureComponent {
     const { selectedToken, maxAmountLimit, fieldName, disabled } = this.props;
     return (
       <Field
-        autoComplete="off"
+        autoComplete='off'
         disabled={!maxAmountLimit || disabled}
         maxAmountLimit={maxAmountLimit}
         required
@@ -69,7 +70,10 @@ export function mapStateToProps(state) {
   const selectedToken = tokenSelectors.selectedToken(state, 'tokenTransfer');
   return {
     selectedToken,
-    maxAmountLimit: balances.tokenBalance(state, { tokenName: selectedToken, toBigNumber: false })
+    maxAmountLimit: balances.tokenBalance(state, {
+      tokenName: selectedToken,
+      toBigNumber: false,
+    }),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -79,4 +83,7 @@ export function mapDispatchToProps(dispatch) {
 
 TokenAmountInputFieldWrapper.propTypes = propTypes;
 TokenAmountInputFieldWrapper.displayName = 'TokenAmountInputField';
-export default connect(mapStateToProps, mapDispatchToProps)(TokenAmountInputFieldWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(TokenAmountInputFieldWrapper);

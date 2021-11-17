@@ -1,30 +1,30 @@
-import React from "react";
-import { PropTypes } from "prop-types";
+import React from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { PureComponent } from "react";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import tokens from "../store/selectors/tokens";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import OasisTokenBalanceSummary from "./OasisTokenBalanceSummary";
-import OfferMakeForm from "./OasisOfferMakeForm";
-import offerMakesReducer from "../store/reducers/offerMakes";
+import { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import tokens from '../store/selectors/tokens';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import OasisTokenBalanceSummary from './OasisTokenBalanceSummary';
+import OfferMakeForm from './OasisOfferMakeForm';
+import offerMakesReducer from '../store/reducers/offerMakes';
 import { MAKE_BUY_OFFER, MAKE_BUY_OFFER_FORM_NAME } from '../constants';
-import OasisMakeOfferModalWrapper from "./OasisMakeOfferModal";
-import offerMakes from "../store/selectors/offerMakes";
-import OasisInsufficientAmountOfToken from "../components/OasisInsufficientAmountOfToken";
-import OasisButton from "../components/OasisButton";
-import platform from "../store/selectors/platform";
-import styles from "./OasisMakeOffer.scss";
-import CSSModules from "react-css-modules";
-import InfoBox from "../components/InfoBox";
-import isVolumeOrPriceEmptyOrZero from "../store/selectors/isVolumeOrPriceEmptyOrZero";
-import OasisOfferBelowDustLimitWrapper from "./OasisOfferBelowDustLimit";
+import OasisMakeOfferModalWrapper from './OasisMakeOfferModal';
+import offerMakes from '../store/selectors/offerMakes';
+import OasisInsufficientAmountOfToken from '../components/OasisInsufficientAmountOfToken';
+import OasisButton from '../components/OasisButton';
+import platform from '../store/selectors/platform';
+import styles from './OasisMakeOffer.scss';
+import CSSModules from 'react-css-modules';
+import InfoBox from '../components/InfoBox';
+import isVolumeOrPriceEmptyOrZero from '../store/selectors/isVolumeOrPriceEmptyOrZero';
+import OasisOfferBelowDustLimitWrapper from './OasisOfferBelowDustLimit';
 import OasisYourOrderExceedsMaxTotalForToken from '../components/OasisYourOrderExceedsMaxTotalForToken';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 export class OasisMakeBuyOfferWrapper extends PureComponent {
@@ -51,18 +51,18 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
       isTotalOverTheTokenMax,
       // canMakeOffer,
       isModalOpen,
-      globalFormLock
+      globalFormLock,
     } = this.props;
 
     const formProps = {
       baseToken,
       quoteToken,
       offerMakeType: MAKE_BUY_OFFER,
-      form: MAKE_BUY_OFFER_FORM_NAME
+      form: MAKE_BUY_OFFER_FORM_NAME,
     };
     return (
       <OasisWidgetFrame heading={`Buy ${baseToken}`} spaceForContent={true}>
-        <OasisTokenBalanceSummary summary="Available" token={quoteToken} />
+        <OasisTokenBalanceSummary summary='Available' token={quoteToken} />
         <div>
           {this.getModal(formProps)}
           <OfferMakeForm {...formProps} shouldFormUpdate={!isModalOpen} />
@@ -80,17 +80,17 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
               />
             )}
             {hasSufficientTokenAmount && isTotalOverTheTokenMax && (
-              <OasisYourOrderExceedsMaxTotalForToken/>
+              <OasisYourOrderExceedsMaxTotalForToken />
             )}
-            <InfoBox hidden={this.props.isPriceSet} noBorder color="muted">
-              {!globalFormLock && ("Enter a price to unlock amount and total.")}
+            <InfoBox hidden={this.props.isPriceSet} noBorder color='muted'>
+              {!globalFormLock && 'Enter a price to unlock amount and total.'}
             </InfoBox>
           </div>
           <OasisButton
             className={styles.callToAction}
-            color="success"
-            size="md"
-            disabled="true"
+            color='success'
+            size='md'
+            disabled='true'
             onClick={this.onModalOpen}
           >
             Buy
@@ -121,9 +121,10 @@ export function mapStateToProps(state) {
   return {
     isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(
       state,
-      MAKE_BUY_OFFER
+      MAKE_BUY_OFFER,
     ),
-    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(MAKE_BUY_OFFER),
+    hasSufficientTokenAmount:
+      offerMakes.hasSufficientTokenAmount(state)(MAKE_BUY_OFFER),
     canMakeOffer:
       tokens.activeTradingPair(state) && platform.contractsLoaded(state)
         ? offerMakes.canMakeOffer(state, MAKE_BUY_OFFER, true)
@@ -133,19 +134,20 @@ export function mapStateToProps(state) {
     contractsLoaded: platform.contractsLoaded(state),
     isPriceSet: offerMakes.isMakeBuyOfferPriceSet(state),
     isVolumeEmptyOrZero: isVolumeOrPriceEmptyOrZero(state)(MAKE_BUY_OFFER),
-    globalFormLock: platform.globalFormLock(state)
+    globalFormLock: platform.globalFormLock(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     makeOfferModalOpen: offerMakesReducer.actions.setOfferMakeModalOpenEpic,
-    initializeOfferMake: offerMakesReducer.actions.initializeOfferMakeFormEpic
+    initializeOfferMake: offerMakesReducer.actions.initializeOfferMakeFormEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisMakeBuyOfferWrapper.propTypes = propTypes;
-OasisMakeBuyOfferWrapper.displayName = "OasisMakeBuyOffer";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(OasisMakeBuyOfferWrapper, styles)
-);
+OasisMakeBuyOfferWrapper.displayName = 'OasisMakeBuyOffer';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisMakeBuyOfferWrapper, styles));

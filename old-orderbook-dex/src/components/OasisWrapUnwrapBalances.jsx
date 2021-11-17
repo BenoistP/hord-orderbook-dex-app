@@ -1,18 +1,18 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import { OasisTable } from "./OasisTable";
-import OasisInlineTokenBalance from "./OasisInlineTokenBalance";
-import { fromJS } from "immutable";
-import styles from "./OasisWrapUnwrapBalances.scss";
-import CSSModules from "react-css-modules";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import { OasisTable } from './OasisTable';
+import OasisInlineTokenBalance from './OasisInlineTokenBalance';
+import { fromJS } from 'immutable';
+import styles from './OasisWrapUnwrapBalances.scss';
+import CSSModules from 'react-css-modules';
 /* eslint-disable react/prop-types */
 
 const colDefinition = [
-  { heading: "coin", key: "unwrappedToken" },
+  { heading: 'coin', key: 'unwrappedToken' },
   {
-    heading: "wallet",
+    heading: 'wallet',
     // eslint-disable-next-line react/display-name
     template: ({ unwrappedToken, unwrappedBalance }) => (
       <OasisInlineTokenBalance
@@ -21,10 +21,10 @@ const colDefinition = [
         balance={unwrappedBalance}
         fractionalZerosGrey={false}
       />
-    )
+    ),
   },
   {
-    heading: "wrapped",
+    heading: 'wrapped',
     // eslint-disable-next-line react/display-name
     template: ({ wrapperToken, wrappedBalance }) => (
       <OasisInlineTokenBalance
@@ -33,8 +33,8 @@ const colDefinition = [
         balance={wrappedBalance}
         fractionalZerosGrey={false}
       />
-    )
-  }
+    ),
+  },
 ];
 
 const propTypes = PropTypes && {
@@ -66,7 +66,7 @@ class OasisWrapUnwrapBalances extends PureComponent {
   render() {
     const { wrapUnwrapBalances = fromJS([]) } = this.props;
     return (
-      <OasisWidgetFrame heading="BALANCES">
+      <OasisWidgetFrame heading='BALANCES'>
         <OasisTable
           onRowClick={this.onTableRowClick}
           col={colDefinition}
@@ -78,7 +78,7 @@ class OasisWrapUnwrapBalances extends PureComponent {
   }
 }
 
-OasisWrapUnwrapBalances.displayName = "OasisWrapUnwrapBalances";
+OasisWrapUnwrapBalances.displayName = 'OasisWrapUnwrapBalances';
 OasisWrapUnwrapBalances.propTypes = propTypes;
 OasisWrapUnwrapBalances.defaultProps = defaultProps;
 export default CSSModules(OasisWrapUnwrapBalances, styles);

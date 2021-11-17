@@ -1,42 +1,42 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 
 // import ImmutablePropTypes from 'react-immutable-proptypes';
-import ReactModal from "react-modal";
+import ReactModal from 'react-modal';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from "../store/reducers/offerTakes";
-import network from "../store/selectors/network";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from '../store/reducers/offerTakes';
+import network from '../store/selectors/network';
 
-import offerTakesReducer from "../store/reducers/offerTakes";
-import offerTakes from "../store/selectors/offerTakes";
-import OfferTakeForm from "../components/OfferTakeForm";
-import OasisTokenBalanceSummary from "./OasisTokenBalanceSummary";
-import SetTokenAllowanceTrustWrapper from "./SetTokenAllowanceTrust";
-import modalStyles from "../styles/modules/_modal.scss";
-import styles from "./OasisMakeOfferModal.scss";
-import CSSModules from "react-css-modules";
-import OasisButton from "../components/OasisButton";
-import OasisOfferNotAvailable from "../components/OasisOfferNotAvailable";
-import markets from "../store/selectors/markets";
-import OasisOfferSummaryWrapper from "./OasisOfferSummary";
-import OasisOfferTakeWarningBox from "../components/OasisOfferTakeWarningBox";
-import OasisNotTheBestOfferPriceWarningWrapper from "./OasisNotTheBestOfferPriceWarning";
+import offerTakesReducer from '../store/reducers/offerTakes';
+import offerTakes from '../store/selectors/offerTakes';
+import OfferTakeForm from '../components/OfferTakeForm';
+import OasisTokenBalanceSummary from './OasisTokenBalanceSummary';
+import SetTokenAllowanceTrustWrapper from './SetTokenAllowanceTrust';
+import modalStyles from '../styles/modules/_modal.scss';
+import styles from './OasisMakeOfferModal.scss';
+import CSSModules from 'react-css-modules';
+import OasisButton from '../components/OasisButton';
+import OasisOfferNotAvailable from '../components/OasisOfferNotAvailable';
+import markets from '../store/selectors/markets';
+import OasisOfferSummaryWrapper from './OasisOfferSummary';
+import OasisOfferTakeWarningBox from '../components/OasisOfferTakeWarningBox';
+import OasisNotTheBestOfferPriceWarningWrapper from './OasisNotTheBestOfferPriceWarning';
 import {
   TX_OFFER_TAKE,
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
-  TX_STATUS_REJECTED
-} from "../store/reducers/transactions";
-import { OasisTransactionStatusWrapperInfoBox } from "./OasisTransactionStatusInfoBox";
-import OasisVolumeIsOverTheOfferMax from "../components/OasisVolumeIsOverTheOfferMax";
+  TX_STATUS_REJECTED,
+} from '../store/reducers/transactions';
+import { OasisTransactionStatusWrapperInfoBox } from './OasisTransactionStatusInfoBox';
+import OasisVolumeIsOverTheOfferMax from '../components/OasisVolumeIsOverTheOfferMax';
 import {
   getActiveOfferAllowanceStatus,
-  hasSufficientTokenAmountByOfferType
-} from "../store/selectors";
+  hasSufficientTokenAmountByOfferType,
+} from '../store/selectors';
 
 const propTypes = PropTypes && {
   isOpen: PropTypes.bool,
@@ -50,25 +50,25 @@ const propTypes = PropTypes && {
   isCurrentOfferActive: PropTypes.bool.isRequired,
   isVolumeGreaterThanOfferMax: PropTypes.oneOfType([
     PropTypes.bool,
-    PropTypes.string
-  ])
+    PropTypes.string,
+  ]),
 };
 
-const getOfferTitle = offerTakeType => {
+const getOfferTitle = (offerTakeType) => {
   switch (offerTakeType) {
     case TAKE_BUY_OFFER:
-      return "Buy offer";
+      return 'Buy offer';
     case TAKE_SELL_OFFER:
-      return "Sell offer";
+      return 'Sell offer';
   }
 };
 
-const getBtnColor = offerMakeType => {
+const getBtnColor = (offerMakeType) => {
   switch (offerMakeType) {
     case TAKE_BUY_OFFER:
-      return "success";
+      return 'success';
     case TAKE_SELL_OFFER:
-      return "danger";
+      return 'danger';
   }
 };
 
@@ -90,8 +90,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
     this.onCancel = this.onCancel.bind(this);
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   onCancel() {
     this.props.actions.setOfferTakeModalClosed();
@@ -103,7 +102,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       {
         disableOfferTakeButton: true,
         txStatus: undefined,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       },
       () =>
         actions.takeOffer({
@@ -111,8 +110,8 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
           onCancelCleanup: this.onTransactionCancelledByUser.bind(this),
           onPending: this.onTransactionPending.bind(this),
           onCompleted: this.onTransactionCompleted.bind(this),
-          onRejected: this.onTransactionRejected.bind(this)
-        })
+          onRejected: this.onTransactionRejected.bind(this),
+        }),
     );
   }
 
@@ -121,7 +120,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       this.setState({
         txStatus: TX_STATUS_AWAITING_USER_ACCEPTANCE,
         disableForm: true,
-        lockCancelButton: true
+        lockCancelButton: true,
       });
     }
   }
@@ -132,14 +131,14 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       this.setState({
         txStatus: TX_STATUS_CANCELLED_BY_USER,
         disableForm: false,
-        lockCancelButton: false
+        lockCancelButton: false,
       });
     }
   }
   onTransactionPending({ txStartTimestamp }) {
     this.setState({
       txStatus: TX_STATUS_AWAITING_CONFIRMATION,
-      txStartTimestamp
+      txStartTimestamp,
     });
   }
 
@@ -150,7 +149,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
 
   onTransactionCompleted() {
     this.setState({
-      txStatus: TX_STATUS_CONFIRMED
+      txStatus: TX_STATUS_CONFIRMED,
     });
   }
 
@@ -160,7 +159,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       txHash,
       disableForm: false,
       lockCancelButton: false,
-      disableOfferTakeButton: false
+      disableOfferTakeButton: false,
     });
   }
 
@@ -168,7 +167,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
     const { isCurrentOfferActive } = this.props;
     const pendingOrConfirmed = [
       TX_STATUS_CONFIRMED,
-      TX_STATUS_AWAITING_CONFIRMATION
+      TX_STATUS_AWAITING_CONFIRMATION,
     ].includes(this.state.txStatus);
     if (!(pendingOrConfirmed || isCurrentOfferActive)) {
       return <OasisOfferNotAvailable />;
@@ -196,11 +195,8 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
   }
 
   shouldDisableTakeOfferButton() {
-    const {
-      isCurrentOfferActive,
-      canFulfillOffer,
-      hasExceededGasLimit
-    } = this.props;
+    const { isCurrentOfferActive, canFulfillOffer, hasExceededGasLimit } =
+      this.props;
     const { disableOfferTakeButton } = this.state;
     return (
       !isCurrentOfferActive ||
@@ -214,14 +210,14 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
     const { isCurrentOfferActive } = this.props;
     return Boolean(
       !isCurrentOfferActive ||
-        (this.state.txStatus && this.state.txStatus !== TX_STATUS_REJECTED)
+        (this.state.txStatus && this.state.txStatus !== TX_STATUS_REJECTED),
     );
   }
 
   isTransactionPendingOrAwaitingAcceptance() {
     return [
       TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION
+      TX_STATUS_AWAITING_CONFIRMATION,
     ].includes(this.state.txStatus);
   }
 
@@ -231,13 +227,14 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       activeMarketAddress,
       sellToken,
       hasSufficientTokenAmount,
-      actions: { getTransactionGasCostEstimate }
+      actions: { getTransactionGasCostEstimate },
     } = this.props;
 
-    return (!isVolumeGreaterThanOfferMax && hasSufficientTokenAmount) || this.state.txStatus ? (
+    return (!isVolumeGreaterThanOfferMax && hasSufficientTokenAmount) ||
+      this.state.txStatus ? (
       <SetTokenAllowanceTrustWrapper
         onTransactionPending={() => this.setState({ lockCancelButton: true })}
-        onTransactionCompleted={newAllowanceStatus => {
+        onTransactionCompleted={(newAllowanceStatus) => {
           newAllowanceStatus && getTransactionGasCostEstimate();
           this.setState({ lockCancelButton: false });
         }}
@@ -253,7 +250,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
     if (this.componentUnmounted === false) {
       this.setState({
         txStatus: undefined,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       });
     }
   }
@@ -264,7 +261,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
       sellToken,
       buyToken,
       isVolumeGreaterThanOfferMax,
-      actions: { getTransactionGasCostEstimate }
+      actions: { getTransactionGasCostEstimate },
     } = this.props;
 
     return (
@@ -279,7 +276,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
             <span>×</span>
           </button>
         ) : null}
-        <OasisTokenBalanceSummary summary="Available" token={sellToken} />
+        <OasisTokenBalanceSummary summary='Available' token={sellToken} />
         <div>
           <div>
             <OfferTakeForm
@@ -288,16 +285,15 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
               onFormChange={this.onFormChange}
             />
           </div>
-          <div className="statusSection">
+          <div className='statusSection'>
             <div>{this.renderOfferSummary()}</div>
             <div>
-              {isVolumeGreaterThanOfferMax &&
-                !this.state.disableForm && (
-                  <OasisVolumeIsOverTheOfferMax
-                    tokenName={buyToken}
-                    offerMax={isVolumeGreaterThanOfferMax}
-                  />
-                )}
+              {isVolumeGreaterThanOfferMax && !this.state.disableForm && (
+                <OasisVolumeIsOverTheOfferMax
+                  tokenName={buyToken}
+                  offerMax={isVolumeGreaterThanOfferMax}
+                />
+              )}
             </div>
             {this.renderSetTokenAllowanceWrapper()}
             {this.state.txStatus ? (
@@ -317,9 +313,9 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
               disabled={this.isTransactionPendingOrAwaitingAcceptance()}
               onClick={this.onCancel}
             >
-              {this.askForConfirmationBeforeModalClose() ? "Close" : "Cancel"}
+              {this.askForConfirmationBeforeModalClose() ? 'Close' : 'Cancel'}
             </OasisButton>
-            <div className="notificationsSection" />
+            <div className='notificationsSection' />
             <OasisButton
               disabled={this.shouldDisableTakeOfferButton()}
               onClick={this.onBuyOffer}
@@ -327,7 +323,7 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
             >
               {OasisTakeOfferModalWrapper.takeOfferBtnLabel(offerTakeType, {
                 buyToken,
-                sellToken
+                sellToken,
               })}
             </OasisButton>
           </div>
@@ -341,11 +337,14 @@ export class OasisTakeOfferModalWrapper extends PureComponent {
   }
 
   renderOfferTakeWarning() {
-   return !this.shouldDisableMinorWarnings() ?
-     <OasisOfferTakeWarningBox /> : null;
+    return !this.shouldDisableMinorWarnings() ? (
+      <OasisOfferTakeWarningBox />
+    ) : null;
   }
   renderNotTheBestOfferWarning() {
-    return !this.shouldDisableMinorWarnings() ? <OasisNotTheBestOfferPriceWarningWrapper />: null;
+    return !this.shouldDisableMinorWarnings() ? (
+      <OasisNotTheBestOfferPriceWarningWrapper />
+    ) : null;
   }
 
   UNSAFE_componentWillUpdate(nextProps) {
@@ -365,7 +364,7 @@ export function mapStateToProps(state) {
   return {
     hasSufficientTokenAmount: hasSufficientTokenAmountByOfferType(
       state,
-      offerTakes.activeOfferTakeType(state)
+      offerTakes.activeOfferTakeType(state),
     ),
     latestBlockNumber: network.latestBlockNumber(state),
     isOfferTakeModalOpen: offerTakes.isOfferTakeModalOpen(state),
@@ -377,9 +376,9 @@ export function mapStateToProps(state) {
     isVolumeGreaterThanOfferMax: offerTakes.isVolumeGreaterThanOfferMax(state),
     isTokenTradingEnabled: getActiveOfferAllowanceStatus(
       state,
-      offerTakes.activeOfferTakeType(state)
+      offerTakes.activeOfferTakeType(state),
     ),
-    hasExceededGasLimit: offerTakes.hasExceededGasLimit(state)
+    hasExceededGasLimit: offerTakes.hasExceededGasLimit(state),
   };
 }
 
@@ -391,17 +390,20 @@ export function mapDispatchToProps(dispatch) {
       offerTakesReducer.actions.setOfferTakeModalClosedEpic,
     takeOffer: offerTakesReducer.actions.takeOfferEpic,
     getTransactionGasCostEstimate:
-      offerTakesReducer.actions.getTransactionGasCostEstimateEpic
+      offerTakesReducer.actions.getTransactionGasCostEstimateEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisTakeOfferModalWrapper.propTypes = propTypes;
-OasisTakeOfferModalWrapper.displayName = "OasisTakeOfferModal";
-export default connect(mapStateToProps, mapDispatchToProps)(
+OasisTakeOfferModalWrapper.displayName = 'OasisTakeOfferModal';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
   CSSModules(
     OasisTakeOfferModalWrapper,
     { modalStyles, styles },
-    { allowMultiple: true }
-  )
+    { allowMultiple: true },
+  ),
 );

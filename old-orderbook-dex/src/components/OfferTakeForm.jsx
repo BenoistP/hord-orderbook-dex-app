@@ -1,35 +1,35 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Field, reduxForm } from "redux-form/immutable";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Field, reduxForm } from 'redux-form/immutable';
 
-import web3 from "../bootstrap/web3";
+import web3 from '../bootstrap/web3';
 
-import offerTakes from "../store/selectors/offerTakes";
-import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from "../store/reducers/offerTakes";
-import offerTakesReducer from "../store/reducers/offerTakes";
-import tokens from "../store/selectors/tokens";
-import balances from "../store/selectors/balances";
+import offerTakes from '../store/selectors/offerTakes';
+import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from '../store/reducers/offerTakes';
+import offerTakesReducer from '../store/reducers/offerTakes';
+import tokens from '../store/selectors/tokens';
+import balances from '../store/selectors/balances';
 import {
   formatValue,
   greaterThanZeroValidator,
   // normalize,
-  numericFormatValidator
-} from "../utils/forms/offers";
+  numericFormatValidator,
+} from '../utils/forms/offers';
 
-import OasisButton from "../components/OasisButton";
+import OasisButton from '../components/OasisButton';
 
-import styles from "./OfferTakeForm.scss";
-import tableStyles from "../styles/modules/_table.scss";
-import CSSModules from "react-css-modules";
-import MaskedTokenAmountInput from "./MaskedTokenAmountInput";
-import { SETMAXBTN_HIDE_DELAY_MS } from "../constants";
-import platform from "../store/selectors/platform";
-import isNumericAndGreaterThanZero from "../utils/numbers/isNumericAndGreaterThanZero";
+import styles from './OfferTakeForm.scss';
+import tableStyles from '../styles/modules/_table.scss';
+import CSSModules from 'react-css-modules';
+import MaskedTokenAmountInput from './MaskedTokenAmountInput';
+import { SETMAXBTN_HIDE_DELAY_MS } from '../constants';
+import platform from '../store/selectors/platform';
+import isNumericAndGreaterThanZero from '../utils/numbers/isNumericAndGreaterThanZero';
 
-const fieldStyle = { textAlign: "right" };
+const fieldStyle = { textAlign: 'right' };
 
 const propTypes = PropTypes && {
   activeOfferTakeOfferData: ImmutablePropTypes.map.isRequired,
@@ -38,7 +38,7 @@ const propTypes = PropTypes && {
   offerTakeType: PropTypes.string.isRequired,
   activeTradingPairPrecision: PropTypes.number.isRequired,
   activeBaseTokenBalance: PropTypes.string.isRequired,
-  onFormChange: PropTypes.func
+  onFormChange: PropTypes.func,
 };
 
 const defaultProps = {};
@@ -50,7 +50,7 @@ export class OfferTakeForm extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showMaxButton: false
+      showMaxButton: false,
     };
     this.componentIsUnmounted = false;
     this.currentSetMaxTimeout = null;
@@ -91,30 +91,30 @@ export class OfferTakeForm extends PureComponent {
   }
 
   setMaxButton() {
-
     if (false === this.state.showMaxButton) {
       return null;
     }
 
-    const balanceOfTokenToPayWith = this.props.offerTakeType === TAKE_BUY_OFFER ?
-      this.props.activeBaseTokenBalance :
-      this.props.activeQuoteTokenBalance;
+    const balanceOfTokenToPayWith =
+      this.props.offerTakeType === TAKE_BUY_OFFER
+        ? this.props.activeBaseTokenBalance
+        : this.props.activeQuoteTokenBalance;
 
     if (web3.toBigNumber(balanceOfTokenToPayWith).gt(0)) {
       const {
         disableForm,
         globalFormLock,
         activeBaseTokenBalance,
-        activeQuoteTokenBalance
+        activeQuoteTokenBalance,
       } = this.props;
       switch (this.props.offerTakeType) {
         case TAKE_BUY_OFFER:
           return (
             <OasisButton
               className={tableStyles.inputBtn}
-              type="button"
-              color="success"
-              size="xs"
+              type='button'
+              color='success'
+              size='xs'
               onClick={this.onSetSellMax}
               onFocus={this.onSetMaxFocus}
               onBlur={this.onSetMaxBlur}
@@ -131,9 +131,9 @@ export class OfferTakeForm extends PureComponent {
           return (
             <OasisButton
               className={tableStyles.inputBtn}
-              type="button"
-              color="danger"
-              size="xs"
+              type='button'
+              color='danger'
+              size='xs'
               onClick={this.onSetBuyMax}
               disabled={
                 disableForm ||
@@ -157,14 +157,14 @@ export class OfferTakeForm extends PureComponent {
         <th>Price</th>
         <td className={tableStyles.withInput}>
           <Field
-            autoComplete="off"
+            autoComplete='off'
             style={fieldStyle}
-            name="price"
-            component="input"
+            name='price'
+            component='input'
             format={formatValue}
             placeholder={0}
             // normalize={normalize}
-            type="text"
+            type='text'
             disabled={true}
           />
         </td>
@@ -182,11 +182,11 @@ export class OfferTakeForm extends PureComponent {
         <th>Amount</th>
         <td className={tableStyles.withInput}>
           <Field
-            autoComplete="off"
+            autoComplete='off'
             style={fieldStyle}
-            name="volume"
+            name='volume'
             component={MaskedTokenAmountInput}
-            type="text"
+            type='text'
             validate={validateVolume}
             min={0}
             placeholder={0}
@@ -214,12 +214,12 @@ export class OfferTakeForm extends PureComponent {
               onBlur={this.onTotalFieldSectionBlur}
             >
               <Field
-                autoComplete="off"
+                autoComplete='off'
                 style={fieldStyle}
                 min={0}
-                name="total"
+                name='total'
                 component={MaskedTokenAmountInput}
-                type="text"
+                type='text'
                 validate={validateTotal}
                 placeholder={0}
                 disabled={disableForm || globalFormLock}
@@ -297,7 +297,7 @@ export class OfferTakeForm extends PureComponent {
     if (this.componentIsUnmounted === false) {
       this.currentSetMaxTimeout = setTimeout(
         () => this.setState({ showMaxButton: false }),
-        SETMAXBTN_HIDE_DELAY_MS
+        SETMAXBTN_HIDE_DELAY_MS,
       );
     }
   }
@@ -307,7 +307,7 @@ export class OfferTakeForm extends PureComponent {
   }
 }
 
-OfferTakeForm.displayName = "OfferTakeForm";
+OfferTakeForm.displayName = 'OfferTakeForm';
 OfferTakeForm.propTypes = propTypes;
 OfferTakeForm.defaultProps = defaultProps;
 
@@ -320,7 +320,7 @@ export function mapStateToProps(state) {
     activeTradingPairPrecision: tokens.precision(state),
     activeBaseTokenBalance: balances.activeBaseTokenBalance(state),
     activeQuoteTokenBalance: balances.activeQuoteTokenBalance(state),
-    globalFormLock: platform.globalFormLock(state)
+    globalFormLock: platform.globalFormLock(state),
   };
 }
 
@@ -331,13 +331,16 @@ export function mapDispatchToProps(dispatch) {
     totalFieldValueChanged:
       offerTakesReducer.actions.totalFieldValueChangedEpic,
     buyMax: offerTakesReducer.actions.buyMaxEpic,
-    sellMax: offerTakesReducer.actions.sellMaxEpic
+    sellMax: offerTakesReducer.actions.sellMaxEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  reduxForm({ form: "takeOffer" })(
-    CSSModules(OfferTakeForm, { styles, tableStyles }, { allowMultiple: true })
-  )
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  reduxForm({ form: 'takeOffer' })(
+    CSSModules(OfferTakeForm, { styles, tableStyles }, { allowMultiple: true }),
+  ),
 );

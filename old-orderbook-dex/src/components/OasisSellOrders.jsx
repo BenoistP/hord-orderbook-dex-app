@@ -1,15 +1,15 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import OasisTable from "./OasisTable";
-import { toDisplayFormat } from "../utils/orders";
-import LoadProgressSection from "./OasisLoadProgressSection";
-import { TAKE_SELL_OFFER } from "../store/reducers/offerTakes";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import OasisTable from './OasisTable';
+import { toDisplayFormat } from '../utils/orders';
+import LoadProgressSection from './OasisLoadProgressSection';
+import { TAKE_SELL_OFFER } from '../store/reducers/offerTakes';
 
-import styles from "./OasisSellOrders.scss";
-import CSSModules from "react-css-modules";
-import { OFFER_STATUS_INACTIVE } from "../store/reducers/offers";
-import OasisSignificantDigitsWrapper from "../containers/OasisSignificantDigits";
+import styles from './OasisSellOrders.scss';
+import CSSModules from 'react-css-modules';
+import { OFFER_STATUS_INACTIVE } from '../store/reducers/offers';
+import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
 import { ETH_UNIT_ETHER } from '../constants';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
@@ -26,24 +26,24 @@ const propTypes = {
 
 const defaultProps = {};
 
-const actionsColumnTemplate = function() {
+const actionsColumnTemplate = function () {
   return null;
 };
 
-const priceTemplate = row => (
+const priceTemplate = (row) => (
   <OasisSignificantDigitsWrapper
     fullPrecisionAmount={row.ask_price_full_precision}
     amount={row.ask_price}
   />
 );
-const baseTokenTemplate = row => (
+const baseTokenTemplate = (row) => (
   <OasisSignificantDigitsWrapper
     fullPrecisionUnit={ETH_UNIT_ETHER}
     fullPrecisionAmount={row.sell_how_much_full_precision}
     amount={row.sell_how_much}
   />
 );
-const quoteTokenTemplate = row => (
+const quoteTokenTemplate = (row) => (
   <OasisSignificantDigitsWrapper
     fullPrecisionUnit={ETH_UNIT_ETHER}
     fullPrecisionAmount={row.buy_how_much_full_precision}
@@ -56,7 +56,7 @@ const colsDefinition = (baseToken, quoteToken, orderActions) => {
     { heading: `price`, template: priceTemplate },
     { heading: `${quoteToken}`, template: quoteTokenTemplate }, // how much will pay
     { heading: `${baseToken}`, template: baseTokenTemplate }, // how much  will get
-    { heading: ``, template: actionsColumnTemplate.bind(orderActions) }
+    { heading: ``, template: actionsColumnTemplate.bind(orderActions) },
   ];
 };
 
@@ -68,10 +68,10 @@ class OasisSellOrders extends PureComponent {
 
   onTableRowClick(rowData) {
     const { onSetOfferTakeModalOpen } = this.props;
-     onSetOfferTakeModalOpen({
+    onSetOfferTakeModalOpen({
       offerTakeType: TAKE_SELL_OFFER,
-      offerId: rowData.id
-    })
+      offerId: rowData.id,
+    });
   }
 
   render() {
@@ -83,13 +83,13 @@ class OasisSellOrders extends PureComponent {
     } = this.props;
     const orderActions = {};
     const rows = sellOffers
-      .filter(offer => offer.status !== OFFER_STATUS_INACTIVE)
+      .filter((offer) => offer.status !== OFFER_STATUS_INACTIVE)
       .sort((p, c) => (p.ask_price_sort > c.ask_price_sort ? 1 : -1))
       .map(toDisplayFormat);
     return (
       <OasisWidgetFrame
         isLoadingData={loadingSellOffers}
-        loadingDataText={"sell orders"}
+        loadingDataText={'sell orders'}
         heading={`SELL ORDERS`}
         loadProgressSection={
           <LoadProgressSection
@@ -109,7 +109,7 @@ class OasisSellOrders extends PureComponent {
   }
 }
 
-OasisSellOrders.displayName = "OasisSellOrders";
+OasisSellOrders.displayName = 'OasisSellOrders';
 OasisSellOrders.propTypes = propTypes;
 OasisSellOrders.defaultProps = defaultProps;
 export default CSSModules(OasisSellOrders, styles, { allowMultiple: true });

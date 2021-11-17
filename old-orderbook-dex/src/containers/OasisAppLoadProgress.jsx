@@ -1,17 +1,17 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { appLoadProgress } from "../store/selectors";
-import offers from "../store/selectors/offers";
-import OasisStatus from "../components/OasisStatus";
-import network from "../store/selectors/network";
-import trades from "../store/selectors/trades";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { appLoadProgress } from '../store/selectors';
+import offers from '../store/selectors/offers';
+import OasisStatus from '../components/OasisStatus';
+import network from '../store/selectors/network';
+import trades from '../store/selectors/trades';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 export class OasisAppLoadProgressWrapper extends PureComponent {
@@ -22,7 +22,7 @@ export class OasisAppLoadProgressWrapper extends PureComponent {
       offersLoadProgress,
       networkStatus,
       networkName,
-      initialMarketHistoryLoaded
+      initialMarketHistoryLoaded,
     } = this.props;
     return (
       <OasisStatus
@@ -45,14 +45,13 @@ export class OasisAppLoadProgressWrapper extends PureComponent {
 
 export function mapStateToProps(state) {
   return {
-    activeTradingPairOffersInitiallyLoaded: offers.activeTradingPairOffersInitiallyLoaded(
-      state
-    ),
+    activeTradingPairOffersInitiallyLoaded:
+      offers.activeTradingPairOffersInitiallyLoaded(state),
     networkStatus: network.status(state),
     networkName: network.activeNetworkName(state),
     loadProgress: appLoadProgress(state),
     initialMarketHistoryLoaded: trades.initialMarketHistoryLoaded(state),
-    offersLoadProgress: offers.activeTradingPairOffersLoadProgress(state)
+    offersLoadProgress: offers.activeTradingPairOffersLoadProgress(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -61,7 +60,8 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisAppLoadProgressWrapper.propTypes = propTypes;
-OasisAppLoadProgressWrapper.displayName = "OasisAppLoadProgress";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  OasisAppLoadProgressWrapper
-);
+OasisAppLoadProgressWrapper.displayName = 'OasisAppLoadProgress';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisAppLoadProgressWrapper);

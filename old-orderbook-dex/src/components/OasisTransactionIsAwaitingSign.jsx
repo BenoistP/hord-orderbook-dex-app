@@ -6,17 +6,15 @@ import styles from './OasisTransactionIsAwaitingSign.scss';
 import StatusPictogram from './StatusPictogram';
 import { TX_STATUS_AWAITING_USER_ACCEPTANCE } from '../store/reducers/transactions';
 
-
-const propTypes = PropTypes && {
-};
+const propTypes = PropTypes && {};
 const defaultProps = {};
-
 
 class OasisTransactionIsAwaitingSign extends PureComponent {
   render() {
     return (
       <div className={styles.base}>
-        Sign Trans. <StatusPictogram status={TX_STATUS_AWAITING_USER_ACCEPTANCE}/>
+        Sign Trans.{' '}
+        <StatusPictogram status={TX_STATUS_AWAITING_USER_ACCEPTANCE} />
       </div>
     );
   }

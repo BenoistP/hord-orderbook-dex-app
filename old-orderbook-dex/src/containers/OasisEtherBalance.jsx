@@ -14,35 +14,41 @@ import OasisIcon from '../components/OasisIcon';
 const propTypes = PropTypes && {
   decimalPlaces: PropTypes.number,
   fromWei: PropTypes.bool,
-  balanceUnit: PropTypes.string
+  balanceUnit: PropTypes.string,
 };
 
 export class OasisEtherBalanceWrapper extends PureComponent {
   render() {
     const { balance, fromWei, balanceUnit } = this.props;
-    if(!balance) {
+    if (!balance) {
       return (
-        <div className={styles.loading}><OasisIcon icon="loading"/></div>
+        <div className={styles.loading}>
+          <OasisIcon icon='loading' />
+        </div>
       );
     } else {
       return (
         <div className={styles.available}>
-          <span className={styles["available-amount"]}>
-          { formatTokenAmount(balance, fromWei, balanceUnit ||  ETH_UNIT_ETHER, AMOUNT_DECIMALS) }
+          <span className={styles['available-amount']}>
+            {formatTokenAmount(
+              balance,
+              fromWei,
+              balanceUnit || ETH_UNIT_ETHER,
+              AMOUNT_DECIMALS,
+            )}
           </span>
-          <span className={styles["available-currency"]}>
+          <span className={styles['available-currency']}>
             <b>{TOKEN_ETHER}</b>
           </span>
         </div>
       );
     }
-
   }
 }
 
 export function mapStateToProps(state) {
   return {
-    balance: balances.ethBalance(state)
+    balance: balances.ethBalance(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -52,4 +58,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisEtherBalanceWrapper.propTypes = propTypes;
 OasisEtherBalanceWrapper.displayName = 'OasisEtherBalance';
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisEtherBalanceWrapper,styles));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisEtherBalanceWrapper, styles));

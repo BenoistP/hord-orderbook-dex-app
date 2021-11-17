@@ -1,4 +1,3 @@
-
 import React, { PureComponent } from 'react';
 import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
@@ -12,7 +11,7 @@ import wrapUnwrapReducer from '../store/reducers/wrapUnwrap';
 import accounts from '../store/selectors/accounts';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 export class OasisWrapUnwrapBalancesWrapper extends PureComponent {
@@ -25,8 +24,8 @@ export class OasisWrapUnwrapBalancesWrapper extends PureComponent {
         changeRoute,
         setActiveWrapUnwrappedToken,
         resetActiveWrapForm,
-        resetActiveUnwrapForm
-      }
+        resetActiveUnwrapForm,
+      },
     } = this.props;
     return (
       <OasisWrapUnwrapBalances
@@ -46,13 +45,14 @@ export function mapStateToProps(state) {
   return {
     defaultAccount: accounts.defaultAccount(state),
     wrapUnwrapBalances: wrapUnwrap.wrapUnwrapBalances(state),
-    activeUnwrappedToken: wrapUnwrap.activeUnwrappedToken(state)
+    activeUnwrappedToken: wrapUnwrap.activeUnwrappedToken(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     changeRoute: platformReducer.actions.changeRouteEpic,
-    setActiveWrapUnwrappedToken: wrapUnwrapReducer.actions.setActiveWrapUnwrappedToken,
+    setActiveWrapUnwrappedToken:
+      wrapUnwrapReducer.actions.setActiveWrapUnwrappedToken,
     resetActiveWrapForm: wrapUnwrapReducer.actions.resetActiveWrapForm,
     resetActiveUnwrapForm: wrapUnwrapReducer.actions.resetActiveUnwrapForm,
   };
@@ -61,4 +61,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisWrapUnwrapBalancesWrapper.propTypes = propTypes;
 OasisWrapUnwrapBalancesWrapper.displayName = 'OasisWrapUnwrapBalances';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapBalancesWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisWrapUnwrapBalancesWrapper);

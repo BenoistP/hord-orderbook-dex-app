@@ -1,11 +1,11 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 
-import styles from "./InfoBox.scss";
-import CSSModules from "react-css-modules/dist/index";
-import FlexBox from "./FlexBox";
+import styles from './InfoBox.scss';
+import CSSModules from 'react-css-modules/dist/index';
+import FlexBox from './FlexBox';
 
-const propTypes =  {
+const propTypes = {
   children: PropTypes.node,
   color: PropTypes.string,
   size: PropTypes.string,
@@ -16,13 +16,13 @@ const propTypes =  {
   hidden: PropTypes.bool,
   additionalStyles: PropTypes.object,
   className: PropTypes.string,
-  wrapXXS: PropTypes.bool
+  wrapXXS: PropTypes.bool,
 };
 
 const defaultProps = {
-  color: "default",
-  size: "md",
-  className: ""
+  color: 'default',
+  size: 'md',
+  className: '',
 };
 
 export class InfoBox extends PureComponent {
@@ -42,10 +42,10 @@ export class InfoBox extends PureComponent {
         hidden={this.props.hidden}
         className={`${styles.box}
           ${styles[color]}
-          ${!noBorder ? styles[size] : styles["sm"]}
+          ${!noBorder ? styles[size] : styles['sm']}
           ${className}
-          ${fullWidth ? styles.fullWidth : ""}
-          ${noBorder ? styles.noBorder : ""}
+          ${fullWidth ? styles.fullWidth : ''}
+          ${noBorder ? styles.noBorder : ''}
           `}
         {...props}
       >
@@ -55,7 +55,7 @@ export class InfoBox extends PureComponent {
   }
 }
 
-InfoBox.displayName = "InfoBox";
+InfoBox.displayName = 'InfoBox';
 InfoBox.propTypes = propTypes;
 InfoBox.defaultProps = defaultProps;
 export default CSSModules(InfoBox, styles);

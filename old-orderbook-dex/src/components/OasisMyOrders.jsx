@@ -1,32 +1,32 @@
 /* eslint-disable react/display-name */
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import { fromJS } from "immutable";
-import ImmutablePropTypes from "react-immutable-proptypes";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import { fromJS } from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { DESCENDING, orderByTimestamp } from "../utils/sort";
-import { OasisTable } from "./OasisTable";
-import { OasisTradeType } from "./OasisTradeType";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import web3 from "../bootstrap/web3";
-import { ASK, BID } from "../store/reducers/trades";
-import { ETH_UNIT_ETHER } from "../constants";
-import { isOfferOwner } from "../utils/orders";
-import OasisSelect from "./OasisSelect";
-import styles from "./OasisMyOrders.scss";
-import OasisOfferCancelModalWrapper from "../containers/OasisOfferCancelModal";
+import { DESCENDING, orderByTimestamp } from '../utils/sort';
+import { OasisTable } from './OasisTable';
+import { OasisTradeType } from './OasisTradeType';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import web3 from '../bootstrap/web3';
+import { ASK, BID } from '../store/reducers/trades';
+import { ETH_UNIT_ETHER } from '../constants';
+import { isOfferOwner } from '../utils/orders';
+import OasisSelect from './OasisSelect';
+import styles from './OasisMyOrders.scss';
+import OasisOfferCancelModalWrapper from '../containers/OasisOfferCancelModal';
 import {
   OFFER_STATUS_INACTIVE,
   TYPE_BUY_OFFER,
-  TYPE_SELL_OFFER
-} from "../store/reducers/offers";
-import OasisSignificantDigitsWrapper from "../containers/OasisSignificantDigits";
-import OasisButton from "./OasisButton";
-import openEtherscanTransactionLink from "../utils/openEtherscanTransactionLink";
-import { myOffersDisplayFormat } from "../utils/offers/myOffersDisplayFormat";
-import { toHistoricalTrades } from "../utils/offers/toHistoricalTrades";
+  TYPE_SELL_OFFER,
+} from '../store/reducers/offers';
+import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
+import OasisButton from './OasisButton';
+import openEtherscanTransactionLink from '../utils/openEtherscanTransactionLink';
+import { myOffersDisplayFormat } from '../utils/offers/myOffersDisplayFormat';
+import { toHistoricalTrades } from '../utils/offers/toHistoricalTrades';
 
-const myOpenOffersFilter = entry => {
+const myOpenOffersFilter = (entry) => {
   const myAccountAddress = web3.eth.defaultAccount;
   return (
     entry.owner.toString() === myAccountAddress.toString() &&
@@ -35,37 +35,37 @@ const myOpenOffersFilter = entry => {
 };
 
 const tradesHistoryColsDefinition = (baseToken, quoteToken) => [
-  { heading: "date", key: "date" },
-  { heading: "action", key: "tradeType" },
+  { heading: 'date', key: 'date' },
+  { heading: 'action', key: 'tradeType' },
   {
     heading: `price`,
-    template: row => (
+    template: (row) => (
       <OasisSignificantDigitsWrapper
         fullPrecisionAmount={row.priceFullPrecision}
         amount={row.price}
       />
-    )
+    ),
   },
   {
     heading: `${quoteToken}`,
-    template: row => (
+    template: (row) => (
       <OasisSignificantDigitsWrapper
         fullPrecisionUnit={ETH_UNIT_ETHER}
         fullPrecisionAmount={row.quoteAmountFullPrecision}
         amount={row.quoteAmount}
       />
-    )
+    ),
   },
   {
     heading: `${baseToken}`,
-    template: row => (
+    template: (row) => (
       <OasisSignificantDigitsWrapper
         fullPrecisionUnit={ETH_UNIT_ETHER}
         fullPrecisionAmount={row.baseAmountFullPrecision}
         amount={row.baseAmount}
       />
-    )
-  }
+    ),
+  },
 ];
 
 const propTypes = {
@@ -80,47 +80,47 @@ const propTypes = {
   sellOffers: PropTypes.object,
   buyOffers: PropTypes.object,
   cancelOffer: PropTypes.func,
-  defaultAccount: PropTypes.string
+  defaultAccount: PropTypes.string,
 };
 const defaultProps = {};
 
-const VIEW_TYPE_OPEN_OFFERS = "Open";
-const VIEW_TYPE_MARKET_HISTORY = "Closed";
+const VIEW_TYPE_OPEN_OFFERS = 'Open';
+const VIEW_TYPE_MARKET_HISTORY = 'Closed';
 
 class OasisMyOrders extends PureComponent {
   openOrdersColsDefinition(baseToken, quoteToken, orderActions) {
     return [
-      { heading: "action", key: "tradeTypeEl" },
+      { heading: 'action', key: 'tradeTypeEl' },
       {
         heading: `price`,
-        template: row => (
+        template: (row) => (
           <OasisSignificantDigitsWrapper
             fullPrecisionAmount={row.priceFullPrecision}
             amount={row.price}
           />
-        )
+        ),
       },
       {
         heading: `${quoteToken}`,
-        template: row => (
+        template: (row) => (
           <OasisSignificantDigitsWrapper
             fullPrecisionUnit={ETH_UNIT_ETHER}
             fullPrecisionAmount={row.quoteAmountFullPrecision}
             amount={row.quoteAmount}
           />
-        )
+        ),
       },
       {
         heading: `${baseToken}`,
-        template: row => (
+        template: (row) => (
           <OasisSignificantDigitsWrapper
             fullPrecisionUnit={ETH_UNIT_ETHER}
             fullPrecisionAmount={row.baseAmountFullPrecision}
             amount={row.baseAmount}
           />
-        )
+        ),
       },
-      { heading: ``, template: this.actionsColumnTemplate.bind(orderActions) }
+      { heading: ``, template: this.actionsColumnTemplate.bind(orderActions) },
     ];
   }
 
@@ -134,14 +134,14 @@ class OasisMyOrders extends PureComponent {
       this.props.removeOrderCancelledByTheOwner({
         offerType: offer.offerType,
         offerId: offer.id,
-        tradingPair: activeTradingPair
+        tradingPair: activeTradingPair,
       });
     }
 
     return isOfferOwner(offer) ? (
       <div>
         <OasisButton
-          size="xs"
+          size='xs'
           disabled={
             offerToCancel ||
             (offer.id.toString() === lastCancelledOfferId &&
@@ -168,12 +168,12 @@ class OasisMyOrders extends PureComponent {
   onViewTypeChange({ target: { value } }) {
     if (this.componentIsUnmounted === false) {
       const { trades, loadingUserMarketHistory } = this.props;
-      console.log({trades, loadingUserMarketHistory });
+      console.log({ trades, loadingUserMarketHistory });
       if (!trades && !loadingUserMarketHistory) {
-          this.props.onFetchAndSubscribeUserTradesHistory()
+        this.props.onFetchAndSubscribeUserTradesHistory();
       }
       this.setState({
-        viewType: value
+        viewType: value,
       });
     }
   }
@@ -189,25 +189,25 @@ class OasisMyOrders extends PureComponent {
       buyOffers = [],
       cancelOffer,
       activeNetworkName,
-      activeTradingPairOffersInitiallyLoaded
+      activeTradingPairOffersInitiallyLoaded,
     } = this.props;
     const orderActions = { cancelOffer };
     const myOpenOffers = sellOffers
-      .map(so => ({
+      .map((so) => ({
         ...so,
         tradeType: ASK,
         offerType: TYPE_SELL_OFFER,
         tradeTypeEl: <OasisTradeType type={ASK} />,
-        price: so.ask_price
+        price: so.ask_price,
       }))
       .concat(
-        buyOffers.map(bo => ({
+        buyOffers.map((bo) => ({
           ...bo,
           tradeType: BID,
           offerType: TYPE_BUY_OFFER,
           tradeTypeEl: <OasisTradeType type={BID} />,
-          price: bo.bid_price
-        }))
+          price: bo.bid_price,
+        })),
       )
       .filter(myOpenOffersFilter)
       .sort((p, c) => (p.bid_price_sort < c.bid_price_sort ? 1 : -1))
@@ -215,7 +215,9 @@ class OasisMyOrders extends PureComponent {
 
     const emptyTableFallback = (
       <div className={styles.info}>
-        {activeTradingPairOffersInitiallyLoaded ? 'You currently have no active offers': ''}
+        {activeTradingPairOffersInitiallyLoaded
+          ? 'You currently have no active offers'
+          : ''}
       </div>
     );
     return (
@@ -226,7 +228,7 @@ class OasisMyOrders extends PureComponent {
           col={this.openOrdersColsDefinition(
             baseToken,
             quoteToken,
-            orderActions
+            orderActions,
           )}
           className={styles.openOffers}
           emptyFallback={emptyTableFallback}
@@ -240,9 +242,9 @@ class OasisMyOrders extends PureComponent {
       defaultAccount,
       trades = fromJS([]),
       activeNetworkName,
-      activeTradingPair: { baseToken, quoteToken }
+      activeTradingPair: { baseToken, quoteToken },
     } = this.props;
-    const myTrades = trades.filter(tradeEntry => {
+    const myTrades = trades.filter((tradeEntry) => {
       if (
         (baseToken === tradeEntry.buyWhichToken &&
           tradeEntry.sellWhichToken === quoteToken) ||
@@ -253,7 +255,13 @@ class OasisMyOrders extends PureComponent {
       }
     });
     const marketHistory = orderByTimestamp(myTrades.toJSON(), DESCENDING).map(
-      tradeHistoryEntry => toHistoricalTrades(tradeHistoryEntry, defaultAccount, baseToken, quoteToken)
+      (tradeHistoryEntry) =>
+        toHistoricalTrades(
+          tradeHistoryEntry,
+          defaultAccount,
+          baseToken,
+          quoteToken,
+        ),
     );
     return (
       <OasisTable
@@ -264,7 +272,7 @@ class OasisMyOrders extends PureComponent {
         className={styles.tradesHistory}
         emptyFallback={
           [true, null].includes(this.props.loadingUserMarketHistory) ? (
-            <div className={styles.info}/>
+            <div className={styles.info} />
           ) : (
             <div className={styles.info}>Your trades history is empty</div>
           )
@@ -296,26 +304,29 @@ class OasisMyOrders extends PureComponent {
   }
 
   getLoadingText() {
-    if (this.state.viewType=== VIEW_TYPE_MARKET_HISTORY) {
-      return "Your trades history"
-    } else if (this.state.viewType=== VIEW_TYPE_OPEN_OFFERS) {
-      return "Your active orders";
+    if (this.state.viewType === VIEW_TYPE_MARKET_HISTORY) {
+      return 'Your trades history';
+    } else if (this.state.viewType === VIEW_TYPE_OPEN_OFFERS) {
+      return 'Your active orders';
     }
   }
 
   render() {
     const { offerToCancel } = this.state;
-    const { loadingUserMarketHistory, activeTradingPairOffersInitiallyLoaded } = this.props;
+    const { loadingUserMarketHistory, activeTradingPairOffersInitiallyLoaded } =
+      this.props;
     return (
       <OasisWidgetFrame
-        isLoadingData={!activeTradingPairOffersInitiallyLoaded || loadingUserMarketHistory}
+        isLoadingData={
+          !activeTradingPairOffersInitiallyLoaded || loadingUserMarketHistory
+        }
         loadingDataText={this.getLoadingText()}
-        heading={"MY ORDERS"}
+        heading={'MY ORDERS'}
         headingChildren={this.renderSelect()}
       >
         {offerToCancel && (
           <OasisOfferCancelModalWrapper
-            onCancelledSuccesfully={lastCancelledOfferId => {
+            onCancelledSuccesfully={(lastCancelledOfferId) => {
               this.setState({ lastCancelledOfferId });
             }}
             onModalClose={() => {
@@ -347,7 +358,7 @@ class OasisMyOrders extends PureComponent {
   // }
 }
 
-OasisMyOrders.displayName = "OasisMyOrders";
+OasisMyOrders.displayName = 'OasisMyOrders';
 OasisMyOrders.propTypes = propTypes;
 OasisMyOrders.defaultProps = defaultProps;
 export default OasisMyOrders;

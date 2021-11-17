@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import charts from './../store/selectors/charts';
 
-import {Line} from 'react-chartjs-2';
-import {tooltipContainer, CHART_HEIGHT} from './OasisChart';
+import { Line } from 'react-chartjs-2';
+import { tooltipContainer, CHART_HEIGHT } from './OasisChart';
 import BigNumber from 'bignumber.js';
 
 const propTypes = PropTypes && {
@@ -33,41 +33,43 @@ export class OasisChartDepth extends PureComponent {
         height={CHART_HEIGHT}
         data={{
           labels: this.props.depthChartLabels,
-          datasets: [{
-            label: 'Buy',
-            data: this.props.depthChartValues.buy,
-            backgroundColor: 'rgba(38, 166, 154, 0.2)',
-            borderColor: 'rgba(38, 166, 154, 1)',
-            borderWidth: 3,
-            // fill: false,
-            pointStyle: 'circle',
-            pointRadius: 3,
-            pointBorderWidth: 1,
-            pointBorderColor: '#1ABC9C',
-            pointBackgroundColor: '#1ABC9C',
-            hoverBackgroundColor: '#1ABC9C',
-            hoverBorderColor: '#1ABC9C',
-            hoverBorderWidth: 5,
-            steppedLine: true,
-            invertedStep: true,
-          },
-          {
-            label: 'Sell',
-            data: this.props.depthChartValues.sell,
-            backgroundColor: 'rgba(239, 83, 80, 0.2)',
-            borderColor: '#EF5350',
-            borderWidth: 3,
-            // fill: false,
-            pointStyle: 'circle',
-            pointRadius: 3,
-            pointBorderWidth: 1,
-            pointBorderColor: '#EF5350',
-            pointBackgroundColor: '#EF5350',
-            hoverBackgroundColor: '#EF5350',
-            hoverBorderColor: '#EF5350',
-            hoverBorderWidth: 5,
-            steppedLine: true,
-          }],
+          datasets: [
+            {
+              label: 'Buy',
+              data: this.props.depthChartValues.buy,
+              backgroundColor: 'rgba(38, 166, 154, 0.2)',
+              borderColor: 'rgba(38, 166, 154, 1)',
+              borderWidth: 3,
+              // fill: false,
+              pointStyle: 'circle',
+              pointRadius: 3,
+              pointBorderWidth: 1,
+              pointBorderColor: '#1ABC9C',
+              pointBackgroundColor: '#1ABC9C',
+              hoverBackgroundColor: '#1ABC9C',
+              hoverBorderColor: '#1ABC9C',
+              hoverBorderWidth: 5,
+              steppedLine: true,
+              invertedStep: true,
+            },
+            {
+              label: 'Sell',
+              data: this.props.depthChartValues.sell,
+              backgroundColor: 'rgba(239, 83, 80, 0.2)',
+              borderColor: '#EF5350',
+              borderWidth: 3,
+              // fill: false,
+              pointStyle: 'circle',
+              pointRadius: 3,
+              pointBorderWidth: 1,
+              pointBorderColor: '#EF5350',
+              pointBackgroundColor: '#EF5350',
+              hoverBackgroundColor: '#EF5350',
+              hoverBorderColor: '#EF5350',
+              hoverBorderWidth: 5,
+              steppedLine: true,
+            },
+          ],
         }}
         options={{
           layout: {
@@ -83,21 +85,25 @@ export class OasisChartDepth extends PureComponent {
             display: false,
           },
           scales: {
-            yAxes: [{
-              scaleLabel: {
-                display: false,
-                labelString: `SUM(${this.props.tradingPair.quoteToken})`,
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: false,
+                  labelString: `SUM(${this.props.tradingPair.quoteToken})`,
+                },
+                ticks: {
+                  beginAtZero: true,
+                },
               },
-              ticks: {
-                beginAtZero: true,
+            ],
+            xAxes: [
+              {
+                display: true,
+                ticks: {
+                  callback: (v) => v.toFixed(2),
+                },
               },
-            }],
-            xAxes: [{
-              display: true,
-              ticks: {
-                callback: v => v.toFixed(2),
-              },
-            }],
+            ],
           },
         }}
       />
@@ -105,7 +111,10 @@ export class OasisChartDepth extends PureComponent {
   }
 
   showTooltip(tooltip) {
-    const tooltipEl = tooltipContainer(tooltip, document.getElementsByClassName("chartjs-render-monitor")[0]);
+    const tooltipEl = tooltipContainer(
+      tooltip,
+      document.getElementsByClassName('chartjs-render-monitor')[0],
+    );
     if (tooltipEl && tooltip.body) {
       const price = this.props.depthChartLabels[tooltip.dataPoints[0].index];
       let type = null;
@@ -119,17 +128,22 @@ export class OasisChartDepth extends PureComponent {
       });
       [type, quoteAmount] = tooltip.body[typeIndex].lines[0].split(': ');
       if (type === 'Sell') {
-        quoteAmount = this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].quote;
-        baseAmount = this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].base;
+        quoteAmount =
+          this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].quote;
+        baseAmount =
+          this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].base;
       } else {
-        quoteAmount = this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].quote;
-        baseAmount = this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].base;
+        quoteAmount =
+          this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].quote;
+        baseAmount =
+          this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].base;
       }
 
-      tooltipEl.innerHTML =
-        `<div class="row-custom-tooltip">
+      tooltipEl.innerHTML = `<div class="row-custom-tooltip">
           <span class="left">Price</span>
-          <span class="right">${new BigNumber(price.toString()).toFormat(4)}</span>
+          <span class="right">${new BigNumber(price.toString()).toFormat(
+            4,
+          )}</span>
         </div>
         <div class="row-custom-tooltip middle">
           <span class="left">SUM(${this.props.tradingPair.quoteToken})</span>
@@ -154,8 +168,7 @@ export function mapStateToProps(state, props) {
 }
 
 export function mapDispatchToProps(dispatch) {
-  const actions = {
-  };
+  const actions = {};
   return { actions: bindActionCreators(actions, dispatch) };
 }
 

@@ -1,33 +1,33 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import OasisTokenSelectWrapper from "./OasisTokenSelect";
-import TokenTransferFormWrapper from "./TokenTransferForm";
-import OasisTokenBalanceSummary from "./OasisTokenBalanceSummary";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import styles from "./OasisTokenTransfer.scss"
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import OasisTokenSelectWrapper from './OasisTokenSelect';
+import TokenTransferFormWrapper from './TokenTransferForm';
+import OasisTokenBalanceSummary from './OasisTokenBalanceSummary';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import styles from './OasisTokenTransfer.scss';
 
-import transfersReducer from "../store/reducers/transfers";
-import transfers from "../store/selectors/transfers";
+import transfersReducer from '../store/reducers/transfers';
+import transfers from '../store/selectors/transfers';
 import {
   TX__GROUP__TRANSFERS,
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
-  TX_STATUS_REJECTED
-} from "../store/reducers/transactions";
-import { formatAmount } from "../utils/tokens/pair";
-import textStyles from "../styles/modules/_typography.scss";
-import CSSModules from "react-css-modules/dist/index";
-import { OasisTransactionStatusWrapperInfoBox } from "./OasisTransactionStatusInfoBox";
+  TX_STATUS_REJECTED,
+} from '../store/reducers/transactions';
+import { formatAmount } from '../utils/tokens/pair';
+import textStyles from '../styles/modules/_typography.scss';
+import CSSModules from 'react-css-modules/dist/index';
+import { OasisTransactionStatusWrapperInfoBox } from './OasisTransactionStatusInfoBox';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
-  selectedToken: PropTypes.string
+  selectedToken: PropTypes.string,
 };
 
 export class OasisTokenTransferWrapper extends PureComponent {
@@ -44,7 +44,7 @@ export class OasisTokenTransferWrapper extends PureComponent {
       {
         disableTransferButton: true,
         txStatus: false,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       },
       () =>
         this.props.actions.makeTransfer({
@@ -52,15 +52,15 @@ export class OasisTokenTransferWrapper extends PureComponent {
           onCancelCleanup: this.onTransactionCancelledByUser.bind(this),
           onPending: this.onTransactionPending.bind(this),
           onCompleted: this.onTransactionCompleted.bind(this),
-          onRejected: this.onTransactionRejected.bind(this)
-        })
+          onRejected: this.onTransactionRejected.bind(this),
+        }),
     );
   }
 
   onTransactionStart() {
     this.setState({
       txStatus: TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      disableForm: true
+      disableForm: true,
     });
   }
 
@@ -68,20 +68,20 @@ export class OasisTokenTransferWrapper extends PureComponent {
     this.setState({ disableTransferButton: false });
     this.setState({
       txStatus: TX_STATUS_CANCELLED_BY_USER,
-      disableForm: false
+      disableForm: false,
     });
   }
   onTransactionPending({ txStartTimestamp }) {
     this.setState({
       txStatus: TX_STATUS_AWAITING_CONFIRMATION,
-      txStartTimestamp
+      txStartTimestamp,
     });
   }
 
   onTransactionCompleted() {
     this.setState({
       txStatus: TX_STATUS_CONFIRMED,
-      disableForm: false
+      disableForm: false,
     });
     this.props.actions.resetTransferForm();
   }
@@ -90,7 +90,7 @@ export class OasisTokenTransferWrapper extends PureComponent {
     this.setState({
       txStatus: TX_STATUS_REJECTED,
       txHash,
-      disableForm: false
+      disableForm: false,
     });
   }
 
@@ -104,7 +104,7 @@ export class OasisTokenTransferWrapper extends PureComponent {
       <OasisTokenSelectWrapper
         onChange={() => this.props.actions.resetTransferForm()}
         disabled={this.shouldDisableForm()}
-        name={"tokenTransfer"}
+        name={'tokenTransfer'}
       />
     );
   }
@@ -132,7 +132,7 @@ export class OasisTokenTransferWrapper extends PureComponent {
           txStatus={txStatus}
           infoText={OasisTokenTransferWrapper.transferInfo({
             selectedToken,
-            transferFormValues: this.transferFormValues
+            transferFormValues: this.transferFormValues,
           })}
           localStatus={txStatus}
           txTimestamp={txStartTimestamp}
@@ -146,7 +146,7 @@ export class OasisTokenTransferWrapper extends PureComponent {
     if (this.componentIsUnmounted === false) {
       this.setState({
         txStatus: undefined,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       });
     }
   }
@@ -157,12 +157,12 @@ export class OasisTokenTransferWrapper extends PureComponent {
     return (
       <OasisWidgetFrame
         className={styles.frame}
-        heading="Transfer"
+        heading='Transfer'
         spaceForContent={true}
         headingChildren={this.selectedToken()}
       >
         <OasisTokenBalanceSummary
-          summary="Wallet"
+          summary='Wallet'
           token={selectedToken}
           decimalPlaces={5}
           className={styles.tokenBalanceSummaryShorter}
@@ -181,26 +181,32 @@ export class OasisTokenTransferWrapper extends PureComponent {
   componentWillUnmount() {
     this.componentIsUnmounted = true;
   }
-
 }
 
 export function mapStateToProps(state) {
   return {
     selectedToken: transfers.selectedToken(state),
-    transferFormValues: transfers.getMakeTransferFormValues(state)
+    transferFormValues: transfers.getMakeTransferFormValues(state),
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
     makeTransfer: transfersReducer.actions.makeTransferEpic,
-    resetTransferForm: transfersReducer.actions.resetTransferForm
+    resetTransferForm: transfersReducer.actions.resetTransferForm,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisTokenTransferWrapper.propTypes = propTypes;
-OasisTokenTransferWrapper.displayName = "OasisTokenTransfer";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(OasisTokenTransferWrapper, { textStyles, styles }, { allowMultiple: true })
+OasisTokenTransferWrapper.displayName = 'OasisTokenTransfer';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
+  CSSModules(
+    OasisTokenTransferWrapper,
+    { textStyles, styles },
+    { allowMultiple: true },
+  ),
 );

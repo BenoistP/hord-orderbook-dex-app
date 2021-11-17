@@ -1,16 +1,16 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { formatAmount } from "../utils/tokens/pair";
-import OasisLoadingIndicator from "./OasisLoadingIndicator";
-import OasisSignificantDigitsWrapper from "../containers/OasisSignificantDigits";
+import { formatAmount } from '../utils/tokens/pair';
+import OasisLoadingIndicator from './OasisLoadingIndicator';
+import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
 import { ETH_UNIT_ETHER } from '../constants';
 
 const propTypes = PropTypes && {
   balance: PropTypes.string,
   inWei: PropTypes.bool,
-  token: PropTypes.string
+  token: PropTypes.string,
 };
 const defaultProps = {};
 
@@ -25,7 +25,7 @@ class OasisInlineTokenBalance extends PureComponent {
             fullPrecisionAmount={balance}
             amount={formatAmount(balance, inWei)}
             fractionalZerosGrey={fractionalZerosGrey}
-          />{" "}
+          />{' '}
           <b>{token}</b>
         </span>
       );
@@ -35,7 +35,7 @@ class OasisInlineTokenBalance extends PureComponent {
   }
 }
 
-OasisInlineTokenBalance.displayName = "OasisInlineTokenBalance";
+OasisInlineTokenBalance.displayName = 'OasisInlineTokenBalance';
 OasisInlineTokenBalance.propTypes = propTypes;
 OasisInlineTokenBalance.defaultProps = defaultProps;
 export default OasisInlineTokenBalance;

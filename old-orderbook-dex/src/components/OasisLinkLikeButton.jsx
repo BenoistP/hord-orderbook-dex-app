@@ -1,18 +1,18 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 
-import styles from "./OasisButton.scss";
-import linkStyles from "./OasisLinkLikeButton.scss";
+import styles from './OasisButton.scss';
+import linkStyles from './OasisLinkLikeButton.scss';
 
 const propTypes = PropTypes && {
   children: PropTypes.node,
   caption: PropTypes.string,
-  size: PropTypes.oneOf(["xs__smaller_text", "xs", "sm", "md", "lg"])
+  size: PropTypes.oneOf(['xs__smaller_text', 'xs', 'sm', 'md', 'lg']),
 };
 
 const defaultProps = {
-  color: "default",
-  size: "md"
+  color: 'default',
+  size: 'md',
 };
 
 class OasisLinkLikeButton extends PureComponent {
@@ -29,10 +29,10 @@ class OasisLinkLikeButton extends PureComponent {
     } = this.props;
     return (
       <a
-        rel="noopener noreferrer"
+        rel='noopener noreferrer'
         className={`${styles.button} ${linkStyles.btn} ${styles[color]} ${
           styles[size]
-        } ${className} ${disabled ? styles.disabled : ""}`}
+        } ${className} ${disabled ? styles.disabled : ''}`}
         href={disabled ? null : href}
         {...props}
       >
@@ -42,7 +42,7 @@ class OasisLinkLikeButton extends PureComponent {
   }
 }
 
-OasisLinkLikeButton.displayName = "OasisLinkLikeButton";
+OasisLinkLikeButton.displayName = 'OasisLinkLikeButton';
 OasisLinkLikeButton.propTypes = propTypes;
 OasisLinkLikeButton.defaultProps = defaultProps;
 export default OasisLinkLikeButton;

@@ -11,7 +11,6 @@ const propTypes = PropTypes && {
   actions: PropTypes.object,
 };
 
-
 const sections = [
   {
     // header: "Information",
@@ -28,7 +27,7 @@ const sections = [
       //   label: 'Market Data',
       //   url: 'https://makerdao.github.io/markets/',
       // },
-    ]
+    ],
   },
   {
     // header: "MakerDAO",
@@ -45,7 +44,7 @@ const sections = [
       //   label: 'Reddit',
       //   url: 'https://www.reddit.com/r/MakerDAO/',
       // },
-    ]
+    ],
   },
   {
     // header: "OasisDex",
@@ -54,28 +53,33 @@ const sections = [
         label: 'Report Issues',
         url: 'https://github.com/OasisDEX/oasis-react/issues/new',
       },
-    ]
+    ],
   },
 ];
 
 export class OasisFooterWrapper extends PureComponent {
   render() {
-    const rowClassNames = `row ${styles.OasisFooter} ${window.mist ? styles.MistBrowser : ''}`;
+    const rowClassNames = `row ${styles.OasisFooter} ${
+      window.mist ? styles.MistBrowser : ''
+    }`;
     return (
       <div className={rowClassNames}>
         {sections.map((section, index) => (
           <div key={index}>
-            <div className="row">
+            <div className='row'>
               <div className={styles.LinksSection}>
                 {/*<h4 className={styles.Heading}>{section.header}</h4>*/}
-                {
-                  section.links.map((link, index) =>
-                    <a
-                      rel="noopener noreferrer" className={styles.Link} key={index} href={link.url} target="_blank"
-                    >{link.label}
-                    </a>
-                  )
-                }
+                {section.links.map((link, index) => (
+                  <a
+                    rel='noopener noreferrer'
+                    className={styles.Link}
+                    key={index}
+                    href={link.url}
+                    target='_blank'
+                  >
+                    {link.label}
+                  </a>
+                ))}
               </div>
             </div>
           </div>
@@ -91,9 +95,12 @@ export function mapStateToProps() {
 
 export function mapDispatchToProps(dispatch) {
   const actions = {};
-  return {actions: bindActionCreators(actions, dispatch)};
+  return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisFooterWrapper.propTypes = propTypes;
 OasisFooterWrapper.displayName = 'OasisFooterWrapper';
-export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisFooterWrapper, styles));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisFooterWrapper, styles));

@@ -1,9 +1,9 @@
-import OasisSignificantDigitsWrapper from "../containers/OasisSignificantDigits";
-import { ETH_UNIT_ETHER } from "../constants";
-import OasisLoadingIndicator from "./OasisLoadingIndicator";
-import React from "react";
+import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
+import { ETH_UNIT_ETHER } from '../constants';
+import OasisLoadingIndicator from './OasisLoadingIndicator';
+import React from 'react';
 
-export const OasisMarketWidgetVolumeTemplate = row => {
+export const OasisMarketWidgetVolumeTemplate = (row) => {
   if (row && row.initialMarketHistoryLoaded) {
     return row.volume ? (
       <OasisSignificantDigitsWrapper
@@ -13,12 +13,12 @@ export const OasisMarketWidgetVolumeTemplate = row => {
         fractionalZerosGrey={false}
       />
     ) : (
-      "N/A"
+      'N/A'
     );
   } else {
     return (
-      <span style={{ position: "relative", right: "20px" }}>
-        <OasisLoadingIndicator size="sm" />
+      <span style={{ position: 'relative', right: '20px' }}>
+        <OasisLoadingIndicator size='sm' />
       </span>
     );
   }

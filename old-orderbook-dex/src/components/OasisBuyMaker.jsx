@@ -9,11 +9,7 @@ const defaultProps = {};
 
 class OasisBuyMaker extends PureComponent {
   render() {
-    return (
-      <div className={styles.base}>
-        OasisBuyMaker
-      </div>
-    );
+    return <div className={styles.base}>OasisBuyMaker</div>;
   }
 }
 

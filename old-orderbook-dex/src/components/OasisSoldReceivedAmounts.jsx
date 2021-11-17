@@ -1,12 +1,12 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import styles from "./OasisSoldReceivedAmounts.scss";
-import FlexBox from "./FlexBox";
-import CSSModules from "react-css-modules/dist/index";
-import OasisSignificantDigitsWrapper from "../containers/OasisSignificantDigits";
-import OasisIcon from "./OasisIcon";
+import styles from './OasisSoldReceivedAmounts.scss';
+import FlexBox from './FlexBox';
+import CSSModules from 'react-css-modules/dist/index';
+import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
+import OasisIcon from './OasisIcon';
 
 const TokenAmount = ({
   tokenName,
@@ -15,10 +15,10 @@ const TokenAmount = ({
   icon,
   ...props
 }) => (
-  <FlexBox alignItems="center" {...props}>
-    <OasisIcon icon={icon} size="md" className={styles.icon} />
+  <FlexBox alignItems='center' {...props}>
+    <OasisIcon icon={icon} size='md' className={styles.icon} />
     <span className={styles.baseText}>
-      {tokenAmount !== "N/A" ? (
+      {tokenAmount !== 'N/A' ? (
         <span>
           <OasisSignificantDigitsWrapper
             fullPrecisionAmount={tokenAmountFullPrecision}
@@ -26,8 +26,9 @@ const TokenAmount = ({
           />
         </span>
       ) : (
-        "N/A"
-      )}&nbsp;
+        'N/A'
+      )}
+      &nbsp;
     </span>
     <span className={styles.bolderText}>{tokenName}</span>
   </FlexBox>
@@ -44,7 +45,7 @@ const TokenReceivedAmount = ({ tokenName, tokenAmount, ...props }) => (
   <TokenAmount
     tokenName={tokenName}
     tokenAmount={tokenAmount}
-    icon="add"
+    icon='add'
     {...props}
   />
 );
@@ -56,17 +57,17 @@ TokenReceivedAmount.propTypes = {
 
 const TokenSoldAmount = ({ tokenName, tokenAmount, ...props }) => (
   <TokenAmount
-    style={{width: '130px', display: 'inline-block'}}
+    style={{ width: '130px', display: 'inline-block' }}
     tokenName={tokenName}
     tokenAmount={tokenAmount}
-    icon="subtract"
+    icon='subtract'
     {...props}
   />
 );
 
 TokenSoldAmount.propTypes = {
   tokenName: PropTypes.string,
-  tokenAmount: PropTypes.string
+  tokenAmount: PropTypes.string,
 };
 
 const propTypes = PropTypes && {
@@ -74,7 +75,7 @@ const propTypes = PropTypes && {
   buyToken: PropTypes.string.isRequired,
   amountSold: PropTypes.string.isRequired,
   amountSoldFullPrecision: PropTypes.string,
-  amountReceivedFullPrecision: PropTypes.string
+  amountReceivedFullPrecision: PropTypes.string,
 };
 const defaultProps = {};
 
@@ -112,7 +113,7 @@ export class OasisSoldReceivedAmounts extends PureComponent {
   }
 }
 
-OasisSoldReceivedAmounts.displayName = "OasisSoldReceivedAmounts";
+OasisSoldReceivedAmounts.displayName = 'OasisSoldReceivedAmounts';
 OasisSoldReceivedAmounts.propTypes = propTypes;
 OasisSoldReceivedAmounts.defaultProps = defaultProps;
 export default CSSModules(OasisSoldReceivedAmounts, styles);

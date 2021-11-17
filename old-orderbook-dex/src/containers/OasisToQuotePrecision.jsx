@@ -6,14 +6,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 export class OasisToQuotePrecisionWrapper extends PureComponent {
   render() {
-    return (
-      <div></div>
-    );
+    return <div></div>;
   }
 }
 
@@ -27,4 +25,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisToQuotePrecisionWrapper.propTypes = propTypes;
 OasisToQuotePrecisionWrapper.displayName = 'OasisToQuotePrecision';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisToQuotePrecisionWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisToQuotePrecisionWrapper);

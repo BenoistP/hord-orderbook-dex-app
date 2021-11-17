@@ -1,31 +1,31 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import getUsersSoldAndReceivedAmounts from "../utils/offers/getUsersSoldAndReceivedAmounts";
-import OasisOfferSummary from "../components/OasisOfferSummary";
+import getUsersSoldAndReceivedAmounts from '../utils/offers/getUsersSoldAndReceivedAmounts';
+import OasisOfferSummary from '../components/OasisOfferSummary';
 import {
   gasEstimateInfo,
   getActiveOfferAllowanceStatus,
   getOfferBuyAndSellTokenByOfferType,
   getOfferFormValuesByOfferType,
-  hasSufficientTokenAmountByOfferType
-} from "../store/selectors";
-import OasisInsufficientAmountOfToken from "../components/OasisInsufficientAmountOfToken";
-import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from "../store/reducers/offerTakes";
-import { MAKE_BUY_OFFER, MAKE_SELL_OFFER } from "../constants";
-import isVolumeOrPriceEmptyOrZero from "../store/selectors/isVolumeOrPriceEmptyOrZero";
-import OasisOrderExceedsGasLimitInfoWrapper from "./OasisOrderExceedsGasLimitInfo";
-import platform from "../store/selectors/platform";
+  hasSufficientTokenAmountByOfferType,
+} from '../store/selectors';
+import OasisInsufficientAmountOfToken from '../components/OasisInsufficientAmountOfToken';
+import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from '../store/reducers/offerTakes';
+import { MAKE_BUY_OFFER, MAKE_SELL_OFFER } from '../constants';
+import isVolumeOrPriceEmptyOrZero from '../store/selectors/isVolumeOrPriceEmptyOrZero';
+import OasisOrderExceedsGasLimitInfoWrapper from './OasisOrderExceedsGasLimitInfo';
+import platform from '../store/selectors/platform';
 
 const propTypes = PropTypes && {
   offerType: PropTypes.oneOf([
     TAKE_BUY_OFFER,
     MAKE_BUY_OFFER,
     TAKE_SELL_OFFER,
-    MAKE_SELL_OFFER
+    MAKE_SELL_OFFER,
   ]),
   offerFormValues: ImmutablePropTypes.map.isRequired,
   offerBuyAndSellTokens: ImmutablePropTypes.map.isRequired,
@@ -36,7 +36,7 @@ const propTypes = PropTypes && {
   buyToken: PropTypes.string,
   sellToken: PropTypes.string,
   disableBalanceWarning: PropTypes.bool,
-  contractsLoaded: PropTypes.bool
+  contractsLoaded: PropTypes.bool,
 };
 
 export class OasisOfferSummaryWrapper extends PureComponent {
@@ -50,10 +50,10 @@ export class OasisOfferSummaryWrapper extends PureComponent {
       isTokenTradingEnabled,
       isVolumeOrPriceEmptyOrZero,
       disableBalanceWarning,
-      contractsLoaded
+      contractsLoaded,
     } = this.props;
 
-    return (hasSufficientTokenAmount || disableBalanceWarning) ? (
+    return hasSufficientTokenAmount || disableBalanceWarning ? (
       <div>
         {gasEstimateInfo && (
           <OasisOrderExceedsGasLimitInfoWrapper
@@ -68,8 +68,8 @@ export class OasisOfferSummaryWrapper extends PureComponent {
           gasEstimateInfo={gasEstimateInfo}
           {...getUsersSoldAndReceivedAmounts(offerType, offerFormValues)}
           offerType={offerType}
-          buyToken={offerBuyAndSellTokens.get("buyToken")}
-          sellToken={offerBuyAndSellTokens.get("sellToken")}
+          buyToken={offerBuyAndSellTokens.get('buyToken')}
+          sellToken={offerBuyAndSellTokens.get('sellToken')}
           isTokenTradingEnabled={isTokenTradingEnabled}
         />
       </div>
@@ -79,17 +79,16 @@ export class OasisOfferSummaryWrapper extends PureComponent {
     const {
       offerBuyAndSellTokens,
       hasSufficientTokenAmount,
-      disableBalanceWarning
+      disableBalanceWarning,
     } = this.props;
     return (
       <div>
         {this.renderOfferSummary()}
-        {!hasSufficientTokenAmount &&
-          !disableBalanceWarning && (
-            <OasisInsufficientAmountOfToken
-              tokenName={offerBuyAndSellTokens.get("sellToken")}
-            />
-          )}
+        {!hasSufficientTokenAmount && !disableBalanceWarning && (
+          <OasisInsufficientAmountOfToken
+            tokenName={offerBuyAndSellTokens.get('sellToken')}
+          />
+        )}
       </div>
     );
   }
@@ -103,10 +102,10 @@ export function mapStateToProps(state, { offerType }) {
     gasEstimateInfo: gasEstimateInfo(state, offerType),
     hasSufficientTokenAmount: hasSufficientTokenAmountByOfferType(
       state,
-      offerType
+      offerType,
     ),
     isVolumeOrPriceEmptyOrZero: isVolumeOrPriceEmptyOrZero(state)(offerType),
-    isTokenTradingEnabled: getActiveOfferAllowanceStatus(state, offerType)
+    isTokenTradingEnabled: getActiveOfferAllowanceStatus(state, offerType),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -115,7 +114,8 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisOfferSummaryWrapper.propTypes = propTypes;
-OasisOfferSummaryWrapper.displayName = "OasisOfferSummary";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  OasisOfferSummaryWrapper
-);
+OasisOfferSummaryWrapper.displayName = 'OasisOfferSummary';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisOfferSummaryWrapper);

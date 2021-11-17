@@ -1,24 +1,24 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Popper, Manager, Reference } from "react-popper";
-import web3 from "../bootstrap/web3";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Popper, Manager, Reference } from 'react-popper';
+import web3 from '../bootstrap/web3';
 
 const splitPattern = /^(\d+[,\d]*\d*).(\d*[1-9]+|0)?(\d*)$/;
-const popperStyle = style => ({
+const popperStyle = (style) => ({
   ...style,
-  padding: "10px",
-  background: "#000",
-  color: "#fff",
-  zIndex: "100"
+  padding: '10px',
+  background: '#000',
+  color: '#fff',
+  zIndex: '100',
 });
 
-import styles from "./OasisSignificantDigits.scss";
-import CSSModules from "react-css-modules";
-import { isXXS } from "../utils/ui/responsive";
+import styles from './OasisSignificantDigits.scss';
+import CSSModules from 'react-css-modules';
+import { isXXS } from '../utils/ui/responsive';
 
 const propTypes = PropTypes && {
   integralColor: PropTypes.string,
@@ -27,11 +27,11 @@ const propTypes = PropTypes && {
   amount: PropTypes.string.isRequired,
   fullPrecisionAmount: PropTypes.any,
   fractionalZerosGrey: PropTypes.bool,
-  fullPrecisionUnit: PropTypes.string
+  fullPrecisionUnit: PropTypes.string,
 };
 
 const defaultProps = {
-  fractionalZerosGrey: true
+  fractionalZerosGrey: true,
 };
 
 export class OasisSignificantDigitsWrapper extends PureComponent {
@@ -44,7 +44,7 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
       amount,
       fullPrecisionAmount,
       fullPrecisionUnit,
-      fractionalZerosGrey
+      fractionalZerosGrey,
     } = this.props;
     const matches = amount.toString().match(splitPattern);
     if (!matches) {
@@ -54,7 +54,7 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
       ,
       integralPart,
       fractionalPartWitOptionalLeadingZeroes,
-      fractionalPartZeroes
+      fractionalPartZeroes,
     ] = matches;
     return (
       <Manager>
@@ -72,7 +72,7 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
               ) : null}
               <span
                 className={
-                  fractionalZerosGrey ? styles.paleSignificantDigit : ""
+                  fractionalZerosGrey ? styles.paleSignificantDigit : ''
                 }
               >
                 {fractionalPartZeroes}
@@ -80,26 +80,25 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
             </span>
           )}
         </Reference>
-        {this.state.showPopup &&
-          !isXXS() && (
-            <Popper placement="top">
-              {({ ref, style, placement }) => (
-                <div
-                  ref={ref}
-                  style={popperStyle(style)}
-                  data-placement={placement}
-                >
-                  {web3
-                    .toBigNumber(
-                      fullPrecisionUnit
-                        ? web3.fromWei(fullPrecisionAmount)
-                        : amount.replace(/,/g, "") // TODO: Ugly fix, component should never be given formated string
-                    )
-                    .toFormat()}
-                </div>
-              )}
-            </Popper>
-          )}
+        {this.state.showPopup && !isXXS() && (
+          <Popper placement='top'>
+            {({ ref, style, placement }) => (
+              <div
+                ref={ref}
+                style={popperStyle(style)}
+                data-placement={placement}
+              >
+                {web3
+                  .toBigNumber(
+                    fullPrecisionUnit
+                      ? web3.fromWei(fullPrecisionAmount)
+                      : amount.replace(/,/g, ''), // TODO: Ugly fix, component should never be given formated string
+                  )
+                  .toFormat()}
+              </div>
+            )}
+          </Popper>
+        )}
       </Manager>
     );
   }
@@ -114,8 +113,9 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisSignificantDigitsWrapper.propTypes = propTypes;
-OasisSignificantDigitsWrapper.displayName = "OasisSignificantDigits";
+OasisSignificantDigitsWrapper.displayName = 'OasisSignificantDigits';
 OasisSignificantDigitsWrapper.defaultProps = defaultProps;
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(OasisSignificantDigitsWrapper, styles)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisSignificantDigitsWrapper, styles));

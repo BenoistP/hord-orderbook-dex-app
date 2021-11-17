@@ -17,7 +17,7 @@ const propTypes = PropTypes && {
   heading: PropTypes.string.isRequired,
   type: PropTypes.oneOf([MSGTYPE_INFO, MSGTYPE_WARNING]),
   dismissible: PropTypes.bool.isRequired,
-  onDismiss: PropTypes.func
+  onDismiss: PropTypes.func,
 };
 const defaultProps = {
   dismissible: false,
@@ -37,14 +37,15 @@ export class OasisMessage extends PureComponent {
   render() {
     const { dismissible, hidden } = this.props;
     return (
-      <div hidden={hidden} styleName={`MessageBoard ${BOARD_TYPE[this.props.type]}`}>
-        <h3 styleName="Heading">
+      <div
+        hidden={hidden}
+        styleName={`MessageBoard ${BOARD_TYPE[this.props.type]}`}
+      >
+        <h3 styleName='Heading'>
           {this.props.heading}
-          {dismissible && <span onClick={this.onDismiss} styleName="Close"/>}
+          {dismissible && <span onClick={this.onDismiss} styleName='Close' />}
         </h3>
-        <div>
-          {this.props.children}
-        </div>
+        <div>{this.props.children}</div>
       </div>
     );
   }

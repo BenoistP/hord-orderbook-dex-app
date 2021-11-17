@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import charts from './../store/selectors/charts';
 
-import {Line} from 'react-chartjs-2';
-import {tooltipContainer, CHART_HEIGHT} from './OasisChart';
+import { Line } from 'react-chartjs-2';
+import { tooltipContainer, CHART_HEIGHT } from './OasisChart';
 import moment from 'moment';
 
 const propTypes = PropTypes && {
@@ -26,17 +26,19 @@ export class OasisChartPrice extends PureComponent {
         height={CHART_HEIGHT}
         data={{
           labels: this.props.priceChartLabels,
-          datasets: [{
-            label: `${this.props.tradingPair.quoteToken} / ${this.props.tradingPair.baseToken}`,
-            data: this.props.priceChartValues,
-            borderColor: '#03A9F4',
-            borderWidth: 3,
-            pointBackgroundColor: '#03A9F4',
-            pointRadius: 1,
-            pointHitRadius: 5,
-            pointHoverRadius: 4,
-            backgroundColor: '#E2F3F9',
-          }],
+          datasets: [
+            {
+              label: `${this.props.tradingPair.quoteToken} / ${this.props.tradingPair.baseToken}`,
+              data: this.props.priceChartValues,
+              borderColor: '#03A9F4',
+              borderWidth: 3,
+              pointBackgroundColor: '#03A9F4',
+              pointRadius: 1,
+              pointHitRadius: 5,
+              pointHoverRadius: 4,
+              backgroundColor: '#E2F3F9',
+            },
+          ],
         }}
         options={{
           maintainAspectRatio: true,
@@ -53,21 +55,25 @@ export class OasisChartPrice extends PureComponent {
             display: false,
           },
           scales: {
-            yAxes: [{
-              scaleLabel: {
-                display: false,
-                labelString: 'PRICE',
+            yAxes: [
+              {
+                scaleLabel: {
+                  display: false,
+                  labelString: 'PRICE',
+                },
               },
-            }],
-            xAxes: [{
-              display: true,
-              afterBuildTicks: this.removeRedundantTicks.bind(this),
-              ticks: {
-                autoSkip: false,
-                maxRotation: 0,
-                callback: ts => ts && moment.unix(ts).format('DD/MM'),
+            ],
+            xAxes: [
+              {
+                display: true,
+                afterBuildTicks: this.removeRedundantTicks.bind(this),
+                ticks: {
+                  autoSkip: false,
+                  maxRotation: 0,
+                  callback: (ts) => ts && moment.unix(ts).format('DD/MM'),
+                },
               },
-            }],
+            ],
           },
         }}
       />
@@ -75,13 +81,15 @@ export class OasisChartPrice extends PureComponent {
   }
 
   showTooltip(tooltip) {
-    const tooltipEl = tooltipContainer(tooltip, document.getElementsByClassName("chartjs-render-monitor")[0]);
+    const tooltipEl = tooltipContainer(
+      tooltip,
+      document.getElementsByClassName('chartjs-render-monitor')[0],
+    );
     if (tooltipEl && tooltip.body) {
       const ts = this.props.priceChartLabels[tooltip.dataPoints[0].index];
       const date = moment.unix(ts).format('ll');
       const time = moment.unix(ts).format('LT');
-      tooltipEl.innerHTML =
-        `<div class="row-custom-tooltip">
+      tooltipEl.innerHTML = `<div class="row-custom-tooltip">
           <span class="left">Date</span>
           <span class="right">${date}</span>
         </div>
@@ -99,12 +107,17 @@ export class OasisChartPrice extends PureComponent {
 
   removeRedundantTicks(axis) {
     const REL_PADDING = 10;
-    axis.ticks = axis.ticks.reduce(({lastDay, lastDayIndex, result}, tick, i) => {
-      const day = moment.unix(tick).startOf('day').unix();
-      return day == lastDay || (lastDayIndex !== null && i-lastDayIndex < axis.ticks.length/REL_PADDING) ?
-        {lastDay, lastDayIndex, result: result.concat(null)} :
-        {lastDay: day, lastDayIndex: i, result: result.concat(tick)};
-    }, {lastDay: null, lastDayIndex: null, result: []}).result;
+    axis.ticks = axis.ticks.reduce(
+      ({ lastDay, lastDayIndex, result }, tick, i) => {
+        const day = moment.unix(tick).startOf('day').unix();
+        return day == lastDay ||
+          (lastDayIndex !== null &&
+            i - lastDayIndex < axis.ticks.length / REL_PADDING)
+          ? { lastDay, lastDayIndex, result: result.concat(null) }
+          : { lastDay: day, lastDayIndex: i, result: result.concat(tick) };
+      },
+      { lastDay: null, lastDayIndex: null, result: [] },
+    ).result;
   }
 }
 
@@ -116,8 +129,7 @@ export function mapStateToProps(state, props) {
 }
 
 export function mapDispatchToProps(dispatch) {
-  const actions = {
-  };
+  const actions = {};
   return { actions: bindActionCreators(actions, dispatch) };
 }
 

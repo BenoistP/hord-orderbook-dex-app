@@ -1,22 +1,22 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
-import ReactModal from "react-modal";
-import CSSModules from "react-css-modules";
+import ReactModal from 'react-modal';
+import CSSModules from 'react-css-modules';
 
-import styles from "./OasisOfferCancelModal.scss";
-import InfoBoxWithIco from "./InfoBoxWithIco";
-import modalStyles from "../styles/modules/_modal.scss";
-import OasisButton from "./OasisButton";
+import styles from './OasisOfferCancelModal.scss';
+import InfoBoxWithIco from './InfoBoxWithIco';
+import modalStyles from '../styles/modules/_modal.scss';
+import OasisButton from './OasisButton';
 import {
   TX_OFFER_CANCEL,
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
-  TX_STATUS_CONFIRMED
-} from "../store/reducers/transactions";
-import OasisTransactionStatusWrapperInfoBox from "../containers/OasisTransactionStatusInfoBox";
-import OasisCantCancelOffer from "./OasisCantCancelOffer";
+  TX_STATUS_CONFIRMED,
+} from '../store/reducers/transactions';
+import OasisTransactionStatusWrapperInfoBox from '../containers/OasisTransactionStatusInfoBox';
+import OasisCantCancelOffer from './OasisCantCancelOffer';
 const propTypes = PropTypes && {
   onCloseModal: PropTypes.func,
   localStatus: PropTypes.any,
@@ -24,7 +24,7 @@ const propTypes = PropTypes && {
   askForConfirmToClose: PropTypes.bool,
   tokenAmount: PropTypes.string,
   tokenName: PropTypes.string,
-  canOfferBeCancelled: PropTypes.bool.isRequired
+  canOfferBeCancelled: PropTypes.bool.isRequired,
 };
 const defaultProps = {};
 
@@ -70,7 +70,7 @@ class OasisOfferCancelModal extends PureComponent {
   isTransactionPendingOrAwaitingAcceptance() {
     return [
       TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION
+      TX_STATUS_AWAITING_CONFIRMATION,
     ].includes(this.props.localStatus);
   }
 
@@ -78,14 +78,14 @@ class OasisOfferCancelModal extends PureComponent {
     const { tokenAmount, tokenName, canOfferBeCancelled } = this.props;
     return canOfferBeCancelled || this.props.localStatus ? (
       <div>
-        <InfoBoxWithIco color="danger" icon="warning">
+        <InfoBoxWithIco color='danger' icon='warning'>
           <div>
             This action will return
             <b
               style={{
-                display: "inlineBlock",
-                marginLeft: "5px",
-                marginRight: "5px"
+                display: 'inlineBlock',
+                marginLeft: '5px',
+                marginRight: '5px',
               }}
             >
               {tokenAmount} {tokenName}
@@ -127,7 +127,7 @@ class OasisOfferCancelModal extends PureComponent {
             <OasisButton
               disabled={this.isTransactionPendingOrAwaitingAcceptance()}
               onClick={this.onCloseModal}
-              caption={"Close"}
+              caption={'Close'}
             />
             <OasisButton
               disabled={
@@ -135,8 +135,8 @@ class OasisOfferCancelModal extends PureComponent {
                 !canOfferBeCancelled
               }
               onClick={this.onCancelOffer}
-              caption="Cancel offer"
-              color="danger"
+              caption='Cancel offer'
+              color='danger'
             />
           </div>
         </div>
@@ -145,11 +145,11 @@ class OasisOfferCancelModal extends PureComponent {
   }
 }
 
-OasisOfferCancelModal.displayName = "OasisOfferCancelModal";
+OasisOfferCancelModal.displayName = 'OasisOfferCancelModal';
 OasisOfferCancelModal.propTypes = propTypes;
 OasisOfferCancelModal.defaultProps = defaultProps;
 export default CSSModules(
   OasisOfferCancelModal,
   { styles, modalStyles },
-  { allowMultiple: true }
+  { allowMultiple: true },
 );

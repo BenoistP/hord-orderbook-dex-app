@@ -1,33 +1,33 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
-import { BrowserRouter } from "react-router-dom";
-import platformReducer from "./../store/reducers/platform";
-import platform from "./../store/selectors/platform";
+import { BrowserRouter } from 'react-router-dom';
+import platformReducer from './../store/reducers/platform';
+import platform from './../store/selectors/platform';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import OasisHeaderWrapper from "./OasisHeader";
-import OasisFooterWrapper from "./OasisFooter";
-import OasisMainContentWrapper from "./OasisMainContent";
-import OasisMessagesSectionWrapper from "./OasisMessagesSection";
-import Locked from "../components/Locked";
-import NoConnection from "../components/NoConnection";
-import WaitingForAccess from "../components/WaitingForAccess";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import OasisHeaderWrapper from './OasisHeader';
+import OasisFooterWrapper from './OasisFooter';
+import OasisMainContentWrapper from './OasisMainContent';
+import OasisMessagesSectionWrapper from './OasisMessagesSection';
+import Locked from '../components/Locked';
+import NoConnection from '../components/NoConnection';
+import WaitingForAccess from '../components/WaitingForAccess';
 
-import styles from "./OasisApp.scss";
-import CSSModules from "react-css-modules";
+import styles from './OasisApp.scss';
+import CSSModules from 'react-css-modules';
 
-import version from "../version";
-import network from "../store/selectors/network";
-import OasisYourNodeIsSyncingWrapper from "./OasisYourNodeIsSyncing";
-import ClickWarp from "../components/ClickWarp";
+import version from '../version';
+import network from '../store/selectors/network';
+import OasisYourNodeIsSyncingWrapper from './OasisYourNodeIsSyncing';
+import ClickWarp from '../components/ClickWarp';
 
 const propTypes = PropTypes && {};
 
 const classes = ({ isAppLoading, globalFormLock }) => {
   let classes = isAppLoading ? styles.appIsLoading : styles.appIsLoaded;
-  classes += globalFormLock ? ` ${styles.globalFormLockEnabled}` : "";
+  classes += globalFormLock ? ` ${styles.globalFormLockEnabled}` : '';
   return classes;
 };
 
@@ -46,11 +46,11 @@ export class OasisAppWrapper extends PureComponent {
       return OasisAppWrapper.renderNodeIsSyncing();
     } else {
       return (
-        <div styleName="container" className="container">
+        <div styleName='container' className='container'>
           <OasisHeaderWrapper />
           <OasisMessagesSectionWrapper />
           <OasisMainContentWrapper />
-          <hr styleName="FooterSeparator" />
+          <hr styleName='FooterSeparator' />
           <OasisFooterWrapper />
         </div>
       );
@@ -59,8 +59,8 @@ export class OasisAppWrapper extends PureComponent {
 
   static versionInfo() {
     return (
-      <div style={{ textAlign: "center" }}>
-        version: {version.version}, branch: {version.branch}, hash:{" "}
+      <div style={{ textAlign: 'center' }}>
+        version: {version.version}, branch: {version.branch}, hash:{' '}
         {version.hash}, build date: {version.buildDate.toUTCString()}
       </div>
     );
@@ -70,23 +70,23 @@ export class OasisAppWrapper extends PureComponent {
     const {
       noProviderConnected,
       waitingForNetworkAccess,
-      isAccountLocked, activeNodeType,
-      isAppLoading, globalFormLock,
+      isAccountLocked,
+      activeNodeType,
+      isAppLoading,
+      globalFormLock,
     } = this.props;
 
-    if(!localStorage.getItem('shutdownAnnouncement')) {
-      return <ClickWarp/>;
+    if (!localStorage.getItem('shutdownAnnouncement')) {
+      return <ClickWarp />;
     }
 
-    if (noProviderConnected)
-      return <NoConnection />;
+    if (noProviderConnected) return <NoConnection />;
 
-    if (waitingForNetworkAccess)
-      return <WaitingForAccess />;
+    if (waitingForNetworkAccess) return <WaitingForAccess />;
 
     if (isAccountLocked)
       return (
-        <div styleName="container" className="container">
+        <div styleName='container' className='container'>
           <Locked activeNodeType={activeNodeType} />
         </div>
       );
@@ -108,19 +108,20 @@ export function mapStateToProps(state) {
     noProviderConnected: network.noProviderConnected(state),
     waitingForNetworkAccess: network.waitingForNetworkAccess(state),
     globalFormLock: platform.globalFormLock(state),
-    isNodeSyncing: network.isNodeSyncing(state)
+    isNodeSyncing: network.isNodeSyncing(state),
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    platformInitEpic: platformReducer.actions.platformInitEpic
+    platformInitEpic: platformReducer.actions.platformInitEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisAppWrapper.propTypes = propTypes;
-OasisAppWrapper.displayName = "OasisAppWrapper";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(OasisAppWrapper, styles)
-);
+OasisAppWrapper.displayName = 'OasisAppWrapper';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisAppWrapper, styles));

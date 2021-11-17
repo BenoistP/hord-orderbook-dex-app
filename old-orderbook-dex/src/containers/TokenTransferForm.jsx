@@ -1,38 +1,38 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 
-import { reduxForm, Field } from "redux-form/immutable";
+import { reduxForm, Field } from 'redux-form/immutable';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-import EthereumAddressInputFieldWrapper from "./EthereumAddressInputField";
-import TokenAmountInputFieldWrapper from "./TokenAmountInputField";
-import transfers from "../store/selectors/transfers";
-import transfersReducer from "../store/reducers/transfers";
-import styles from "./TokenTransferForm.scss";
-import tableStyles from "../styles/modules/_table.scss";
-import widgetStyles from "./OasisWidgetFrame.scss";
-import OasisButton from "../components/OasisButton";
-import { SETMAXBTN_HIDE_DELAY_MS } from "../constants";
-import platform from "../store/selectors/platform";
-import CSSModules from "react-css-modules";
-import OasisPleaseProvideEthereumAddress from "../components/OasisPleaseProvideEthereumAddress";
-import OasisInsufficientAmountOfToken from "../components/OasisInsufficientAmountOfToken";
+import EthereumAddressInputFieldWrapper from './EthereumAddressInputField';
+import TokenAmountInputFieldWrapper from './TokenAmountInputField';
+import transfers from '../store/selectors/transfers';
+import transfersReducer from '../store/reducers/transfers';
+import styles from './TokenTransferForm.scss';
+import tableStyles from '../styles/modules/_table.scss';
+import widgetStyles from './OasisWidgetFrame.scss';
+import OasisButton from '../components/OasisButton';
+import { SETMAXBTN_HIDE_DELAY_MS } from '../constants';
+import platform from '../store/selectors/platform';
+import CSSModules from 'react-css-modules';
+import OasisPleaseProvideEthereumAddress from '../components/OasisPleaseProvideEthereumAddress';
+import OasisInsufficientAmountOfToken from '../components/OasisInsufficientAmountOfToken';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
   onFormChange: PropTypes.func.isRequired,
-  txStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool])
+  txStatus: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
 };
 
 export class TokenTransferFormWrapper extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      showMaxButton: false
+      showMaxButton: false,
     };
     this.componentIsUnmounted = false;
     this.currentSetMaxTimeout = null;
@@ -42,12 +42,10 @@ export class TokenTransferFormWrapper extends PureComponent {
     this.onTotalFieldSectionFocus = this.onTotalFieldSectionFocus.bind(this);
     this.onSetMaxFocus = this.onSetMaxFocus.bind(this);
     this.onSetMaxBlur = this.onSetMaxBlur.bind(this);
-    this.onEthereumAddressInputValidityChange = this.onEthereumAddressInputValidityChange.bind(
-      this
-    );
-    this.onTokenAmountInputValidityChange = this.onTokenAmountInputValidityChange.bind(
-      this
-    );
+    this.onEthereumAddressInputValidityChange =
+      this.onEthereumAddressInputValidityChange.bind(this);
+    this.onTokenAmountInputValidityChange =
+      this.onTokenAmountInputValidityChange.bind(this);
   }
 
   onFormChange() {
@@ -60,14 +58,14 @@ export class TokenTransferFormWrapper extends PureComponent {
   onTokenAmountInputValidityChange(isValid) {
     if (this.componentIsUnmounted === false) {
       this.setState({
-        showInsufficientTokenAmountWarning: !isValid
+        showInsufficientTokenAmountWarning: !isValid,
       });
     }
   }
   onEthereumAddressInputValidityChange(isValid) {
     if (this.componentIsUnmounted === false) {
       this.setState({
-        showPleaseProvideEthereumAddressWarning: !isValid
+        showPleaseProvideEthereumAddressWarning: !isValid,
       });
     }
   }
@@ -76,7 +74,7 @@ export class TokenTransferFormWrapper extends PureComponent {
     const { selectedToken } = this.props;
     const {
       showInsufficientTokenAmountWarning,
-      showPleaseProvideEthereumAddressWarning
+      showPleaseProvideEthereumAddressWarning,
     } = this.state;
 
     return showInsufficientTokenAmountWarning ? (
@@ -96,10 +94,10 @@ export class TokenTransferFormWrapper extends PureComponent {
       actions,
       transferState,
       globalFormLock,
-      selectedToken
+      selectedToken,
     } = this.props;
     return (
-      <form method="POST" onSubmit={handleSubmit} onChange={this.onFormChange}>
+      <form method='POST' onSubmit={handleSubmit} onChange={this.onFormChange}>
         <table className={`${tableStyles.table} ${styles.transferTable}`}>
           <thead>
             <tr>
@@ -111,33 +109,31 @@ export class TokenTransferFormWrapper extends PureComponent {
           <tbody>
             <tr>
               <th>Recipient</th>
-              <td colSpan="2" className={tableStyles.withInput}>
+              <td colSpan='2' className={tableStyles.withInput}>
                 <EthereumAddressInputFieldWrapper
                   required={true}
                   disabled={disabled || globalFormLock}
-                  fieldName={"recipient"}
+                  fieldName={'recipient'}
                   onValidityChange={this.onEthereumAddressInputValidityChange}
                 />
               </td>
             </tr>
             <tr>
               <th>Amount</th>
-              <td
-                className={`${tableStyles.withInput}`}
-              >
+              <td className={`${tableStyles.withInput}`}>
                 <div className={tableStyles.inputGroup}>
                   <OasisButton
                     hidden={!this.state.showMaxButton}
-                    type="button"
+                    type='button'
                     onClick={actions.transferMax}
                     onFocus={this.onSetMaxFocus}
                     onBlur={this.onSetMaxBlur}
-                    size="xs"
+                    size='xs'
                     className={tableStyles.inputBtn}
                     disabled={disabled || globalFormLock}
                   >
                     <span className={styles.transferMaxButton}>
-                      <span className="d-none d-sm-block">transfer</span> max
+                      <span className='d-none d-sm-block'>transfer</span> max
                     </span>
                   </OasisButton>
                   <div
@@ -148,13 +144,13 @@ export class TokenTransferFormWrapper extends PureComponent {
                     <TokenAmountInputFieldWrapper
                       onValidityChange={this.onTokenAmountInputValidityChange}
                       disabled={disabled || globalFormLock}
-                      fieldName={"tokenAmount"}
+                      fieldName={'tokenAmount'}
                     />
                   </div>
                   <Field
-                    component={"input"}
-                    type={"text"}
-                    name={"token"}
+                    component={'input'}
+                    type={'text'}
+                    name={'token'}
                     disabled={true}
                     hidden
                   />
@@ -170,7 +166,7 @@ export class TokenTransferFormWrapper extends PureComponent {
             {this.renderWarningSectionContent()}
           </div>
           <OasisButton
-            type="submit"
+            type='submit'
             onClick={makeTransfer}
             disabled={!valid || disabled || globalFormLock}
           >
@@ -183,12 +179,12 @@ export class TokenTransferFormWrapper extends PureComponent {
 
   componentDidUpdate(prevProps) {
     if (this.props.selectedToken !== prevProps.selectedToken) {
-      this.props.change("token", this.props.selectedToken);
+      this.props.change('token', this.props.selectedToken);
       this.onFormChange();
       this.setState({
         showInsufficientTokenAmountWarning: false,
-        showPleaseProvideEthereumAddressWarning: false
-      })
+        showPleaseProvideEthereumAddressWarning: false,
+      });
     }
   }
 
@@ -210,7 +206,7 @@ export class TokenTransferFormWrapper extends PureComponent {
     if (this.componentIsUnmounted === false) {
       this.currentSetMaxTimeout = setTimeout(
         () => this.setState({ showMaxButton: false }),
-        SETMAXBTN_HIDE_DELAY_MS
+        SETMAXBTN_HIDE_DELAY_MS,
       );
     }
   }
@@ -223,26 +219,29 @@ export class TokenTransferFormWrapper extends PureComponent {
 export function mapStateToProps(state) {
   return {
     selectedToken: transfers.selectedToken(state),
-    globalFormLock: platform.globalFormLock(state)
+    globalFormLock: platform.globalFormLock(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    transferMax: transfersReducer.actions.setTransferMax
+    transferMax: transfersReducer.actions.setTransferMax,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 TokenTransferFormWrapper.propTypes = propTypes;
-TokenTransferFormWrapper.displayName = "TokenTransferForm";
-export default connect(mapStateToProps, mapDispatchToProps)(
+TokenTransferFormWrapper.displayName = 'TokenTransferForm';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(
   reduxForm({
-    form: "tokenTransfer"
+    form: 'tokenTransfer',
   })(
     CSSModules(
       TokenTransferFormWrapper,
       { styles, tableStyles, widgetStyles },
-      { allowMultiple: true }
-    )
-  )
+      { allowMultiple: true },
+    ),
+  ),
 );

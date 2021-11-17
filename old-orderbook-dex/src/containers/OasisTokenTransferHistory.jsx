@@ -1,29 +1,29 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import { connect } from "react-redux";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import { connect } from 'react-redux';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
-import moment from "moment";
-import { bindActionCreators } from "redux";
-import OasisWidgetFrame from "../containers/OasisWidgetFrame";
-import OasisTable from "../components/OasisTable";
-import transfers from "../store/selectors/transfers";
+import moment from 'moment';
+import { bindActionCreators } from 'redux';
+import OasisWidgetFrame from '../containers/OasisWidgetFrame';
+import OasisTable from '../components/OasisTable';
+import transfers from '../store/selectors/transfers';
 import transferHistoryReducer, {
   TRANSFER_HISTORY_LOAD_STATUS_COMPLETED,
 } from '../store/reducers/transferHistory';
-import platform from "../store/selectors/platform";
-import network from "../store/selectors/network";
-import transferHistory from "../store/selectors/transferHistory";
-import { formatAmount } from "../utils/tokens/pair";
-import { Map } from "immutable";
-import styles from "./OasisTokenTransferHistory.scss";
-import openEtherscanTransactionLink from "../utils/openEtherscanTransactionLink";
-import OasisSignificantDigitsWrapper from "./OasisSignificantDigits";
-import { ETH_UNIT_ETHER } from "../constants";
-import OasisLoadingIndicator from "../components/OasisLoadingIndicator";
-import accounts from "../store/selectors/accounts";
+import platform from '../store/selectors/platform';
+import network from '../store/selectors/network';
+import transferHistory from '../store/selectors/transferHistory';
+import { formatAmount } from '../utils/tokens/pair';
+import { Map } from 'immutable';
+import styles from './OasisTokenTransferHistory.scss';
+import openEtherscanTransactionLink from '../utils/openEtherscanTransactionLink';
+import OasisSignificantDigitsWrapper from './OasisSignificantDigits';
+import { ETH_UNIT_ETHER } from '../constants';
+import OasisLoadingIndicator from '../components/OasisLoadingIndicator';
+import accounts from '../store/selectors/accounts';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 /* eslint-disable react/prop-types */
@@ -42,18 +42,18 @@ const amountTemplate = ({ tokenAmount }) => (
 /* eslint-disable react/prop-types */
 const transferHistoryColsDefinition = () => [
   {
-    heading: "date",
-    template: ({ timestamp }) => moment.unix(timestamp).format("DD-MM HH:mm")
+    heading: 'date',
+    template: ({ timestamp }) => moment.unix(timestamp).format('DD-MM HH:mm'),
   },
-  { heading: "action", key: "action" },
+  { heading: 'action', key: 'action' },
 
   {
-    heading: "recipient",
+    heading: 'recipient',
     // eslint-disable-next-line react/display-name
-    template: ({ toAddress }) => <RecipientAddress address={toAddress} />
+    template: ({ toAddress }) => <RecipientAddress address={toAddress} />,
   },
-  { heading: "coin", key: "tokenName" },
-  { heading: `amount`, template: amountTemplate }
+  { heading: 'coin', key: 'tokenName' },
+  { heading: `amount`, template: amountTemplate },
 ];
 
 export class OasisTokenTransferHistoryWrapper extends PureComponent {
@@ -67,7 +67,7 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
       latestBlockNumber,
       contractsLoaded,
       selectedToken,
-      hasAccountEntry
+      hasAccountEntry,
     } = this.props;
     if (latestBlockNumber && contractsLoaded && !hasAccountEntry) {
       actions.loadTokenTransfersHistory(selectedToken);
@@ -83,18 +83,20 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
       tokenTransferHistoryStatus,
       transferHistoryList = Map(),
       activeNetworkName,
-      isTokenTransferHistoryLoading
+      isTokenTransferHistoryLoading,
     } = this.props;
     return (
       <OasisWidgetFrame
-        isLoadingData={tokenTransferHistoryStatus !== TRANSFER_HISTORY_LOAD_STATUS_COMPLETED}
-        loadingDataText={"Your transfer history"}
+        isLoadingData={
+          tokenTransferHistoryStatus !== TRANSFER_HISTORY_LOAD_STATUS_COMPLETED
+        }
+        loadingDataText={'Your transfer history'}
         loadProgressSection={
           isTokenTransferHistoryLoading ? (
-            <OasisLoadingIndicator size={"md"} />
+            <OasisLoadingIndicator size={'md'} />
           ) : null
         }
-        heading="History"
+        heading='History'
         className={styles.frame}
       >
         <div>
@@ -119,7 +121,7 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
     actions,
     hasAccountEntry,
     tokenTransferHistoryStatus,
-    isTokenTransferHistoryLoading
+    isTokenTransferHistoryLoading,
   }) {
     if (
       latestBlockNumber &&
@@ -137,7 +139,7 @@ export function mapStateToProps(state) {
   return {
     hasAccountEntry: transferHistory.hasAccountEntry(
       state,
-      accounts.defaultAccount(state)
+      accounts.defaultAccount(state),
     ),
     defaultAccount: accounts.defaultAccount(state),
     selectedToken,
@@ -146,28 +148,27 @@ export function mapStateToProps(state) {
     latestBlockNumber: network.latestBlockNumber(state),
     tokenTransferHistoryStatus: transferHistory.getTokenTransferHistoryStatus(
       state,
-      selectedToken
+      selectedToken,
     ),
     transferHistoryList: transferHistory.tokenTransferHistory(
       state,
-      selectedToken
+      selectedToken,
     ),
-    isTokenTransferHistoryLoading: transferHistory.isTokenTransferHistoryLoading(
-      state,
-      selectedToken
-    )
+    isTokenTransferHistoryLoading:
+      transferHistory.isTokenTransferHistoryLoading(state, selectedToken),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     loadTokenTransfersHistory:
-      transferHistoryReducer.actions.loadTokenTransfersHistoryEpic
+      transferHistoryReducer.actions.loadTokenTransfersHistoryEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisTokenTransferHistoryWrapper.propTypes = propTypes;
-OasisTokenTransferHistoryWrapper.displayName = "OasisTokenTransferHistory";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  OasisTokenTransferHistoryWrapper
-);
+OasisTokenTransferHistoryWrapper.displayName = 'OasisTokenTransferHistory';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisTokenTransferHistoryWrapper);

@@ -4,10 +4,10 @@ import { PropTypes } from 'prop-types';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import OasisTokenTransferHistoryWrapper  from './OasisTokenTransferHistory';
-import OasisTokenTransferWrapper  from './OasisTokenTransfer';
+import OasisTokenTransferHistoryWrapper from './OasisTokenTransferHistory';
+import OasisTokenTransferWrapper from './OasisTokenTransfer';
 import transfers from '../store/selectors/transfers';
-import {FlexBox} from "../components/FlexBox";
+import { FlexBox } from '../components/FlexBox';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object,
@@ -18,8 +18,8 @@ export class OasisTransferMainWrapper extends PureComponent {
     const { selectedToken } = this.props;
     return (
       <FlexBox wrap>
-        <OasisTokenTransferWrapper selectedToken={selectedToken}/>
-        <OasisTokenTransferHistoryWrapper/>
+        <OasisTokenTransferWrapper selectedToken={selectedToken} />
+        <OasisTokenTransferHistoryWrapper />
       </FlexBox>
     );
   }
@@ -38,4 +38,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTransferMainWrapper.propTypes = propTypes;
 OasisTransferMainWrapper.displayName = 'OasisTransfer';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisTransferMainWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisTransferMainWrapper);

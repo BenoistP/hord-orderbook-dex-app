@@ -1,21 +1,20 @@
-import React, { Component } from "react";
-import { PropTypes } from "prop-types";
+import React, { Component } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import { Route, Redirect, withRouter } from "react-router-dom";
-import { compose } from "redux";
-
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Route, Redirect, withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
 import OasisTradeWrapper from './OasisTrade';
 import OasisTransferWrapper from './OasisTransferMainWrapper';
 import OasisWrapUnwrapWrapper from './OasisWrapUnwrap';
 import tokensSelectors from './../store/selectors/tokens';
-import OasisTabsContainerWrapper  from './OasisTabsContainer';
+import OasisTabsContainerWrapper from './OasisTabsContainer';
 
 const propTypes = PropTypes && {
-  actions: PropTypes.object
+  actions: PropTypes.object,
 };
 
 export class OasisMainContentWrapper extends Component {
@@ -24,8 +23,8 @@ export class OasisMainContentWrapper extends Component {
     this.state = {};
   }
   redirect() {
-    if (document.location.pathname === "/") {
-      return <Redirect from={"/"} to={`/trade`} />;
+    if (document.location.pathname === '/') {
+      return <Redirect from={'/'} to={`/trade`} />;
     } else {
       return null;
     }
@@ -60,19 +59,22 @@ export class OasisMainContentWrapper extends Component {
   }
 
   render() {
-    const { defaultTradingPair, location: { pathname } } = this.props;
+    const {
+      defaultTradingPair,
+      location: { pathname },
+    } = this.props;
     return (
       this.redirect() || (
-        <div className="OasisMainContent">
-          <OasisTabsContainerWrapper pathname={pathname}/>
+        <div className='OasisMainContent'>
+          <OasisTabsContainerWrapper pathname={pathname} />
           <div>
             <Route
-              path={"*"}
-              render={rootRouteProps => (
+              path={'*'}
+              render={(rootRouteProps) => (
                 <div>
                   <Route
-                    path={"/trade/:baseToken?/:quoteToken?"}
-                    render={props => (
+                    path={'/trade/:baseToken?/:quoteToken?'}
+                    render={(props) => (
                       <div>
                         <OasisTradeWrapper
                           {...props}
@@ -102,7 +104,7 @@ export class OasisMainContentWrapper extends Component {
 
 export function mapStateToProps(state) {
   return {
-    defaultTradingPair: tokensSelectors.defaultTradingPair(state)
+    defaultTradingPair: tokensSelectors.defaultTradingPair(state),
   };
 }
 
@@ -112,9 +114,9 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisMainContentWrapper.propTypes = propTypes;
-OasisMainContentWrapper.displayName = "OasisMainContentWrapper";
+OasisMainContentWrapper.displayName = 'OasisMainContentWrapper';
 
 export default compose(
   withRouter,
-  connect(mapStateToProps, mapDispatchToProps)
+  connect(mapStateToProps, mapDispatchToProps),
 )(OasisMainContentWrapper);

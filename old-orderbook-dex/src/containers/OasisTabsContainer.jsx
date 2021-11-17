@@ -9,7 +9,7 @@ import tokens from '../store/selectors/tokens';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
-  pathname: PropTypes.string
+  pathname: PropTypes.string,
 };
 
 export class OasisTabsContainerWrapper extends PureComponent {
@@ -20,7 +20,8 @@ export class OasisTabsContainerWrapper extends PureComponent {
         <OasisTabs
           activeTradingPair={activeTradingPair}
           defaultTradingPair={defaultTradingPair}
-          pathname={pathname}/>
+          pathname={pathname}
+        />
       </div>
     );
   }
@@ -29,7 +30,7 @@ export class OasisTabsContainerWrapper extends PureComponent {
 export function mapStateToProps(state) {
   return {
     defaultTradingPair: tokens.defaultTradingPair(state),
-    activeTradingPair: tokens.activeTradingPair(state)
+    activeTradingPair: tokens.activeTradingPair(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -39,4 +40,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTabsContainerWrapper.propTypes = propTypes;
 OasisTabsContainerWrapper.displayName = 'OasisTabsContainer';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisTabsContainerWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisTabsContainerWrapper);

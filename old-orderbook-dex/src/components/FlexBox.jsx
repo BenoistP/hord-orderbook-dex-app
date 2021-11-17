@@ -1,8 +1,8 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 
-import styles from "./FlexBox.scss";
-import CSSModules from "react-css-modules/dist/index";
+import styles from './FlexBox.scss';
+import CSSModules from 'react-css-modules/dist/index';
 
 const propTypes = {
   children: PropTypes.node,
@@ -15,16 +15,16 @@ const propTypes = {
   className: PropTypes.string,
   alignContent: PropTypes.string,
   additionalStyles: PropTypes.string,
-  hidden: PropTypes.bool
+  hidden: PropTypes.bool,
 };
 
 const defaultProps = {
   vertical: false,
-  className: "",
+  className: '',
   wrap: false,
-  justifyContent: "normal",
-  alignItems: "stretch",
-  alignContent: "stretch"
+  justifyContent: 'normal',
+  alignItems: 'stretch',
+  alignContent: 'stretch',
 };
 
 export class FlexBox extends PureComponent {
@@ -38,22 +38,22 @@ export class FlexBox extends PureComponent {
       className,
       additionalStyles,
       wrapXXS,
-      inlineXXS
+      inlineXXS,
     } = this.props;
 
     const inlineStyles = {
       justifyContent,
       alignItems,
       alignContent,
-      ...additionalStyles
+      ...additionalStyles,
     };
 
     const divClasses = `
       ${styles.box}
       ${vertical ? styles.vertical : styles.horizontal}
-      ${wrap ? styles.wrap : ""}
-      ${wrapXXS ? styles.wrapXXS: ""}
-      ${inlineXXS ? styles.inlineXXS : ""}
+      ${wrap ? styles.wrap : ''}
+      ${wrapXXS ? styles.wrapXXS : ''}
+      ${inlineXXS ? styles.inlineXXS : ''}
       ${className}
     `;
     return (
@@ -68,7 +68,7 @@ export class FlexBox extends PureComponent {
   }
 }
 
-FlexBox.displayName = "FlexBox";
+FlexBox.displayName = 'FlexBox';
 FlexBox.propTypes = propTypes;
 FlexBox.defaultProps = defaultProps;
 export default CSSModules(FlexBox, styles);

@@ -1,14 +1,14 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import ImmutablePropTypes from "react-immutable-proptypes";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import styles from "./OasisOfferSummary.scss";
-import OasisGasPriceWrapper from "../containers/OasisGasPrice";
-import CSSModules from "react-css-modules/dist/index";
-import OasisSoldReceivedAmounts from "./OasisSoldReceivedAmounts";
-import OasisIsTokenTradingEnabledByUserWrapper from "../containers/OasisIsTokenTradingEnabledByUser";
-import InfoBox from "./InfoBox";
-import OasisIcon from "./OasisIcon";
+import styles from './OasisOfferSummary.scss';
+import OasisGasPriceWrapper from '../containers/OasisGasPrice';
+import CSSModules from 'react-css-modules/dist/index';
+import OasisSoldReceivedAmounts from './OasisSoldReceivedAmounts';
+import OasisIsTokenTradingEnabledByUserWrapper from '../containers/OasisIsTokenTradingEnabledByUser';
+import InfoBox from './InfoBox';
+import OasisIcon from './OasisIcon';
 
 const propTypes = {
   offerType: PropTypes.string.isRequired,
@@ -19,7 +19,7 @@ const propTypes = {
   gasEstimateInfo: ImmutablePropTypes.map.isRequired,
   isTokenTradingEnabled: PropTypes.bool.isRequired,
   isVolumeOrPriceEmptyOrZero: PropTypes.bool,
-  contractsLoaded: PropTypes.bool
+  contractsLoaded: PropTypes.bool,
 };
 const defaultProps = {};
 
@@ -31,17 +31,17 @@ export class OasisOfferSummary extends PureComponent {
         <OasisGasPriceWrapper
           gasEstimateError={null}
           gasEstimatePending={false}
-          transactionGasCostEstimate={"0"}
+          transactionGasCostEstimate={'0'}
           className={styles.detailsTradingCol}
         />
       );
     } else {
-      const gasEstimatePending = gasEstimateInfo.get("isGasEstimatePending");
+      const gasEstimatePending = gasEstimateInfo.get('isGasEstimatePending');
       const transactionGasCostEstimate = gasEstimateInfo.get(
-        "transactionGasCostEstimate"
+        'transactionGasCostEstimate',
       );
       const gasEstimateError = gasEstimateInfo.get(
-        "transactionGasCostEstimateError"
+        'transactionGasCostEstimateError',
       );
       return (
         <OasisGasPriceWrapper
@@ -63,9 +63,9 @@ export class OasisOfferSummary extends PureComponent {
     return contractsLoaded ? (
       <OasisIsTokenTradingEnabledByUserWrapper tokenName={sellToken} />
     ) : (
-      <div style={{ marginBottom: "4px" }}>
-        <OasisIcon icon="loading" />
-        <span style={{ marginLeft: "5px", display: "inline-block" }}>
+      <div style={{ marginBottom: '4px' }}>
+        <OasisIcon icon='loading' />
+        <span style={{ marginLeft: '5px', display: 'inline-block' }}>
           Loading market contracts...
         </span>
       </div>
@@ -77,7 +77,7 @@ export class OasisOfferSummary extends PureComponent {
       buyToken,
       amountSold,
       amountReceived,
-      isTokenTradingEnabled
+      isTokenTradingEnabled,
     } = this.props;
 
     return (
@@ -103,7 +103,7 @@ export class OasisOfferSummary extends PureComponent {
   }
 }
 
-OasisOfferSummary.displayName = "OasisOfferSummary";
+OasisOfferSummary.displayName = 'OasisOfferSummary';
 OasisOfferSummary.propTypes = propTypes;
 OasisOfferSummary.defaultProps = defaultProps;
 export default CSSModules(OasisOfferSummary, styles);

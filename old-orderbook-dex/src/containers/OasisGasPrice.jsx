@@ -1,35 +1,32 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import network from "../store/selectors/network";
-import web3 from "../bootstrap/web3";
-import { DEFAULT_GAS_PRICE, ETH_UNIT_ETHER } from '../constants'
-import { formatAmount } from "../utils/tokens/pair";
-import { FlexBox } from "../components/FlexBox";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import network from '../store/selectors/network';
+import web3 from '../bootstrap/web3';
+import { DEFAULT_GAS_PRICE, ETH_UNIT_ETHER } from '../constants';
+import { formatAmount } from '../utils/tokens/pair';
+import { FlexBox } from '../components/FlexBox';
 
-import styles from "./OasisGasPrice.scss";
-import textStyles from "../styles/modules/_typography.scss";
-import CSSModules from "react-css-modules";
+import styles from './OasisGasPrice.scss';
+import textStyles from '../styles/modules/_typography.scss';
+import CSSModules from 'react-css-modules';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
-  transactionGasCostEstimate: PropTypes.string
+  transactionGasCostEstimate: PropTypes.string,
 };
 
 export class OasisGasPriceWrapper extends PureComponent {
   getGasCostEstimate() {
-    const {
-      latestEthereumPrice,
-      transactionGasCostEstimate
-    } = this.props;
+    const { latestEthereumPrice, transactionGasCostEstimate } = this.props;
     const currentGasPriceBN = web3.toBigNumber(DEFAULT_GAS_PRICE);
     if (transactionGasCostEstimate && latestEthereumPrice) {
       const cost = web3.fromWei(
         currentGasPriceBN.mul(transactionGasCostEstimate),
-        ETH_UNIT_ETHER
+        ETH_UNIT_ETHER,
       );
       return (
         <FlexBox alignItems='baseline'>
@@ -53,13 +50,9 @@ export class OasisGasPriceWrapper extends PureComponent {
   renderContent() {
     const { gasEstimatePending, gasEstimateError } = this.props;
     if (gasEstimateError) {
-      return (
-        <strong className={textStyles.textDanger}>estimate error</strong>
-      );
+      return <strong className={textStyles.textDanger}>estimate error</strong>;
     } else if (gasEstimatePending) {
-      return (
-        <span>estimate pending...</span>
-      );
+      return <span>estimate pending...</span>;
     } else {
       return this.getGasCostEstimate();
     }
@@ -67,14 +60,14 @@ export class OasisGasPriceWrapper extends PureComponent {
 
   render() {
     const { className } = this.props;
-    return <div className={className || ""}>{this.renderContent()}</div>;
+    return <div className={className || ''}>{this.renderContent()}</div>;
   }
 }
 
 export function mapStateToProps(state) {
   return {
     latestEthereumPrice: network.latestEthereumPrice(state),
-    latestBlockNumber: network.latestBlockNumber(state)
+    latestBlockNumber: network.latestBlockNumber(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -83,7 +76,8 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisGasPriceWrapper.propTypes = propTypes;
-OasisGasPriceWrapper.displayName = "OasisGasPrice";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  CSSModules(OasisGasPriceWrapper, styles)
-);
+OasisGasPriceWrapper.displayName = 'OasisGasPrice';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CSSModules(OasisGasPriceWrapper, styles));

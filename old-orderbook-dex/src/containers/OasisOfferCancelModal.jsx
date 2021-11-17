@@ -1,28 +1,28 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
-import ImmutablePropTypes from "react-immutable-proptypes";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import OasisOfferCancelModal from "../components/OasisOfferCancelModal";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import OasisOfferCancelModal from '../components/OasisOfferCancelModal';
 import offersReducer, {
   TYPE_BUY_OFFER,
-  TYPE_SELL_OFFER
-} from "../store/reducers/offers";
+  TYPE_SELL_OFFER,
+} from '../store/reducers/offers';
 import {
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
-  TX_STATUS_REJECTED
-} from "../store/reducers/transactions";
-import tokens from "../store/selectors/tokens";
-import offers from "../store/selectors/offers";
-import network from "../store/selectors/network";
+  TX_STATUS_REJECTED,
+} from '../store/reducers/transactions';
+import tokens from '../store/selectors/tokens';
+import offers from '../store/selectors/offers';
+import network from '../store/selectors/network';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
   offer: ImmutablePropTypes.map.isRequired,
-  onModalClose: PropTypes.func.isRequired
+  onModalClose: PropTypes.func.isRequired,
 };
 
 export class OasisOfferCancelModalWrapper extends PureComponent {
@@ -36,7 +36,7 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
 
   componentDidMount() {
     this.setState({ offer: this.props.offer }, () =>
-      this.setState({ modalOpen: true })
+      this.setState({ modalOpen: true }),
     );
   }
 
@@ -47,35 +47,35 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
       onCancelCleanup: this.onTransactionCancelledByUser.bind(this),
       onPending: this.onTransactionPending.bind(this),
       onCompleted: this.onTransactionCompleted.bind(this),
-      onRejected: this.onTransactionRejected.bind(this)
+      onRejected: this.onTransactionRejected.bind(this),
     });
   }
 
   onTransactionStart() {
     this.setState({
       txStatus: TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      lockCancelButton: true
+      lockCancelButton: true,
     });
   }
 
   onTransactionCancelledByUser() {
     this.setState({
       txStatus: TX_STATUS_CANCELLED_BY_USER,
-      lockCancelButton: false
+      lockCancelButton: false,
     });
   }
   onTransactionPending({ txStartTimestamp }) {
     this.setState({
       txStatus: TX_STATUS_AWAITING_CONFIRMATION,
-      txStartTimestamp
+      txStartTimestamp,
     });
   }
 
   onTransactionCompleted() {
     this.setState({
-      txStatus: TX_STATUS_CONFIRMED
+      txStatus: TX_STATUS_CONFIRMED,
     });
-    this.props.onCancelledSuccesfully(this.state.offer.get("id"));
+    this.props.onCancelledSuccesfully(this.state.offer.get('id'));
   }
 
   onTransactionRejected({ txHash }) {
@@ -83,7 +83,7 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
       txStatus: TX_STATUS_REJECTED,
       txHash,
       lockCancelButton: false,
-      disableCancelButton: false
+      disableCancelButton: false,
     });
   }
 
@@ -95,9 +95,9 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
         {
           modalOpen: false,
           txStartTimestamp: undefined,
-          txStatus: undefined
+          txStatus: undefined,
         },
-        () => this.props.onModalClose()
+        () => this.props.onModalClose(),
       );
     }
 
@@ -113,18 +113,20 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
   cancelIsAwaitingAcceptanceOrPending() {
     return [
       TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION
+      TX_STATUS_AWAITING_CONFIRMATION,
     ].includes(this.state.txStatus);
   }
 
   getTokenNameAndAmount() {
-    const { activeTradingPair: { baseToken, quoteToken } } = this.props;
+    const {
+      activeTradingPair: { baseToken, quoteToken },
+    } = this.props;
     const { offer } = this.state;
-    switch (offer.get("offerType")) {
+    switch (offer.get('offerType')) {
       case TYPE_BUY_OFFER:
-        return { tokenName: quoteToken, tokenAmount: offer.get("quoteAmount") };
+        return { tokenName: quoteToken, tokenAmount: offer.get('quoteAmount') };
       case TYPE_SELL_OFFER:
-        return { tokenName: baseToken, tokenAmount: offer.get("baseAmount") };
+        return { tokenName: baseToken, tokenAmount: offer.get('baseAmount') };
     }
   }
 
@@ -158,20 +160,21 @@ export function mapStateToProps(state, props) {
     activeTradingPair: tokens.activeTradingPair(state),
     canOfferBeCancelled: offers.canOfferBeCancelled(
       state,
-      props.offer ? props.offer.get("id") : null
-    )
+      props.offer ? props.offer.get('id') : null,
+    ),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     cancelOffer: offersReducer.actions.cancelOfferEpic,
-    markOfferAsInactive: offersReducer.actions.markOfferAsInactive
+    markOfferAsInactive: offersReducer.actions.markOfferAsInactive,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisOfferCancelModalWrapper.propTypes = propTypes;
-OasisOfferCancelModalWrapper.displayName = "OasisOfferCancelModal";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  OasisOfferCancelModalWrapper
-);
+OasisOfferCancelModalWrapper.displayName = 'OasisOfferCancelModal';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisOfferCancelModalWrapper);

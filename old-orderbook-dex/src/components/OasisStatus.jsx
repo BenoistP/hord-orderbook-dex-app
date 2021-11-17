@@ -1,26 +1,26 @@
-import React, { PureComponent } from "react";
-import CSSModules from "react-css-modules";
-import { PropTypes } from "prop-types";
-import styles from "./OasisStatus.scss";
-import { ONLINE, OUT_OF_SYNC, CLOSED, CONNECTING } from "../constants";
-import OasisLoadingIndicator from "./OasisLoadingIndicator";
-import isNumeric from "../utils/numbers/isNumeric";
+import React, { PureComponent } from 'react';
+import CSSModules from 'react-css-modules';
+import { PropTypes } from 'prop-types';
+import styles from './OasisStatus.scss';
+import { ONLINE, OUT_OF_SYNC, CLOSED, CONNECTING } from '../constants';
+import OasisLoadingIndicator from './OasisLoadingIndicator';
+import isNumeric from '../utils/numbers/isNumeric';
 
 const propTypes = PropTypes && {
   status: PropTypes.string.isRequired,
   name: PropTypes.string,
   offersLoadingProgress: PropTypes.number,
   offersInitiallyLoaded: PropTypes.bool,
-  initialMarketHistoryLoaded: PropTypes.bool
+  initialMarketHistoryLoaded: PropTypes.bool,
 };
 
 const defaultProps = {};
 
 const INDICATORS = {
-  [ONLINE]: { class: "StatusIndicator--Online", text: "Connected" },
-  [CONNECTING]: { class: "StatusIndicator--Closed", text: "Connecting" },
-  [OUT_OF_SYNC]: { class: "StatusIndicator--Out-Of-Sync", text: "Out Of Sync" },
-  [CLOSED]: { class: "StatusIndicator--Closed", text: "Closed" }
+  [ONLINE]: { class: 'StatusIndicator--Online', text: 'Connected' },
+  [CONNECTING]: { class: 'StatusIndicator--Closed', text: 'Connecting' },
+  [OUT_OF_SYNC]: { class: 'StatusIndicator--Out-Of-Sync', text: 'Out Of Sync' },
+  [CLOSED]: { class: 'StatusIndicator--Closed', text: 'Closed' },
 };
 
 export class OasisStatus extends PureComponent {
@@ -29,10 +29,10 @@ export class OasisStatus extends PureComponent {
     if (offersLoadProgress >= 0 && offersLoadProgress < 100) {
       return (
         <span className={styles.offersLoadProgress}>
-          <OasisLoadingIndicator marginRight={"3px"} />
+          <OasisLoadingIndicator marginRight={'3px'} />
           <span>offers</span>
           <span>
-            ({isNumeric(offersLoadProgress) ? offersLoadProgress : "0"}%)
+            ({isNumeric(offersLoadProgress) ? offersLoadProgress : '0'}%)
           </span>
         </span>
       );
@@ -54,27 +54,27 @@ export class OasisStatus extends PureComponent {
 
   getTradesLoadProgress() {
     const { initialMarketHistoryLoaded } = this.props;
-    return initialMarketHistoryLoaded !==true ? 0: 100;
+    return initialMarketHistoryLoaded !== true ? 0 : 100;
   }
 
   renderTradesHistoryLoadProgress() {
     const { initialMarketHistoryLoaded } = this.props;
-    return initialMarketHistoryLoaded!==true ? (
+    return initialMarketHistoryLoaded !== true ? (
       <span>
-        <OasisLoadingIndicator marginRight={"3px"} />
+        <OasisLoadingIndicator marginRight={'3px'} />
         <span className={styles.tradesLoadProgress}>
           history <span>({this.getTradesLoadProgress()}%)</span>
         </span>
       </span>
-    ): null;
+    ) : null;
   }
 
   renderNetworkName() {
     const { name } = this.props;
-    if (name === "-") {
+    if (name === '-') {
       return (
         <div>
-          <OasisLoadingIndicator size={"sm"} marginRight={"10px"} />{" "}
+          <OasisLoadingIndicator size={'sm'} marginRight={'10px'} />{' '}
           <span>{name}</span>
         </div>
       );
@@ -85,16 +85,16 @@ export class OasisStatus extends PureComponent {
 
   renderContent() {
     const { activeTradingPairOffersInitiallyLoaded } = this.props;
-    if(!activeTradingPairOffersInitiallyLoaded) {
-      return this.renderOffersLoadProgress()
+    if (!activeTradingPairOffersInitiallyLoaded) {
+      return this.renderOffersLoadProgress();
     } else {
-      return  this.renderTradesHistoryLoadProgress() || this.statusIndicator();
+      return this.renderTradesHistoryLoadProgress() || this.statusIndicator();
     }
   }
 
   render() {
     return (
-      <div styleName="OasisStatus">
+      <div styleName='OasisStatus'>
         <div>{this.renderNetworkName()}</div>
         <div>{this.renderContent()}</div>
       </div>
@@ -102,7 +102,7 @@ export class OasisStatus extends PureComponent {
   }
 }
 
-OasisStatus.displayName = "OasisStatus";
+OasisStatus.displayName = 'OasisStatus';
 OasisStatus.propTypes = propTypes;
 OasisStatus.defaultProps = defaultProps;
 

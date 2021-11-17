@@ -34,12 +34,14 @@ export class OasisMyOrdersContainerWrapper extends PureComponent {
         cancelOffer,
         fetchAndSubscribeUserTradesHistory,
         removeOrderCancelledByTheOwner,
-      }
+      },
     } = this.props;
 
     return (
       <OasisMyOrders
-        activeTradingPairOffersInitiallyLoaded={activeTradingPairOffersInitiallyLoaded}
+        activeTradingPairOffersInitiallyLoaded={
+          activeTradingPairOffersInitiallyLoaded
+        }
         defaultAccount={defaultAccount}
         activeNetworkName={activeNetworkName}
         sellOffers={sellOffers}
@@ -62,29 +64,32 @@ export function mapStateToProps(state) {
   return {
     defaultAccount: accounts.defaultAccount(state),
     activeTradingPair: tokens.activeTradingPair(state),
-    activeTradingPairOffersInitiallyLoaded: offers.activeTradingPairOffersInitiallyLoaded(state),
-    initialMarketHistoryLoaded: tradesSelectors.initialMarketHistoryLoaded(
-      state
-    ),
+    activeTradingPairOffersInitiallyLoaded:
+      offers.activeTradingPairOffersInitiallyLoaded(state),
+    initialMarketHistoryLoaded:
+      tradesSelectors.initialMarketHistoryLoaded(state),
     buyOfferCount: offers.activeTradingPairBuyOfferCount(state),
     sellOfferCount: offers.activeTradingPairSellOfferCount(state),
     buyOffers: offers.activeTradingPairBuyOffers(state),
     sellOffers: offers.activeTradingPairSellOffers(state),
     activeNetworkName: network.activeNetworkName(state),
     userTradesList: userTrades.marketsData(state),
-    loadingUserMarketHistory: userTrades.loadindUserMarketHistory(state)
+    loadingUserMarketHistory: userTrades.loadindUserMarketHistory(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     fetchAndSubscribeUserTradesHistory:
-    userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
-    removeOrderCancelledByTheOwner: offersReducer.actions.removeOrderCancelledByTheOwner
-
+      userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
+    removeOrderCancelledByTheOwner:
+      offersReducer.actions.removeOrderCancelledByTheOwner,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisMyOrdersContainerWrapper.propTypes = propTypes;
 OasisMyOrdersContainerWrapper.displayName = 'OasisMyOrdersContainer';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisMyOrdersContainerWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisMyOrdersContainerWrapper);

@@ -1,31 +1,28 @@
-import React, { PureComponent } from "react";
-import { PropTypes } from "prop-types";
+import React, { PureComponent } from 'react';
+import { PropTypes } from 'prop-types';
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-import OasisWrapUnwrapUnwrap from "../components/OasisWrapUnwrapUnwrap";
-import wrapUnwrap from "../store/selectors/wrapUnwrap";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import OasisWrapUnwrapUnwrap from '../components/OasisWrapUnwrapUnwrap';
+import wrapUnwrap from '../store/selectors/wrapUnwrap';
 import wrapUnwrapReducer, {
-  UNWRAP_TOKEN_WRAPPER
-} from "../store/reducers/wrapUnwrap";
+  UNWRAP_TOKEN_WRAPPER,
+} from '../store/reducers/wrapUnwrap';
 import {
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
   TX_STATUS_REJECTED,
-  TX_UNWRAP_TOKEN_WRAPPER
-} from "../store/reducers/transactions";
-import accounts from "../store/selectors/accounts";
+  TX_UNWRAP_TOKEN_WRAPPER,
+} from '../store/reducers/transactions';
+import accounts from '../store/selectors/accounts';
 import { TOKEN_WRAPPED_ETH, TOKEN_WRAPPED_GNT } from '../constants';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
-  wrappedToken: PropTypes.oneOf([
-    TOKEN_WRAPPED_ETH,
-    TOKEN_WRAPPED_GNT
-  ])
+  wrappedToken: PropTypes.oneOf([TOKEN_WRAPPED_ETH, TOKEN_WRAPPED_GNT]),
 };
 
 export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
@@ -42,7 +39,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
       {
         disableTransferButton: true,
         txStatus: false,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       },
       () =>
         this.props.actions.unwrapToken({
@@ -50,8 +47,8 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
           onCancelCleanup: this.onTransactionCancelledByUser.bind(this),
           onPending: this.onTransactionPending.bind(this),
           onCompleted: this.onTransactionCompleted.bind(this),
-          onRejected: this.onTransactionRejected.bind(this)
-        })
+          onRejected: this.onTransactionRejected.bind(this),
+        }),
     );
   }
 
@@ -59,7 +56,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
     this.setState({
       txStatus: TX_STATUS_AWAITING_USER_ACCEPTANCE,
       disableForm: true,
-      lockCancelButton: true
+      lockCancelButton: true,
     });
   }
 
@@ -67,23 +64,23 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
     this.setState({
       txStatus: TX_STATUS_CANCELLED_BY_USER,
       disableForm: false,
-      lockCancelButton: false
+      lockCancelButton: false,
     });
   }
   onTransactionPending({ txStartTimestamp }) {
     this.setState({
       txStatus: TX_STATUS_AWAITING_CONFIRMATION,
-      txStartTimestamp
+      txStartTimestamp,
     });
   }
 
   onTransactionCompleted() {
     this.setState({
-      txStatus: TX_STATUS_CONFIRMED
+      txStatus: TX_STATUS_CONFIRMED,
     });
     this.props.actions.resetActiveUnwrapForm(UNWRAP_TOKEN_WRAPPER);
     this.setState({
-      disableForm: false
+      disableForm: false,
     });
   }
 
@@ -91,7 +88,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
     this.setState({
       txStatus: TX_STATUS_REJECTED,
       txHash,
-      disableForm: false
+      disableForm: false,
     });
   }
 
@@ -99,7 +96,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
     if (this.componentIsUnmounted === false) {
       this.setState({
         txStatus: undefined,
-        txStartTimestamp: undefined
+        txStartTimestamp: undefined,
       });
     }
   }
@@ -109,14 +106,14 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
       hidden,
       activeWrappedToken,
       activeWrappedTokenBalance,
-      wrappedToken
+      wrappedToken,
     } = this.props;
     const { txStatus, txStartTimestamp, disableForm } = this.state;
     return (
       <OasisWrapUnwrapUnwrap
         hidden={hidden}
         txType={TX_UNWRAP_TOKEN_WRAPPER}
-        form={"unwrapTokenWrapper"}
+        form={'unwrapTokenWrapper'}
         wrappedToken={wrappedToken}
         transactionState={{ txStatus, txStartTimestamp }}
         onSubmit={this.makeUnwrap}
@@ -147,19 +144,20 @@ export function mapStateToProps(state) {
   return {
     defaultAccount: accounts.defaultAccount(state),
     activeWrappedTokenBalance: wrapUnwrap.activeWrappedTokenBalance(state),
-    activeWrappedToken: wrapUnwrap.activeWrappedToken(state)
+    activeWrappedToken: wrapUnwrap.activeWrappedToken(state),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
     unwrapToken: wrapUnwrapReducer.actions.unwrapTokenEpic,
-    resetActiveUnwrapForm: wrapUnwrapReducer.actions.resetActiveUnwrapForm
+    resetActiveUnwrapForm: wrapUnwrapReducer.actions.resetActiveUnwrapForm,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisWrapUnwrapUnwrapWrapper.propTypes = propTypes;
-OasisWrapUnwrapUnwrapWrapper.displayName = "OasisWrapUnwrapUnwrap";
-export default connect(mapStateToProps, mapDispatchToProps)(
-  OasisWrapUnwrapUnwrapWrapper
-);
+OasisWrapUnwrapUnwrapWrapper.displayName = 'OasisWrapUnwrapUnwrap';
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisWrapUnwrapUnwrapWrapper);

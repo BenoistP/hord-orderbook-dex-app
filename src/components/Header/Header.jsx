@@ -18,18 +18,18 @@ const Header = ({
   onWalletConnectError,
 }) => {
   return (
-    <div className="header-wrapper">
-            <div className="connect-wallet-container">
-                <WalletConnector
-                  networkId={config.network}
-                  rpcUrl={config.rpcUrl}
-                  onClick={() => null}
-                  onConnectRequest={onWalletConnectRequest}
-                  onConnect={onWalletConnectSuccess}
-                  onConnectError={onWalletConnectError}
-                  onDisconnect={onWalletDisconnect}
-                />
-            </div>
+    <div className='header-wrapper'>
+      <div className='connect-wallet-container'>
+        <WalletConnector
+          networkId={config.network}
+          rpcUrl={config.rpcUrl}
+          onClick={() => null}
+          onConnectRequest={onWalletConnectRequest}
+          onConnect={onWalletConnectSuccess}
+          onConnectError={onWalletConnectError}
+          onDisconnect={onWalletDisconnect}
+        />
+      </div>
     </div>
   );
 };
@@ -38,9 +38,7 @@ Header.defaultProps = {
   championData: null,
 };
 
-const mapStateToProps = () => ({
- 
-});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = {
   onWalletConnectSuccess: onWalletConnectSuccessAction,

@@ -16,9 +16,7 @@ class OasisCard extends PureComponent {
     return (
       <div className={styles.base}>
         <h2>{heading}</h2>
-        <div className={styles.OasisCardContent}>
-          {this.props.children}
-        </div>
+        <div className={styles.OasisCardContent}>{this.props.children}</div>
       </div>
     );
   }

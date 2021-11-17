@@ -7,22 +7,20 @@ import { bindActionCreators } from 'redux';
 import tokens from '../store/selectors/tokens';
 import tokenSelectorsReducer from '../store/reducers/tokenSelectors';
 import tokenSelectors from '../store/selectors/tokenSelectors';
-import OasisSelect from "../components/OasisSelect";
-import widgetFrameStyles from "./OasisWidgetFrame.scss"
+import OasisSelect from '../components/OasisSelect';
+import widgetFrameStyles from './OasisWidgetFrame.scss';
 
 const propTypes = PropTypes && {
   actions: PropTypes.object.isRequired,
   disabled: PropTypes.bool,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
 };
 
 export class OasisTokenSelectWrapper extends PureComponent {
   constructor(props) {
     super(props);
     this.onOptionSelected = this.onOptionSelected.bind(this);
-    props.actions.registerComponent(
-      props.name, props.defaultToken
-    );
+    props.actions.registerComponent(props.name, props.defaultToken);
   }
 
   onOptionSelected(e) {
@@ -34,11 +32,11 @@ export class OasisTokenSelectWrapper extends PureComponent {
 
   getOptions() {
     const { tokens } = this.props;
-    return tokens.map(
-      (token, idx) => (
-        <option key={idx} value={token}>{token}</option>
-      ),
-    );
+    return tokens.map((token, idx) => (
+      <option key={idx} value={token}>
+        {token}
+      </option>
+    ));
   }
 
   render() {
@@ -46,36 +44,31 @@ export class OasisTokenSelectWrapper extends PureComponent {
     const selectedToken = selected || defaultToken;
     if (tokens) {
       return (
-          <OasisSelect
-            disabled={disabled}
-            name={this.props.name}
-            value={selectedToken}
-            onChange={this.onOptionSelected}
-            className={widgetFrameStyles.WidgetFloatRightButton}
-          >
-            {this.getOptions()}
-          </OasisSelect>
+        <OasisSelect
+          disabled={disabled}
+          name={this.props.name}
+          value={selectedToken}
+          onChange={this.onOptionSelected}
+          className={widgetFrameStyles.WidgetFloatRightButton}
+        >
+          {this.getOptions()}
+        </OasisSelect>
       );
     } else {
-      return (
-        <div>Loading</div>
-      );
+      return <div>Loading</div>;
     }
   }
 
   componentWillUnmount() {
-    this.props.actions.unregisterComponent(
-      this.props.name
-    );
+    this.props.actions.unregisterComponent(this.props.name);
   }
-
 }
 
 export function mapStateToProps(state, props) {
   return {
     tokens: tokens.allTokens(state),
     defaultToken: tokens.defaultBaseToken(state),
-    selected: tokenSelectors.selectedToken(state, props.name)
+    selected: tokenSelectors.selectedToken(state, props.name),
   };
 }
 
@@ -91,4 +84,7 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTokenSelectWrapper.propTypes = propTypes;
 OasisTokenSelectWrapper.displayName = 'OasisTokenSelect';
-export default connect(mapStateToProps, mapDispatchToProps)(OasisTokenSelectWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(OasisTokenSelectWrapper);
