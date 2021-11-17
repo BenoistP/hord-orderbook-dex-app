@@ -54,8 +54,8 @@ export const setSellOrders = () => async (dispatch, getState) => {
   const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
-  const sellTokenAddress = HPoolToken.address;
-  const buyTokenAddress = BUSD.address;
+  const sellTokenAddress = BUSD.address; 
+  const buyTokenAddress = HPoolToken.address;
 
   const sellOffers = await useContractReader(
     MakerOtcSupportMethods,
@@ -85,7 +85,7 @@ export const setSellOrders = () => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = sellOffers.ids[currentIndex];
     }
-    console.log(sellOrders);
+    console.log("SELL",sellOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_SELL_ORDERS,

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { setBuyOrders } from 'store/actions/orderbookActions';
+import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
 import './App.css';
 
 // import { useContractReader } from 'utils/contractReader';
@@ -9,7 +9,13 @@ import './App.css';
 import { Header, Notifications } from './components';
 import { connectToContracts } from './store/actions/contractActions';
 
-const App = ({ connectToContracts, account, MatchingMarket, setBuyOrders }) => {
+const App = ({
+  connectToContracts,
+  account,
+  MatchingMarket,
+  setBuyOrders,
+  setSellOrders,
+}) => {
   useEffect(() => {
     if (account) connectToContracts();
 
@@ -18,6 +24,7 @@ const App = ({ connectToContracts, account, MatchingMarket, setBuyOrders }) => {
 
   const interactWithContracts = async () => {
     setBuyOrders();
+    setSellOrders();
   };
   return (
     <div className='App'>
@@ -40,6 +47,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { connectToContracts, setBuyOrders })(
-  App,
-);
+export default connect(mapStateToProps, {
+  connectToContracts,
+  setBuyOrders,
+  setSellOrders,
+})(App);
