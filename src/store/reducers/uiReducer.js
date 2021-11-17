@@ -8,7 +8,8 @@ const initialState = {
 };
 
 const uiReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case uiActionTypes.START_ACTION:
       return {
         ...state,
@@ -22,22 +23,22 @@ const uiReducer = (state = initialState, action) => {
     case uiActionTypes.SET_ERROR:
       return {
         ...state,
-        error: action.payload,
+        error: payload,
       };
     case uiActionTypes.SET_CONTRACTS_LOADED_ALREADY:
       return {
         ...state,
-        contractsLoadedAlready: action.payload,
+        contractsLoadedAlready: payload,
       };
     case uiActionTypes.CREATE_NOTIFICATION:
       return {
         ...state,
-        notificationsList: [...state.notificationsList, action.payload],
+        notificationsList: [...state.notificationsList, payload],
       };
     case uiActionTypes.UPDATE_NOTIFICATIONS:
       return {
         ...state,
-        notificationsList: action.payload,
+        notificationsList: payload,
       };
     default:
       return state;

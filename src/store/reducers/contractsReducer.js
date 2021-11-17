@@ -1,4 +1,4 @@
-import * as types from '../actionTypes/contractActionTypes';
+import * as contractActionTypes from '../actionTypes/contractActionTypes';
 
 const initialState = {
   signerAddress: 'Not connected',
@@ -8,25 +8,26 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  switch (action.type) {
-    case types.GET_CONTRACT:
+  const { type, payload } = action;
+  switch (type) {
+    case contractActionTypes.GET_CONTRACT:
       return {
         ...state,
-        signerAddress: action.payload.signerAddress,
-        provider: action.payload.provider,
-        ...action.payload.newContracts,
+        signerAddress: payload.signerAddress,
+        provider: payload.provider,
+        ...payload.newContracts,
       };
-    case types.REMOVE_CONTRACT:
+    case contractActionTypes.REMOVE_CONTRACT:
       return {
        signerAddress: 'Not connected',
        MatchingMarket: false,
        UniswapSimplePriceOracle: false,
        provider: false,
       };
-    case types.ADD_SIGNERADDRESS:
+    case contractActionTypes.ADD_SIGNERADDRESS:
       return {
         ...state,
-        signerAddress: action.payload,
+        signerAddress: payload,
       };
     default:
       return state;

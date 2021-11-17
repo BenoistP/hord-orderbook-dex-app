@@ -1,4 +1,4 @@
-import * as actionTypes from '../actionTypes/contractActionTypes';
+import * as contractActionTypes from '../actionTypes/contractActionTypes';
 import getContract from '../../utils/loadContracts';
 import { setError, setContractsLoadedAlready } from './uiActions';
 import { unsetBalances, setBalances } from './balanceActions';
@@ -16,7 +16,7 @@ export const connectToContracts =
       }
 
       dispatch({
-        type: actionTypes.GET_CONTRACT,
+        type: contractActionTypes.GET_CONTRACT,
         payload: {
           signerAddress,
           newContracts,
@@ -42,7 +42,7 @@ export const connectToContracts =
 export const disconnectToContracts = () => async (dispatch) => {
   try {
     dispatch({
-      type: actionTypes.REMOVE_CONTRACT,
+      type: contractActionTypes.REMOVE_CONTRACT,
     });
 
     dispatch(unsetBalances());
@@ -54,6 +54,6 @@ export const disconnectToContracts = () => async (dispatch) => {
 };
 
 export const addSigneraddress = (signerAddress) => ({
-  type: actionTypes.ADD_SIGNERADDRESS,
+  type: contractActionTypes.ADD_SIGNERADDRESS,
   payload: signerAddress,
 });

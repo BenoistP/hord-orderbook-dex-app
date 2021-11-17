@@ -1,4 +1,4 @@
-import * as types from '../actionTypes/balanceActionTypes';
+import * as balanceActionTypes from '../actionTypes/balanceActionTypes';
 
 const initialState = {
   bnbBalance: 0,
@@ -6,12 +6,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case types.GET_BALANCES:
+    case balanceActionTypes.GET_BALANCES:
       return {
         ...state,
         ...action.payload,
       };
-    case types.REMOVE_BALANCES:
+    case balanceActionTypes.REMOVE_BALANCES:
       return {
         ethBalance: 0,
       };
