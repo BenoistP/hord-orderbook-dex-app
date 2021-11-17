@@ -1,0 +1,9 @@
+{
+  "network": 97,
+  "rpcUrl": "https://data-seed-prebsc-1-s1.binance.org:8545/",
+  "thegraphUrl": "https://api.thegraph.com/subgraphs/name/hord/hord-develop",
+  "apiPath": "https://test-api.hord.app",
+  "stakeAmount": "1000",
+  "daysToStake": "10",
+  "stage": "develop"
+}
