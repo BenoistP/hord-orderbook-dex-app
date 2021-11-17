@@ -16,8 +16,11 @@ module.exports = {
   rules: {
     'no-debugger': 'off',
     'linebreak-style': ['error', 'unix'],
-    quotes: ['error', 'single'],
-    semi: ['error', 'always'],
+    'allowTemplateLiterals': 0,
+    'jsx-quotes': [2, 'prefer-single'],
+    'quotes': 'off',
+    'semi': ['error', 'always'],
     'react/prop-types': 'off',
+    'import/no-anonymous-default-export': 'off'
   },
 };
