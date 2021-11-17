@@ -5,11 +5,12 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     case balanceActionTypes.GET_BALANCES:
       return {
         ...state,
-        ...action.payload,
+        ...payload,
       };
     case balanceActionTypes.REMOVE_BALANCES:
       return {

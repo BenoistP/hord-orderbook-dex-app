@@ -4,6 +4,7 @@ import contractReducer from './reducers/contractsReducer';
 import uiReducer from './reducers/uiReducer';
 import balanceReducer from './reducers/balancesReducer';
 import walletReducer from './reducers/walletReducer';
+import orderbookReducer from './reducers/orderbookReducer';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 export default () => {
@@ -13,6 +14,7 @@ export default () => {
       balances: balanceReducer,
       ui: uiReducer,
       wallet: walletReducer,
+      orderbook: orderbookReducer,
     }),
     composeWithDevTools(applyMiddleware(thunk)),
   );
