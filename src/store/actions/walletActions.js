@@ -1,10 +1,10 @@
-import configJson from 'config/config.json';
+import configJson from '../../config/config.json';
 import {
   getAccount,
   isInPageProviderApproved,
   web3WalletConnector,
-} from '../../services/walletService';
-import { setupWeb3 } from '../../services/web3Service';
+} from '../../utils/walletService';
+import { setupWeb3 } from '../../utils/web3Service';
 import {
   CONNECT_WALLET_START,
   CONNECT_WALLET_END,
@@ -13,9 +13,9 @@ import {
   CONNECT_WALLET_PROVIDER_FAILURE,
   CLEAR_ACCOUNT,
 } from '../actionTypes/walletActionTypes';
-import { LS_ACCOUNT } from '../../constants/general';
-import { closeModal } from './modalActions';
-import { wait } from '../../services/utilsService';
+import { LS_ACCOUNT } from '../../utils/constants/general';
+// import { closeModal } from './modalActions';
+import { wait } from '../../utils/utilsService';
 
 const postLogin = () => () => {};
 
@@ -116,7 +116,7 @@ export const logOut = () => async (dispatch, getState) => {
   const { modalType } = getState().modal;
   dispatch({ type: CLEAR_ACCOUNT });
   if (modalType !== '') {
-    dispatch(closeModal());
+    // dispatch(closeModal());
   }
   dispatch(normalLogin());
   localStorage.removeItem(LS_ACCOUNT);

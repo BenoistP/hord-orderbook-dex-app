@@ -1,33 +1,33 @@
-import { utils } from 'ethers';
 import { connect } from 'react-redux';
 import './App.css';
-import connectWallet from './utils/connectWallet';
-import { useContractReader } from './utils/contractReader';
-import { loadContracts } from './utils/loadContracts';
-import { txHandler } from './utils/txHandler';
+
+// import { useContractReader } from 'utils/contractReader';
+// import { loadContracts } from 'utils/loadContracts';
+
+import { Header } from './components';
 
 function App() {
   const interactWithContracts = async () => {
-    const { signer, provider, signerAddress } = await connectWallet();
-    debugger;
+    // const { signer, provider, signerAddress } = await connectWallet();
+    // debugger;
 
-    const contract = loadContracts(signer);
-    debugger;
+    // const contract = loadContracts(signer);
+    // debugger;
 
-    const MatchingMarket = contract['MatchingMarket']
-    const BUSD = contract['BUSD']
-    const HPoolToken = contract['HPoolToken']
-    const MakerOtcSupportMethods = contract['MakerOtcSupportMethods']
+    // const MatchingMarket = contract['MatchingMarket']
+    // const BUSD = contract['BUSD']
+    // const HPoolToken = contract['HPoolToken']
+    // const MakerOtcSupportMethods = contract['MakerOtcSupportMethods']
 
-    debugger
+    // debugger
 
-    const hundredTokensInWei = utils.parseEther('1000000000')
-    const tenTokensInWei = utils.parseEther('20347')
-    const oneTokenInWei = utils.parseEther('2')
-    const testTokensInWei = utils.parseEther('3')
-    const test2TokenInWei = utils.parseEther('15213')
-    const test3TokensInWei = utils.parseEther('2')
-    const test4TokenInWei = utils.parseEther('11334')
+    // const hundredTokensInWei = utils.parseEther('1000000000')
+    // const tenTokensInWei = utils.parseEther('20347')
+    // const oneTokenInWei = utils.parseEther('2')
+    // const testTokensInWei = utils.parseEther('3')
+    // const test2TokenInWei = utils.parseEther('15213')
+    // const test3TokensInWei = utils.parseEther('2')
+    // const test4TokenInWei = utils.parseEther('11334')
 
     /* FIRST STEP APPROVE TOKEN */
     // approve HPoolToken - first check if enough is already approved
@@ -76,12 +76,12 @@ function App() {
     //   getTokenContractInstance(sellToken).address,
     //   getTokenContractInstance(buyToken).address
     // ),
-    const sellTokenAddress = HPoolToken.address;
-    const buyTokenAddress = BUSD.address;
-    // eslint-disable-next-line
-    const buyOffers = await useContractReader({ MakerOtcSupportMethods }, 'MakerOtcSupportMethods', 'getOffers(address,address,address)', [MatchingMarket.address, sellTokenAddress, buyTokenAddress ]);
-    console.log(buyOffers)
-    debugger
+    // const sellTokenAddress = HPoolToken.address;
+    // const buyTokenAddress = BUSD.address;
+    // // eslint-disable-next-line
+    // const buyOffers = await useContractReader({ MakerOtcSupportMethods }, 'MakerOtcSupportMethods', 'getOffers(address,address,address)', [MatchingMarket.address, sellTokenAddress, buyTokenAddress ]);
+    // console.log(buyOffers)
+    // debugger
 
 
 
@@ -103,6 +103,7 @@ function App() {
   }
   return (
     <div className="App">
+      <Header />
       <header className="App-header">
         <p>
           Edit <code>src/App.js</code> and save to reload.

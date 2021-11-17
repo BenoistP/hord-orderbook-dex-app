@@ -8,7 +8,7 @@ import {
   onWalletDisconnectAction,
   onWalletConnectRequestAction,
   onWalletConnectErrorAction,
-} from '../../redux/actions/walletActions';
+} from '../../store/actions/walletActions';
 import config from '../../config/config.json';
 
 const Header = ({
@@ -38,9 +38,8 @@ Header.defaultProps = {
   championData: null,
 };
 
-const mapStateToProps = ({ champion }) => ({
-  championData: champion.championData,
-  isChampionVerified: champion.championData?.is_verified_champion === 'VERIFIED',
+const mapStateToProps = () => ({
+ 
 });
 
 const mapDispatchToProps = {
