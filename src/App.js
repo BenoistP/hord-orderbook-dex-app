@@ -1,16 +1,22 @@
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import './App.css';
-import { loadContracts } from './utils/contractsRegistryService';
 
 // import { useContractReader } from 'utils/contractReader';
 // import { loadContracts } from 'utils/loadContracts';
 
-import { Header } from './components';
+import { Header, Notifications } from './components';
+import { connectToContracts } from './store/actions/contractActions';
 
-function App() {
-  const interactWithContracts = async () => {
-    const contracts = await loadContracts();
+const App = ({ connectToContracts, account }) => {
+  useEffect(() => {
     debugger;
+    if (account) connectToContracts();
+  }, [account]);
+
+  const interactWithContracts = async () => {
+    // const contracts = await loadContracts();
+    // debugger;
     // const { signer, provider, signerAddress } = await connectWallet();
     // debugger;
 
@@ -107,16 +113,17 @@ function App() {
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <button onClick={interactWithContracts}>test</button>
+        <Notifications position='top-right' autoDelete autoDeleteTime={2000} />
       </header>
     </div>
   );
-}
+};
 const mapStateToProps = (state) => {
   return {
-    signerAddress: state.contracts.signerAddress,
+    account: state.wallet.account,
     MatchingMarket: state.contracts.MatchingMarket,
     UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
   };
 };
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { connectToContracts })(App);
