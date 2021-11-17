@@ -1,33 +1,28 @@
 import * as contractActionTypes from '../actionTypes/contractActionTypes';
 
 const initialState = {
-  signerAddress: 'Not connected',
+  BUSD: false,
+  HPoolToken: false, 
   MatchingMarket: false,
   UniswapSimplePriceOracle: false,
-  provider: false,
+  MakerOtcSupportMethods: false,
 };
 
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case contractActionTypes.GET_CONTRACT:
+    case contractActionTypes.SET_CONTRACTS:
       return {
         ...state,
-        signerAddress: payload.signerAddress,
-        provider: payload.provider,
-        ...payload.newContracts,
+        ...payload,
       };
-    case contractActionTypes.REMOVE_CONTRACT:
+    case contractActionTypes.REMOVE_CONTRACTS:
       return {
-       signerAddress: 'Not connected',
+       BUSD: false,
+       HPoolToken: false, 
        MatchingMarket: false,
        UniswapSimplePriceOracle: false,
-       provider: false,
-      };
-    case contractActionTypes.ADD_SIGNERADDRESS:
-      return {
-        ...state,
-        signerAddress: payload,
+       MakerOtcSupportMethods: false,
       };
     default:
       return state;

@@ -2,7 +2,7 @@ import * as walletActionTypes from '../actionTypes/walletActionTypes';
 
 import { LS_ACCOUNT } from '../../utils/constants/general';
 
-const lsAccountType = localStorage.getItem(LS_ACCOUNT);
+localStorage.getItem(LS_ACCOUNT);
 
 const initialState = {
   connectingWallet: false,

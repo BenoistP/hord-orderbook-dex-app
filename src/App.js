@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import './App.css';
+import { loadContracts } from './utils/contractsRegistryService'
 
 // import { useContractReader } from 'utils/contractReader';
 // import { loadContracts } from 'utils/loadContracts';
@@ -8,6 +9,8 @@ import { Header } from './components';
 
 function App() {
   const interactWithContracts = async () => {
+    const contracts = await loadContracts();
+    debugger;
     // const { signer, provider, signerAddress } = await connectWallet();
     // debugger;
 

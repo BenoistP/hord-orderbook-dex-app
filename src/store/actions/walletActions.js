@@ -1,7 +1,6 @@
 import configJson from '../../config/config.json';
 import {
   getAccount,
-  isInPageProviderApproved,
   web3WalletConnector,
 } from '../../utils/walletService';
 import { setupWeb3 } from '../../utils/web3Service';
