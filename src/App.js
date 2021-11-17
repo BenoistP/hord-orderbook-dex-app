@@ -8,10 +8,11 @@ import './App.css';
 import { Header, Notifications } from './components';
 import { connectToContracts } from './store/actions/contractActions';
 
-const App = ({ connectToContracts, account }) => {
+const App = ({ connectToContracts, account, MatchingMarket }) => {
   useEffect(() => {
-    debugger;
     if (account) connectToContracts();
+
+    setTimeout(() => console.log(MatchingMarket), 5000);
   }, [account]);
 
   const interactWithContracts = async () => {
@@ -19,17 +20,13 @@ const App = ({ connectToContracts, account }) => {
     // debugger;
     // const { signer, provider, signerAddress } = await connectWallet();
     // debugger;
-
     // const contract = loadContracts(signer);
     // debugger;
-
     // const MatchingMarket = contract['MatchingMarket']
     // const BUSD = contract['BUSD']
     // const HPoolToken = contract['HPoolToken']
     // const MakerOtcSupportMethods = contract['MakerOtcSupportMethods']
-
     // debugger
-
     // const hundredTokensInWei = utils.parseEther('1000000000')
     // const tenTokensInWei = utils.parseEther('20347')
     // const oneTokenInWei = utils.parseEther('2')
@@ -37,14 +34,12 @@ const App = ({ connectToContracts, account }) => {
     // const test2TokenInWei = utils.parseEther('15213')
     // const test3TokensInWei = utils.parseEther('2')
     // const test4TokenInWei = utils.parseEther('11334')
-
     /* FIRST STEP APPROVE TOKEN */
     // approve HPoolToken - first check if enough is already approved
     // approve HPool Token
     // await txHandler(HPoolToken, 'approve', [MatchingMarket.address, hundredTokensInWei])
     // approve BUSD
     // await txHandler(BUSD, 'approve', [MatchingMarket.address, hundredTokensInWei])
-
     /* SECOND STEP OFFER TOKEN */
     // market maker tx
     // offer(pay_amt, pay_gem, buy_amt, buy_gem, pos) 99% every time like this - there are 3 different one
@@ -67,7 +62,6 @@ const App = ({ connectToContracts, account }) => {
     //  await Promise.all([txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [oneTokenInWei, BUSD.address, tenTokensInWei, HPoolToken.address, 0])
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [testTokensInWei, BUSD.address, test2TokenInWei, HPoolToken.address, 0])
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [test3TokensInWei, BUSD.address, test4TokenInWei, HPoolToken.address, 0])])
-
     /* THIRD STEP GET BEST OFFER FROM PAIR */
     // market maker tx
     // getBestOffer(ERC20 sell_gem, ERC20 buy_gem)
@@ -78,7 +72,6 @@ const App = ({ connectToContracts, account }) => {
     // example output:  "100000000000000000000,0x39A8f0f941BCb56ff0f19371a366496dfC948704,1000000000000000000,0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
     // const splittedBestOfferData = bestOfferData.split(',');
     // values need to get converted to human readable number with utils.formatEther(value)
-
     /* GET BUY OFFERS FOR PAIR */
     // firstPage = (sellToken, buyToken) => getOTCSupportMethodsContractInstance().getOffers(
     //   getMarketContractInstance().address,
@@ -91,7 +84,6 @@ const App = ({ connectToContracts, account }) => {
     // const buyOffers = await useContractReader({ MakerOtcSupportMethods }, 'MakerOtcSupportMethods', 'getOffers(address,address,address)', [MatchingMarket.address, sellTokenAddress, buyTokenAddress ]);
     // console.log(buyOffers)
     // debugger
-
     // /* GET SELL OFFERS FOR PAIR */
     // // firstPage = (sellToken, buyToken) => getOTCSupportMethodsContractInstance().getOffers(
     // //   getMarketContractInstance().address,
