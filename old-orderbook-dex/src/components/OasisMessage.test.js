@@ -8,7 +8,7 @@ import { shallow } from 'enzyme';
 describe('(Component) OasisMessage', () => {
   it('should render', () => {
     const props = {
-      heading: 'Hello world'
+      heading: 'Hello world',
     };
     const wrapper = shallow(
       <OasisMessage {...props}>

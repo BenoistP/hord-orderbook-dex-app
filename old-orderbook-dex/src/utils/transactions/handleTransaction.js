@@ -4,10 +4,10 @@ import transactions, {
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
   TX_STATUS_CANCELLED_BY_USER,
   TX_STATUS_CONFIRMED,
-  TX_STATUS_ERROR
-} from "../../store/reducers/transactions";
-import { fromJS } from "immutable";
-import { getTimestamp } from "../time";
+  TX_STATUS_ERROR,
+} from '../../store/reducers/transactions';
+import { fromJS } from 'immutable';
+import { getTimestamp } from '../time';
 
 /**
  *
@@ -58,15 +58,15 @@ const handleTransaction = (
       onStart,
       onPending,
       onCompleted,
-      onRejected
-    } = {}
+      onRejected,
+    } = {},
   },
-  { addTransactionEpic = transactions.actions.addTransactionEpic } = {}
+  { addTransactionEpic = transactions.actions.addTransactionEpic } = {},
 ) => {
   // console.log('handleTransaction');
 
   if (!transactionType) {
-    throw new Error("Transaction type not set!");
+    throw new Error('Transaction type not set!');
   }
 
   return new Promise(async (resolve, reject) => {
@@ -82,7 +82,7 @@ const handleTransaction = (
        * Then continue with component calling the action
        */
       onCancelCleanup && onCancelCleanup();
-      resolve({status: TX_STATUS_CANCELLED_BY_USER});
+      resolve({ status: TX_STATUS_CANCELLED_BY_USER });
     });
 
     // console.log('transactionActionResult', transactionActionResult);
@@ -94,7 +94,7 @@ const handleTransaction = (
         onTransactionPending({
           txHash: transactionHash,
           txStartTimestamp,
-          txMeta
+          txMeta,
         });
       const transactionConfirmationPromise = dispatch(
         addTransactionEpic({
@@ -102,8 +102,8 @@ const handleTransaction = (
           txHash: transactionHash,
           txMeta,
           txDispatchedTimestamp,
-          txStartTimestamp
-        })
+          txStartTimestamp,
+        }),
       );
 
       onPending && onPending({ txHash: transactionHash, txStartTimestamp });
@@ -111,7 +111,7 @@ const handleTransaction = (
       resolve({
         status: TX_STATUS_CONFIRMED,
         transactionConfirmationPromise: transactionConfirmationPromise
-          .then(to => {
+          .then((to) => {
             //First run Epic completion handler
             onTransactionCompleted && onTransactionCompleted(to);
             //Then continue with component calling the action
@@ -120,7 +120,7 @@ const handleTransaction = (
               if (nextTransactionDelay) {
                 setTimeout(
                   () => onCallNextTransaction(to, txMeta),
-                  nextTransactionDelay
+                  nextTransactionDelay,
                 );
               } else {
                 onCallNextTransaction(to, txMeta);
@@ -128,16 +128,16 @@ const handleTransaction = (
             }
             return fromJS(to);
           })
-          .catch(to => {
+          .catch((to) => {
             onTransactionRejected && onTransactionRejected(to);
             onRejected && onRejected(to);
           }),
-        transactionHash
+        transactionHash,
       });
     } else {
       reject({
         status: TX_STATUS_ERROR,
-        message: "No response from transactionDispatcher!"
+        message: 'No response from transactionDispatcher!',
       });
     }
   });

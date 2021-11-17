@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisTransactionIsAwaitingSign from './OasisTransactionIsAwaitingSign';
 
-
 describe('(Component) OasisTransactionIsAwaitingSign', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisTransactionIsAwaitingSign {...props}/>
-    );
+    const wrapper = shallow(<OasisTransactionIsAwaitingSign {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

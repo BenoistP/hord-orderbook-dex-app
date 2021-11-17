@@ -5,10 +5,10 @@ import BigNumber from 'bignumber.js';
 //import { Dapple, web3Obj } from 'meteor/makerotc:dapple';
 //import { Spacebars } from 'meteor/spacebars';
 
-const $ = undefined
-const Dapple = undefined
-const web3Obj = undefined
-const Session = undefined
+const $ = undefined;
+const Dapple = undefined;
+const web3Obj = undefined;
+const Session = undefined;
 
 /**
  * Best case scenario:
@@ -29,9 +29,11 @@ const Session = undefined
 function asToken(addressOrToken, defaultToken) {
   const allTokens = Dapple.getTokens();
 
-  if (!defaultToken
-    || typeof defaultToken !== 'string'
-    || !allTokens.includes(defaultToken)) {
+  if (
+    !defaultToken ||
+    typeof defaultToken !== 'string' ||
+    !allTokens.includes(defaultToken)
+  ) {
     throw Error('Wrong usage of the API. Read documentation');
   }
 
@@ -80,10 +82,14 @@ export function doHashChange() {
   let quoteCurrency = null;
   let baseCurrency = null;
 
-  if (location.hash.indexOf('#wrap') === -1 && location.hash.indexOf('#transfer') === -1) {
+  if (
+    location.hash.indexOf('#wrap') === -1 &&
+    location.hash.indexOf('#transfer') === -1
+  ) {
     if (location.hash.indexOf('#trade') === -1) {
-      location.hash = `#trade/${localStorage.getItem('baseCurrency') || 'MKR'}`
-        + `/${localStorage.getItem('quoteCurrency') || 'W-ETH'}`;
+      location.hash =
+        `#trade/${localStorage.getItem('baseCurrency') || 'MKR'}` +
+        `/${localStorage.getItem('quoteCurrency') || 'W-ETH'}`;
     }
     const coins = location.hash.replace(/#trade\//g, '').split('/');
 
@@ -104,9 +110,13 @@ export function doHashChange() {
     }
 
     // Looking for any existing pair that contains the currencies provided in the URL
-    const pair = Dapple.generatePairs().find((currentPair) =>
-    (currentPair.base === baseCurrency && currentPair.quote === quoteCurrency)
-    || (currentPair.base === quoteCurrency && currentPair.quote === baseCurrency));
+    const pair = Dapple.generatePairs().find(
+      (currentPair) =>
+        (currentPair.base === baseCurrency &&
+          currentPair.quote === quoteCurrency) ||
+        (currentPair.base === quoteCurrency &&
+          currentPair.quote === baseCurrency),
+    );
 
     // if such pair exists we use it to set the base and quote otherwise we default
     if (pair) {
@@ -124,8 +134,14 @@ export function doHashChange() {
 
   doTabShow();
 
-  Session.set('quoteCurrency', quoteCurrency || localStorage.getItem('quoteCurrency'));
-  Session.set('baseCurrency', baseCurrency || localStorage.getItem('baseCurrency'));
+  Session.set(
+    'quoteCurrency',
+    quoteCurrency || localStorage.getItem('quoteCurrency'),
+  );
+  Session.set(
+    'baseCurrency',
+    baseCurrency || localStorage.getItem('baseCurrency'),
+  );
 }
 
 export function txHref(tx) {
@@ -153,7 +169,7 @@ export function thousandSeparator(number) {
   const formatter = new Intl.NumberFormat(navigator.language);
 
   const whole = formatter.format(parts[0]);
-  const fraction = (parts[1] ? `${fractionSeparator()}${parts[1]}` : '');
+  const fraction = parts[1] ? `${fractionSeparator()}${parts[1]}` : '';
 
   return whole + fraction;
 }
@@ -167,7 +183,7 @@ export function formatNumber(number, dec) {
   if (typeof number !== 'object') {
     n = new BigNumber(`${number}`);
   }
-  const d = (new BigNumber(10)).pow(decimals);
+  const d = new BigNumber(10).pow(decimals);
   n = n.mul(d).trunc().div(d).toFixed(decimals, 6);
   return thousandSeparator(n);
 }
@@ -177,18 +193,21 @@ export function removeOutliersFromArray(data, fieldName, deviation) {
   if (data.length <= 2) {
     return data;
   }
-  let sum = 0;     // stores sum of elements
+  let sum = 0; // stores sum of elements
   let sumsq = 0; // stores sum of squares
   for (let i = 0; i < l; ++i) {
     sum += data[i][fieldName];
     sumsq += data[i][fieldName] * data[i][fieldName];
   }
   const mean = sum / l;
-  const varience = (sumsq / l) - (mean * mean);
+  const varience = sumsq / l - mean * mean;
   const sd = Math.sqrt(varience);
   const newData = []; // uses for data which is 3 standard deviations from the mean
   for (let i = 0; i < l; ++i) {
-    if (data[i][fieldName] > mean - (deviation * sd) && data[i][fieldName] < mean + (deviation * sd)) {
+    if (
+      data[i][fieldName] > mean - deviation * sd &&
+      data[i][fieldName] < mean + deviation * sd
+    ) {
       newData.push(data[i]);
     }
   }

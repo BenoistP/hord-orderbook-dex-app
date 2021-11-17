@@ -6,15 +6,15 @@ import { fromJS } from 'immutable';
 import {
   OasisTokenWrapFormWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisTokenWrapForm';
 import { shallow } from 'enzyme';
 import { TX_STATUS_AWAITING_CONFIRMATION } from '../store/reducers/transactions';
 
 describe('(Container) OasisTokenWrapForm', () => {
   const state = fromJS(global.storeMock);
-  const initialProps = mapStateToProps(state, { form: "wrapEther" });
-  const initialActions = mapDispatchToProps(x => x);
+  const initialProps = mapStateToProps(state, { form: 'wrapEther' });
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
@@ -28,16 +28,12 @@ describe('(Container) OasisTokenWrapForm', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisTokenWrapFormWrapper {...props}/>
-    );
+    const wrapper = shallow(<OasisTokenWrapFormWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

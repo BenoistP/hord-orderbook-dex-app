@@ -1,8 +1,8 @@
-import { ETH_UNIT_ETHER } from "../../constants";
-import { ASK, BID } from "../../store/reducers/trades";
-import { formatAmount, formatPrice } from "../tokens/pair";
+import { ETH_UNIT_ETHER } from '../../constants';
+import { ASK, BID } from '../../store/reducers/trades';
+import { formatAmount, formatPrice } from '../tokens/pair';
 
-export const myOffersDisplayFormat = offer => {
+export const myOffersDisplayFormat = (offer) => {
   let baseAmount = null,
     baseAmountFullPrecision = null,
     quoteAmount = null,
@@ -32,6 +32,6 @@ export const myOffersDisplayFormat = offer => {
     quoteAmount,
     quoteAmountFullPrecision,
     owner: offer.owner,
-    id: offer.id
+    id: offer.id,
   };
 };

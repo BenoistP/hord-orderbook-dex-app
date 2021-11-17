@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import StatusPictogram from './StatusPictogram';
 
-
 describe('(Component) StatusPictogram', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <StatusPictogram {...props}/>
-    );
+    const wrapper = shallow(<StatusPictogram {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

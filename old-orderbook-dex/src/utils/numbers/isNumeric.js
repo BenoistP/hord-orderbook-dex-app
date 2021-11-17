@@ -1,3 +1,3 @@
-const isNumeric = n => !isNaN(parseFloat(n)) && isFinite(n);
+const isNumeric = (n) => !isNaN(parseFloat(n)) && isFinite(n);
 
 export default isNumeric;

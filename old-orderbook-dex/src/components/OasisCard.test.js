@@ -8,11 +8,9 @@ import { shallow } from 'enzyme';
 describe('(Component) OasisCard', () => {
   it('should render', () => {
     const props = {
-      heading: 'Example heading'
+      heading: 'Example heading',
     };
-    const wrapper = shallow(
-      <OasisCard {...props}/>,
-    );
+    const wrapper = shallow(<OasisCard {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

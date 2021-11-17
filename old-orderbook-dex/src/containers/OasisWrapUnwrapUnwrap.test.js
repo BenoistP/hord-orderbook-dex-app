@@ -6,34 +6,30 @@ import { fromJS } from 'immutable';
 import {
   OasisWrapUnwrapUnwrapEther,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisWrapUnwrapUnwrapEther';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisWrapUnwrapUnwrap', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
-    hidden: false
+    hidden: false,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisWrapUnwrapUnwrapEther {...props}/>
-    );
+    const wrapper = shallow(<OasisWrapUnwrapUnwrapEther {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

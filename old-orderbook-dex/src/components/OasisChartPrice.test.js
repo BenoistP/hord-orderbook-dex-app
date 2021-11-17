@@ -13,7 +13,7 @@ import {
 describe('(Component) OasisChartPrice', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
@@ -24,9 +24,7 @@ describe('(Component) OasisChartPrice', () => {
   };
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisChartPrice {...props}/>,
-    );
+    const wrapper = shallow(<OasisChartPrice {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

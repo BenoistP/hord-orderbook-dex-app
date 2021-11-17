@@ -8,7 +8,6 @@ import { TAKE_BUY_OFFER } from '../store/reducers/offerTakes';
 import { TOKEN_MAKER, TOKEN_WRAPPED_ETH } from '../constants';
 import { fromJS } from 'immutable';
 
-
 describe('(Component) OasisOfferSummary', () => {
   it('should render', () => {
     const props = {
@@ -18,11 +17,9 @@ describe('(Component) OasisOfferSummary', () => {
       amountSold: '1',
       amountReceived: '1',
       gasEstimateInfo: fromJS({}),
-      isTokenTradingEnabled: true
+      isTokenTradingEnabled: true,
     };
-    const wrapper = shallow(
-      <OasisOfferSummary {...props}/>
-    );
+    const wrapper = shallow(<OasisOfferSummary {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

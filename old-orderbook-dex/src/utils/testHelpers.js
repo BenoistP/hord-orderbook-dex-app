@@ -1,6 +1,6 @@
 import MockDate from 'mockdate';
 import moment from 'moment-timezone';
-import {createAction} from 'redux-actions';
+import { createAction } from 'redux-actions';
 import BigNumber from 'bignumber.js';
 
 export function mockDate(date, block) {
@@ -15,8 +15,7 @@ export function mockDate(date, block) {
 }
 
 export function mockDatePromise(date, promise) {
-  if (!promise)
-    return null;
+  if (!promise) return null;
   MockDate.set(date);
   moment.tz.setDefault('UTC');
   return promise.then((v) => {
@@ -31,16 +30,17 @@ export function mockAction(name) {
 }
 
 export function dispatchMockAction(name, dispatch) {
-  return (...args) => dispatch(
-    createAction('MOCK___' + name, (...args) => args)(...args)
-  );
+  return (...args) =>
+    dispatch(createAction('MOCK___' + name, (...args) => args)(...args));
 }
 
 export function mockEpic(name, dispatch) {
-  return (f) => (...args) => async () => {
-    dispatch(createAction('MOCK___' + name, (...args) => args)(...args));
-    return f(...args);
-  };
+  return (f) =>
+    (...args) =>
+    async () => {
+      dispatch(createAction('MOCK___' + name, (...args) => args)(...args));
+      return f(...args);
+    };
 }
 
 export function asyncMock(mock) {

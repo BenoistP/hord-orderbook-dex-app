@@ -5,12 +5,12 @@ import React from 'react';
 import {
   OasisWelcomeMessageWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisWelcomeMessage';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisWelcomeMessage', () => {
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
   };
@@ -20,10 +20,7 @@ describe('(Container) OasisWelcomeMessage', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisWelcomeMessageWrapper {...props}/>
-    );
+    const wrapper = shallow(<OasisWelcomeMessageWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

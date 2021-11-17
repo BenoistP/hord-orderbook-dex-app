@@ -1,16 +1,16 @@
-import loadContact from "../utils/contracts/loadContract";
-import createContractInstance from "../utils/contracts/createContractInstance";
+import loadContact from '../utils/contracts/loadContract';
+import createContractInstance from '../utils/contracts/createContractInstance';
 
-const config = require("./../configs");
+const config = require('./../configs');
 
-const erc20Abi = require("./../contracts/abi/standard-token/erc20");
-const WEthAbi = require("./../contracts/abi/standard-token/ds-eth-token");
-const TokenWrapperAbi = require("./../contracts/abi/token-wrapper/token-wrapper");
-const MatchingMarketAbi = require("./../contracts/abi/maker-otc/matching-market");
-const DepositBrokerAbi = require("./../contracts/abi/token-wrapper/deposit-broker");
-const OTCSupportContractAbi = require("../contracts/abi/otc-support-methods/otc-support-methods");
-import { fromJS } from "immutable";
-import web3 from "./web3";
+const erc20Abi = require('./../contracts/abi/standard-token/erc20');
+const WEthAbi = require('./../contracts/abi/standard-token/ds-eth-token');
+const TokenWrapperAbi = require('./../contracts/abi/token-wrapper/token-wrapper');
+const MatchingMarketAbi = require('./../contracts/abi/maker-otc/matching-market');
+const DepositBrokerAbi = require('./../contracts/abi/token-wrapper/deposit-broker');
+const OTCSupportContractAbi = require('../contracts/abi/otc-support-methods/otc-support-methods');
+import { fromJS } from 'immutable';
+import web3 from './web3';
 import {
   TOKEN_DAI,
   TOKEN_DIGIX,
@@ -23,25 +23,25 @@ let brokers = fromJS({});
 let contracts = {};
 let contractsInitialized = false;
 
-const init = networkName => {
-  const tokencontractsDeploymentAdressessList = config["tokens"][networkName];
-  const marketDeploymentAddress = config["market"][networkName]["address"];
+const init = (networkName) => {
+  const tokencontractsDeploymentAdressessList = config['tokens'][networkName];
+  const marketDeploymentAddress = config['market'][networkName]['address'];
 
   const WETH = loadContact(
     WEthAbi.interface,
-    tokencontractsDeploymentAdressessList["W-ETH"]
+    tokencontractsDeploymentAdressessList['W-ETH'],
   );
   const DAI = loadContact(
     erc20Abi.interface,
-    tokencontractsDeploymentAdressessList["DAI"]
+    tokencontractsDeploymentAdressessList['DAI'],
   );
   const MKR = loadContact(
     erc20Abi.interface,
-    tokencontractsDeploymentAdressessList["MKR"]
+    tokencontractsDeploymentAdressessList['MKR'],
   );
   const DGD = loadContact(
     erc20Abi.interface,
-    tokencontractsDeploymentAdressessList["DGD"]
+    tokencontractsDeploymentAdressessList['DGD'],
   );
   // const GNT = loadContact(
   //   erc20Abi.interface,
@@ -53,29 +53,28 @@ const init = networkName => {
   // );
   const RHOC = loadContact(
     erc20Abi.interface,
-    tokencontractsDeploymentAdressessList["RHOC"]
+    tokencontractsDeploymentAdressessList['RHOC'],
   );
   const market = loadContact(
     MatchingMarketAbi.interface,
-    marketDeploymentAddress
+    marketDeploymentAddress,
   );
   const marketNoProxy = loadContact(
     MatchingMarketAbi.interface,
     marketDeploymentAddress,
-    true
+    true,
   );
 
   const OTCSupportMethods = loadContact(
     OTCSupportContractAbi.interface,
-    config.otcSupportMethods[networkName].address
+    config.otcSupportMethods[networkName].address,
   );
 
   const OTCSupportMethodsNoProxy = loadContact(
     OTCSupportContractAbi.interface,
     config.otcSupportMethods[networkName].address,
-    true
+    true,
   );
-
 
   // const WGNTNoProxy = loadContact(
   //   TokenWrapperAbi.interface,
@@ -88,7 +87,7 @@ const init = networkName => {
     WEthAbi,
     TokenWrapperAbi,
     DepositBrokerAbi,
-    OTCSupportContractAbi
+    OTCSupportContractAbi,
   });
 
   contracts = Object.freeze({
@@ -99,7 +98,7 @@ const init = networkName => {
       [TOKEN_MAKER]: MKR,
       [TOKEN_DIGIX]: DGD,
       // [TOKEN_GOLEM]: GNT,
-      [TOKEN_RHOC]: RHOC
+      [TOKEN_RHOC]: RHOC,
     },
     market,
     noProxyTokens: {
@@ -109,27 +108,27 @@ const init = networkName => {
     OTCSupportMethods,
     OTCSupportMethodsNoProxy,
     abiList,
-    createContractInstance
+    createContractInstance,
   });
   setContractsInitialized();
 };
 
-const setContractsInitialized = initializationState =>
+const setContractsInitialized = (initializationState) =>
   (contractsInitialized = initializationState);
 
 const initDepositBrokerContract = (token, address) => {
   if (!web3.isAddress(address)) {
-    throw new Error("This is not Ethereum address!");
+    throw new Error('This is not Ethereum address!');
   }
   brokers = brokers.set(
     token,
-    loadContact(DepositBrokerAbi.interface, address)
+    loadContact(DepositBrokerAbi.interface, address),
   );
-  console.log("initDepositBrokerContract", brokers);
+  console.log('initDepositBrokerContract', brokers);
   return brokers.get(token);
 };
 
-const getTokenContractInstance = tokenName => {
+const getTokenContractInstance = (tokenName) => {
   if (contracts.tokens[tokenName]) {
     return contracts.tokens[tokenName];
   } else {
@@ -164,10 +163,10 @@ const getOTCSupportMethodsNoProxyContractInstance = () => {
 const getTokenContractsList = () => contracts.tokens;
 
 const getMarketNoProxyContractInstance = () => contracts.marketNoProxy;
-const getTokenNoProxyContractInstance = tokenName =>
+const getTokenNoProxyContractInstance = (tokenName) =>
   contracts.noProxyTokens[tokenName];
 
-const getDepositBrokerContractInstance = token => {
+const getDepositBrokerContractInstance = (token) => {
   if (brokers.has(token)) {
     return brokers.get(token);
   }
@@ -185,9 +184,9 @@ export {
   initDepositBrokerContract,
   areContractsInitialized,
   getOTCSupportMethodsContractInstance,
-  getOTCSupportMethodsNoProxyContractInstance
+  getOTCSupportMethodsNoProxyContractInstance,
 };
 
 export default {
-  init
+  init,
 };

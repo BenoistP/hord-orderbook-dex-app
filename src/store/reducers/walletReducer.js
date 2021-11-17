@@ -22,13 +22,25 @@ export default (state = initialState, action) => {
 
   switch (type) {
     case walletActionTypes.CONNECT_WALLET_START:
-      return { ...state, connectingWallet: true, connectingWalletAccountType: payload };
+      return {
+        ...state,
+        connectingWallet: true,
+        connectingWalletAccountType: payload,
+      };
 
     case walletActionTypes.CONNECT_WALLET_END:
-      return { ...state, connectingWallet: false, connectingWalletAccountType: '' };
+      return {
+        ...state,
+        connectingWallet: false,
+        connectingWalletAccountType: '',
+      };
 
     case walletActionTypes.CONNECT_WALLET_PROVIDER:
-      return { ...state, connectingWalletProvider: true, connectingWalletProviderError: '' };
+      return {
+        ...state,
+        connectingWalletProvider: true,
+        connectingWalletProviderError: '',
+      };
 
     case walletActionTypes.CONNECT_WALLET_PROVIDER_SUCCESS:
       return {

@@ -7,11 +7,9 @@ import { OasisExpirationDate } from './OasisExpirationDate';
 describe('(Component) OasisExpirationDate', () => {
   it('should render', () => {
     const props = {
-      timestamp: 1536674743
+      timestamp: 1536674743,
     };
-    const wrapper = shallow(
-      <OasisExpirationDate {...props}/>,
-    );
+    const wrapper = shallow(<OasisExpirationDate {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

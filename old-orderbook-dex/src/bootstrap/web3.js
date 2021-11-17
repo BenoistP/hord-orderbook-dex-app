@@ -1,8 +1,8 @@
-import Web3 from "web3";
-import { fromJS } from "immutable";
-import { detectNetworkChange } from "./network";
-import networkReducer from "../store/reducers/network";
-import platformReducer from "../store/reducers/platform";
+import Web3 from 'web3';
+import { fromJS } from 'immutable';
+import { detectNetworkChange } from './network';
+import networkReducer from '../store/reducers/network';
+import platformReducer from '../store/reducers/platform';
 import {
   SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS,
   SUBSCRIPTIONS_TOKEN_TRANSFER_HISTORY_EVENTS,
@@ -21,12 +21,12 @@ const subscriptions = {
   transferHistoryEventSubs: fromJS({}),
   wrapUnwrapHistoryEventSubs: fromJS({}),
   ethBalanceChangeEventSub: null,
-  userMarketHistoryEventSubs: fromJS({ makes: null, takes: null })
+  userMarketHistoryEventSubs: fromJS({ makes: null, takes: null }),
 };
 
-const settings = require("../settings");
+const settings = require('../settings');
 
-const promisify = inner =>
+const promisify = (inner) =>
   new Promise((resolve, reject) =>
     inner((err, res) => {
       if (err) {
@@ -34,20 +34,20 @@ const promisify = inner =>
       } else {
         resolve(res);
       }
-    })
+    }),
   );
 
 const proxiedWeb3Handler = {
   get: (target, name) => {
     const inner = target[name];
     if (inner instanceof Function) {
-      return (...args) => promisify(cb => inner(...args, cb));
-    } else if (typeof inner === "object") {
+      return (...args) => promisify((cb) => inner(...args, cb));
+    } else if (typeof inner === 'object') {
       return new window.Proxy(inner, proxiedWeb3Handler);
     } else {
       return inner;
     }
-  }
+  },
 };
 
 const registerAccountSpecificSubscriptions = ({
@@ -55,31 +55,34 @@ const registerAccountSpecificSubscriptions = ({
   transferHistoryEventSub,
   wrapUnwrapHistoryEventSub,
   ethBalanceChangeEventSub,
-  userMarketHistoryEventSubs
+  userMarketHistoryEventSubs,
 }) => {
   if (userMarketHistoryEventSubs) {
-    subscriptions.userMarketHistoryEventSubs = subscriptions.transferHistoryEventSubs.set(
-      userMarketHistoryEventSubs.key,
-      userMarketHistoryEventSubs.value
-    );
+    subscriptions.userMarketHistoryEventSubs =
+      subscriptions.transferHistoryEventSubs.set(
+        userMarketHistoryEventSubs.key,
+        userMarketHistoryEventSubs.value,
+      );
   } else if (tokenTransferEventSubs) {
     subscriptions.tokenTransferEventSubs = tokenTransferEventSubs;
   } else if (transferHistoryEventSub) {
-    subscriptions.transferHistoryEventSubs = subscriptions.transferHistoryEventSubs.set(
-      transferHistoryEventSub.key,
-      transferHistoryEventSub.value
-    );
+    subscriptions.transferHistoryEventSubs =
+      subscriptions.transferHistoryEventSubs.set(
+        transferHistoryEventSub.key,
+        transferHistoryEventSub.value,
+      );
   } else if (wrapUnwrapHistoryEventSub) {
-    subscriptions.wrapUnwrapHistoryEventSubs = subscriptions.wrapUnwrapHistoryEventSubs.set(
-      wrapUnwrapHistoryEventSub.key,
-      wrapUnwrapHistoryEventSub.value
-    );
+    subscriptions.wrapUnwrapHistoryEventSubs =
+      subscriptions.wrapUnwrapHistoryEventSubs.set(
+        wrapUnwrapHistoryEventSub.key,
+        wrapUnwrapHistoryEventSub.value,
+      );
   } else if (ethBalanceChangeEventSub) {
     subscriptions.ethBalanceChangeEventSub = ethBalanceChangeEventSub;
   }
 };
 
-const getSubscriptionsByType = group => {
+const getSubscriptionsByType = (group) => {
   switch (group) {
     case SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS:
       return subscriptions.userMarketHistoryEventSubs;
@@ -96,33 +99,33 @@ const getSubscriptionsByTypeAndTag = (group, tag) => {
 const clearAccountSpecificSubscriptions = ({ dispatch }) => {
   subscriptions.tokenTransferEventSubs
     .valueSeq()
-    .forEach(sub => sub.stopWatching());
+    .forEach((sub) => sub.stopWatching());
   dispatch(
     platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS
-    )
+      SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS,
+    ),
   );
 
   subscriptions.transferHistoryEventSubs
     .valueSeq()
-    .forEach(sub => sub.stopWatching());
+    .forEach((sub) => sub.stopWatching());
   dispatch(
     platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_TOKEN_TRANSFER_HISTORY_EVENTS
-    )
+      SUBSCRIPTIONS_TOKEN_TRANSFER_HISTORY_EVENTS,
+    ),
   );
   subscriptions.userMarketHistoryEventSubs
     .valueSeq()
-    .forEach(sub => sub.stopWatching());
+    .forEach((sub) => sub.stopWatching());
   dispatch(
     platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS
-    )
+      SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
+    ),
   );
 
   subscriptions.wrapUnwrapHistoryEventSubs
     .valueSeq()
-    .forEach(sub => sub.stopWatching());
+    .forEach((sub) => sub.stopWatching());
   subscriptions.ethBalanceChangeEventSub.stopWatching();
   subscriptions.tokenTransferEventSubs = fromJS({});
   subscriptions.transferHistoryEventSubs = fromJS({});
@@ -135,37 +138,34 @@ const init = async (dispatch) => {
   if (window.ethereum) {
     web3.setProvider(window.ethereum);
     web3p = new window.Proxy(web3, proxiedWeb3Handler);
-    await dispatch(
-      networkReducer.actions.setWaitingForNetworkAccess(true)
-    );
-    window.ethereum.enable().then(() => {
-      dispatch(
-        networkReducer.actions.setWaitingForNetworkAccess(false)
-      );
-    }).catch(e => {
-      console.log(e);
-      dispatch(
-        networkReducer.actions.setWaitingForNetworkAccess(false)
-      );
-      dispatch(platformReducer.actions.accountLocked());
-    });
+    await dispatch(networkReducer.actions.setWaitingForNetworkAccess(true));
+    window.ethereum
+      .enable()
+      .then(() => {
+        dispatch(networkReducer.actions.setWaitingForNetworkAccess(false));
+      })
+      .catch((e) => {
+        console.log(e);
+        dispatch(networkReducer.actions.setWaitingForNetworkAccess(false));
+        dispatch(platformReducer.actions.accountLocked());
+      });
     setInterval(detectNetworkChange, 500);
   } else if (window.web3) {
     web3.setProvider(window.web3.currentProvider);
     web3p = new window.Proxy(web3, proxiedWeb3Handler);
     setInterval(detectNetworkChange, 500);
   } else {
-    console.info("Cant connect to inPage Provider!");
+    console.info('Cant connect to inPage Provider!');
     fetch(settings.nodeURL)
       .then(
         () => {
-          console.info("Connecting to local Parity node");
+          console.info('Connecting to local Parity node');
           web3.setProvider(new Web3.providers.HttpProvider(settings.nodeURL));
           web3p = new window.Proxy(web3, proxiedWeb3Handler);
         },
-        () => {}
+        () => {},
       )
-      .catch(() => console.info("Cant connect to local node!"));
+      .catch(() => console.info('Cant connect to local node!'));
   }
 };
 window.solSha3 = solSha3;
@@ -176,5 +176,5 @@ export {
   registerAccountSpecificSubscriptions,
   getSubscriptionsByType,
   getSubscriptionsByTypeAndTag,
-  clearAccountSpecificSubscriptions
+  clearAccountSpecificSubscriptions,
 };

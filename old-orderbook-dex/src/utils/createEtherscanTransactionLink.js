@@ -1,8 +1,8 @@
-import { KOVAN } from "../constants";
+import { KOVAN } from '../constants';
 
 const createEtherscanTransactionLink = ({
   activeNetworkName,
-  transactionHash
+  transactionHash,
 }) => {
   switch (activeNetworkName) {
     case KOVAN:
@@ -12,10 +12,7 @@ const createEtherscanTransactionLink = ({
   }
 };
 
-export const createEtherscanAddressLink = ({
-  networkName,
-  address,
-}) => {
+export const createEtherscanAddressLink = ({ networkName, address }) => {
   switch (networkName) {
     case KOVAN:
       return `https://${networkName}.etherscan.io/address/${address}`;

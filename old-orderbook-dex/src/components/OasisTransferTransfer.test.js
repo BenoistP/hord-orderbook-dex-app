@@ -7,13 +7,9 @@ import OasisTransferTransfer from './OasisTransferTransfer';
 describe('(Component) OasisTransferTransfer', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      ),
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisTransferTransfer {...props}/>,
-    );
+    const wrapper = shallow(<OasisTransferTransfer {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -1,9 +1,6 @@
-import web3 from "./web3";
-import { ERRORS } from "../utils/errorCodes";
-import {
-  PROVIDER_TYPE_METAMASK,
-  PROVIDER_TYPE_MIST,
-} from '../constants';
+import web3 from './web3';
+import { ERRORS } from '../utils/errorCodes';
+import { PROVIDER_TYPE_METAMASK, PROVIDER_TYPE_MIST } from '../constants';
 
 export const HEALTHCHECK_INTERVAL_MS = 6000;
 
@@ -33,4 +30,4 @@ export const detectNetworkChange = () => {
     window.location.reload();
   }
   lastNetworkId = networkId;
-}
+};

@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisInlineTokenBalance from './OasisInlineTokenBalance';
 
-
 describe('(Component) OasisInlineTokenBalance', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisInlineTokenBalance {...props}/>
-    );
+    const wrapper = shallow(<OasisInlineTokenBalance {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

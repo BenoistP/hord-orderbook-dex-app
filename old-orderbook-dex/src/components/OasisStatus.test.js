@@ -9,11 +9,9 @@ import { ONLINE } from '../constants';
 describe('(Component) OasisStatus', () => {
   it('should render', () => {
     const props = {
-      status: ONLINE
+      status: ONLINE,
     };
-    const wrapper = shallow(
-      <OasisStatus {...props}/>,
-    );
+    const wrapper = shallow(<OasisStatus {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

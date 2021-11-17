@@ -6,7 +6,7 @@ import { fromJS } from 'immutable';
 import {
   OasisTakeOfferModalWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisTakeOfferModal';
 import { shallow } from 'enzyme';
 import { TAKE_BUY_OFFER } from '../store/reducers/offerTakes';
@@ -14,27 +14,23 @@ import { TAKE_BUY_OFFER } from '../store/reducers/offerTakes';
 describe('(Container) OasisTakeOfferModal', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
-    offerTakeType: TAKE_BUY_OFFER
+    offerTakeType: TAKE_BUY_OFFER,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisTakeOfferModalWrapper {...props}/>
-    );
+    const wrapper = shallow(<OasisTakeOfferModalWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

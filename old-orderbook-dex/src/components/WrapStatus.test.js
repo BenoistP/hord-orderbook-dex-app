@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import WrapStatus from './WrapStatus';
 
-
 describe('(Component) WrapStatus', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <WrapStatus {...props}/>
-    );
+    const wrapper = shallow(<WrapStatus {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

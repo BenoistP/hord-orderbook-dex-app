@@ -13,10 +13,10 @@ import { shallow } from 'enzyme';
 describe('(Container) OasisFooter', () => {
   const state = Immutable.fromJS({});
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
@@ -28,10 +28,7 @@ describe('(Container) OasisFooter', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisFooterWrapper {...props}/>,
-    );
+    const wrapper = shallow(<OasisFooterWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

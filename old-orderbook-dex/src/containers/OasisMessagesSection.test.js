@@ -18,17 +18,17 @@ describe('(Container) OasisMessagesSection', () => {
         messages: {
           [MSGTYPE_WARNING]: {},
           [MSGTYPE_INFO]: {
-            dismissed: false
-          }
-        }
-      }
-    }
+            dismissed: false,
+          },
+        },
+      },
+    },
   });
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
@@ -40,10 +40,7 @@ describe('(Container) OasisMessagesSection', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisMessagesSectionWrapper {...props}/>,
-    );
+    const wrapper = shallow(<OasisMessagesSectionWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

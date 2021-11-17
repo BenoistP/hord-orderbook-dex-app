@@ -1,15 +1,13 @@
 /* eslint-disable no-undef */
 import { configure } from 'enzyme';
-import {Map} from 'immutable';
+import { Map } from 'immutable';
 import Adapter from 'enzyme-adapter-react-16';
 
 // jest.mock('./src/bootstrap/contracts');
-import  contractBootstrap from './src/bootstrap/contracts';
+import contractBootstrap from './src/bootstrap/contracts';
 
 configure({ adapter: new Adapter() });
-jest.mock('react-css-modules', () => Component => Component);
-
-
+jest.mock('react-css-modules', () => (Component) => Component);
 
 global.storeMock = {
   contracts: {},
@@ -20,71 +18,71 @@ global.storeMock = {
         recipient: {
           name: 'recipient',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         tokenAmount: {
           name: 'tokenAmount',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         token: {
           name: 'token',
           type: 'Field',
-          count: 1
-        }
+          count: 1,
+        },
       },
       values: {
         recipient: '0x0000000000000000000000000000000000000001',
         tokenAmount: '1',
-        token: 'W-ETH'
+        token: 'W-ETH',
       },
       fields: {
         recipient: {
           visited: true,
-          touched: true
+          touched: true,
         },
         tokenAmount: {
           visited: true,
-          touched: true
-        }
+          touched: true,
+        },
       },
-      anyTouched: true
+      anyTouched: true,
     },
     takeOffer: {
       values: {
         price: '111',
         volume: '0.0001',
-        total: '0.0111'
+        total: '0.0111',
       },
       initial: {
         price: '111',
         volume: '1',
-        total: '111'
+        total: '111',
       },
       registeredFields: {
         price: {
           name: 'price',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         volume: {
           name: 'volume',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         total: {
           name: 'total',
           type: 'Field',
-          count: 1
-        }
+          count: 1,
+        },
       },
       fields: {
         volume: {
           visited: true,
-          touched: true
-        }
+          touched: true,
+        },
       },
-      anyTouched: true
+      anyTouched: true,
     },
     makeBuyOffer: {
       syncErrors: {},
@@ -92,29 +90,29 @@ global.storeMock = {
         price: {
           name: 'price',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         volume: {
           name: 'volume',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         total: {
           name: 'total',
           type: 'Field',
-          count: 1
-        }
+          count: 1,
+        },
       },
       values: {
         price: '1',
         volume: '1',
-        total: '1'
+        total: '1',
       },
       initial: {
         price: '1',
         volume: '1',
-        total: '1'
-      }
+        total: '1',
+      },
     },
     makeSellOffer: {
       syncErrors: {},
@@ -122,60 +120,58 @@ global.storeMock = {
         price: {
           name: 'price',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         volume: {
           name: 'volume',
           type: 'Field',
-          count: 1
+          count: 1,
         },
         total: {
           name: 'total',
           type: 'Field',
-          count: 1
-        }
+          count: 1,
+        },
       },
       values: {
         price: '1',
         volume: '1',
-        total: '1'
+        total: '1',
       },
       initial: {
         price: '1',
         volume: '1',
-        total: '1'
-      }
+        total: '1',
+      },
     },
   },
   accounts: {
     defaultAccount: '0x0000000000000000000000000000000000000000',
-    accounts: [
-      '0x0000000000000000000000000000000000000000'
-    ],
-    lastAccountSwitchAt: 1522860054.016
+    accounts: ['0x0000000000000000000000000000000000000000'],
+    lastAccountSwitchAt: 1522860054.016,
   },
   wrapUnwrapHistory: {
     historyLoadingStatus: null,
-    wrapUnwrapHistory: []
+    wrapUnwrapHistory: [],
   },
   transfers: {
-    txSubjectId: null
+    txSubjectId: null,
   },
   transferHistory: {
     tokensLoadingStatus: {
       MKR: {
-        status: 'TRANSFER_HISTORY/LOAD_STATUS_PENDING'
-      }
+        status: 'TRANSFER_HISTORY/LOAD_STATUS_PENDING',
+      },
     },
-    transferHistory: []
+    transferHistory: [],
   },
   router: {
     location: {
       pathname: '/trade/MKR/DAI',
       search: '',
       hash: '',
-      key: 'fr2gji'
-    }
+      key: 'fr2gji',
+    },
   },
   offerMakes: {
     makeBuyOffer: {
@@ -183,65 +179,65 @@ global.storeMock = {
       activeOfferMake: {
         offerData: {
           payToken: null,
-          buyToken: null
+          buyToken: null,
         },
         buyToken: 'MKR',
         sellToken: 'DAI',
         baseToken: 'MKR',
         quoteToken: 'DAI',
         sellTokenAddress: '0xc4375b7de8af5a38a93548eb8453a498222c4ff2',
-        buyTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd'
+        buyTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
       },
       isOfferMakeModalOpen: false,
       activeOfferMakeOfferDraftId: null,
       transactionGasCostEstimate: null,
       txSubjectId: null,
-      drafts: []
+      drafts: [],
     },
     makeSellOffer: {
       type: 'OFFER_MAKES/MAKE_SELL_OFFER',
       activeOfferMake: {
         offerData: {
           payToken: null,
-          buyToken: null
+          buyToken: null,
         },
         buyToken: 'DAI',
         sellToken: 'MKR',
         baseToken: 'MKR',
         quoteToken: 'DAI',
         sellTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
-        buyTokenAddress: '0xc4375b7de8af5a38a93548eb8453a498222c4ff2'
+        buyTokenAddress: '0xc4375b7de8af5a38a93548eb8453a498222c4ff2',
       },
       isOfferMakeModalOpen: false,
       activeOfferMakeOfferDraftId: null,
       transactionGasCostEstimate: null,
       txSubjectId: null,
-      drafts: []
+      drafts: [],
     },
-    activeOfferMakeType: "OFFER_MAKES/MAKE_BUY_OFFER"
+    activeOfferMakeType: 'OFFER_MAKES/MAKE_BUY_OFFER',
   },
   wrapUnwrap: {
     wrapperTokenPairs: [
       {
         unwrapped: 'ETH',
-        wrapper: 'W-ETH'
+        wrapper: 'W-ETH',
       },
       {
         unwrapped: 'GNT',
-        wrapper: 'W-GNT'
-      }
+        wrapper: 'W-GNT',
+      },
     ],
     activeUnwrappedToken: 'GNT',
     loadedBrokerContracts: [],
     brokerAddresses: {
-      GNT: '0x0000000000000000000000000000000000000001'
+      GNT: '0x0000000000000000000000000000000000000001',
     },
     activeTokenWrapStatus: null,
-    activeTokenUnwrapStatus: null
+    activeTokenUnwrapStatus: null,
   },
   timers: {
     timestamp: 1522866862,
-    timeoutId: 13
+    timeoutId: 13,
   },
   network: {
     outOfSync: true,
@@ -252,26 +248,26 @@ global.storeMock = {
         id: 100,
         name: 'private',
         startingBlock: null,
-        avgBlocksPerDay: null
+        avgBlocksPerDay: null,
       },
       {
         id: 1,
         name: 'mainnet',
         startingBlock: null,
-        avgBlocksPerDay: 5760
+        avgBlocksPerDay: 5760,
       },
       {
         id: 42,
         name: 'kovan',
         startingBlock: null,
-        avgBlocksPerDay: 21600
+        avgBlocksPerDay: 21600,
       },
       {
         id: 3,
         name: 'Ropsten',
         startingBlock: null,
-        avgBlocksPerDay: null
-      }
+        avgBlocksPerDay: null,
+      },
     ],
     tokenAddresses: {
       DGD: '0xbb7697d091a2b9428053e2d42d088fcd2a6a0aaf',
@@ -293,7 +289,7 @@ global.storeMock = {
       'W-GNT': '0xbd1ceb35769eb44b641c8e257005817183fc2817',
       PLU: '0x00a0fcaa32b47c4ab4a8fdda6d108e5c1ffd8e4f',
       SAI: '0x228bf3d5be3ee4b80718b89b68069b023c32131e',
-      REP: '0x99e846cfe0321260e51963a2114bc4008d092e24'
+      REP: '0x99e846cfe0321260e51963a2114bc4008d092e24',
     },
     latestEthereumPrice: {
       id: 'ethereum',
@@ -310,7 +306,7 @@ global.storeMock = {
       percent_change_1h: '-0.99',
       percent_change_24h: '-8.14',
       percent_change_7d: '-16.34',
-      last_updated: '1522866553'
+      last_updated: '1522866553',
     },
     latestBlock: {},
     latestBlockNumber: 6716998,
@@ -318,13 +314,13 @@ global.storeMock = {
     activeNetworkName: 'kovan',
     sync: {
       isPending: false,
-      ts: null
-    }
+      ts: null,
+    },
   },
   widgets: {
     OasisMarketWidget: {
-      isExpanded: false
-    }
+      isExpanded: false,
+    },
   },
   userTrades: {
     volumes: {},
@@ -337,84 +333,84 @@ global.storeMock = {
     latestEventsBlocks: {
       LogTake: null,
       LogMake: null,
-      LogTrade: null
+      LogTrade: null,
     },
-    trades: []
+    trades: [],
   },
   trades: {
     volumes: {
       'W-ETH/DAI': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'TIME/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'VSL/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'MLN/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       '1ST/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'NMR/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'SNGLS/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'ICN/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'MKR/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'BAT/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'W-GNT/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'PLU/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'MKR/DAI': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'REP/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'DGD/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'GUP/W-ETH': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'SAI/DAI': {
         volume: 0,
-        latestPrice: null
+        latestPrice: null,
       },
       'RHOC/W-ETH': {
         volume: 0,
-        latestPrice: null
-      }
+        latestPrice: null,
+      },
     },
     marketHistory: [],
     initialMarketHistoryLoaded: true,
@@ -424,42 +420,42 @@ global.storeMock = {
     latestEventsBlocks: {
       LogTake: null,
       LogMake: null,
-      LogTrade: null
+      LogTrade: null,
     },
-    trades: []
+    trades: [],
   },
   offerTakes: {
     transactionGasCostEstimatePending: null,
-        checkingIfOfferActive: false,
-        transactionGasCostEstimate: null,
-        activeOfferTakeType: 'OFFER_TAKES/TAKE_SELL_OFFER',
-        minOrderLimitInWei: '100000000000000000',
-        isOfferActive: true,
-        transactionGasCostEstimateError: null,
-        activeOfferTakeOfferId: '12',
-        activeOfferTake: {
+    checkingIfOfferActive: false,
+    transactionGasCostEstimate: null,
+    activeOfferTakeType: 'OFFER_TAKES/TAKE_SELL_OFFER',
+    minOrderLimitInWei: '100000000000000000',
+    isOfferActive: true,
+    transactionGasCostEstimateError: null,
+    activeOfferTakeOfferId: '12',
+    activeOfferTake: {
       offerData: {
-        buyHowMuch_filter: 1.951718560884e+21,
-            buyWhichToken: 'W-ETH',
-            ask_price: '2',
-            sellWhichTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
-            bid_price: '0.5',
-            sellHowMuch: '975859280442000000000',
-            sellHowMuch_filter: 975859280442000000000,
-            sellWhichToken: 'MKR',
-            buyWhichTokenAddress: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-            owner: '0xdb33dfd3d61308c33c63209845dad3e6bfb2c674',
-            bid_price_sort: 0.5,
-            buyHowMuch: '1.951718560884e+21',
-            ask_price_sort: 2,
-            id: '12'
+        buyHowMuch_filter: 1.951718560884e21,
+        buyWhichToken: 'W-ETH',
+        ask_price: '2',
+        sellWhichTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
+        bid_price: '0.5',
+        sellHowMuch: '975859280442000000000',
+        sellHowMuch_filter: 975859280442000000000,
+        sellWhichToken: 'MKR',
+        buyWhichTokenAddress: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
+        owner: '0xdb33dfd3d61308c33c63209845dad3e6bfb2c674',
+        bid_price_sort: 0.5,
+        buyHowMuch: '1.951718560884e+21',
+        ask_price_sort: 2,
+        id: '12',
       },
       buyToken: 'MKR',
-          sellToken: 'W-ETH',
-          baseToken: 'MKR',
-          quoteToken: 'W-ETH'
+      sellToken: 'W-ETH',
+      baseToken: 'MKR',
+      quoteToken: 'W-ETH',
     },
-    isOfferTakeModalOpen: true
+    isOfferTakeModalOpen: true,
   },
   tokenEvents: {},
   platform: {
@@ -474,19 +470,20 @@ global.storeMock = {
     marketInitialized: true,
     defaultTradingPair: {
       baseToken: 'MKR',
-      quoteToken: 'W-ETH'
+      quoteToken: 'W-ETH',
     },
     metamaskLocked: false,
-    lastNetworkSwitchAt: 1522860054274
+    lastNetworkSwitchAt: 1522860054274,
   },
   history: {
     tokensLoadingStatus: {},
-    transferHistory: []
+    transferHistory: [],
   },
   transactions: {
     txList: [
       {
-        txHash: '0x110b48acd19927bae9f4f492efd60953e4e173000885cb5df43761b7c8a7e711',
+        txHash:
+          '0x110b48acd19927bae9f4f492efd60953e4e173000885cb5df43761b7c8a7e711',
         txReceipt: {},
         txType: 'TRANSACTIONS/GROUP__OFFERS/OFFER_TAKE',
         txStatus: 'TX/STATUS_CONFIRMED',
@@ -496,19 +493,19 @@ global.storeMock = {
           txStartTimestamp: 1525383907883,
           txEndTimestamp: 1525383921570,
           txEndBlockNumber: 7116384,
-          txTotalTimeSec: null
-        }
-      }
+          txTotalTimeSec: null,
+        },
+      },
     ],
     defaultGasLimit: '10000000',
     activeGasLimit: '10000000',
     defaultGasPrice: '1000000',
     activeGasPrice: '1000000',
     currentGasPriceInWei: '30000000000',
-    txNonce: 2
+    txNonce: 2,
   },
   transactionWatchers: {
-    watchers: []
+    watchers: [],
   },
   wgnt: {},
   session: {
@@ -532,16 +529,16 @@ global.storeMock = {
       loading: false,
       allowanceLoaded: false,
       limitsLoaded: false,
-      isConnected: false
+      isConnected: false,
     },
     persist: {
       messages: {
         MSGTYPE_WARNING: {},
         MSGTYPE_INFO: {
-          dismissed: false
-        }
-      }
-    }
+          dismissed: false,
+        },
+      },
+    },
   },
   balances: {
     accounts: [],
@@ -568,15 +565,15 @@ global.storeMock = {
       'W-GNT': '0',
       PLU: '0',
       SAI: '0',
-      REP: '0'
+      REP: '0',
     },
-    tokenAllowances: {}
+    tokenAllowances: {},
   },
 
   offers: {
     activeTradingPairBestOfferId: {
       bestBuyOfferId: '377',
-      bestSellOfferId: '7'
+      bestSellOfferId: '7',
     },
     offers: {
       'Map { "baseToken": "BAT", "quoteToken": "W-ETH" }': {
@@ -590,8 +587,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "1ST", "quoteToken": "W-ETH" }': {
@@ -605,8 +602,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "MLN", "quoteToken": "W-ETH" }': {
@@ -620,8 +617,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "GUP", "quoteToken": "W-ETH" }': {
@@ -629,7 +626,7 @@ global.storeMock = {
         sellOfferCount: null,
         buyOffers: [],
         sellOffers: [],
-        initialSyncStatus: 'STATUS_PRISTINE'
+        initialSyncStatus: 'STATUS_PRISTINE',
       },
       'Map { "baseToken": "SAI", "quoteToken": "DAI" }': {
         buyOfferCount: null,
@@ -642,8 +639,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "MKR", "quoteToken": "W-ETH" }': {
@@ -653,7 +650,7 @@ global.storeMock = {
         sellOffers: [],
         initialSyncStatus: 'STATUS_COMPLETED',
         loadingSellOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
-        loadingBuyOffers: 'OFFERS/SYNC_STATUS_COMPLETED'
+        loadingBuyOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
       },
       'Map { "baseToken": "PLU", "quoteToken": "W-ETH" }': {
         buyOfferCount: 1,
@@ -673,7 +670,7 @@ global.storeMock = {
             ask_price: '1.02040816326530612244',
             bid_price: '0.98',
             ask_price_sort: 1.0204081632653061,
-            bid_price_sort: 0.98
+            bid_price_sort: 0.98,
           },
         ],
         sellOffers: [
@@ -686,12 +683,12 @@ global.storeMock = {
             sellWhichToken: 'MKR',
             buyHowMuch: '1.951718560884e+21',
             sellHowMuch: '975859280442000000000',
-            buyHowMuch_filter: 1.951718560884e+21,
+            buyHowMuch_filter: 1.951718560884e21,
             sellHowMuch_filter: 975859280442000000000,
             ask_price: '2',
             bid_price: '0.5',
             ask_price_sort: 2,
-            bid_price_sort: 0.5
+            bid_price_sort: 0.5,
           },
         ],
         initialSyncStatus: 'STATUS_PRISTINE',
@@ -700,8 +697,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "TIME", "quoteToken": "W-ETH" }': {
@@ -715,8 +712,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "DGD", "quoteToken": "W-ETH" }': {
@@ -730,11 +727,11 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
-       [Map({ baseToken: "MKR", quoteToken: "DAI" })]: {
+      [Map({ baseToken: 'MKR', quoteToken: 'DAI' })]: {
         buyOfferCount: 1,
         sellOfferCount: 1,
         buyOffers: [
@@ -752,8 +749,8 @@ global.storeMock = {
             ask_price: '0.005',
             bid_price: '200',
             ask_price_sort: 0.005,
-            bid_price_sort: 200
-          }
+            bid_price_sort: 200,
+          },
         ],
         sellOffers: [
           {
@@ -765,46 +762,46 @@ global.storeMock = {
             sellWhichToken: 'MKR',
             buyHowMuch: '2.0255250000000000000595e+23',
             sellHowMuch: '98806097560975609759',
-            buyHowMuch_filter: 2.025525e+23,
+            buyHowMuch_filter: 2.025525e23,
             sellHowMuch_filter: 98806097560975600000,
             ask_price: '2050',
             bid_price: '0.00048780487804878048',
             ask_price_sort: 2050,
-            bid_price_sort: 0.00048780487804878
-          }
+            bid_price_sort: 0.00048780487804878,
+          },
         ],
         initialSyncStatus: 'STATUS_COMPLETED',
-         initialSyncMeta: {
-           syncStartBlockNumber: null,
-           syncEndBlockNumber: null,
-           syncTimestamps: {
-             syncStartTimestamp: null,
-             syncEndTimestamp: null
-           }
-         },
+        initialSyncMeta: {
+          syncStartBlockNumber: null,
+          syncEndBlockNumber: null,
+          syncTimestamps: {
+            syncStartTimestamp: null,
+            syncEndTimestamp: null,
+          },
+        },
         loadingBuyOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
-        loadingSellOffers: 'OFFERS/SYNC_STATUS_COMPLETED'
+        loadingSellOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
       },
       'Map { "baseToken": "SNGLS", "quoteToken": "W-ETH" }': {
         buyOfferCount: null,
         sellOfferCount: null,
         buyOffers: [],
         sellOffers: [],
-        initialSyncStatus: 'STATUS_PRISTINE'
+        initialSyncStatus: 'STATUS_PRISTINE',
       },
       'Map { "baseToken": "RHOC", "quoteToken": "W-ETH" }': {
         buyOfferCount: null,
         sellOfferCount: null,
         buyOffers: [],
         sellOffers: [],
-        initialSyncStatus: 'STATUS_PRISTINE'
+        initialSyncStatus: 'STATUS_PRISTINE',
       },
       'Map { "baseToken": "VSL", "quoteToken": "W-ETH" }': {
         buyOfferCount: null,
         sellOfferCount: null,
         buyOffers: [],
         sellOffers: [],
-        initialSyncStatus: 'STATUS_PRISTINE'
+        initialSyncStatus: 'STATUS_PRISTINE',
       },
       'Map { "baseToken": "W-ETH", "quoteToken": "DAI" }': {
         buyOfferCount: 1,
@@ -824,8 +821,8 @@ global.storeMock = {
             ask_price: '0.1',
             bid_price: '10',
             ask_price_sort: 0.1,
-            bid_price_sort: 10
-          }
+            bid_price_sort: 10,
+          },
         ],
         sellOffers: [
           {
@@ -842,7 +839,7 @@ global.storeMock = {
             ask_price: '396',
             bid_price: '0.00252525252525252525',
             ask_price_sort: 396,
-            bid_price_sort: 0.002525252525252525
+            bid_price_sort: 0.002525252525252525,
           },
           {
             id: '175',
@@ -858,7 +855,7 @@ global.storeMock = {
             ask_price: '396',
             bid_price: '0.00252525252525252525',
             ask_price_sort: 396,
-            bid_price_sort: 0.002525252525252525
+            bid_price_sort: 0.002525252525252525,
           },
           {
             id: '175',
@@ -874,7 +871,7 @@ global.storeMock = {
             ask_price: '396',
             bid_price: '0.00252525252525252525',
             ask_price_sort: 396,
-            bid_price_sort: 0.002525252525252525
+            bid_price_sort: 0.002525252525252525,
           },
           {
             id: '175',
@@ -890,7 +887,7 @@ global.storeMock = {
             ask_price: '396',
             bid_price: '0.00252525252525252525',
             ask_price_sort: 396,
-            bid_price_sort: 0.002525252525252525
+            bid_price_sort: 0.002525252525252525,
           },
           {
             id: '175',
@@ -906,7 +903,7 @@ global.storeMock = {
             ask_price: '396',
             bid_price: '0.00252525252525252525',
             ask_price_sort: 396,
-            bid_price_sort: 0.002525252525252525
+            bid_price_sort: 0.002525252525252525,
           },
           {
             id: '9',
@@ -922,8 +919,8 @@ global.storeMock = {
             ask_price: '1500',
             bid_price: '0.00066666666666666666',
             ask_price_sort: 1500,
-            bid_price_sort: 0.000666666666666667
-          }
+            bid_price_sort: 0.000666666666666667,
+          },
         ],
         initialSyncStatus: 'STATUS_COMPLETED',
         initialSyncMeta: {
@@ -931,11 +928,11 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
         loadingBuyOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
-        loadingSellOffers: 'OFFERS/SYNC_STATUS_COMPLETED'
+        loadingSellOffers: 'OFFERS/SYNC_STATUS_COMPLETED',
       },
       'Map { "baseToken": "ICN", "quoteToken": "W-ETH" }': {
         buyOfferCount: null,
@@ -948,8 +945,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "W-GNT", "quoteToken": "W-ETH" }': {
@@ -963,8 +960,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "NMR", "quoteToken": "W-ETH" }': {
@@ -978,8 +975,8 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
       },
       'Map { "baseToken": "REP", "quoteToken": "W-ETH" }': {
@@ -993,16 +990,16 @@ global.storeMock = {
           syncEndBlockNumber: null,
           syncTimestamps: {
             syncStartTimestamp: null,
-            syncEndTimestamp: null
-          }
+            syncEndTimestamp: null,
+          },
         },
-      }
+      },
     },
     syncingOffers: [],
     pendingOffers: [],
     initialSyncStatus: {},
     loadingSellOffers: {},
-    loadingBuyOffers: {}
+    loadingBuyOffers: {},
   },
   markets: {
     closeTime: '1546543143',
@@ -1010,75 +1007,75 @@ global.storeMock = {
     isOrderMatchingEnabled: true,
     isBuyEnabled: true,
     activeMarketOriginBlock: {
-      number: '5216718'
+      number: '5216718',
     },
     activeMarketAddress: '0x8cf1cab422a0b6b554077a361f8419cdf122a9f9',
-    marketType: 'MARKET_TYPE_MATCHING_MARKET'
+    marketType: 'MARKET_TYPE_MATCHING_MARKET',
   },
   limits: {
     limitsLoaded: true,
     tokens: {
       DGD: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       GUP: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       'W-ETH': {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       RHOC: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       DAI: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       GNT: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       TIME: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       VSL: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       MLN: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       '1ST': {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       NMR: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       SNGLS: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       'OW-ETH': {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       ICN: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       MKR: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       BAT: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       'W-GNT': {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       PLU: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       SAI: {
-        minSell: "1000000000000"
+        minSell: '1000000000000',
       },
       REP: {
-        minSell: "1000000000000"
-      }
-    }
+        minSell: '1000000000000',
+      },
+    },
   },
   tokens: {
     defaultBaseToken: 'MKR',
@@ -1097,128 +1094,126 @@ global.storeMock = {
       'TIME',
       'GUP',
       'BAT',
-      'NMR'
+      'NMR',
     ],
     activeTradingPair: {
       baseToken: 'MKR',
-      quoteToken: 'DAI'
+      quoteToken: 'DAI',
     },
-    quoteTokens: [
-      'W-ETH'
-    ],
+    quoteTokens: ['W-ETH'],
     tradingPairs: [
       {
         base: 'MKR',
         quote: 'W-ETH',
         priority: 10,
-        isDefault: true
+        isDefault: true,
       },
       {
         base: 'W-ETH',
         quote: 'DAI',
         priority: 9,
-        isDefault: true
+        isDefault: true,
       },
       {
         base: 'MKR',
         quote: 'DAI',
         priority: 8,
-        isDefault: true
+        isDefault: true,
       },
       {
         base: 'SAI',
         quote: 'DAI',
         priority: 6,
-        isDefault: true
+        isDefault: true,
       },
       {
         base: 'W-GNT',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'DGD',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'REP',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'ICN',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: '1ST',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'SNGLS',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'VSL',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'PLU',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'MLN',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'RHOC',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'TIME',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'GUP',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'BAT',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
+        isDefault: false,
       },
       {
         base: 'NMR',
         quote: 'W-ETH',
         priority: 0,
-        isDefault: false
-      }
+        isDefault: false,
+      },
     ],
     defaultTradingPair: {
       baseToken: 'MKR',
-      quoteToken: 'W-ETH'
+      quoteToken: 'W-ETH',
     },
     allTokens: [
       'W-ETH',
@@ -1239,96 +1234,96 @@ global.storeMock = {
       'BAT',
       'NMR',
       'SAI',
-      'DAI'
+      'DAI',
     ],
     precision: 18,
     defaultQuoteToken: 'W-ETH',
     tokenSpecs: {
       DGD: {
         precision: 9,
-        format: '0,0.00[0000000]'
+        format: '0,0.00[0000000]',
       },
       GUP: {
         precision: 3,
-        format: '0,0.00[0]'
+        format: '0,0.00[0]',
       },
       'W-ETH': {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       RHOC: {
         precision: 8,
-        format: '0,0.00[000000]'
+        format: '0,0.00[000000]',
       },
       DAI: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       GNT: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       TIME: {
         precision: 8,
-        format: '0,0.00[000000]'
+        format: '0,0.00[000000]',
       },
       VSL: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       MLN: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       '1ST': {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       NMR: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       SNGLS: {
         precision: 0,
-        format: '0,0'
+        format: '0,0',
       },
       'OW-ETH': {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       ICN: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       MKR: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       BAT: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       'W-GNT': {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       PLU: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       SAI: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
+        format: '0,0.00[0000000000000000]',
       },
       REP: {
         precision: 18,
-        format: '0,0.00[0000000000000000]'
-      }
-    }
+        format: '0,0.00[0000000000000000]',
+      },
+    },
   },
   tokenSelectors: {
-    tokenTransfer: "MKR"
-  }
+    tokenTransfer: 'MKR',
+  },
 };
 
-contractBootstrap.init("kovan");
+contractBootstrap.init('kovan');

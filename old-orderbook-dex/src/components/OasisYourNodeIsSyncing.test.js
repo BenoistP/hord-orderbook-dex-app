@@ -4,15 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisYourNodeIsSyncing from './OasisYourNodeIsSyncing';
 
-
 describe('(Component) OasisYourNodeIsSyncing', () => {
   it('should render', () => {
     const props = {
-      latestBlock: {}
+      latestBlock: {},
     };
-    const wrapper = shallow(
-      <OasisYourNodeIsSyncing {...props}/>
-    );
+    const wrapper = shallow(<OasisYourNodeIsSyncing {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

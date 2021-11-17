@@ -1,88 +1,88 @@
-import { createSelector } from "reselect";
-import reselect from "../../utils/reselect";
-import { fromJS } from "immutable";
-import config from "../../configs";
-import accounts from "./accounts";
+import { createSelector } from 'reselect';
+import reselect from '../../utils/reselect';
+import { fromJS } from 'immutable';
+import config from '../../configs';
+import accounts from './accounts';
 
-const network = state => state.get("network");
+const network = (state) => state.get('network');
 
-const activeNetworkId = createSelector(network, state =>
-  state.get("activeNetworkId")
+const activeNetworkId = createSelector(network, (state) =>
+  state.get('activeNetworkId'),
 );
 
-const activeNetworkMeta = createSelector(activeNetworkId, id => {
+const activeNetworkMeta = createSelector(activeNetworkId, (id) => {
   if (id) {
-    return fromJS(config.networks).find(n => n.get("id") == id);
+    return fromJS(config.networks).find((n) => n.get('id') == id);
   } else {
     return null;
   }
 });
 
-const activeNetworkName = createSelector(
-  activeNetworkMeta,
-  network => (network ? network.get("name") : "-")
+const activeNetworkName = createSelector(activeNetworkMeta, (network) =>
+  network ? network.get('name') : '-',
 );
 
-const activeNetworkProviderType = createSelector(
-  activeNetworkMeta,
-  network => (network ? network.get("providerType") : undefined)
+const activeNetworkProviderType = createSelector(activeNetworkMeta, (network) =>
+  network ? network.get('providerType') : undefined,
 );
 
-const status = createSelector(network, state => state.get("status"));
+const status = createSelector(network, (state) => state.get('status'));
 
-const latestBlock = createSelector(network, state => state.get("latestBlock"));
-
-const latestBlockNumber = createSelector(network, state =>
-  state.get("latestBlockNumber")
+const latestBlock = createSelector(network, (state) =>
+  state.get('latestBlock'),
 );
 
-const latestEthereumPrice = createSelector(network, s =>
-  s.get("latestEthereumPrice")
+const latestBlockNumber = createSelector(network, (state) =>
+  state.get('latestBlockNumber'),
 );
 
-const tokenAddresses = createSelector(activeNetworkName, activeNetworkName =>
-  fromJS(config.tokens[activeNetworkName])
+const latestEthereumPrice = createSelector(network, (s) =>
+  s.get('latestEthereumPrice'),
+);
+
+const tokenAddresses = createSelector(activeNetworkName, (activeNetworkName) =>
+  fromJS(config.tokens[activeNetworkName]),
 );
 
 const getTokenAddress = createSelector(
   tokenAddresses,
   reselect.getProps,
-  (tokens, tokenName) => tokens.get(tokenName)
+  (tokens, tokenName) => tokens.get(tokenName),
 );
 
-const isNetworkCheckPending = createSelector(network, s =>
-  s.get("isNetworkCheckPending")
+const isNetworkCheckPending = createSelector(network, (s) =>
+  s.get('isNetworkCheckPending'),
 );
 
-const lastNetworkCheckAt = createSelector(network, s =>
-  s.get("lastNetworkCheckAt")
+const lastNetworkCheckAt = createSelector(network, (s) =>
+  s.get('lastNetworkCheckAt'),
 );
 
 const hasDefaultAccountChanged = createSelector(
   network,
   accounts.state,
   (s, accountsState) =>
-    parseInt(s.getIn("lastNetworkCheckAt", "start")) <
-    parseInt(accountsState.get("lastAccountSwitchAt"))
+    parseInt(s.getIn('lastNetworkCheckAt', 'start')) <
+    parseInt(accountsState.get('lastAccountSwitchAt')),
 );
 
 const lastCheckTotalTimeMs = createSelector(
   network,
-  s =>
-    parseInt(s.getIn("lastNetworkCheckAt", "end")) -
-    parseInt(s.getIn("lastNetworkCheckAt", "start"))
+  (s) =>
+    parseInt(s.getIn('lastNetworkCheckAt', 'end')) -
+    parseInt(s.getIn('lastNetworkCheckAt', 'start')),
 );
 
-const noProviderConnected = createSelector(network, s =>
-  s.get("noProviderConnected")
+const noProviderConnected = createSelector(network, (s) =>
+  s.get('noProviderConnected'),
 );
 
-const waitingForNetworkAccess = createSelector(network, s =>
-  s.get("waitingForNetworkAccess")
+const waitingForNetworkAccess = createSelector(network, (s) =>
+  s.get('waitingForNetworkAccess'),
 );
 
-const isNodeSyncing = createSelector(network, s =>
-  s.getIn(["sync", "isPending"])
+const isNodeSyncing = createSelector(network, (s) =>
+  s.getIn(['sync', 'isPending']),
 );
 
 export default {
@@ -103,5 +103,5 @@ export default {
   noProviderConnected,
   waitingForNetworkAccess,
   isNodeSyncing,
-  latestBlock
+  latestBlock,
 };

@@ -11,11 +11,9 @@ import {
 import { shallow } from 'enzyme';
 import { combineReducers, createStore } from 'redux/index';
 import { reducer as formReducer } from 'redux-form';
-import { Provider } from 'reac-t'
-
+import { Provider } from 'reac-t';
 
 describe('(Container) OasisMainContent', () => {
-
   let store = null;
   beforeEach(() => {
     store = createStore(combineReducers({ form: formReducer }));
@@ -23,10 +21,10 @@ describe('(Container) OasisMainContent', () => {
 
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
@@ -40,10 +38,9 @@ describe('(Container) OasisMainContent', () => {
   it('should render', () => {
     const wrapper = shallow(
       <Provider>
-        <OasisMainContentWrapper {...props}/>
-      </Provider>
+        <OasisMainContentWrapper {...props} />
+      </Provider>,
     );
     expect(wrapper).toMatchSnapshot();
   });
-
 });

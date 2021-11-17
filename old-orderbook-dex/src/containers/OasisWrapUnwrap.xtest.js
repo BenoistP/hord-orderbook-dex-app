@@ -12,10 +12,10 @@ import { shallow } from 'enzyme';
 describe('(Container) OasisWrapUnwrap', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
@@ -27,10 +27,7 @@ describe('(Container) OasisWrapUnwrap', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisWrapUnwrapWrapper {...props}/>,
-    );
+    const wrapper = shallow(<OasisWrapUnwrapWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

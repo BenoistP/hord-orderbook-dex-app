@@ -6,7 +6,7 @@ import Immutable from 'immutable';
 import {
   OasisTokenBalanceWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisTokenBalance';
 import { shallow } from 'enzyme';
 import { TOKEN_WRAPPED_ETH } from '../constants';
@@ -14,26 +14,22 @@ import { TOKEN_WRAPPED_ETH } from '../constants';
 describe('(Container) OasisTokenBalance', () => {
   const state = Immutable.fromJS(global.storeMock);
   const initialProps = mapStateToProps(state, { tokenName: TOKEN_WRAPPED_ETH });
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisTokenBalanceWrapper {...props}/>
-    );
+    const wrapper = shallow(<OasisTokenBalanceWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

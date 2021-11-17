@@ -2,7 +2,8 @@ export const useContractReader = async (
   contract,
   contractFunction,
   parameters = [],
-  callMethod = (contractInstance) => contractInstance?.methods?.[contractFunction](...parameters)?.call(),
+  callMethod = (contractInstance) =>
+    contractInstance?.methods?.[contractFunction](...parameters)?.call(),
 ) => {
   let result;
   try {

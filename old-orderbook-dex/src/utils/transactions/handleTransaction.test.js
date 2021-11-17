@@ -1,11 +1,11 @@
-import {handleTransaction} from './handleTransaction';
-import { fromJS } from "immutable";
+import { handleTransaction } from './handleTransaction';
+import { fromJS } from 'immutable';
 import {
   TX_STATUS_ERROR,
   TX_STATUS_CANCELLED_BY_USER,
 } from '../../store/reducers/transactions';
 
-describe("handleTransaction", () => {
+describe('handleTransaction', () => {
   test('transactionType not set, should throw error', async () => {
     expect(() => {
       handleTransaction({});
@@ -20,11 +20,11 @@ describe("handleTransaction", () => {
 
     await expect(result).rejects.toEqual({
       status: TX_STATUS_ERROR,
-      message: 'No response from transactionDispatcher!'})
+      message: 'No response from transactionDispatcher!',
+    });
   });
 
   test('transaction rejected', async () => {
-
     const onTransactionCancelled = jest.fn();
     const onCancelCleanup = jest.fn();
 
@@ -35,14 +35,15 @@ describe("handleTransaction", () => {
       withCallbacks: { onCancelCleanup },
     });
 
-    await expect(result).resolves.toEqual({status: TX_STATUS_CANCELLED_BY_USER});
+    await expect(result).resolves.toEqual({
+      status: TX_STATUS_CANCELLED_BY_USER,
+    });
     expect(onTransactionCancelled.mock.calls.length).toBe(1);
     expect(onCancelCleanup.mock.calls.length).toBe(1);
   });
 
   test('transaction accepted and completed', async () => {
-
-    const dispatch = jest.fn(x => x);
+    const dispatch = jest.fn((x) => x);
     const onTransactionPending = jest.fn();
     const onPending = jest.fn();
 
@@ -50,10 +51,14 @@ describe("handleTransaction", () => {
     const onCompleted = jest.fn();
 
     const transaction = { value: 'hash' };
-    const transactionDispatcher = jest.fn().mockReturnValueOnce(Promise.resolve(transaction));
+    const transactionDispatcher = jest
+      .fn()
+      .mockReturnValueOnce(Promise.resolve(transaction));
 
     const transactionConfirmation = { _meta: 'transactionConfirmation' };
-    const addTransactionEpic = jest.fn().mockReturnValueOnce(Promise.resolve(transactionConfirmation));
+    const addTransactionEpic = jest
+      .fn()
+      .mockReturnValueOnce(Promise.resolve(transactionConfirmation));
 
     const result = await handleTransaction(
       {
@@ -65,12 +70,15 @@ describe("handleTransaction", () => {
         withCallbacks: { onPending, onCompleted },
       },
       {
-        addTransactionEpic
-      });
+        addTransactionEpic,
+      },
+    );
 
     expect(result.transactionHash).toBe(transaction.value);
 
-    expect(result.transactionConfirmationPromise).resolves.toEqual(fromJS(transactionConfirmation));
+    expect(result.transactionConfirmationPromise).resolves.toEqual(
+      fromJS(transactionConfirmation),
+    );
 
     expect(onTransactionPending.mock.calls.length).toBe(1);
     expect(onPending.mock.calls.length).toBe(1);
@@ -80,8 +88,7 @@ describe("handleTransaction", () => {
   });
 
   test('transaction accepted and failed', async () => {
-
-    const dispatch = jest.fn(x => x);
+    const dispatch = jest.fn((x) => x);
     const onTransactionPending = jest.fn();
     const onPending = jest.fn();
 
@@ -89,10 +96,14 @@ describe("handleTransaction", () => {
     const onRejected = jest.fn();
 
     const transaction = { value: 'hash' };
-    const transactionDispatcher = jest.fn().mockReturnValueOnce(Promise.resolve(transaction));
+    const transactionDispatcher = jest
+      .fn()
+      .mockReturnValueOnce(Promise.resolve(transaction));
 
     const transactionRejection = { _meta: 'transactionRejection' };
-    const addTransactionEpic = jest.fn().mockReturnValueOnce(Promise.reject(transactionRejection));
+    const addTransactionEpic = jest
+      .fn()
+      .mockReturnValueOnce(Promise.reject(transactionRejection));
 
     const result = await handleTransaction(
       {
@@ -101,11 +112,12 @@ describe("handleTransaction", () => {
         transactionDispatcher,
         onTransactionPending,
         onTransactionRejected,
-        withCallbacks: { onPending, onRejected},
+        withCallbacks: { onPending, onRejected },
       },
       {
-        addTransactionEpic
-      });
+        addTransactionEpic,
+      },
+    );
 
     expect(result.transactionHash).toBe(transaction.value);
 

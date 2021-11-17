@@ -4,15 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisOfferCancelModal from './OasisOfferCancelModal';
 
-
 describe('(Component) OasisOfferCancelModal', () => {
   it('should render', () => {
     const props = {
-      canOfferBeCancelled: false
+      canOfferBeCancelled: false,
     };
-    const wrapper = shallow(
-      <OasisOfferCancelModal {...props}/>
-    );
+    const wrapper = shallow(<OasisOfferCancelModal {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -4,7 +4,7 @@ import {
   TOKEN_MAKER,
   TOKEN_RHOC,
   TOKEN_WRAPPED_ETH,
-} from "../constants";
+} from '../constants';
 
 export const generateTradingPairs = () => {
   return [
@@ -12,25 +12,25 @@ export const generateTradingPairs = () => {
       base: TOKEN_WRAPPED_ETH,
       quote: TOKEN_DAI,
       priority: 9,
-      isDefault: true
+      isDefault: true,
     },
     {
       base: TOKEN_MAKER,
       quote: TOKEN_DAI,
-      isDefault: true
+      isDefault: true,
     },
     {
       base: TOKEN_MAKER,
       quote: TOKEN_WRAPPED_ETH,
-      isDefault: true
+      isDefault: true,
     },
     {
       base: TOKEN_DIGIX,
-      quote: TOKEN_WRAPPED_ETH
+      quote: TOKEN_WRAPPED_ETH,
     },
     {
       base: TOKEN_RHOC,
-      quote: TOKEN_WRAPPED_ETH
+      quote: TOKEN_WRAPPED_ETH,
     },
   ];
 };

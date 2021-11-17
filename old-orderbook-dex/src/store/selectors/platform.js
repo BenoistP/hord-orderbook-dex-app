@@ -1,48 +1,49 @@
-import { createSelector } from "reselect";
-import period from "../../utils/period";
-import network from "./network";
-import reselect from "../../utils/reselect";
-import { subscriptionGroupToKeyMap } from "../../constants";
+import { createSelector } from 'reselect';
+import period from '../../utils/period';
+import network from './network';
+import reselect from '../../utils/reselect';
+import { subscriptionGroupToKeyMap } from '../../constants';
 
-const platform = state => state.get("platform");
+const platform = (state) => state.get('platform');
 
-const isAccountLocked = createSelector(platform, state =>
-  state.get("accountLocked")
+const isAccountLocked = createSelector(platform, (state) =>
+  state.get('accountLocked'),
 );
 
-const defaultPeriod = createSelector(platform, state =>
-  state.get("defaultPeriod")
+const defaultPeriod = createSelector(platform, (state) =>
+  state.get('defaultPeriod'),
 );
 
-const activePeriod = createSelector(platform, state =>
-  state.get("activePeriod")
+const activePeriod = createSelector(platform, (state) =>
+  state.get('activePeriod'),
 );
 
-const contractsLoaded = createSelector(platform, state =>
-  state.get("contractsLoaded")
+const contractsLoaded = createSelector(platform, (state) =>
+  state.get('contractsLoaded'),
 );
 
-const activePeriodAvgBlockNumber = createSelector(platform, state =>
-  period.avgBlockPer(state.get("activePeriod"))
+const activePeriodAvgBlockNumber = createSelector(platform, (state) =>
+  period.avgBlockPer(state.get('activePeriod')),
 );
 
-const defaultPeriodAvgBlockNumber = createSelector(platform, state =>
-  period.avgBlockPer(state.get("defaultPeriod"))
+const defaultPeriodAvgBlockNumber = createSelector(platform, (state) =>
+  period.avgBlockPer(state.get('defaultPeriod')),
 );
 
-const globalFormLock = createSelector(platform, s => s.get("globalFormLock"));
+const globalFormLock = createSelector(platform, (s) => s.get('globalFormLock'));
 
-const isAppLoading = createSelector(platform, s => s.get("isAppLoading"));
+const isAppLoading = createSelector(platform, (s) => s.get('isAppLoading'));
 
-const isMarketInitialized = createSelector(platform, s => s.get("marketInitialized"));
-
-
-const allInitialSubscriptionsRegistered = createSelector(platform, s =>
-  s.get("allInitialSubscriptionsRegistered")
+const isMarketInitialized = createSelector(platform, (s) =>
+  s.get('marketInitialized'),
 );
 
-const subscriptionsRegisteredMap = createSelector(platform, s =>
-  s.get("subscriptionsRegistered")
+const allInitialSubscriptionsRegistered = createSelector(platform, (s) =>
+  s.get('allInitialSubscriptionsRegistered'),
+);
+
+const subscriptionsRegisteredMap = createSelector(platform, (s) =>
+  s.get('subscriptionsRegistered'),
 );
 
 const isSubscriptionRegistered = createSelector(
@@ -52,9 +53,9 @@ const isSubscriptionRegistered = createSelector(
     Boolean(
       subscriptionsRegisteredMap.getIn([
         subscriptionGroupToKeyMap[subscriptionGroup],
-        subscriptionGroupToKeyMap[subscriptionType]
-      ])
-    )
+        subscriptionGroupToKeyMap[subscriptionType],
+      ]),
+    ),
 );
 
 const canRegisterSubscription = createSelector(
@@ -64,25 +65,22 @@ const canRegisterSubscription = createSelector(
   (
     isSyncing,
     subscriptionsRegisteredMap,
-    { subscriptionGroup, subscriptionType }
+    { subscriptionGroup, subscriptionType },
   ) =>
     !isSyncing &&
     !subscriptionsRegisteredMap.getIn([
       subscriptionGroupToKeyMap[subscriptionGroup],
-      subscriptionGroupToKeyMap[subscriptionType]
-    ])
+      subscriptionGroupToKeyMap[subscriptionType],
+    ]),
 );
 
 const canRegisterInitialSubscriptions = createSelector(
   network.isNodeSyncing,
   allInitialSubscriptionsRegistered,
-  (isSyncing, asr) => !isSyncing && !asr
+  (isSyncing, asr) => !isSyncing && !asr,
 );
 
-const activeNodeType = createSelector(
-  platform,
-  s => s.get("activeNodeType")
-);
+const activeNodeType = createSelector(platform, (s) => s.get('activeNodeType'));
 
 export default {
   state: platform,
@@ -99,5 +97,5 @@ export default {
   canRegisterSubscription,
   isMarketInitialized,
   isSubscriptionRegistered,
-  activeNodeType
+  activeNodeType,
 };

@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisVolumeIsGreaterThanUserBalance from './OasisVolumeIsGreaterThanUserBalance';
 
-
 describe('(Component) OasisVolumeIsGreaterThanUserBalance', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisVolumeIsGreaterThanUserBalance {...props}/>
-    );
+    const wrapper = shallow(<OasisVolumeIsGreaterThanUserBalance {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

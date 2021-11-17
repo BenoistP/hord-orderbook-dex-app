@@ -6,7 +6,7 @@ import { fromJS } from 'immutable';
 import {
   SetTokenAllowanceTrustWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './SetTokenAllowanceTrust';
 import { shallow } from 'enzyme';
 import { TOKEN_WRAPPED_ETH } from '../constants';
@@ -14,28 +14,24 @@ import { TOKEN_WRAPPED_ETH } from '../constants';
 describe('(Container) SetTokenAllowanceTrust', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state, {});
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     allowanceSubjectAddress: '0x0',
     tokenName: TOKEN_WRAPPED_ETH,
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <SetTokenAllowanceTrustWrapper {...props}/>
-    );
+    const wrapper = shallow(<SetTokenAllowanceTrustWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

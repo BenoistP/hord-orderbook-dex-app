@@ -12,11 +12,9 @@ describe('(Component) OasisWrapUnwrapWrap', () => {
       onFormChange: jest.fn,
       activeUnwrappedTokenBalance: new BigNumber(100),
       transactionState: { txStatus: true },
-      hidden: false
+      hidden: false,
     };
-    const wrapper = shallow(
-      <OasisWrapUnwrapWrap {...props}/>,
-    );
+    const wrapper = shallow(<OasisWrapUnwrapWrap {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

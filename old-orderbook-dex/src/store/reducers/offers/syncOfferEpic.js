@@ -1,40 +1,41 @@
-import getOfferTradingPairAndType from "../../../utils/offers/getOfferTradingPairAndType";
-import { OFFER_SYNC_TYPE_INITIAL, OFFER_SYNC_TYPE_UPDATE } from "../offers";
-import { setOfferEpic } from "./setOfferEpic";
-import { createAction } from "redux-actions";
-import getTokenByAddress from "../../../utils/tokens/getTokenByAddress";
-import { getMarketContractInstance } from "../../../bootstrap/contracts";
-import { fulfilled, pending } from "../../../utils/store";
+import getOfferTradingPairAndType from '../../../utils/offers/getOfferTradingPairAndType';
+import { OFFER_SYNC_TYPE_INITIAL, OFFER_SYNC_TYPE_UPDATE } from '../offers';
+import { setOfferEpic } from './setOfferEpic';
+import { createAction } from 'redux-actions';
+import getTokenByAddress from '../../../utils/tokens/getTokenByAddress';
+import { getMarketContractInstance } from '../../../bootstrap/contracts';
+import { fulfilled, pending } from '../../../utils/store';
 import { getTradingPairOfferCount } from './getTradingPairOffersCount';
 
 const attemptToSyncRemovedOffer = createAction(
-  "OFFERS/ATTEMPT_TO_SYNC_REMOVED_OFFER",
-  syncOfferParams => syncOfferParams
+  'OFFERS/ATTEMPT_TO_SYNC_REMOVED_OFFER',
+  (syncOfferParams) => syncOfferParams,
 );
 
-export const loadOffer = createAction("OFFERS/LOAD_OFFER", async offerId =>
-  getMarketContractInstance().offers(offerId)
+export const loadOffer = createAction('OFFERS/LOAD_OFFER', async (offerId) =>
+  getMarketContractInstance().offers(offerId),
 );
 
-export const  syncOffer = (
-  offerId,
-  syncType = OFFER_SYNC_TYPE_INITIAL,
-  previousOfferState,
-  {
-    doLoadOffer = loadOffer,
-    doSetOfferEpic = setOfferEpic,
-    doGetTradingPairOfferCount = getTradingPairOfferCount
-  } = {}
-) => async (dispatch, getState) => {
-  return dispatch(doLoadOffer(offerId)).then(
-    ({ value: offer }) => {
+export const syncOffer =
+  (
+    offerId,
+    syncType = OFFER_SYNC_TYPE_INITIAL,
+    previousOfferState,
+    {
+      doLoadOffer = loadOffer,
+      doSetOfferEpic = setOfferEpic,
+      doGetTradingPairOfferCount = getTradingPairOfferCount,
+    } = {},
+  ) =>
+  async (dispatch, getState) => {
+    return dispatch(doLoadOffer(offerId)).then(({ value: offer }) => {
       const [
         sellHowMuch,
         sellWhichTokenAddress,
         buyHowMuch,
         buyWhichTokenAddress,
         owner,
-        timestamp
+        timestamp,
       ] = offer;
 
       const tokenAddressesAreValid =
@@ -43,12 +44,10 @@ export const  syncOffer = (
       if (tokenAddressesAreValid) {
         const { baseToken, quoteToken, offerType } = getOfferTradingPairAndType(
           { buyWhichTokenAddress, sellWhichTokenAddress, syncType },
-          getState()
+          getState(),
         );
         const id = offerId.toString();
-        dispatch(
-          doGetTradingPairOfferCount(baseToken, quoteToken)
-        );
+        dispatch(doGetTradingPairOfferCount(baseToken, quoteToken));
         dispatch(
           doSetOfferEpic(
             Object.assign(
@@ -62,22 +61,22 @@ export const  syncOffer = (
                 timestamp,
                 offerType,
                 tradingPair: { baseToken, quoteToken },
-                syncType: syncType
+                syncType: syncType,
               },
-              syncType == OFFER_SYNC_TYPE_UPDATE ? { previousOfferState } : {}
-            )
-          )
+              syncType == OFFER_SYNC_TYPE_UPDATE ? { previousOfferState } : {},
+            ),
+          ),
         );
         return {
           offer,
-          offerMeta: { baseToken, quoteToken, offerType }
+          offerMeta: { baseToken, quoteToken, offerType },
         };
       } else {
         dispatch(
-          attemptToSyncRemovedOffer({ offerId, syncType, previousOfferState })
+          attemptToSyncRemovedOffer({ offerId, syncType, previousOfferState }),
         );
         console.log(
-          "trying to sync already removed offer",
+          'trying to sync already removed offer',
           { offerId, syncType, previousOfferState },
           {
             sellHowMuch,
@@ -85,53 +84,51 @@ export const  syncOffer = (
             buyHowMuch,
             buyWhichTokenAddress,
             owner,
-            timestamp
-          }
+            timestamp,
+          },
         );
       }
-    }
-  )
-};
+    });
+  };
 
-export const  syncRawOffer = (
-  offer, { doSetOfferEpic = setOfferEpic } = {}
-) => async (dispatch, getState) => {
-      const {
-        offerId,
+export const syncRawOffer =
+  (offer, { doSetOfferEpic = setOfferEpic } = {}) =>
+  async (dispatch, getState) => {
+    const {
+      offerId,
+      sellHowMuch,
+      sellWhichTokenAddress,
+      buyHowMuch,
+      buyWhichTokenAddress,
+      owner,
+      timestamp,
+    } = offer;
+    const { baseToken, quoteToken, offerType } = getOfferTradingPairAndType(
+      { buyWhichTokenAddress, sellWhichTokenAddress, OFFER_SYNC_TYPE_INITIAL },
+      getState(),
+    );
+    const id = offerId.toString();
+    dispatch(
+      doSetOfferEpic({
+        id,
         sellHowMuch,
         sellWhichTokenAddress,
         buyHowMuch,
         buyWhichTokenAddress,
         owner,
-        timestamp
-      } = offer;
-        const { baseToken, quoteToken, offerType } = getOfferTradingPairAndType(
-          { buyWhichTokenAddress, sellWhichTokenAddress, OFFER_SYNC_TYPE_INITIAL },
-          getState()
-        );
-        const id = offerId.toString();
-        dispatch(
-          doSetOfferEpic({
-            id,
-            sellHowMuch,
-            sellWhichTokenAddress,
-            buyHowMuch,
-            buyWhichTokenAddress,
-            owner,
-            timestamp,
-            offerType,
-            tradingPair: { baseToken, quoteToken },
-            syncType: OFFER_SYNC_TYPE_INITIAL
-          })
-        );
-        return {
-          offer, offerMeta: { baseToken, quoteToken, offerType }
-        };
-};
-
-
+        timestamp,
+        offerType,
+        tradingPair: { baseToken, quoteToken },
+        syncType: OFFER_SYNC_TYPE_INITIAL,
+      }),
+    );
+    return {
+      offer,
+      offerMeta: { baseToken, quoteToken, offerType },
+    };
+  };
 
 export const reducer = {
-  [pending(loadOffer)]: state => state,
-  [fulfilled(loadOffer)]: state => state
+  [pending(loadOffer)]: (state) => state,
+  [fulfilled(loadOffer)]: (state) => state,
 };

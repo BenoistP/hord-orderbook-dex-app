@@ -1,8 +1,5 @@
 import configJson from '../../config/config.json';
-import {
-  getAccount,
-  web3WalletConnector,
-} from '../../utils/walletService';
+import { getAccount, web3WalletConnector } from '../../utils/walletService';
 import { setupWeb3 } from '../../utils/web3Service';
 import {
   CONNECT_WALLET_START,
@@ -23,18 +20,24 @@ export const onWalletConnectRequestAction = (accountType) => (dispatch) => {
   dispatch({ type: CONNECT_WALLET_PROVIDER });
 };
 
-export const onWalletConnectSuccessAction = ({ provider, account, connectionType }) => async (dispatch, getState) => {
-  setupWeb3(provider);
-  localStorage.setItem(LS_ACCOUNT, connectionType);
-  dispatch({
-    type: CONNECT_WALLET_PROVIDER_SUCCESS,
-    payload: { account, accountType: connectionType, network: configJson.network },
-  });
+export const onWalletConnectSuccessAction =
+  ({ provider, account, connectionType }) =>
+  async (dispatch, getState) => {
+    setupWeb3(provider);
+    localStorage.setItem(LS_ACCOUNT, connectionType);
+    dispatch({
+      type: CONNECT_WALLET_PROVIDER_SUCCESS,
+      payload: {
+        account,
+        accountType: connectionType,
+        network: configJson.network,
+      },
+    });
 
-  if (getState().wallet.account) await dispatch(postLogin());
+    if (getState().wallet.account) await dispatch(postLogin());
 
-  dispatch({ type: CONNECT_WALLET_END });
-};
+    dispatch({ type: CONNECT_WALLET_END });
+  };
 
 export const onWalletConnectErrorAction = (err) => (dispatch) => {
   dispatch({ type: CONNECT_WALLET_PROVIDER_FAILURE, payload: err.message });
@@ -71,7 +74,11 @@ export const normalLogin = (accountType) => async (dispatch, getState) => {
 
     dispatch({
       type: CONNECT_WALLET_PROVIDER_SUCCESS,
-      payload: { account, accountType: web3WalletConnector.connectionType, network: configJson.network },
+      payload: {
+        account,
+        accountType: web3WalletConnector.connectionType,
+        network: configJson.network,
+      },
     });
   } catch (err) {
     dispatch({ type: CONNECT_WALLET_PROVIDER_FAILURE, payload: err.message });

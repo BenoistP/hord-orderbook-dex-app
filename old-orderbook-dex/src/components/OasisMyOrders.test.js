@@ -8,14 +8,12 @@ import { fromJS } from 'immutable';
 describe('(Component) OasisMyOrders', () => {
   it('should render', () => {
     const props = {
-      activeTradingPair: { baseToken: "MKR", quoteToken: "W-ETH" },
+      activeTradingPair: { baseToken: 'MKR', quoteToken: 'W-ETH' },
       sellOffers: fromJS([]),
       buyOffers: fromJS([]),
-      onFetchAndSubscribeUserTradesHistory: jest.fn()
+      onFetchAndSubscribeUserTradesHistory: jest.fn(),
     };
-    const wrapper = shallow(
-      <OasisMyOrders {...props}/>,
-    );
+    const wrapper = shallow(<OasisMyOrders {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

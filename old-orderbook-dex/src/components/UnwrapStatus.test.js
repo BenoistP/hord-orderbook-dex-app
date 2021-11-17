@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import UnwrapStatus from './UnwrapStatus';
 
-
 describe('(Component) UnwrapStatus', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <UnwrapStatus {...props}/>
-    );
+    const wrapper = shallow(<UnwrapStatus {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import './App.css';
-import { loadContracts } from './utils/contractsRegistryService'
+import { loadContracts } from './utils/contractsRegistryService';
 
 // import { useContractReader } from 'utils/contractReader';
 // import { loadContracts } from 'utils/loadContracts';
@@ -41,7 +41,7 @@ function App() {
 
     /* SECOND STEP OFFER TOKEN */
     // market maker tx
-    // offer(pay_amt, pay_gem, buy_amt, buy_gem, pos) 99% every time like this - there are 3 different one 
+    // offer(pay_amt, pay_gem, buy_amt, buy_gem, pos) 99% every time like this - there are 3 different one
     // uint pay_amt,    //maker (ask) sell how much
     // ERC20 pay_gem,   //maker (ask) sell which token
     // uint buy_amt,    //maker (ask) buy how much
@@ -55,9 +55,9 @@ function App() {
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [testTokensInWei, HPoolToken.address, test2TokenInWei, BUSD.address, 0])
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [test3TokensInWei, HPoolToken.address, test4TokenInWei, BUSD.address, 0])])
     // offer BUSD for HPool token
-    // single 
+    // single
     // await txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [oneTokenInWei, BUSD.address, tenTokensInWei, HPoolToken.address, 0])
-    // multi 
+    // multi
     //  await Promise.all([txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [oneTokenInWei, BUSD.address, tenTokensInWei, HPoolToken.address, 0])
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [testTokensInWei, BUSD.address, test2TokenInWei, HPoolToken.address, 0])
     // ,txHandler(MatchingMarket, 'offer(uint256,address,uint256,address,uint256)', [test3TokensInWei, BUSD.address, test4TokenInWei, HPoolToken.address, 0])])
@@ -86,11 +86,6 @@ function App() {
     // console.log(buyOffers)
     // debugger
 
-
-
-
-
-
     // /* GET SELL OFFERS FOR PAIR */
     // // firstPage = (sellToken, buyToken) => getOTCSupportMethodsContractInstance().getOffers(
     // //   getMarketContractInstance().address,
@@ -103,19 +98,15 @@ function App() {
     // const buyOffers = await useContractReader({ MakerOtcSupportMethods }, 'MakerOtcSupportMethods', 'getOffers(address,address,address)', [MatchingMarket.address, sellTokenAddress, buyTokenAddress ]);
     // console.log(buyOffers)
     // debugger
-  }
+  };
   return (
-    <div className="App">
+    <div className='App'>
       <Header />
-      <header className="App-header">
+      <header className='App-header'>
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
-        <button
-         onClick={interactWithContracts}
-        >
-          test
-        </button>
+        <button onClick={interactWithContracts}>test</button>
       </header>
     </div>
   );

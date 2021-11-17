@@ -7,9 +7,7 @@ import OasisBuyMaker from './OasisBuyMaker';
 describe('(Component) OasisBuyMaker', () => {
   it('should render', () => {
     const props = {};
-    const wrapper = shallow(
-      <OasisBuyMaker {...props}/>,
-    );
+    const wrapper = shallow(<OasisBuyMaker {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

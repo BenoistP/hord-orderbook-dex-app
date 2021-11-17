@@ -6,23 +6,22 @@ import { fromJS } from 'immutable';
 import {
   OasisNotTheBestOfferPriceWarningWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisNotTheBestOfferPriceWarning';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisNotTheBestOfferPriceWarning', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
-
 
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
@@ -30,9 +29,8 @@ describe('(Container) OasisNotTheBestOfferPriceWarning', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <OasisNotTheBestOfferPriceWarningWrapper {...props}/>
+      <OasisNotTheBestOfferPriceWarningWrapper {...props} />,
     );
     expect(wrapper).toMatchSnapshot();
   });
-
 });

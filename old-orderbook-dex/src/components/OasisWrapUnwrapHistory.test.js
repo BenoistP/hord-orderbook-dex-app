@@ -7,13 +7,9 @@ import OasisWrapUnwrapHistory from './OasisWrapUnwrapHistory';
 describe('(Component) OasisWrapUnwrapHistory', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      ),
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisWrapUnwrapHistory {...props}/>,
-    );
+    const wrapper = shallow(<OasisWrapUnwrapHistory {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

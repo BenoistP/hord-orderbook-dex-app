@@ -8,9 +8,7 @@ import { shallow } from 'enzyme';
 describe('(Component) OasisLogo', () => {
   it('should render', () => {
     const props = {};
-    const wrapper = shallow(
-      <OasisLogo {...props}/>,
-    );
+    const wrapper = shallow(<OasisLogo {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -12,7 +12,7 @@ export default () => {
       contracts: contractReducer,
       balances: balanceReducer,
       ui: uiReducer,
-      wallet: walletReducer
+      wallet: walletReducer,
     }),
     composeWithDevTools(applyMiddleware(thunk)),
   );

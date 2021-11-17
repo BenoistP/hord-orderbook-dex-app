@@ -27,7 +27,8 @@ export const setWeb3toInPageProvider = async (retryNum = 0) => {
   const testWeb3 = new Web3(window.ethereum || window.web3.currentProvider);
   const testWeb3Network = await getNetwork(testWeb3);
 
-  if (configJson.network !== testWeb3Network) throw new Error('errors.wrong_network');
+  if (configJson.network !== testWeb3Network)
+    throw new Error('errors.wrong_network');
 
   window._web3 = new Web3(window.ethereum || window.web3.currentProvider);
   return testWeb3Network;
@@ -38,11 +39,13 @@ export const ethToWei = (_ethVal, size = 'ether') => {
   let val = parts[0];
 
   if (parts[1]) {
-    const decimals = parts[1].length > 18 ? parts[1].substring(0, 18) : parts[1];
+    const decimals =
+      parts[1].length > 18 ? parts[1].substring(0, 18) : parts[1];
     val += `.${decimals}`;
   }
 
   return window._web3.utils.toWei(`${val}`, size);
 };
 
-export const WeiToEth = (value) => window._web3.utils.fromWei(value.toString(), 'ether');
+export const WeiToEth = (value) =>
+  window._web3.utils.fromWei(value.toString(), 'ether');

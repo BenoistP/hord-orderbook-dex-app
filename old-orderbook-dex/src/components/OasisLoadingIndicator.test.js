@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisLoadingIndicator from './OasisLoadingIndicator';
 
-
 describe('(Component) OasisLoadingIndicator', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisLoadingIndicator {...props}/>
-    );
+    const wrapper = shallow(<OasisLoadingIndicator {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

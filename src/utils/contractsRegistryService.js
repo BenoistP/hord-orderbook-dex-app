@@ -6,10 +6,15 @@ const createContract = (address, abi) => async () => {
 
 export const loadContracts = async () => {
   const loadedContracts = {};
-  await Promise.all(contracts.map(async (contract) => {
-    loadedContracts[contract.name] = await createContract(contract.address, contract.abi)();
-    return contract;
-  }));
+  await Promise.all(
+    contracts.map(async (contract) => {
+      loadedContracts[contract.name] = await createContract(
+        contract.address,
+        contract.abi,
+      )();
+      return contract;
+    }),
+  );
 
   return loadedContracts;
-}
+};

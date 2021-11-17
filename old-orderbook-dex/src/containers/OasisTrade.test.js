@@ -14,7 +14,7 @@ import { WEEK } from '../utils/period';
 describe('(Container) OasisTrade', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
@@ -71,10 +71,7 @@ describe('(Container) OasisTrade', () => {
     props.actions.setActiveTradingPairEpic = jest.fn;
     props.actions.denotePrecision = jest.fn;
 
-    const wrapper = shallow(
-      <OasisTradeWrapper {...props}/>,
-    );
+    const wrapper = shallow(<OasisTradeWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

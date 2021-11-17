@@ -6,34 +6,30 @@ import Immutable from 'immutable';
 import {
   EthereumAddressInputFieldWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './EthereumAddressInputField';
 import { shallow } from 'enzyme';
 
 describe('(Container) EthereumAddressInputField', () => {
   const state = Immutable.fromJS(global.stateMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
     ...initialProps,
-    fieldName: 'exampleFieldName'
+    fieldName: 'exampleFieldName',
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
 
-
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <EthereumAddressInputFieldWrapper {...props}/>
-    );
+    const wrapper = shallow(<EthereumAddressInputFieldWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
-
 });

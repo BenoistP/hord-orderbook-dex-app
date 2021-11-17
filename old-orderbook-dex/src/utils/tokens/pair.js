@@ -1,12 +1,12 @@
-import BigNumber from "bignumber.js";
+import BigNumber from 'bignumber.js';
 import {
   ETH_UNIT_ETHER,
   USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
-  USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE
-} from "../../constants";
-import web3 from "../../bootstrap/web3";
-import { ASK, BID } from "../../store/reducers/trades";
-import isNumeric from "../numbers/isNumeric";
+  USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
+} from '../../constants';
+import web3 from '../../bootstrap/web3';
+import { ASK, BID } from '../../store/reducers/trades';
+import isNumeric from '../numbers/isNumeric';
 
 export const PRICE_DECIMAL = 5;
 export const AMOUNT_DECIMALS = 5;
@@ -14,12 +14,12 @@ export const AMOUNT_DECIMALS = 5;
 const format = (baseToken, quoteToken) => `${baseToken}/${quoteToken}`;
 
 const trades = (marketData, baseToken, quoteToken) =>
-  marketData.filter(marketHistoryEntry => {
+  marketData.filter((marketHistoryEntry) => {
     const { sellWhichToken, buyWhichToken } = marketHistoryEntry;
     const tradingPairTokensList = [baseToken, quoteToken];
     if (
-      tradingPairTokensList.some(t => t === sellWhichToken) &&
-      tradingPairTokensList.some(t => t === buyWhichToken)
+      tradingPairTokensList.some((t) => t === sellWhichToken) &&
+      tradingPairTokensList.some((t) => t === buyWhichToken)
     ) {
       return marketHistoryEntry;
     }
@@ -54,14 +54,14 @@ const price = (tradeHistoryEntry, baseToken, quoteToken) => {
     tradeHistoryEntry.sellWhichToken === baseToken
   ) {
     price = new BigNumber(tradeHistoryEntry.buyHowMuch).div(
-      new BigNumber(tradeHistoryEntry.sellHowMuch)
+      new BigNumber(tradeHistoryEntry.sellHowMuch),
     );
   } else if (
     tradeHistoryEntry.buyWhichToken === baseToken &&
     tradeHistoryEntry.sellWhichToken === quoteToken
   ) {
     price = new BigNumber(tradeHistoryEntry.sellHowMuch).div(
-      new BigNumber(tradeHistoryEntry.buyHowMuch)
+      new BigNumber(tradeHistoryEntry.buyHowMuch),
     );
   }
   return price;
@@ -74,7 +74,7 @@ const getBaseAndQuoteAmount = (tradeHistoryEntry, baseToken, quoteToken) => {
   ) {
     return {
       baseAmount: new BigNumber(tradeHistoryEntry.sellHowMuch),
-      quoteAmount: new BigNumber(tradeHistoryEntry.buyHowMuch)
+      quoteAmount: new BigNumber(tradeHistoryEntry.buyHowMuch),
     };
   } else if (
     tradeHistoryEntry.buyWhichToken === baseToken &&
@@ -82,7 +82,7 @@ const getBaseAndQuoteAmount = (tradeHistoryEntry, baseToken, quoteToken) => {
   ) {
     return {
       baseAmount: new BigNumber(tradeHistoryEntry.buyHowMuch),
-      quoteAmount: new BigNumber(tradeHistoryEntry.sellHowMuch)
+      quoteAmount: new BigNumber(tradeHistoryEntry.sellHowMuch),
     };
   }
 };
@@ -90,7 +90,7 @@ const getBaseAndQuoteAmount = (tradeHistoryEntry, baseToken, quoteToken) => {
 // eslint-disable-next-line no-unused-vars
 const formatPrice = (
   price,
-  fromWei = false
+  fromWei = false,
   // unit = ETH_UNIT_ETHER,
   // decimalPlaces = PRICE_DECIMAL
 ) => {
@@ -100,12 +100,12 @@ const formatPrice = (
     }
 
     const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, "");
+      isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
       ? new BigNumber(
           !fromWei
             ? priceSanitized
-            : web3.fromWei(priceSanitized, ETH_UNIT_ETHER)
+            : web3.fromWei(priceSanitized, ETH_UNIT_ETHER),
         ).toFormat(5, BigNumber.ROUND_HALF_UP)
       : null;
   } catch (e) {
@@ -123,14 +123,14 @@ const formatTokenAmount = (price, fromWei = false, unit, decimalPlaces) => {
   }
   try {
     const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, "");
+      isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
       ? String(
           new BigNumber(
             !fromWei
               ? priceSanitized
-              : web3.fromWei(priceSanitized, unit, decimalPlaces)
-          ).toFormat(decimalPlaces, BigNumber.ROUND_DOWN)
+              : web3.fromWei(priceSanitized, unit, decimalPlaces),
+          ).toFormat(decimalPlaces, BigNumber.ROUND_DOWN),
         )
       : null;
   } catch (e) {
@@ -143,21 +143,21 @@ const formatAmount = (
   fromWei = false,
   //eslint-disable-next-line no-unused-vars
   unknown = null,
-  precision = 3
+  precision = 3,
 ) => {
   if ([null, undefined].includes(price)) {
     return null;
   }
   try {
     const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, "");
+      isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
       ? String(
           new BigNumber(
             !fromWei
               ? priceSanitized
-              : web3.fromWei(priceSanitized, ETH_UNIT_ETHER)
-          ).toFormat(precision, BigNumber.ROUND_DOWN)
+              : web3.fromWei(priceSanitized, ETH_UNIT_ETHER),
+          ).toFormat(precision, BigNumber.ROUND_DOWN),
         )
       : null;
   } catch (e) {
@@ -165,20 +165,22 @@ const formatAmount = (
   }
 };
 
-const formatVolume = tradingPairVolume =>
-  web3.fromWei(tradingPairVolume, ETH_UNIT_ETHER).toFormat(2, BigNumber.ROUND_HALF_UP);
+const formatVolume = (tradingPairVolume) =>
+  web3
+    .fromWei(tradingPairVolume, ETH_UNIT_ETHER)
+    .toFormat(2, BigNumber.ROUND_HALF_UP);
 
 const tradeType = (
   order,
   baseCurrency,
   userToTradeBaseRelation,
-  userToTradeAdditionalRelation
+  userToTradeAdditionalRelation,
 ) => {
   const checkWithOwnership = (
     userToTradeRelationEnum,
     userToTradeAdditionalRelationEnum,
     noRelationType,
-    noRelationOtherType
+    noRelationOtherType,
   ) => {
     switch (userToTradeRelationEnum) {
       case USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER: {
@@ -198,7 +200,7 @@ const tradeType = (
         userToTradeBaseRelation,
         userToTradeAdditionalRelation,
         BID,
-        ASK
+        ASK,
       );
     } else {
       return ASK;
@@ -209,7 +211,7 @@ const tradeType = (
         userToTradeBaseRelation,
         userToTradeAdditionalRelation,
         ASK,
-        BID
+        BID,
       );
     } else {
       return BID;
@@ -217,15 +219,15 @@ const tradeType = (
   }
 };
 
-const formatTradeType = type => {
+const formatTradeType = (type) => {
   if (!type) {
     return null;
   } else {
     switch (type) {
       case BID:
-        return "buy";
+        return 'buy';
       case ASK:
-        return "sell";
+        return 'sell';
     }
   }
 };
@@ -241,5 +243,5 @@ export {
   formatTradeType,
   formatAmount,
   formatTokenAmount,
-  getBaseAndQuoteAmount
+  getBaseAndQuoteAmount,
 };

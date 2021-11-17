@@ -6,23 +6,22 @@ import { fromJS } from 'immutable';
 import {
   OasisEthBalanceWarningMessageWrapper,
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 } from './OasisEthBalanceWarningMessage';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisEthBalanceWarningMessage', () => {
   const state = fromJS(global.storeMock);
   const initialProps = mapStateToProps(state);
-  const initialActions = mapDispatchToProps(x => x);
+  const initialActions = mapDispatchToProps((x) => x);
   const props = {
     ...initialActions,
-    ...initialProps
+    ...initialProps,
   };
 
   it('will receive right props', () => {
     expect(initialProps).toMatchSnapshot();
   });
-
 
   it('will receive right actions', () => {
     expect(initialActions).toMatchSnapshot();
@@ -30,9 +29,8 @@ describe('(Container) OasisEthBalanceWarningMessage', () => {
 
   it('should render', () => {
     const wrapper = shallow(
-      <OasisEthBalanceWarningMessageWrapper {...props}/>
+      <OasisEthBalanceWarningMessageWrapper {...props} />,
     );
     expect(wrapper).toMatchSnapshot();
   });
-
 });

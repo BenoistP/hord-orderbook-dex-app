@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import OasisOfferTakeWarningBox from './OasisOfferTakeWarningBox';
 
-
 describe('(Component) OasisOfferTakeWarningBox', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisOfferTakeWarningBox {...props}/>
-    );
+    const wrapper = shallow(<OasisOfferTakeWarningBox {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -11,12 +11,10 @@ describe('(Component) OasisTabs', () => {
     const props = {
       defaultTradingPair: {
         baseToken: TOKEN_WRAPPED_ETH,
-        quoteToken: TOKEN_DAI
-      }
+        quoteToken: TOKEN_DAI,
+      },
     };
-    const wrapper = shallow(
-      <OasisTabs {...props}/>,
-    );
+    const wrapper = shallow(<OasisTabs {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -11,11 +11,9 @@ describe('(Component) OasisWrapUnwrapUnwrap', () => {
       activeWrappedToken: TOKEN_WRAPPED_ETH,
       onSubmit: jest.fn,
       transactionState: { txStatus: true },
-      hidden: true
+      hidden: true,
     };
-    const wrapper = shallow(
-      <OasisWrapUnwrapUnwrap {...props}/>,
-    );
+    const wrapper = shallow(<OasisWrapUnwrapUnwrap {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

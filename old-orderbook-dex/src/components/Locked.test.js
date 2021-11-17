@@ -4,17 +4,12 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Locked from './Locked';
 
-
 describe('(Component) Locked', () => {
   it('should render', () => {
     const props = {
-      children: (
-        <span>test</span>
-      )
+      children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <Locked {...props}/>
-    );
+    const wrapper = shallow(<Locked {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

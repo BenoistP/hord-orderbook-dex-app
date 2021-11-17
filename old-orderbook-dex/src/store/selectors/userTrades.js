@@ -1,13 +1,13 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
-const userTrades = state => state.get("userTrades");
+const userTrades = (state) => state.get('userTrades');
 
-const initialMarketHistoryLoaded = createSelector(
-  userTrades, state => state.get("initialMarketHistoryLoaded")
+const initialMarketHistoryLoaded = createSelector(userTrades, (state) =>
+  state.get('initialMarketHistoryLoaded'),
 );
 
-const marketHistory = createSelector(userTrades, state =>
-  state.get("marketHistory")
+const marketHistory = createSelector(userTrades, (state) =>
+  state.get('marketHistory'),
 );
 
 const marketsData = createSelector(
@@ -18,15 +18,15 @@ const marketsData = createSelector(
     if (initialMarketHistoryLoaded) {
       return marketHistory;
     }
-  }
+  },
 );
 
-const volumesLoaded = createSelector(userTrades, state =>
-  state.get("volumesLoaded")
+const volumesLoaded = createSelector(userTrades, (state) =>
+  state.get('volumesLoaded'),
 );
 
-const loadindUserMarketHistory = createSelector(
-  userTrades, s => s.get("loadingUserMarketHistory")
+const loadindUserMarketHistory = createSelector(userTrades, (s) =>
+  s.get('loadingUserMarketHistory'),
 );
 
 export default {
@@ -34,5 +34,5 @@ export default {
   marketsData,
   initialMarketHistoryLoaded,
   volumesLoaded,
-  loadindUserMarketHistory
+  loadindUserMarketHistory,
 };

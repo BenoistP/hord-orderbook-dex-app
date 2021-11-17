@@ -9,18 +9,18 @@ import { fromJS } from 'immutable';
 describe('(Component) OasisSellOrders', () => {
   it('should render', () => {
     const props = {
-      activeTradingPair: { baseToken : TOKEN_MAKER, quoteToken: TOKEN_WRAPPED_ETH },
+      activeTradingPair: {
+        baseToken: TOKEN_MAKER,
+        quoteToken: TOKEN_WRAPPED_ETH,
+      },
       sellOffers: fromJS([]),
       onSetOfferTakeModalOpen: jest.fn,
       onSetActiveOfferTakeOfferId: jest.fn,
       onCheckOfferIsActive: jest.fn,
-      onResetCompletedOfferCheck: jest.fn
+      onResetCompletedOfferCheck: jest.fn,
     };
 
-
-    const wrapper = shallow(
-      <OasisSellOrders {...props}/>,
-    );
+    const wrapper = shallow(<OasisSellOrders {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

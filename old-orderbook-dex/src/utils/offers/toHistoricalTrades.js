@@ -5,8 +5,14 @@ import BigNumber from 'bignumber.js';
 import { formatAmount, formatPrice, price } from '../tokens/pair';
 import OasisTradeType from '../../components/OasisTradeType';
 
-export const toHistoricalTrades = (tradeHistoryEntry, userAccountAddress, baseToken, quoteToken) => {
-  let baseAmount = null, quoteAmount = null;
+export const toHistoricalTrades = (
+  tradeHistoryEntry,
+  userAccountAddress,
+  baseToken,
+  quoteToken,
+) => {
+  let baseAmount = null,
+    quoteAmount = null;
   if (
     tradeHistoryEntry.buyWhichToken === quoteToken &&
     tradeHistoryEntry.sellWhichToken === baseToken
@@ -22,13 +28,15 @@ export const toHistoricalTrades = (tradeHistoryEntry, userAccountAddress, baseTo
   }
   return {
     transactionHash: tradeHistoryEntry.transactionHash,
-    date: moment.unix(tradeHistoryEntry.timestamp).format("DD-MM HH:mm"),
+    date: moment.unix(tradeHistoryEntry.timestamp).format('DD-MM HH:mm'),
     tradeType: (
       <OasisTradeType
         order={tradeHistoryEntry}
         baseCurrency={baseToken}
         userToTradeBaseRelation={tradeHistoryEntry.userToTradeBaseRelation}
-        userToTradeAdditionalRelation={tradeHistoryEntry.userToTradeAdditionalRelation}
+        userToTradeAdditionalRelation={
+          tradeHistoryEntry.userToTradeAdditionalRelation
+        }
       />
     ),
     baseAmount: formatAmount(baseAmount, true),
@@ -36,6 +44,6 @@ export const toHistoricalTrades = (tradeHistoryEntry, userAccountAddress, baseTo
     quoteAmount: formatAmount(quoteAmount, true),
     quoteAmountFullPrecision: quoteAmount,
     price: formatPrice(price(tradeHistoryEntry, baseToken, quoteToken)),
-    priceFullPrecision: price(tradeHistoryEntry, baseToken, quoteToken)
+    priceFullPrecision: price(tradeHistoryEntry, baseToken, quoteToken),
   };
-}
+};

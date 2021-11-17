@@ -1,28 +1,30 @@
-import platform from "../../store/selectors/platform";
-import platformReducer from "../../store/reducers/platform";
+import platform from '../../store/selectors/platform';
+import platformReducer from '../../store/reducers/platform';
 
 export const registerSubscription = (
   subscriptionType,
   onRegister,
   { dispatch, getState },
-  subscriptionsGroup
+  subscriptionsGroup,
 ) => {
   if (
     !platform.isSubscriptionRegistered(getState(), {
       subscriptionsGroup,
-      subscriptionType
+      subscriptionType,
     })
   ) {
     onRegister();
     dispatch(
       platformReducer.actions.registerSubscriptionByTypeAndGroup(
         subscriptionsGroup,
-        subscriptionType
-      )
+        subscriptionType,
+      ),
     );
     return true;
   } else {
-    console.error(`onErrorRegister => ${subscriptionsGroup} ${subscriptionType}`);
+    console.error(
+      `onErrorRegister => ${subscriptionsGroup} ${subscriptionType}`,
+    );
     return false;
   }
 };

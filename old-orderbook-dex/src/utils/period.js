@@ -8,9 +8,11 @@ const init = (getStateFunction) => {
 };
 
 const getNetworkMeta = () => network.activeNetworkMeta(getState());
-const getActiveNetworkAvgBlocksPerDay = () => parseInt(getNetworkMeta().get('avgBlocksPerDay'));
+const getActiveNetworkAvgBlocksPerDay = () =>
+  parseInt(getNetworkMeta().get('avgBlocksPerDay'));
 
-export const isLeapYear = (year) => year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+export const isLeapYear = (year) =>
+  year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
 
 export const DAY = 'TIME_SPAN/DAY';
 export const WEEK = 'TIME_SPAN/WEEK';
@@ -21,19 +23,25 @@ export const HALF_OF_YEAR = 'TIME_SPAN/HALF_OF_YEAR';
 export const YEAR = 'TIME_SPAN/YEAR';
 export const TWO_YEARS = 'TIME_SPAN/TWO_YEARS';
 
+export const getNumberOfDaysInTheYear = (year) =>
+  isLeapYear(year) ? 366 : 365;
+const avgBlockPerDefaultPeriod = () =>
+  avgBlockPer(platform.defaultPeriod(getState()));
 
-export const getNumberOfDaysInTheYear = (year) => isLeapYear(year) ? 366 : 365;
-const avgBlockPerDefaultPeriod = () => avgBlockPer(platform.defaultPeriod(getState()));
-
-const avgBlockPerActivePeriod = () => avgBlockPer(platform.activePeriod(getState()));
+const avgBlockPerActivePeriod = () =>
+  avgBlockPer(platform.activePeriod(getState()));
 
 const avgBlockPer = (period) => {
   const avgBlocksPerDay = getActiveNetworkAvgBlocksPerDay();
   switch (period) {
-    case DAY: return avgBlocksPerDay;
-    case WEEK: return 7 * avgBlocksPerDay;
-    case TWO_WEEKS: return 14 * avgBlocksPerDay;
-    default: throw new Error('Wrong time span provided!');
+    case DAY:
+      return avgBlocksPerDay;
+    case WEEK:
+      return 7 * avgBlocksPerDay;
+    case TWO_WEEKS:
+      return 14 * avgBlocksPerDay;
+    default:
+      throw new Error('Wrong time span provided!');
   }
 };
 
@@ -41,6 +49,5 @@ export default {
   init,
   avgBlockPer,
   avgBlockPerActivePeriod,
-  avgBlockPerDefaultPeriod
-}
-
+  avgBlockPerDefaultPeriod,
+};
