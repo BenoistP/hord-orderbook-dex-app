@@ -1,18 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Order from './components/Order';
-import { nanoid } from 'nanoid';
-import './OrderBook.scss';
+import './Order.scss';
 
 const Order = (props) => {
-  const { orderType } = props;
-  const orders = props[orderType];
+  const {  } = props;
 
   return (
     <div className='header-wrapper'>
-      {orders.map((order) => (
-        <Order key={nanoid()} order={order} />
-      ))}
     </div>
   );
 };
