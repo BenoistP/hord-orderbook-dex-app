@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import './Order.scss';
 
 const Order = (props) => {
-  const {  } = props;
+    const { buyAmt, payAmt, id, owner } = props;
 
-  return (
-    <div className='header-wrapper'>
-    </div>
-  );
+    return <div className='order'>
+        
+      
+  </div>;
 };
 
 Order.defaultProps = {
