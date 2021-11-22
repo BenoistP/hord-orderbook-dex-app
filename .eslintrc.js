@@ -1,14 +1,11 @@
-const path = require('path');
-
 module.exports = {
   extends: ['airbnb', 'plugin:react/recommended', 'plugin:jsx-a11y/recommended', 'plugin:react-hooks/recommended'],
   plugins: ['import'],
-  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
   },
   env: {
@@ -63,6 +60,7 @@ module.exports = {
     'no-plusplus': 'off',
     'jsx-a11y/no-onchange': 'off',
     indent: 'off',
+    'import/no-unresolved': 'off',
   },
   globals: {
     web3: true,
@@ -73,15 +71,5 @@ module.exports = {
     fetch: true,
     location: true,
     localStorage: true,
-  },
-  settings: {
-    'import/resolver': {
-      [path.resolve(__dirname, 'node_modules/eslint-import-resolver-webpack')]: {
-        config: path.resolve(__dirname, './build/webpack.dev.config.js'),
-        alias: {
-          map: [['translate', path.resolve(__dirname, './src/services/translate/translate.jsx')]],
-        },
-      },
-    },
   },
 };

@@ -1,8 +1,6 @@
 import { contracts } from './contracts';
 
-const createContract = (address, abi) => async () => {
-  return new window._web3.eth.Contract(abi, address);
-};
+const createContract = (address, abi) => async () => new window._web3.eth.Contract(abi, address);
 
 export const loadContracts = async () => {
   const loadedContracts = {};
