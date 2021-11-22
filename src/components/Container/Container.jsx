@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import './Container.scss';
 
@@ -19,23 +18,5 @@ const Container = ({ onClick, style, className, children, row, centered }) => (
     {children}
   </div>
 );
-
-Container.defaultProps = {
-  onClick: null,
-  style: null,
-  className: null,
-  children: null,
-  row: null,
-  centered: null,
-};
-
-Container.propTypes = {
-  onClick: PropTypes.func,
-  style: PropTypes.object,
-  className: PropTypes.string,
-  children: PropTypes.node,
-  row: PropTypes.bool,
-  centered: PropTypes.bool,
-};
 
 export default Container;
