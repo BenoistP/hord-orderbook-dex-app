@@ -29,18 +29,10 @@ export const syncOffer =
   ) =>
   async (dispatch, getState) => {
     return dispatch(doLoadOffer(offerId)).then(({ value: offer }) => {
-      const [
-        sellHowMuch,
-        sellWhichTokenAddress,
-        buyHowMuch,
-        buyWhichTokenAddress,
-        owner,
-        timestamp,
-      ] = offer;
+      const [sellHowMuch, sellWhichTokenAddress, buyHowMuch, buyWhichTokenAddress, owner, timestamp] = offer;
 
       const tokenAddressesAreValid =
-        getTokenByAddress(buyWhichTokenAddress) &&
-        getTokenByAddress(sellWhichTokenAddress);
+        getTokenByAddress(buyWhichTokenAddress) && getTokenByAddress(sellWhichTokenAddress);
       if (tokenAddressesAreValid) {
         const { baseToken, quoteToken, offerType } = getOfferTradingPairAndType(
           { buyWhichTokenAddress, sellWhichTokenAddress, syncType },
@@ -72,9 +64,7 @@ export const syncOffer =
           offerMeta: { baseToken, quoteToken, offerType },
         };
       } else {
-        dispatch(
-          attemptToSyncRemovedOffer({ offerId, syncType, previousOfferState }),
-        );
+        dispatch(attemptToSyncRemovedOffer({ offerId, syncType, previousOfferState }));
         console.log(
           'trying to sync already removed offer',
           { offerId, syncType, previousOfferState },
@@ -94,15 +84,7 @@ export const syncOffer =
 export const syncRawOffer =
   (offer, { doSetOfferEpic = setOfferEpic } = {}) =>
   async (dispatch, getState) => {
-    const {
-      offerId,
-      sellHowMuch,
-      sellWhichTokenAddress,
-      buyHowMuch,
-      buyWhichTokenAddress,
-      owner,
-      timestamp,
-    } = offer;
+    const { offerId, sellHowMuch, sellWhichTokenAddress, buyHowMuch, buyWhichTokenAddress, owner, timestamp } = offer;
     const { baseToken, quoteToken, offerType } = getOfferTradingPairAndType(
       { buyWhichTokenAddress, sellWhichTokenAddress, OFFER_SYNC_TYPE_INITIAL },
       getState(),

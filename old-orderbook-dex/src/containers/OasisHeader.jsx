@@ -24,40 +24,36 @@ const propTypes = PropTypes && {
 
 export class OasisHeaderWrapper extends PureComponent {
   render() {
-    const { marketCloseTime, marketAddress, accounts, networkName } =
-      this.props;
+    const { marketCloseTime, marketAddress, accounts, networkName } = this.props;
 
     return (
-      <div styleName='headerMainSection' className='row'>
-        <div className='col-lg-6' styleName='leftColumn'>
-          <div className='row'>
-            <div className='col-3 col-sm-3'>
+      <div styleName="headerMainSection" className="row">
+        <div className="col-lg-6" styleName="leftColumn">
+          <div className="row">
+            <div className="col-3 col-sm-3">
               <OasisLogo />
             </div>
-            <div className='col-9' styleName='infoSection'>
-              <div className='row'>
-                <div className='col-6'>
+            <div className="col-9" styleName="infoSection">
+              <div className="row">
+                <div className="col-6">
                   <OasisAppLoadProgressWrapper />
                 </div>
-                <div className='col-6'>
+                <div className="col-6">
                   <OasisExpirationDate timestamp={marketCloseTime} />
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className='col-lg-6'>
-          <div styleName='row' className='row'>
-            <div className='col-12'>
+        <div className="col-lg-6">
+          <div styleName="row" className="row">
+            <div className="col-12">
               <OasisAccount accounts={accounts} />
             </div>
           </div>
-          <div styleName='row' className='row'>
-            <div className='col-sm-12'>
-              <OasisMarket
-                marketAddress={marketAddress}
-                networkName={networkName}
-              />
+          <div styleName="row" className="row">
+            <div className="col-sm-12">
+              <OasisMarket marketAddress={marketAddress} networkName={networkName} />
             </div>
           </div>
         </div>

@@ -28,9 +28,7 @@ describe('(Container) OasisEthBalanceWarningMessage', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisEthBalanceWarningMessageWrapper {...props} />,
-    );
+    const wrapper = shallow(<OasisEthBalanceWarningMessageWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

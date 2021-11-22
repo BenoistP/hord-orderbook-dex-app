@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisTokenSelectWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTokenSelect';
+import { OasisTokenSelectWrapper, mapStateToProps, mapDispatchToProps } from './OasisTokenSelect';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisTokenSelect', () => {

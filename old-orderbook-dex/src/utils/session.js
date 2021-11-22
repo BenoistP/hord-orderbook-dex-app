@@ -14,44 +14,25 @@ export const Session = {
     const accountSessionData = sessionStorage.getItem(defaultAccountHash);
     const accountPersistentData = localStorage.getItem(defaultAccountHash);
     if (accountPersistentData) {
-      dispatch(
-        sessionReducer.actions.loadSavedPersistentData(
-          fromJS(JSON.parse(accountPersistentData)),
-        ),
-      );
+      dispatch(sessionReducer.actions.loadSavedPersistentData(fromJS(JSON.parse(accountPersistentData))));
     } else {
-      localStorage.setItem(
-        defaultAccountHash,
-        JSON.stringify(session.persistentData(getState())),
-      );
+      localStorage.setItem(defaultAccountHash, JSON.stringify(session.persistentData(getState())));
     }
 
     if (accountSessionData) {
-      dispatch(
-        sessionReducer.actions.loadSavedSessionData(
-          fromJS(JSON.parse(accountSessionData)),
-        ),
-      );
+      dispatch(sessionReducer.actions.loadSavedSessionData(fromJS(JSON.parse(accountSessionData))));
     } else {
-      sessionStorage.setItem(
-        defaultAccountHash,
-        JSON.stringify(session.sessionData(getState())),
-      );
+      sessionStorage.setItem(defaultAccountHash, JSON.stringify(session.sessionData(getState())));
     }
     dispatch(sessionReducer.actions.init());
   },
 
-  getSession: (sessionKey) =>
-    getState().getIn(['session', 'session', sessionKey]),
-  getPersistent: (sessionKey) =>
-    getState().getIn(['session', 'persist', sessionKey]),
+  getSession: (sessionKey) => getState().getIn(['session', 'session', sessionKey]),
+  getPersistent: (sessionKey) => getState().getIn(['session', 'persist', sessionKey]),
 
   set: (dispatchFunction, key, value) => {
     dispatchFunction(sessionReducer.actions.SetValue(key, value));
-    sessionStorage.setItem(
-      web3.eth.defaultAccount,
-      JSON.stringify(getState().getIn(['session', 'session']).toJSON()),
-    );
+    sessionStorage.setItem(web3.eth.defaultAccount, JSON.stringify(getState().getIn(['session', 'session']).toJSON()));
   },
   setPersistent: (dispatchFunction, key, value) => {
     dispatchFunction(sessionReducer.actions.SetValue(key, value));

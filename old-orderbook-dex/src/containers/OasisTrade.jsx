@@ -6,12 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { validateTradingPair } from '../utils/validateTradingPair';
-import {
-  BASE_TOKENS,
-  QUOTE_TOKENS,
-  TOKEN_DAI,
-  TOKEN_WRAPPED_ETH,
-} from '../constants';
+import { BASE_TOKENS, QUOTE_TOKENS, TOKEN_DAI, TOKEN_WRAPPED_ETH } from '../constants';
 import tokensReducer from './../store/reducers/tokens';
 import { generateTradingPairs } from '../utils/generateTradingPairs';
 import OasisMarketWidget from '../components/OasisMarketWidget';
@@ -36,13 +31,7 @@ export class OasisTradeWrapper extends PureComponent {
     const params = this.props.match.params;
     const { baseToken, quoteToken } = this.props.defaultTradingPair.toJSON();
 
-    if (
-      !validateTradingPair(
-        params.baseToken,
-        params.quoteToken,
-        generateTradingPairs(BASE_TOKENS, QUOTE_TOKENS),
-      )
-    ) {
+    if (!validateTradingPair(params.baseToken, params.quoteToken, generateTradingPairs(BASE_TOKENS, QUOTE_TOKENS))) {
       if (baseToken === TOKEN_WRAPPED_ETH && quoteToken === TOKEN_DAI) {
         return <Redirect to={`/trade/${TOKEN_WRAPPED_ETH}/${TOKEN_DAI}`} />;
       } else {
@@ -74,11 +63,7 @@ export class OasisTradeWrapper extends PureComponent {
       initialMarketHistoryLoaded,
       isMarketInitialized,
       activeTradingPair = paramsTradePair,
-      actions: {
-        setActiveTradingPairEpic,
-        changeRouteEpic,
-        updateTradingPairOfferCount,
-      },
+      actions: { setActiveTradingPairEpic, changeRouteEpic, updateTradingPairOfferCount },
     } = this.props;
 
     return (

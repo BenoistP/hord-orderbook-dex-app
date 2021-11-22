@@ -16,14 +16,12 @@ class TokenAmountInput extends PureComponent {
   render() {
     const { meta, showInlineWarning } = this.props;
 
-    const insufficientAmount =
-      meta.error &&
-      meta.error.includes(VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE);
+    const insufficientAmount = meta.error && meta.error.includes(VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE);
 
     const errorMessage = (
       <div className={styles.errorMessage}>
         {showInlineWarning && insufficientAmount && (
-          <InfoBoxWithIco color='danger' icon='warning'>
+          <InfoBoxWithIco color="danger" icon="warning">
             Insufficient token amount
           </InfoBoxWithIco>
         )}

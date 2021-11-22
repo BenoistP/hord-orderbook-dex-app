@@ -46,10 +46,7 @@ function loadContact(abi, contractAddress, noProxy) {
         }
       },
     };
-    return new window.Proxy(
-      contractFactory.at(contractAddress),
-      proxiedWeb3Handler,
-    );
+    return new window.Proxy(contractFactory.at(contractAddress), proxiedWeb3Handler);
   } catch (e) {
     console.error(e); // eslint-disable-line no-console
     return null;

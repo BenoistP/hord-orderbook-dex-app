@@ -2,11 +2,7 @@
 /* eslint-disable import/first */
 import React from 'react';
 
-import {
-  OasisWelcomeMessageWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisWelcomeMessage';
+import { OasisWelcomeMessageWrapper, mapStateToProps, mapDispatchToProps } from './OasisWelcomeMessage';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisWelcomeMessage', () => {

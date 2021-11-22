@@ -20,7 +20,7 @@ class OasisYourTransactionFailed extends PureComponent {
   render() {
     const { txHash } = this.props;
     return (
-      <InfoBox color='danger'>
+      <InfoBox color="danger">
         <StatusPictogram status={TX_STATUS_REJECTED} />
         <span className={styles.infoText}>Your transaction</span>
         <EtherscanLinkWrapper
@@ -37,8 +37,4 @@ class OasisYourTransactionFailed extends PureComponent {
 OasisYourTransactionFailed.displayName = 'OasisYourTransactionFailed';
 OasisYourTransactionFailed.propTypes = propTypes;
 OasisYourTransactionFailed.defaultProps = defaultProps;
-export default CSSModules(
-  OasisYourTransactionFailed,
-  { styles, textStyles },
-  { allowMultiple: true },
-);
+export default CSSModules(OasisYourTransactionFailed, { styles, textStyles }, { allowMultiple: true });

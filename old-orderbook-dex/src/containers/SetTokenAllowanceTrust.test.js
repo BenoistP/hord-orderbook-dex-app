@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  SetTokenAllowanceTrustWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './SetTokenAllowanceTrust';
+import { SetTokenAllowanceTrustWrapper, mapStateToProps, mapDispatchToProps } from './SetTokenAllowanceTrust';
 import { shallow } from 'enzyme';
 import { TOKEN_WRAPPED_ETH } from '../constants';
 

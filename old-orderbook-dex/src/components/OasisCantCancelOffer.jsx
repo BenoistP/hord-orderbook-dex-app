@@ -10,11 +10,7 @@ const defaultProps = {};
 
 class OasisCantCancelOffer extends PureComponent {
   render() {
-    return (
-      <InfoBox color='danger'>
-        This offer has been taken. You cannot cancel it anymore.
-      </InfoBox>
-    );
+    return <InfoBox color="danger">This offer has been taken. You cannot cancel it anymore.</InfoBox>;
   }
 }
 

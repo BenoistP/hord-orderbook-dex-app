@@ -18,8 +18,7 @@ const propTypes = PropTypes && {
   onValidityChange: PropTypes.func,
 };
 
-export const VALIDATION_ERROR__NOT_ETHEREUM_ADDRESS_FORMAT =
-  'VALIDATION_ERROR/NOT_ETHEREUM_ADDRESS_FORMAT';
+export const VALIDATION_ERROR__NOT_ETHEREUM_ADDRESS_FORMAT = 'VALIDATION_ERROR/NOT_ETHEREUM_ADDRESS_FORMAT';
 
 export class EthereumAddressInputFieldWrapper extends PureComponent {
   constructor(props) {
@@ -83,7 +82,4 @@ export function mapDispatchToProps(dispatch) {
 
 EthereumAddressInputFieldWrapper.propTypes = propTypes;
 EthereumAddressInputFieldWrapper.displayName = 'EthereumAddressInputField';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModule(EthereumAddressInputFieldWrapper, style));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModule(EthereumAddressInputFieldWrapper, style));

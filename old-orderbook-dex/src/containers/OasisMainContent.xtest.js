@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisMainContentWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisMainContent';
+import { OasisMainContentWrapper, mapStateToProps, mapDispatchToProps } from './OasisMainContent';
 import { shallow } from 'enzyme';
 import { combineReducers, createStore } from 'redux/index';
 import { reducer as formReducer } from 'redux-form';

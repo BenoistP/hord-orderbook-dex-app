@@ -8,15 +8,9 @@ import CSSModules from 'react-css-modules/dist/index';
 import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
 import OasisIcon from './OasisIcon';
 
-const TokenAmount = ({
-  tokenName,
-  tokenAmount,
-  tokenAmountFullPrecision,
-  icon,
-  ...props
-}) => (
-  <FlexBox alignItems='center' {...props}>
-    <OasisIcon icon={icon} size='md' className={styles.icon} />
+const TokenAmount = ({ tokenName, tokenAmount, tokenAmountFullPrecision, icon, ...props }) => (
+  <FlexBox alignItems="center" {...props}>
+    <OasisIcon icon={icon} size="md" className={styles.icon} />
     <span className={styles.baseText}>
       {tokenAmount !== 'N/A' ? (
         <span>
@@ -42,12 +36,7 @@ TokenAmount.propTypes = {
 };
 
 const TokenReceivedAmount = ({ tokenName, tokenAmount, ...props }) => (
-  <TokenAmount
-    tokenName={tokenName}
-    tokenAmount={tokenAmount}
-    icon='add'
-    {...props}
-  />
+  <TokenAmount tokenName={tokenName} tokenAmount={tokenAmount} icon="add" {...props} />
 );
 
 TokenReceivedAmount.propTypes = {
@@ -60,7 +49,7 @@ const TokenSoldAmount = ({ tokenName, tokenAmount, ...props }) => (
     style={{ width: '130px', display: 'inline-block' }}
     tokenName={tokenName}
     tokenAmount={tokenAmount}
-    icon='subtract'
+    icon="subtract"
     {...props}
   />
 );

@@ -27,9 +27,7 @@ const propTypes = PropTypes && {
 
 export class OasisTransactionStatusWrapper extends PureComponent {
   hasTransactionFailedOrSignatureDenied() {
-    return [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(
-      this.props.transaction.get('txStatus'),
-    );
+    return [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(this.props.transaction.get('txStatus'));
   }
 
   /**
@@ -37,9 +35,7 @@ export class OasisTransactionStatusWrapper extends PureComponent {
    * @returns {boolean}
    */
   isAwaitingUserAcceptance() {
-    return [TX_STATUS_AWAITING_USER_ACCEPTANCE].includes(
-      this.props.transaction.get('txStatus'),
-    );
+    return [TX_STATUS_AWAITING_USER_ACCEPTANCE].includes(this.props.transaction.get('txStatus'));
   }
 
   /**
@@ -59,26 +55,18 @@ export class OasisTransactionStatusWrapper extends PureComponent {
     const { transaction, infoText, noBorder, ...props } = this.props;
     return (
       <InfoBox
-        justifyContent='space-between'
-        alignItems='baseline'
-        size='sm'
+        justifyContent="space-between"
+        alignItems="baseline"
+        size="sm"
         fullWidth
         noBorder={noBorder}
         className={styles.base}
         {...props}
       >
         <div className={styles.infoText}>
-          {typeof infoText === 'function'
-            ? infoText(transaction.get('txMeta'))
-            : infoText}
+          {typeof infoText === 'function' ? infoText(transaction.get('txMeta')) : infoText}
         </div>
-        <div
-          className={
-            this.hasTransactionFailedOrSignatureDenied()
-              ? styles.statusDanger
-              : styles.status
-          }
-        >
+        <div className={this.hasTransactionFailedOrSignatureDenied() ? styles.statusDanger : styles.status}>
           <TransactionStatus transaction={transaction} />
         </div>
       </InfoBox>
@@ -104,7 +92,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTransactionStatusWrapper.propTypes = propTypes;
 OasisTransactionStatusWrapper.displayName = 'OasisTransactionStatus';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisTransactionStatusWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisTransactionStatusWrapper, styles));

@@ -7,17 +7,11 @@ import OasisTokenBalanceWrapper from '../containers/OasisTokenBalance';
 import { TOKEN_ETHER, TOKEN_GOLEM } from '../constants';
 import OasisWidgetFrame from '../containers/OasisWidgetFrame';
 import OasisEtherBalanceWrapper from '../containers/OasisEtherBalance';
-import {
-  WRAP_STATUS_VIEW_TYPE_WRAP,
-  WrapUnwrapStatusWrapper,
-} from '../containers/WrapUnwrapStatus';
+import { WRAP_STATUS_VIEW_TYPE_WRAP, WrapUnwrapStatusWrapper } from '../containers/WrapUnwrapStatus';
 import OasisTokenBalanceSummary from '../containers/OasisTokenBalanceSummary';
 import styles from './OasisWrapUnwrapWrap.scss';
 import CSSModules from 'react-css-modules';
-import {
-  TX_WRAP_ETHER,
-  TX_WRAP_TOKEN_WRAPPER,
-} from '../store/reducers/transactions';
+import { TX_WRAP_ETHER, TX_WRAP_TOKEN_WRAPPER } from '../store/reducers/transactions';
 
 const propTypes = PropTypes && {
   activeUnwrappedToken: PropTypes.string,
@@ -44,12 +38,7 @@ class OasisWrapUnwrapWrap extends PureComponent {
     if (activeUnwrappedToken === TOKEN_ETHER) {
       return <OasisEtherBalanceWrapper decimalPlaces={5} fromWei />;
     } else {
-      return (
-        <OasisTokenBalanceWrapper
-          decimalPlaces={5}
-          tokenName={activeUnwrappedToken}
-        />
-      );
+      return <OasisTokenBalanceWrapper decimalPlaces={5} tokenName={activeUnwrappedToken} />;
     }
   }
 
@@ -66,16 +55,10 @@ class OasisWrapUnwrapWrap extends PureComponent {
   }
 
   render() {
-    const { unwrappedToken, hidden, txType, form, transactionState } =
-      this.props;
+    const { unwrappedToken, hidden, txType, form, transactionState } = this.props;
     return (
-      <OasisWidgetFrame
-        hidden={hidden}
-        heading={'Wrap'}
-        spaceForContent={true}
-        className={styles.frame}
-      >
-        <OasisTokenBalanceSummary summary='Wallet' className={styles.balance}>
+      <OasisWidgetFrame hidden={hidden} heading={'Wrap'} spaceForContent={true} className={styles.frame}>
+        <OasisTokenBalanceSummary summary="Wallet" className={styles.balance}>
           {this.getBalance()}
         </OasisTokenBalanceSummary>
         <OasisTokenWrapFormWrapper

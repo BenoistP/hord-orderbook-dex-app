@@ -24,23 +24,17 @@ export class TransactionTimer extends PureComponent {
     // if (!transaction.hasIn(["txStats", "txEndTimestamp"])) {
     //   timeDiff = moment(timer).diff(moment(startTimestamp));
     // } else {
-    timeDiff = moment(transaction.getIn(['txStats', 'txEndTimestamp'])).diff(
-      moment(startTimestamp),
-    );
+    timeDiff = moment(transaction.getIn(['txStats', 'txEndTimestamp'])).diff(moment(startTimestamp));
     // }
 
     const momentDuration = moment.duration(timeDiff);
-    const [minutes, seconds] = [
-      momentDuration.get('minutes'),
-      momentDuration.get('seconds'),
-    ];
+    const [minutes, seconds] = [momentDuration.get('minutes'), momentDuration.get('seconds')];
 
     return (
       <div>
         <span style={{ padding: '0 10px' }}>Time</span>
         <span>
-          {minutes < 10 ? `0${minutes}` : minutes} :{' '}
-          {seconds < 10 ? `0${seconds}` : seconds} min
+          {minutes < 10 ? `0${minutes}` : minutes} : {seconds < 10 ? `0${seconds}` : seconds} min
         </span>
       </div>
     );

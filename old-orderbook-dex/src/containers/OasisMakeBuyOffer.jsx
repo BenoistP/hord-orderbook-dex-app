@@ -39,9 +39,7 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
   }
 
   getModal(formProps) {
-    return (
-      this.props.isModalOpen && <OasisMakeOfferModalWrapper {...formProps} />
-    );
+    return this.props.isModalOpen && <OasisMakeOfferModalWrapper {...formProps} />;
   }
 
   render() {
@@ -62,35 +60,27 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
     };
     return (
       <OasisWidgetFrame heading={`Buy ${baseToken}`} spaceForContent={true}>
-        <OasisTokenBalanceSummary summary='Available' token={quoteToken} />
+        <OasisTokenBalanceSummary summary="Available" token={quoteToken} />
         <div>
           {this.getModal(formProps)}
           <OfferMakeForm {...formProps} shouldFormUpdate={!isModalOpen} />
         </div>
         <div className={styles.footer}>
           <div className={styles.helpBlock}>
-            {hasSufficientTokenAmount === false && (
-              <OasisInsufficientAmountOfToken tokenName={quoteToken} noBorder />
-            )}
+            {hasSufficientTokenAmount === false && <OasisInsufficientAmountOfToken tokenName={quoteToken} noBorder />}
             {hasSufficientTokenAmount && (
-              <OasisOfferBelowDustLimitWrapper
-                noBorder
-                tokenName={quoteToken}
-                offerType={MAKE_BUY_OFFER}
-              />
+              <OasisOfferBelowDustLimitWrapper noBorder tokenName={quoteToken} offerType={MAKE_BUY_OFFER} />
             )}
-            {hasSufficientTokenAmount && isTotalOverTheTokenMax && (
-              <OasisYourOrderExceedsMaxTotalForToken />
-            )}
-            <InfoBox hidden={this.props.isPriceSet} noBorder color='muted'>
+            {hasSufficientTokenAmount && isTotalOverTheTokenMax && <OasisYourOrderExceedsMaxTotalForToken />}
+            <InfoBox hidden={this.props.isPriceSet} noBorder color="muted">
               {!globalFormLock && 'Enter a price to unlock amount and total.'}
             </InfoBox>
           </div>
           <OasisButton
             className={styles.callToAction}
-            color='success'
-            size='md'
-            disabled='true'
+            color="success"
+            size="md"
+            disabled="true"
             onClick={this.onModalOpen}
           >
             Buy
@@ -107,10 +97,8 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
   // }
 
   UNSAFE_componentWillUpdate(nextProps) {
-    const pairChanged =
-      nextProps.activeTradingPair !== this.props.activeTradingPair;
-    const contractsInitiallyLoaded =
-      !this.props.contractsLoaded && nextProps.contractsLoaded;
+    const pairChanged = nextProps.activeTradingPair !== this.props.activeTradingPair;
+    const contractsInitiallyLoaded = !this.props.contractsLoaded && nextProps.contractsLoaded;
     if (contractsInitiallyLoaded || pairChanged) {
       this.props.actions.initializeOfferMake(MAKE_BUY_OFFER);
     }
@@ -119,12 +107,8 @@ export class OasisMakeBuyOfferWrapper extends PureComponent {
 
 export function mapStateToProps(state) {
   return {
-    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(
-      state,
-      MAKE_BUY_OFFER,
-    ),
-    hasSufficientTokenAmount:
-      offerMakes.hasSufficientTokenAmount(state)(MAKE_BUY_OFFER),
+    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(state, MAKE_BUY_OFFER),
+    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(MAKE_BUY_OFFER),
     canMakeOffer:
       tokens.activeTradingPair(state) && platform.contractsLoaded(state)
         ? offerMakes.canMakeOffer(state, MAKE_BUY_OFFER, true)
@@ -147,7 +131,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisMakeBuyOfferWrapper.propTypes = propTypes;
 OasisMakeBuyOfferWrapper.displayName = 'OasisMakeBuyOffer';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisMakeBuyOfferWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisMakeBuyOfferWrapper, styles));

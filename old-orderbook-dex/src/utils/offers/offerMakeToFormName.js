@@ -1,9 +1,4 @@
-import {
-  MAKE_BUY_OFFER,
-  MAKE_SELL_OFFER,
-  MAKE_SELL_OFFER_FORM_NAME,
-  MAKE_BUY_OFFER_FORM_NAME,
-} from '../../constants';
+import { MAKE_BUY_OFFER, MAKE_SELL_OFFER, MAKE_SELL_OFFER_FORM_NAME, MAKE_BUY_OFFER_FORM_NAME } from '../../constants';
 
 const offerMakeToFormName = (offerMakeType) => {
   switch (offerMakeType) {

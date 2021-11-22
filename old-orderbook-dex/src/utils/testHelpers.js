@@ -30,8 +30,7 @@ export function mockAction(name) {
 }
 
 export function dispatchMockAction(name, dispatch) {
-  return (...args) =>
-    dispatch(createAction('MOCK___' + name, (...args) => args)(...args));
+  return (...args) => dispatch(createAction('MOCK___' + name, (...args) => args)(...args));
 }
 
 export function mockEpic(name, dispatch) {

@@ -46,9 +46,7 @@ const bootstrap = async () => {
   conversion.init(getState);
 
   try {
-    await dispatch(
-      platformReducer.actions.web3Initialized(await web3.init(dispatch)),
-    );
+    await dispatch(platformReducer.actions.web3Initialized(await web3.init(dispatch)));
   } catch (e) {
     await dispatch(networkReducer.actions.setNoProviderConnected(true));
     throw e;
@@ -61,10 +59,7 @@ const bootstrap = async () => {
       networkCheckIntervalId = PENDING_INITIAL_NETWORK_CHECK;
       clearInterval(checkIfInitiallyLockedIntervalId);
       await healthCheck(dispatch, getState, true);
-      networkCheckIntervalId = setInterval(
-        await healthCheck.bind(null, dispatch, getState),
-        HEALTHCHECK_INTERVAL_MS,
-      );
+      networkCheckIntervalId = setInterval(await healthCheck.bind(null, dispatch, getState), HEALTHCHECK_INTERVAL_MS);
     } else {
       dispatch(platformReducer.actions.accountLocked());
     }
@@ -74,10 +69,7 @@ const bootstrap = async () => {
   checkIfInitiallyLockedIntervalId = setInterval(
     async (dispatch, getState) => {
       try {
-        if (
-          isCheckingConnectivityPromise === null &&
-          networkCheckIntervalId !== PENDING_INITIAL_NETWORK_CHECK
-        ) {
+        if (isCheckingConnectivityPromise === null && networkCheckIntervalId !== PENDING_INITIAL_NETWORK_CHECK) {
           isCheckingConnectivityPromise = true;
           const nodeType = await Network.checkConnectivity();
           dispatch(platformReducer.actions.setActiveNodeType(nodeType));

@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisOfferCancelModalWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisOfferCancelModal';
+import { OasisOfferCancelModalWrapper, mapStateToProps, mapDispatchToProps } from './OasisOfferCancelModal';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisOfferCancelModal', () => {

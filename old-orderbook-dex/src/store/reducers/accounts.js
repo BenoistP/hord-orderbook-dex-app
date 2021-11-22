@@ -12,24 +12,13 @@ const initialState = Immutable.fromJS({
 
 const Init = createAction('ACCOUNTS/INIT', () => null);
 
-const checkAccounts = createAction('ACCOUNTS/CHECK_ACCOUNTS', () =>
-  web3p.eth.getAccounts(),
-);
+const checkAccounts = createAction('ACCOUNTS/CHECK_ACCOUNTS', () => web3p.eth.getAccounts());
 
-const setDefaultAccount = createAction(
-  'ACCOUNTS/SET_DEFAULT_ACCOUNT',
-  (address) => address,
-);
+const setDefaultAccount = createAction('ACCOUNTS/SET_DEFAULT_ACCOUNT', (address) => address);
 
-const setAccounts = createAction(
-  'ACCOUNTS/SET_ACCOUNTS',
-  (accounts) => accounts,
-);
+const setAccounts = createAction('ACCOUNTS/SET_ACCOUNTS', (accounts) => accounts);
 
-const defaultAccountChanged = createAction(
-  'ACCOUNTS/DEFAULT_ACCOUNT_CHANGED',
-  () => Date.now().toString(),
-);
+const defaultAccountChanged = createAction('ACCOUNTS/DEFAULT_ACCOUNT_CHANGED', () => Date.now().toString());
 
 const checkAccountsEpic = () => async (dispatch, getState) => {
   const userAccounts = (await dispatch(checkAccounts())).value;
@@ -66,10 +55,8 @@ const actions = {
 
 const reducer = handleActions(
   {
-    [setDefaultAccount]: (state, { payload }) =>
-      state.set('defaultAccount', payload),
-    [defaultAccountChanged]: (state, { payload }) =>
-      state.set('lastAccountSwitchAt', payload),
+    [setDefaultAccount]: (state, { payload }) => state.set('defaultAccount', payload),
+    [defaultAccountChanged]: (state, { payload }) => state.set('lastAccountSwitchAt', payload),
     [setAccounts]: (state, { payload }) => state.set('accounts', payload),
   },
   initialState,

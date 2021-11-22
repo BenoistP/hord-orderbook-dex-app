@@ -59,24 +59,16 @@ const sections = [
 
 export class OasisFooterWrapper extends PureComponent {
   render() {
-    const rowClassNames = `row ${styles.OasisFooter} ${
-      window.mist ? styles.MistBrowser : ''
-    }`;
+    const rowClassNames = `row ${styles.OasisFooter} ${window.mist ? styles.MistBrowser : ''}`;
     return (
       <div className={rowClassNames}>
         {sections.map((section, index) => (
           <div key={index}>
-            <div className='row'>
+            <div className="row">
               <div className={styles.LinksSection}>
                 {/*<h4 className={styles.Heading}>{section.header}</h4>*/}
                 {section.links.map((link, index) => (
-                  <a
-                    rel='noopener noreferrer'
-                    className={styles.Link}
-                    key={index}
-                    href={link.url}
-                    target='_blank'
-                  >
+                  <a rel="noopener noreferrer" className={styles.Link} key={index} href={link.url} target="_blank">
                     {link.label}
                   </a>
                 ))}
@@ -100,7 +92,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisFooterWrapper.propTypes = propTypes;
 OasisFooterWrapper.displayName = 'OasisFooterWrapper';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisFooterWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisFooterWrapper, styles));

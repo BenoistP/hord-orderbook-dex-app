@@ -25,9 +25,9 @@ export class OasisExpirationDate extends PureComponent {
   render() {
     const { timestamp } = this.props;
     return (
-      <div styleName='ClosingTime'>
+      <div styleName="ClosingTime">
         <div> CLOSING TIME </div>
-        <div styleName='Date'>{formatTime(timestamp)}</div>
+        <div styleName="Date">{formatTime(timestamp)}</div>
       </div>
     );
   }

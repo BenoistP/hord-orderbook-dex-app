@@ -70,17 +70,11 @@ const sizes = {
 export class OasisIcon extends PureComponent {
   render() {
     const { size, icon, color, onClick, className, ...props } = this.props;
-    const classNames = `${styles.base} ${className} ${
-      onClick ? styles.clickable : ''
-    }`;
+    const classNames = `${styles.base} ${className} ${onClick ? styles.clickable : ''}`;
     const height = `${sizes[size]}px`;
     return (
       <div onClick={onClick} className={classNames} {...props}>
-        <img
-          className={`${color ? colors[color] : ''}`}
-          style={{ width: height, height }}
-          src={icons[icon]}
-        />
+        <img className={`${color ? colors[color] : ''}`} style={{ width: height, height }} src={icons[icon]} />
       </div>
     );
   }

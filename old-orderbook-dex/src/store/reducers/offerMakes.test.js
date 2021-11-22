@@ -20,129 +20,103 @@ describe('make offer form', () => {
     ['negative number', '-1', MAKE_SELL_OFFER],
   ];
 
-  each(testCases).describe(
-    'volumeFieldValueChangedEpic',
-    (desc, volume, offerMakeType) => {
-      test(`volume set to: ${desc}(${volume}) for: ${offerMakeType}`, () => {
-        const store = configureMockStore([thunk2Data(), thunk])({});
+  each(testCases).describe('volumeFieldValueChangedEpic', (desc, volume, offerMakeType) => {
+    test(`volume set to: ${desc}(${volume}) for: ${offerMakeType}`, () => {
+      const store = configureMockStore([thunk2Data(), thunk])({});
 
-        store.dispatch(
-          offerMakes.actions.volumeFieldValueChangedEpic(
-            offerMakeType,
-            volume,
-            { localFormValueSelector: () => () => 3 },
-          ),
-        );
+      store.dispatch(
+        offerMakes.actions.volumeFieldValueChangedEpic(offerMakeType, volume, {
+          localFormValueSelector: () => () => 3,
+        }),
+      );
 
-        expect(store.getActions()).toMatchSnapshot();
-      });
-    },
-  );
+      expect(store.getActions()).toMatchSnapshot();
+    });
+  });
 
-  each(testCases).describe(
-    'totalFieldValueChangedEpic',
-    (desc, total, offerMakeType) => {
-      test(`total set to: ${desc}(${total}) for: ${offerMakeType}`, () => {
-        const store = configureMockStore([thunk2Data(), thunk])({});
+  each(testCases).describe('totalFieldValueChangedEpic', (desc, total, offerMakeType) => {
+    test(`total set to: ${desc}(${total}) for: ${offerMakeType}`, () => {
+      const store = configureMockStore([thunk2Data(), thunk])({});
 
-        store.dispatch(
-          offerMakes.actions.totalFieldValueChangedEpic(offerMakeType, total, {
-            localFormValueSelector: () => () => 3,
-          }),
-        );
+      store.dispatch(
+        offerMakes.actions.totalFieldValueChangedEpic(offerMakeType, total, {
+          localFormValueSelector: () => () => 3,
+        }),
+      );
 
-        expect(store.getActions()).toMatchSnapshot();
-      });
-    },
-  );
+      expect(store.getActions()).toMatchSnapshot();
+    });
+  });
 
-  each(testCases).describe(
-    'priceFieldChangedEpic',
-    (desc, price, offerMakeType) => {
-      test(`price set to: ${desc}(${price}) for: ${offerMakeType}`, () => {
-        const store = configureMockStore([thunk2Data(), thunk])({});
+  each(testCases).describe('priceFieldChangedEpic', (desc, price, offerMakeType) => {
+    test(`price set to: ${desc}(${price}) for: ${offerMakeType}`, () => {
+      const store = configureMockStore([thunk2Data(), thunk])({});
 
-        store.dispatch(
-          offerMakes.actions.totalFieldValueChangedEpic(offerMakeType, price, {
-            localFormValueSelector: () => () => 3,
-          }),
-        );
+      store.dispatch(
+        offerMakes.actions.totalFieldValueChangedEpic(offerMakeType, price, {
+          localFormValueSelector: () => () => 3,
+        }),
+      );
 
-        expect(store.getActions()).toMatchSnapshot();
-      });
-    },
-  );
+      expect(store.getActions()).toMatchSnapshot();
+    });
+  });
 });
 
 describe('make offer modal', () => {
   test('setOfferMakeModalOpenEpic', () => {
     const store = configureMockStore([thunk2Data(), thunk])({});
-    store.dispatch(
-      offerMakes.actions.setOfferMakeModalOpenEpic(MAKE_BUY_OFFER),
-    );
+    store.dispatch(offerMakes.actions.setOfferMakeModalOpenEpic(MAKE_BUY_OFFER));
     expect(store.getActions()).toMatchSnapshot();
   });
   test('setOfferMakeModalClosedEpic', () => {
     const store = configureMockStore([thunk2Data(), thunk])({});
-    store.dispatch(
-      offerMakes.actions.setOfferMakeModalClosedEpic(MAKE_BUY_OFFER),
-    );
+    store.dispatch(offerMakes.actions.setOfferMakeModalClosedEpic(MAKE_BUY_OFFER));
     expect(store.getActions()).toMatchSnapshot();
   });
 });
 
-each([[MAKE_BUY_OFFER], [MAKE_SELL_OFFER]]).test(
-  'buyMaxEpic',
-  (offerMakeType) => {
-    const store = configureMockStore([thunk2Data(), thunk])({});
+each([[MAKE_BUY_OFFER], [MAKE_SELL_OFFER]]).test('buyMaxEpic', (offerMakeType) => {
+  const store = configureMockStore([thunk2Data(), thunk])({});
 
-    store.dispatch(
-      offerMakes.actions.buyMaxEpic(offerMakeType, {
-        activeQuoteTokenBalance: () => 33,
-      }),
-    );
+  store.dispatch(
+    offerMakes.actions.buyMaxEpic(offerMakeType, {
+      activeQuoteTokenBalance: () => 33,
+    }),
+  );
 
-    expect(store.getActions()).toMatchSnapshot();
-  },
-);
+  expect(store.getActions()).toMatchSnapshot();
+});
 
-each([[MAKE_BUY_OFFER], [MAKE_SELL_OFFER]]).test(
-  'sellMaxEpic',
-  (offerMakeType) => {
-    const store = configureMockStore([thunk2Data(), thunk])({});
+each([[MAKE_BUY_OFFER], [MAKE_SELL_OFFER]]).test('sellMaxEpic', (offerMakeType) => {
+  const store = configureMockStore([thunk2Data(), thunk])({});
 
-    store.dispatch(
-      offerMakes.actions.sellMaxEpic(offerMakeType, {
-        activeBaseTokenBalance: () => 100,
-        currentFormValues: () => () => ({ price: 0.8 }),
-      }),
-    );
+  store.dispatch(
+    offerMakes.actions.sellMaxEpic(offerMakeType, {
+      activeBaseTokenBalance: () => 100,
+      currentFormValues: () => () => ({ price: 0.8 }),
+    }),
+  );
 
-    expect(store.getActions()).toMatchSnapshot();
-  },
-);
+  expect(store.getActions()).toMatchSnapshot();
+});
 
-each([[true], [false]]).test(
-  'updateTransactionGasCostEstimateEpic',
-  (canMakeOffer) => {
-    const store = configureMockStore([thunk2Data(), thunk])(
-      fromJS({ transactions: {} }),
-    );
+each([[true], [false]]).test('updateTransactionGasCostEstimateEpic', (canMakeOffer) => {
+  const store = configureMockStore([thunk2Data(), thunk])(fromJS({ transactions: {} }));
 
-    store.dispatch(
-      offerMakes.actions.updateTransactionGasCostEstimateEpic(MAKE_BUY_OFFER, {
-        canMakeOffer: () => canMakeOffer,
-        activeOfferMakePure: () =>
-          fromJS({
-            sellTokenAddress: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-            buyTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
-            offerData: {
-              payAmount: '1000000000000000000',
-              buyAmount: '1000000000000000000',
-            },
-          }),
-      }),
-    );
-    expect(store.getActions()).toMatchSnapshot();
-  },
-);
+  store.dispatch(
+    offerMakes.actions.updateTransactionGasCostEstimateEpic(MAKE_BUY_OFFER, {
+      canMakeOffer: () => canMakeOffer,
+      activeOfferMakePure: () =>
+        fromJS({
+          sellTokenAddress: '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
+          buyTokenAddress: '0xaaf64bfcc32d0f15873a02163e7e500671a4ffcd',
+          offerData: {
+            payAmount: '1000000000000000000',
+            buyAmount: '1000000000000000000',
+          },
+        }),
+    }),
+  );
+  expect(store.getActions()).toMatchSnapshot();
+});

@@ -23,11 +23,10 @@ const amountAndTokenNameStyle = {
 
 export class OasisOfferBelowDustLimitWrapper extends PureComponent {
   render() {
-    const { isOfferBelowLimit, tokenName, tokenMinLimit, noBorder } =
-      this.props;
+    const { isOfferBelowLimit, tokenName, tokenMinLimit, noBorder } = this.props;
     return isOfferBelowLimit ? (
-      <InfoBox fullWidth icon='warning' noBorder={noBorder} color='danger'>
-        <OasisIcon icon='warning' />
+      <InfoBox fullWidth icon="warning" noBorder={noBorder} color="danger">
+        <OasisIcon icon="warning" />
         <div style={{ marginLeft: 10, lineHeight: '24px' }}>
           Order below{' '}
           <b style={amountAndTokenNameStyle}>
@@ -42,10 +41,7 @@ export class OasisOfferBelowDustLimitWrapper extends PureComponent {
 
 export function mapStateToProps(state, { offerType, tokenName }) {
   return {
-    isOfferBelowLimit: offerMakes.isOfferBelowLimit(
-      state,
-      offerType,
-    )(offerType),
+    isOfferBelowLimit: offerMakes.isOfferBelowLimit(state, offerType)(offerType),
     tokenMinLimit: limits.tokenMinSellLimitInEther(state)(tokenName),
   };
 }
@@ -56,7 +52,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisOfferBelowDustLimitWrapper.propTypes = propTypes;
 OasisOfferBelowDustLimitWrapper.displayName = 'OasisOfferBelowDustLimit';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisOfferBelowDustLimitWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisOfferBelowDustLimitWrapper);

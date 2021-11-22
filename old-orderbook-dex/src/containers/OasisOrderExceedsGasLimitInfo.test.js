@@ -52,9 +52,7 @@ describe('(Container) OasisOrderExceedsGasLimitInfo', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisOrderExceedsGasLimitInfoWrapper {...props} />,
-    );
+    const wrapper = shallow(<OasisOrderExceedsGasLimitInfoWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

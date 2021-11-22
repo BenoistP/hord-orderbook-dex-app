@@ -41,7 +41,4 @@ export function mapDispatchToProps(dispatch) {
 
 WrapUnwrapStatusWrapper.propTypes = propTypes;
 WrapUnwrapStatusWrapper.displayName = 'WrapUnwrapStatus';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(WrapUnwrapStatusWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(WrapUnwrapStatusWrapper);

@@ -12,12 +12,7 @@ class OasisInsufficientAmountOfToken extends PureComponent {
   render() {
     const { noBorder, tokenName, ...props } = this.props;
     return (
-      <InfoBoxWithIco
-        noBorder={noBorder}
-        color='danger'
-        icon='warning'
-        {...props}
-      >
+      <InfoBoxWithIco noBorder={noBorder} color="danger" icon="warning" {...props}>
         <span>
           You do not have enough <strong>{tokenName}</strong> tokens.
         </span>

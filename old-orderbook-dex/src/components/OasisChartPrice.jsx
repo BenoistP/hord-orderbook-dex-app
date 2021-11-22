@@ -81,10 +81,7 @@ export class OasisChartPrice extends PureComponent {
   }
 
   showTooltip(tooltip) {
-    const tooltipEl = tooltipContainer(
-      tooltip,
-      document.getElementsByClassName('chartjs-render-monitor')[0],
-    );
+    const tooltipEl = tooltipContainer(tooltip, document.getElementsByClassName('chartjs-render-monitor')[0]);
     if (tooltipEl && tooltip.body) {
       const ts = this.props.priceChartLabels[tooltip.dataPoints[0].index];
       const date = moment.unix(ts).format('ll');
@@ -110,9 +107,7 @@ export class OasisChartPrice extends PureComponent {
     axis.ticks = axis.ticks.reduce(
       ({ lastDay, lastDayIndex, result }, tick, i) => {
         const day = moment.unix(tick).startOf('day').unix();
-        return day == lastDay ||
-          (lastDayIndex !== null &&
-            i - lastDayIndex < axis.ticks.length / REL_PADDING)
+        return day == lastDay || (lastDayIndex !== null && i - lastDayIndex < axis.ticks.length / REL_PADDING)
           ? { lastDay, lastDayIndex, result: result.concat(null) }
           : { lastDay: day, lastDayIndex: i, result: result.concat(tick) };
       },

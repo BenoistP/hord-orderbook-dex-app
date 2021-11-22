@@ -9,9 +9,7 @@ describe('(Component) OasisYourOrderExceedsMaxTotalForToken', () => {
     const props = {
       children: <span>test</span>,
     };
-    const wrapper = shallow(
-      <OasisYourOrderExceedsMaxTotalForToken {...props} />,
-    );
+    const wrapper = shallow(<OasisYourOrderExceedsMaxTotalForToken {...props} />);
 
     expect(wrapper).toMatchSnapshot();
   });

@@ -69,10 +69,7 @@ module.exports = {
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
     // Point sourcemap entries to original disk location (format as URL on Windows)
-    devtoolModuleFilenameTemplate: (info) =>
-      path
-        .relative(paths.appSrc, info.absoluteResourcePath)
-        .replace(/\\/g, '/'),
+    devtoolModuleFilenameTemplate: (info) => path.relative(paths.appSrc, info.absoluteResourcePath).replace(/\\/g, '/'),
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -167,10 +164,7 @@ module.exports = {
             test: /\.scss$/,
             use: ExtractTextPlugin.extract({
               fallback: 'style-loader',
-              use: [
-                'css-loader?modules=true&minimize=true&sourceMap=true',
-                'sass-loader',
-              ],
+              use: ['css-loader?modules=true&minimize=true&sourceMap=true', 'sass-loader'],
             }),
           },
           {
@@ -187,8 +181,7 @@ module.exports = {
                         minimize: true,
                         sourceMap: shouldUseSourceMap,
                         modules: true,
-                        localIdentName:
-                          '[path][name]__[local]--[hash:base64:5]',
+                        localIdentName: '[path][name]__[local]--[hash:base64:5]',
                       },
                     },
                     {

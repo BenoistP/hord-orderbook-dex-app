@@ -5,17 +5,11 @@ import { PropTypes } from 'prop-types';
 import OasisTokenBalanceWrapper from '../containers/OasisTokenBalance';
 import OasisTokenUnwrapFormWrapper from '../containers/OasisTokenUnwrapForm';
 import OasisWidgetFrame from '../containers/OasisWidgetFrame';
-import {
-  WRAP_STATUS_VIEW_TYPE_UNWRAP,
-  WrapUnwrapStatusWrapper,
-} from '../containers/WrapUnwrapStatus';
+import { WRAP_STATUS_VIEW_TYPE_UNWRAP, WrapUnwrapStatusWrapper } from '../containers/WrapUnwrapStatus';
 import OasisTokenBalanceSummary from '../containers/OasisTokenBalanceSummary';
 import styles from './OasisWrapUnwrapUnwrap.scss';
 import CSSModules from 'react-css-modules';
-import {
-  TX_UNWRAP_ETHER,
-  TX_UNWRAP_TOKEN_WRAPPER,
-} from '../store/reducers/transactions';
+import { TX_UNWRAP_ETHER, TX_UNWRAP_TOKEN_WRAPPER } from '../store/reducers/transactions';
 import { TOKEN_WRAPPED_ETH, TOKEN_WRAPPED_GNT } from '../constants';
 
 const propTypes = PropTypes && {
@@ -50,30 +44,12 @@ class OasisWrapUnwrapUnwrap extends PureComponent {
   }
 
   render() {
-    const {
-      activeWrappedToken,
-      txType,
-      form,
-      onSubmit,
-      transactionState,
-      onFormChange,
-      hidden,
-      wrappedToken,
-    } = this.props;
+    const { activeWrappedToken, txType, form, onSubmit, transactionState, onFormChange, hidden, wrappedToken } =
+      this.props;
     return (
-      <OasisWidgetFrame
-        hidden={hidden}
-        heading={'Unwrap'}
-        spaceForContent={true}
-        className={styles.frame}
-      >
-        <OasisTokenBalanceSummary summary='Wrapped' className={styles.balance}>
-          {
-            <OasisTokenBalanceWrapper
-              decimalPlaces={5}
-              tokenName={activeWrappedToken}
-            />
-          }
+      <OasisWidgetFrame hidden={hidden} heading={'Unwrap'} spaceForContent={true} className={styles.frame}>
+        <OasisTokenBalanceSummary summary="Wrapped" className={styles.balance}>
+          {<OasisTokenBalanceWrapper decimalPlaces={5} tokenName={activeWrappedToken} />}
         </OasisTokenBalanceSummary>
         <OasisTokenUnwrapFormWrapper
           wrappedToken={wrappedToken}

@@ -102,49 +102,33 @@ const state = refDate(() =>
 const props = { tradingPair: { baseToken: 'MKR', quoteToken: 'W-ETH' } };
 
 test('priceChartLabels', () => {
-  expect(
-    refDate(() => charts.priceChartLabels(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.priceChartLabels(state, props))).toMatchSnapshot();
 });
 
 test('priceChartValues', () => {
-  expect(
-    refDate(() => charts.priceChartValues(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.priceChartValues(state, props))).toMatchSnapshot();
 });
 
 test('volumeChartLabels', () => {
-  expect(
-    refDate(() => charts.volumeChartLabels(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.volumeChartLabels(state, props))).toMatchSnapshot();
 });
 
 test('volumeChartValues', () => {
-  expect(
-    refDate(() => charts.volumeChartValues(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.volumeChartValues(state, props))).toMatchSnapshot();
 });
 
 test('volumeChartTooltips', () => {
-  expect(
-    refDate(() => charts.volumeChartTooltips(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.volumeChartTooltips(state, props))).toMatchSnapshot();
 });
 
 test('depthChartLabels', () => {
-  expect(
-    refDate(() => charts.depthChartLabels(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.depthChartLabels(state, props))).toMatchSnapshot();
 });
 
 test('depthChartValues', () => {
-  expect(
-    refDate(() => charts.depthChartValues(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.depthChartValues(state, props))).toMatchSnapshot();
 });
 
 test('depthChartTooltips', () => {
-  expect(
-    refDate(() => charts.depthChartTooltips(state, props)),
-  ).toMatchSnapshot();
+  expect(refDate(() => charts.depthChartTooltips(state, props))).toMatchSnapshot();
 });

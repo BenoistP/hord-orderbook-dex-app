@@ -11,15 +11,10 @@ import {
 } from '../../store/actions/walletActions';
 import config from '../../config/config.json';
 
-const Header = ({
-  onWalletConnectSuccess,
-  onWalletDisconnect,
-  onWalletConnectRequest,
-  onWalletConnectError,
-}) => {
+const Header = ({ onWalletConnectSuccess, onWalletDisconnect, onWalletConnectRequest, onWalletConnectError }) => {
   return (
-    <div className='header-wrapper'>
-      <div className='connect-wallet-container'>
+    <div className="header-wrapper">
+      <div className="connect-wallet-container">
         <WalletConnector
           networkId={config.network}
           rpcUrl={config.rpcUrl}

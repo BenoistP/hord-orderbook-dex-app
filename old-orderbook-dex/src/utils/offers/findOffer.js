@@ -12,14 +12,10 @@ const findOffer = (offerId, state) => {
     .find(([pair, offers]) => {
       if (offers.get('initialSyncStatus') !== SYNC_STATUS_PRISTINE) {
         const buyOffer = offers.get('buyOfferCount')
-          ? offers
-              .get('buyOffers')
-              .find((bo) => parseInt(bo.id) === parseInt(offerId))
+          ? offers.get('buyOffers').find((bo) => parseInt(bo.id) === parseInt(offerId))
           : null;
         const sellOffer = offers.get('sellOfferCount')
-          ? offers
-              .get('sellOffers')
-              .find((so) => parseInt(so.id) === parseInt(offerId))
+          ? offers.get('sellOffers').find((so) => parseInt(so.id) === parseInt(offerId))
           : null;
         if (buyOffer) {
           offerType = TYPE_BUY_OFFER;

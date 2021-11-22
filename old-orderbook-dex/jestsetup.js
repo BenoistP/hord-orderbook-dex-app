@@ -482,8 +482,7 @@ global.storeMock = {
   transactions: {
     txList: [
       {
-        txHash:
-          '0x110b48acd19927bae9f4f492efd60953e4e173000885cb5df43761b7c8a7e711',
+        txHash: '0x110b48acd19927bae9f4f492efd60953e4e173000885cb5df43761b7c8a7e711',
         txReceipt: {},
         txType: 'TRANSACTIONS/GROUP__OFFERS/OFFER_TAKE',
         txStatus: 'TX/STATUS_CONFIRMED',

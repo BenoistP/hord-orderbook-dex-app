@@ -15,7 +15,7 @@ export class OasisLoadingDataOverlay extends PureComponent {
     return (
       <div className={styles.base}>
         <div style={{ textAlign: 'center' }}>
-          <OasisLoadingIndicator size='xlg' />
+          <OasisLoadingIndicator size="xlg" />
           <span className={styles.loadingText}>{loadingText}</span>
         </div>
       </div>

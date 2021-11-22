@@ -11,13 +11,7 @@ const DepositBrokerAbi = require('./../../contracts/abi/token-wrapper/deposit-br
 const OTCSupportContractAbi = require('../../contracts/abi/otc-support-methods/otc-support-methods');
 import { fromJS } from 'immutable';
 import web3 from './../web3';
-import {
-  TOKEN_DAI,
-  TOKEN_DIGIX,
-  TOKEN_MAKER,
-  TOKEN_RHOC,
-  TOKEN_WRAPPED_ETH,
-} from '../../constants';
+import { TOKEN_DAI, TOKEN_DIGIX, TOKEN_MAKER, TOKEN_RHOC, TOKEN_WRAPPED_ETH } from '../../constants';
 
 let brokers = fromJS({});
 let contracts = {};
@@ -27,22 +21,10 @@ const init = (networkName) => {
   const tokencontractsDeploymentAdressessList = config['tokens'][networkName];
   const marketDeploymentAddress = config['market'][networkName]['address'];
 
-  const WETH = loadContact(
-    WEthAbi.interface,
-    tokencontractsDeploymentAdressessList['W-ETH'],
-  );
-  const DAI = loadContact(
-    erc20Abi.interface,
-    tokencontractsDeploymentAdressessList['DAI'],
-  );
-  const MKR = loadContact(
-    erc20Abi.interface,
-    tokencontractsDeploymentAdressessList['MKR'],
-  );
-  const DGD = loadContact(
-    erc20Abi.interface,
-    tokencontractsDeploymentAdressessList['DGD'],
-  );
+  const WETH = loadContact(WEthAbi.interface, tokencontractsDeploymentAdressessList['W-ETH']);
+  const DAI = loadContact(erc20Abi.interface, tokencontractsDeploymentAdressessList['DAI']);
+  const MKR = loadContact(erc20Abi.interface, tokencontractsDeploymentAdressessList['MKR']);
+  const DGD = loadContact(erc20Abi.interface, tokencontractsDeploymentAdressessList['DGD']);
   // const GNT = loadContact(
   //   erc20Abi.interface,
   //   tokencontractsDeploymentAdressessList["GNT"]
@@ -51,24 +33,11 @@ const init = (networkName) => {
   //   TokenWrapperAbi.interface,
   //   tokencontractsDeploymentAdressessList["W-GNT"]
   // );
-  const RHOC = loadContact(
-    erc20Abi.interface,
-    tokencontractsDeploymentAdressessList['RHOC'],
-  );
-  const market = loadContact(
-    MatchingMarketAbi.interface,
-    marketDeploymentAddress,
-  );
-  const marketNoProxy = loadContact(
-    MatchingMarketAbi.interface,
-    marketDeploymentAddress,
-    true,
-  );
+  const RHOC = loadContact(erc20Abi.interface, tokencontractsDeploymentAdressessList['RHOC']);
+  const market = loadContact(MatchingMarketAbi.interface, marketDeploymentAddress);
+  const marketNoProxy = loadContact(MatchingMarketAbi.interface, marketDeploymentAddress, true);
 
-  const OTCSupportMethods = loadContact(
-    OTCSupportContractAbi.interface,
-    config.otcSupportMethods[networkName].address,
-  );
+  const OTCSupportMethods = loadContact(OTCSupportContractAbi.interface, config.otcSupportMethods[networkName].address);
 
   // const WGNTNoProxy = loadContact(
   //   TokenWrapperAbi.interface,
@@ -106,17 +75,13 @@ const init = (networkName) => {
   setContractsInitialized();
 };
 
-const setContractsInitialized = (initializationState) =>
-  (contractsInitialized = initializationState);
+const setContractsInitialized = (initializationState) => (contractsInitialized = initializationState);
 
 const initDepositBrokerContract = (token, address) => {
   if (!web3.isAddress(address)) {
     throw new Error('This is not Ethereum address!');
   }
-  brokers = brokers.set(
-    token,
-    loadContact(DepositBrokerAbi.interface, address),
-  );
+  brokers = brokers.set(token, loadContact(DepositBrokerAbi.interface, address));
   console.log('initDepositBrokerContract', brokers);
   return brokers.get(token);
 };
@@ -148,8 +113,7 @@ const getOTCSupportMethodsContractInstance = () => {
 const getTokenContractsList = () => contracts.tokens;
 
 const getMarketNoProxyContractInstance = () => contracts.marketNoProxy;
-const getTokenNoProxyContractInstance = (tokenName) =>
-  contracts.noProxyTokens[tokenName];
+const getTokenNoProxyContractInstance = (tokenName) => contracts.noProxyTokens[tokenName];
 
 const getDepositBrokerContractInstance = (token) => {
   if (brokers.has(token)) {

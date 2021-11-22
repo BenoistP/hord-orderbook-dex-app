@@ -7,25 +7,16 @@ const configs = require('../configs');
 
 const init = async (dispatch, activeNetwork) =>
   await Promise.all([
+    dispatch(marketsReducer.actions.setActiveMarketAddress(getMarketContractInstance().address)),
     dispatch(
-      marketsReducer.actions.setActiveMarketAddress(
-        getMarketContractInstance().address,
-      ),
-    ),
-    dispatch(
-      marketsReducer.actions.setActiveMarketOriginBlockNumber(
-        configs.market[activeNetwork].blockNumber.toString(),
-      ),
+      marketsReducer.actions.setActiveMarketOriginBlockNumber(configs.market[activeNetwork].blockNumber.toString()),
     ),
     dispatch(marketsReducer.actions.checkIfMarketIsOpen()),
     dispatch(marketsReducer.actions.checkMarketCloseTime()),
     dispatch(marketsReducer.actions.checkIfOrderMatchingIsEnabled()),
     dispatch(marketsReducer.actions.checkIfBuyEnabled()),
     dispatch(
-      limitsReducer.actions.getAllTradedTokenMinSellLimits(
-        getMarketContractInstance(),
-        getTokenContractsList(),
-      ),
+      limitsReducer.actions.getAllTradedTokenMinSellLimits(getMarketContractInstance(), getTokenContractsList()),
     ),
     dispatch(tradesReducer.actions.initializeVolumes()),
     dispatch(tradesReducer.actions.initMarketHistory()),

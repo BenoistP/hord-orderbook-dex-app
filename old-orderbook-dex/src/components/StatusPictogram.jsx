@@ -25,26 +25,24 @@ export class StatusPictogram extends PureComponent {
   renderStatus() {
     switch (this.props.status) {
       case TX_STATUS_AWAITING_USER_ACCEPTANCE:
-        return <OasisIcon icon='loading' />;
+        return <OasisIcon icon="loading" />;
 
       case TX_STATUS_AWAITING_CONFIRMATION:
-        return <OasisIcon icon='loading' />;
+        return <OasisIcon icon="loading" />;
 
       case TX_STATUS_CANCELLED_BY_USER:
-        return <OasisIcon icon='failed' />;
+        return <OasisIcon icon="failed" />;
 
       case TX_STATUS_CONFIRMED:
-        return <OasisIcon icon='success' />;
+        return <OasisIcon icon="success" />;
       case TX_STATUS_REJECTED:
-        return <OasisIcon icon='failed' />;
+        return <OasisIcon icon="failed" />;
     }
   }
 
   render() {
     const { className } = this.props;
-    return (
-      <div className={`${styles.base} ${className}`}>{this.renderStatus()}</div>
-    );
+    return <div className={`${styles.base} ${className}`}>{this.renderStatus()}</div>;
   }
 }
 

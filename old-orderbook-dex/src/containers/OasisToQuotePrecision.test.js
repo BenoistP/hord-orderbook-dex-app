@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  OasisToQuotePrecisionWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisToQuotePrecision';
+import { OasisToQuotePrecisionWrapper, mapStateToProps, mapDispatchToProps } from './OasisToQuotePrecision';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisToQuotePrecision', () => {

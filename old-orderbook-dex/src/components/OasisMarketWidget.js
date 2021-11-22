@@ -10,13 +10,7 @@ import OasisWidgetFrame from '../containers/OasisWidgetFrame';
 import { OasisTable } from './OasisTable';
 
 import { DAY, MONTH, WEEK } from '../utils/period';
-import {
-  trades,
-  volume,
-  price,
-  formatPrice,
-  formatVolume,
-} from '../utils/tokens/pair';
+import { trades, volume, price, formatPrice, formatVolume } from '../utils/tokens/pair';
 
 import OasisLinkLikeButton from './OasisLinkLikeButton';
 import tokensReducer from '../store/reducers/tokens';
@@ -45,18 +39,15 @@ const isCurrentRowActive = (activeTradingPair, baseToken, quoteToken) => {
   if (!activeTradingPair) {
     return false;
   } else {
-    return (
-      activeTradingPair.baseToken === baseToken &&
-      activeTradingPair.quoteToken === quoteToken
-    );
+    return activeTradingPair.baseToken === baseToken && activeTradingPair.quoteToken === quoteToken;
   }
 };
 
 const daiButton = (
   <OasisLinkLikeButton
-    href='https://dai.makerdao.com/'
-    caption='CREATE DAI'
-    target='_blank'
+    href="https://dai.makerdao.com/"
+    caption="CREATE DAI"
+    target="_blank"
     className={styles.createDaiBtn}
   />
 );
@@ -80,11 +71,7 @@ class OasisMarketWidget extends PureComponent {
       </span>
     );
     if (marketData) {
-      const weeklyTradingPairTrades = trades(
-        marketData,
-        baseToken,
-        quoteToken,
-      ).filter((marketHistoryEntry) => {
+      const weeklyTradingPairTrades = trades(marketData, baseToken, quoteToken).filter((marketHistoryEntry) => {
         const { timestamp } = marketHistoryEntry;
 
         if (timestamp > this.weekAgo) {
@@ -92,11 +79,7 @@ class OasisMarketWidget extends PureComponent {
         }
       });
 
-      const tradingPairVolume = volume(
-        weeklyTradingPairTrades,
-        baseToken,
-        quoteToken,
-      );
+      const tradingPairVolume = volume(weeklyTradingPairTrades, baseToken, quoteToken);
 
       const tradingPairPrice = tradingPairVolume.toNumber()
         ? price(weeklyTradingPairTrades.last(), baseToken, quoteToken)
@@ -104,11 +87,7 @@ class OasisMarketWidget extends PureComponent {
 
       return {
         initialMarketHistoryLoaded,
-        isActive: isCurrentRowActive(
-          this.props.activeTradingPair,
-          baseToken,
-          quoteToken,
-        ),
+        isActive: isCurrentRowActive(this.props.activeTradingPair, baseToken, quoteToken),
         tradingPair: pair,
         volume: formatVolume(tradingPairVolume),
         volumeFullPrecision: tradingPairVolume,
@@ -128,8 +107,7 @@ class OasisMarketWidget extends PureComponent {
   }
 
   onTableRowClick(rowData) {
-    const { setActiveTradingPair, changeRoute, updateTradingPairOfferCount } =
-      this.props;
+    const { setActiveTradingPair, changeRoute, updateTradingPairOfferCount } = this.props;
     const { baseToken, quoteToken } = rowData.rawTradingPair;
     setActiveTradingPair({ baseToken, quoteToken });
     changeRoute(`/trade/${baseToken}/${quoteToken}`);
@@ -138,32 +116,18 @@ class OasisMarketWidget extends PureComponent {
   }
 
   render() {
-    const {
-      activeTradingPair,
-      tradedTokens,
-      defaultPeriod,
-      isMarketInitialized,
-    } = this.props;
+    const { activeTradingPair, tradedTokens, defaultPeriod, isMarketInitialized } = this.props;
     const activeTradingPairIncludesDAI =
-      activeTradingPair &&
-      [activeTradingPair.baseToken, activeTradingPair.quoteToken].includes(
-        TOKEN_DAI,
-      );
+      activeTradingPair && [activeTradingPair.baseToken, activeTradingPair.quoteToken].includes(TOKEN_DAI);
     return (
-      <OasisWidgetFrame
-        heading='MARKETS'
-        headingChildren={activeTradingPairIncludesDAI ? daiButton : null}
-      >
+      <OasisWidgetFrame heading="MARKETS" headingChildren={activeTradingPairIncludesDAI ? daiButton : null}>
         <OasisTable
           isInitializing={!isMarketInitialized}
           isInitializingText={'Market contract is initializing...'}
           onRowClick={isMarketInitialized ? this.onTableRowClick : null}
           className={styles.marketTable}
           col={colDefinition(defaultPeriod)}
-          rows={tradedTokens.map(
-            this.transformRow,
-            this.props.activeTradingPair,
-          )}
+          rows={tradedTokens.map(this.transformRow, this.props.activeTradingPair)}
           collapseEnabled={true}
           collapseInitial={true}
         />

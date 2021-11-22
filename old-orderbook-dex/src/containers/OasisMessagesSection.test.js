@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  OasisMessagesSectionWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisMessagesSection';
+import { OasisMessagesSectionWrapper, mapStateToProps, mapDispatchToProps } from './OasisMessagesSection';
 import { shallow } from 'enzyme';
 import { MSGTYPE_INFO, MSGTYPE_WARNING } from '../components/OasisMessage';
 

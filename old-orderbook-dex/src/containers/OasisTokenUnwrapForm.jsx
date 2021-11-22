@@ -16,11 +16,7 @@ import OasisTransactionStatusWrapperInfoBox from './OasisTransactionStatusInfoBo
 import { AMOUNT_DECIMALS, formatAmount } from '../utils/tokens/pair';
 import MaskedTokenAmountInput from '../components/MaskedTokenAmountInput';
 import platform from '../store/selectors/platform';
-import {
-  SETMAXBTN_HIDE_DELAY_MS,
-  TOKEN_WRAPPED_ETH,
-  TOKEN_WRAPPED_GNT,
-} from '../constants';
+import { SETMAXBTN_HIDE_DELAY_MS, TOKEN_WRAPPED_ETH, TOKEN_WRAPPED_GNT } from '../constants';
 import isNumericAndGreaterThanZero from '../utils/numbers/isNumericAndGreaterThanZero';
 import OasisInsufficientAmountOfToken from '../components/OasisInsufficientAmountOfToken';
 
@@ -76,8 +72,7 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
       <div>
         Unwrap{' '}
         <b>
-          {formatAmount(unwrapTokenAmount, false, null, AMOUNT_DECIMALS)}{' '}
-          {wrappedToken}
+          {formatAmount(unwrapTokenAmount, false, null, AMOUNT_DECIMALS)} {wrappedToken}
         </b>
       </div>
     );
@@ -142,17 +137,13 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
                 <div className={tableStyles.inputGroup}>
                   {this.state.showMaxButton && (
                     <OasisButton
-                      type='button'
-                      size='xs'
+                      type="button"
+                      size="xs"
                       className={tableStyles.inputBtn}
                       onClick={this.setUnwrapMax}
                       onFocus={this.onSetMaxFocus}
                       onBlur={this.onSetMaxBlur}
-                      disabled={
-                        disabled ||
-                        globalFormLock ||
-                        !isNumericAndGreaterThanZero(activeWrappedTokenBalance)
-                      }
+                      disabled={disabled || globalFormLock || !isNumericAndGreaterThanZero(activeWrappedTokenBalance)}
                     >
                       <span style={{ fontSize: '10px' }}>unwrap max</span>
                     </OasisButton>
@@ -166,11 +157,11 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
                       style={inputStyle}
                       required
                       validate={this.validate}
-                      autoComplete='off'
-                      name='amount'
+                      autoComplete="off"
+                      name="amount"
                       component={MaskedTokenAmountInput}
                       placeholder={0}
-                      type='text'
+                      type="text"
                       disabled={disabled || globalFormLock}
                     />
                   </div>
@@ -184,13 +175,9 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
         <div className={styles.footer}>
           <div>{this.renderInsufficientBalanceWarning()}</div>
           <OasisButton
-            type='submit'
+            type="submit"
             disabled={
-              !valid ||
-              disabled ||
-              globalFormLock ||
-              initialized ||
-              !isNumericAndGreaterThanZero(unwrapTokenAmount)
+              !valid || disabled || globalFormLock || initialized || !isNumericAndGreaterThanZero(unwrapTokenAmount)
             }
             className={styles.footerBtn}
           >
@@ -217,10 +204,7 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
 
   onTotalFieldSectionBlur() {
     if (this.componentIsUnmounted === false) {
-      this.currentSetMaxTimeout = setTimeout(
-        () => this.setState({ showMaxButton: false }),
-        SETMAXBTN_HIDE_DELAY_MS,
-      );
+      this.currentSetMaxTimeout = setTimeout(() => this.setState({ showMaxButton: false }), SETMAXBTN_HIDE_DELAY_MS);
     }
   }
 
@@ -231,10 +215,7 @@ export class OasisTokenUnwrapFormWrapper extends PureComponent {
 
 export function mapStateToProps(state, { form }) {
   return {
-    activeWrappedTokenBalance: wrapUnwrap.activeWrappedTokenBalance(
-      state,
-      true,
-    ),
+    activeWrappedTokenBalance: wrapUnwrap.activeWrappedTokenBalance(state, true),
     unwrapTokenAmount: wrapUnwrap.unwrapTokenAmount(state, form),
     globalFormLock: platform.globalFormLock(state),
   };
@@ -253,10 +234,6 @@ export default connect(
   mapDispatchToProps,
 )(
   reduxForm({})(
-    CSSModules(
-      OasisTokenUnwrapFormWrapper,
-      { tableStyles, styles, widgetStyles },
-      { allowMultiple: true },
-    ),
+    CSSModules(OasisTokenUnwrapFormWrapper, { tableStyles, styles, widgetStyles }, { allowMultiple: true }),
   ),
 );

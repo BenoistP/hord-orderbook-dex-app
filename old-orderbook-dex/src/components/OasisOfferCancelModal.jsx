@@ -68,17 +68,14 @@ class OasisOfferCancelModal extends PureComponent {
   }
 
   isTransactionPendingOrAwaitingAcceptance() {
-    return [
-      TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION,
-    ].includes(this.props.localStatus);
+    return [TX_STATUS_AWAITING_USER_ACCEPTANCE, TX_STATUS_AWAITING_CONFIRMATION].includes(this.props.localStatus);
   }
 
   renderInfo() {
     const { tokenAmount, tokenName, canOfferBeCancelled } = this.props;
     return canOfferBeCancelled || this.props.localStatus ? (
       <div>
-        <InfoBoxWithIco color='danger' icon='warning'>
+        <InfoBoxWithIco color="danger" icon="warning">
           <div>
             This action will return
             <b
@@ -90,9 +87,8 @@ class OasisOfferCancelModal extends PureComponent {
             >
               {tokenAmount} {tokenName}
             </b>
-            to your token balance. If someone (partially) fills this order
-            before you cancel await, your order may not or only be partially
-            cancelled.
+            to your token balance. If someone (partially) fills this order before you cancel await, your order may not
+            or only be partially cancelled.
           </div>
         </InfoBoxWithIco>
       </div>
@@ -104,19 +100,12 @@ class OasisOfferCancelModal extends PureComponent {
   render() {
     const { localStatus, canOfferBeCancelled } = this.props;
     return (
-      <ReactModal
-        ariaHideApp={false}
-        isOpen={true}
-        className={modalStyles.modal}
-      >
+      <ReactModal ariaHideApp={false} isOpen={true} className={modalStyles.modal}>
         <div>
           <div>
             <h4 className={modalStyles.heading}>Cancel Offer</h4>
             {!this.isTransactionPendingOrAwaitingAcceptance() ? (
-              <button
-                className={modalStyles.closeModalBtn}
-                onClick={this.onCloseModal}
-              >
+              <button className={modalStyles.closeModalBtn} onClick={this.onCloseModal}>
                 ×
               </button>
             ) : null}
@@ -130,13 +119,10 @@ class OasisOfferCancelModal extends PureComponent {
               caption={'Close'}
             />
             <OasisButton
-              disabled={
-                (localStatus && localStatus !== TX_STATUS_CANCELLED_BY_USER) ||
-                !canOfferBeCancelled
-              }
+              disabled={(localStatus && localStatus !== TX_STATUS_CANCELLED_BY_USER) || !canOfferBeCancelled}
               onClick={this.onCancelOffer}
-              caption='Cancel offer'
-              color='danger'
+              caption="Cancel offer"
+              color="danger"
             />
           </div>
         </div>
@@ -148,8 +134,4 @@ class OasisOfferCancelModal extends PureComponent {
 OasisOfferCancelModal.displayName = 'OasisOfferCancelModal';
 OasisOfferCancelModal.propTypes = propTypes;
 OasisOfferCancelModal.defaultProps = defaultProps;
-export default CSSModules(
-  OasisOfferCancelModal,
-  { styles, modalStyles },
-  { allowMultiple: true },
-);
+export default CSSModules(OasisOfferCancelModal, { styles, modalStyles }, { allowMultiple: true });

@@ -17,11 +17,7 @@ export class OasisTabsContainerWrapper extends PureComponent {
     const { pathname, defaultTradingPair, activeTradingPair } = this.props;
     return (
       <div>
-        <OasisTabs
-          activeTradingPair={activeTradingPair}
-          defaultTradingPair={defaultTradingPair}
-          pathname={pathname}
-        />
+        <OasisTabs activeTradingPair={activeTradingPair} defaultTradingPair={defaultTradingPair} pathname={pathname} />
       </div>
     );
   }
@@ -40,7 +36,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTabsContainerWrapper.propTypes = propTypes;
 OasisTabsContainerWrapper.displayName = 'OasisTabsContainer';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisTabsContainerWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisTabsContainerWrapper);

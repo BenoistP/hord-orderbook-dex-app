@@ -4,10 +4,7 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OasisOfferCancelModal from '../components/OasisOfferCancelModal';
-import offersReducer, {
-  TYPE_BUY_OFFER,
-  TYPE_SELL_OFFER,
-} from '../store/reducers/offers';
+import offersReducer, { TYPE_BUY_OFFER, TYPE_SELL_OFFER } from '../store/reducers/offers';
 import {
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
@@ -35,9 +32,7 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
   }
 
   componentDidMount() {
-    this.setState({ offer: this.props.offer }, () =>
-      this.setState({ modalOpen: true }),
-    );
+    this.setState({ offer: this.props.offer }, () => this.setState({ modalOpen: true }));
   }
 
   onCancelOffer() {
@@ -111,10 +106,7 @@ export class OasisOfferCancelModalWrapper extends PureComponent {
   }
 
   cancelIsAwaitingAcceptanceOrPending() {
-    return [
-      TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION,
-    ].includes(this.state.txStatus);
+    return [TX_STATUS_AWAITING_USER_ACCEPTANCE, TX_STATUS_AWAITING_CONFIRMATION].includes(this.state.txStatus);
   }
 
   getTokenNameAndAmount() {
@@ -158,10 +150,7 @@ export function mapStateToProps(state, props) {
   return {
     latestBlockNumber: network.latestBlockNumber(state),
     activeTradingPair: tokens.activeTradingPair(state),
-    canOfferBeCancelled: offers.canOfferBeCancelled(
-      state,
-      props.offer ? props.offer.get('id') : null,
-    ),
+    canOfferBeCancelled: offers.canOfferBeCancelled(state, props.offer ? props.offer.get('id') : null),
   };
 }
 export function mapDispatchToProps(dispatch) {
@@ -174,7 +163,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisOfferCancelModalWrapper.propTypes = propTypes;
 OasisOfferCancelModalWrapper.displayName = 'OasisOfferCancelModal';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisOfferCancelModalWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisOfferCancelModalWrapper);

@@ -25,7 +25,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisToQuotePrecisionWrapper.propTypes = propTypes;
 OasisToQuotePrecisionWrapper.displayName = 'OasisToQuotePrecision';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisToQuotePrecisionWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisToQuotePrecisionWrapper);

@@ -1,7 +1,4 @@
-import {
-  MAKE_BUY_OFFER,
-  MAKE_SELL_OFFER,
-} from '../../store/reducers/offerMakes';
+import { MAKE_BUY_OFFER, MAKE_SELL_OFFER } from '../../store/reducers/offerMakes';
 import { MAKE_SELL_OFFER_FORM_NAME } from '../../containers/OasisMakeSellOffer';
 import { MAKE_BUY_OFFER_FORM_NAME } from '../../containers/OasisMakeBuyOffer';
 

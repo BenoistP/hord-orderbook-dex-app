@@ -14,16 +14,10 @@ import offers from './offers';
 
 const offerTakesState = (s) => s.get('offerTakes');
 
-const activeOfferTakeType = createSelector(offerTakesState, (s) =>
-  s.get('activeOfferTakeType'),
-);
+const activeOfferTakeType = createSelector(offerTakesState, (s) => s.get('activeOfferTakeType'));
 
-const isOfferTakeModalOpen = createSelector(offerTakesState, (s) =>
-  s.get('isOfferTakeModalOpen'),
-);
-const activeOfferTakeOfferId = createSelector(offerTakesState, (s) =>
-  s.get('activeOfferTakeOfferId'),
-);
+const isOfferTakeModalOpen = createSelector(offerTakesState, (s) => s.get('isOfferTakeModalOpen'));
+const activeOfferTakeOfferId = createSelector(offerTakesState, (s) => s.get('activeOfferTakeOfferId'));
 
 const activeOfferTake = createSelector(
   offers.activeTradingPairBuyOffers,
@@ -31,37 +25,24 @@ const activeOfferTake = createSelector(
   activeOfferTakeType,
   activeOfferTakeOfferId,
   tokens.activeTradingPair,
-  (
-    activeTradingPairBuyOffers,
-    activeTradingPairSellOffers,
-    offerTakeType,
-    offerId,
-    activeTradingPair,
-  ) => {
+  (activeTradingPairBuyOffers, activeTradingPairSellOffers, offerTakeType, offerId, activeTradingPair) => {
     const { baseToken, quoteToken } = activeTradingPair;
     let offer = null;
     switch (offerTakeType) {
       case TAKE_BUY_OFFER:
         {
-          offer = activeTradingPairBuyOffers.find(
-            (offer) => fromJS(offer).get('id') === offerId,
-          );
+          offer = activeTradingPairBuyOffers.find((offer) => fromJS(offer).get('id') === offerId);
         }
         break;
       case TAKE_SELL_OFFER:
         {
-          offer = activeTradingPairSellOffers.find(
-            (offer) => fromJS(offer).get('id') === offerId,
-          );
+          offer = activeTradingPairSellOffers.find((offer) => fromJS(offer).get('id') === offerId);
         }
         break;
     }
 
     if (offer) {
-      const { sellToken, buyToken } = getOfferTakeBuyAndSellTokens(
-        activeTradingPair,
-        offerTakeType,
-      );
+      const { sellToken, buyToken } = getOfferTakeBuyAndSellTokens(activeTradingPair, offerTakeType);
       return fromJS({
         offerData: fromJS(offer),
         sellToken: sellToken,
@@ -75,27 +56,17 @@ const activeOfferTake = createSelector(
   },
 );
 
-const activeOfferTakeOfferData = createSelector(activeOfferTake, (s) =>
-  s.get('offerData'),
-);
+const activeOfferTakeOfferData = createSelector(activeOfferTake, (s) => s.get('offerData'));
 
-const activeOfferTakeOfferOwner = createSelector(activeOfferTake, (s) =>
-  s.getIn(['offerData', 'owner']),
-);
+const activeOfferTakeOfferOwner = createSelector(activeOfferTake, (s) => s.getIn(['offerData', 'owner']));
 
-const activeOfferTakeBuyToken = createSelector(activeOfferTake, (s) =>
-  s.get('buyToken'),
-);
+const activeOfferTakeBuyToken = createSelector(activeOfferTake, (s) => s.get('buyToken'));
 
-const activeOfferTakeSellToken = createSelector(activeOfferTake, (s) =>
-  s.get('sellToken'),
-);
+const activeOfferTakeSellToken = createSelector(activeOfferTake, (s) => s.get('sellToken'));
 
 const takeFormValuesSelector = formValueSelector('takeOffer');
 
-const isOfferBelowLimit = createSelector(offerTakesState, (s) =>
-  s.get('isOfferBelowLimit'),
-);
+const isOfferBelowLimit = createSelector(offerTakesState, (s) => s.get('isOfferBelowLimit'));
 
 const hasSufficientTokenAmount = createSelector(
   balances.tokenBalances,
@@ -108,9 +79,7 @@ const hasSufficientTokenAmount = createSelector(
     } else {
       const totalInWei = web3.toWei(total, ETH_UNIT_ETHER);
       const volumeInWei = web3.toWei(volume, ETH_UNIT_ETHER);
-      const usersSellTokenBalanceBN = web3.toBigNumber(
-        tokenBalances.get(sellToken),
-      );
+      const usersSellTokenBalanceBN = web3.toBigNumber(tokenBalances.get(sellToken));
       switch (activeOfferTakeType) {
         case TAKE_BUY_OFFER:
           return usersSellTokenBalanceBN.gte(volumeInWei);
@@ -153,9 +122,7 @@ const isVolumeGreaterThanOfferMax = createSelector(
   },
 );
 
-const hasExceededGasLimit = createSelector(offerTakesState, (s) =>
-  Boolean(s.get('exceededGasLimit')),
-);
+const hasExceededGasLimit = createSelector(offerTakesState, (s) => Boolean(s.get('exceededGasLimit')));
 
 const tokenToBeAllowed = createSelector(
   activeOfferTakeType,
@@ -166,9 +133,7 @@ const tokenToBeAllowed = createSelector(
   },
 );
 
-const isOfferActive = createSelector(offerTakesState, (s) =>
-  s.get('isOfferActive'),
-);
+const isOfferActive = createSelector(offerTakesState, (s) => s.get('isOfferActive'));
 
 const canFulfillOffer = createSelector(
   hasSufficientTokenAmount,
@@ -205,17 +170,11 @@ const canFulfillOffer = createSelector(
   },
 );
 
-const transactionGasCostEstimate = createSelector(offerTakesState, (s) =>
-  s.get('transactionGasCostEstimate'),
-);
+const transactionGasCostEstimate = createSelector(offerTakesState, (s) => s.get('transactionGasCostEstimate'));
 
-const checkingIfOfferIsActive = createSelector(offerTakesState, (s) =>
-  s.get('checkingIfOfferActive'),
-);
+const checkingIfOfferIsActive = createSelector(offerTakesState, (s) => s.get('checkingIfOfferActive'));
 
-const gasEstimatePending = createSelector(offerTakesState, (s) =>
-  s.get('transactionGasCostEstimatePending'),
-);
+const gasEstimatePending = createSelector(offerTakesState, (s) => s.get('transactionGasCostEstimatePending'));
 
 const getActiveOfferTakeAllowanceStatus = createSelector(
   (rootState) => {
@@ -247,9 +206,7 @@ const getBuyAmount = createSelector(
   activeOfferTakeSellToken,
   (rootState) => rootState,
   (activeOfferType, buyToken, sellToken, rs) =>
-    activeOfferType === TAKE_BUY_OFFER
-      ? takeFormValuesSelector(rs, 'total')
-      : takeFormValuesSelector(rs, 'volume'),
+    activeOfferType === TAKE_BUY_OFFER ? takeFormValuesSelector(rs, 'total') : takeFormValuesSelector(rs, 'volume'),
 );
 
 export default {

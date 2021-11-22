@@ -6,18 +6,11 @@ import { bindActionCreators } from 'redux';
 import { Field, reduxForm } from 'redux-form/immutable';
 
 import offerMakes from '../store/selectors/offerMakes';
-import {
-  MAKE_BUY_OFFER,
-  MAKE_SELL_OFFER,
-  SETMAXBTN_HIDE_DELAY_MS,
-} from '../constants';
+import { MAKE_BUY_OFFER, MAKE_SELL_OFFER, SETMAXBTN_HIDE_DELAY_MS } from '../constants';
 import offerMakesReducer from '../store/reducers/offerMakes';
 import tokens from '../store/selectors/tokens';
 import balances from '../store/selectors/balances';
-import {
-  greaterThanZeroValidator,
-  numericFormatValidator,
-} from '../utils/forms/offers';
+import { greaterThanZeroValidator, numericFormatValidator } from '../utils/forms/offers';
 
 import OasisButton from '../components/OasisButton';
 
@@ -129,9 +122,9 @@ export class OfferMakeForm extends React.Component {
               globalFormLock ||
               !isNumericAndGreaterThanZero(activeQuoteTokenBalance)
             }
-            type='button'
-            color='success'
-            size='xs'
+            type="button"
+            color="success"
+            size="xs"
             onClick={this.onSetBuyMax}
             onFocus={this.onSetMaxFocus}
             onBlur={this.onSetMaxBlur}
@@ -149,9 +142,9 @@ export class OfferMakeForm extends React.Component {
               globalFormLock ||
               !isNumericAndGreaterThanZero(activeBaseTokenBalance)
             }
-            type='button'
-            color='danger'
-            size='xs'
+            type="button"
+            color="danger"
+            size="xs"
             onClick={this.onSetSellMax}
             onFocus={this.onSetMaxFocus}
             onBlur={this.onSetMaxBlur}
@@ -191,12 +184,12 @@ export class OfferMakeForm extends React.Component {
     const { disableForm, globalFormLock } = this.props;
     return (
       <Field
-        autoComplete='off'
-        name='price'
+        autoComplete="off"
+        name="price"
         component={MaskedTokenAmountInput}
         placeholder={0}
         disabled={disableForm || globalFormLock}
-        type='text'
+        type="text"
         onChange={this.onPriceFieldChange}
       />
     );
@@ -206,18 +199,14 @@ export class OfferMakeForm extends React.Component {
     const { currentFormValues = {}, disableForm, globalFormLock } = this.props;
     return (
       <Field
-        autoComplete='off'
-        name='volume'
+        autoComplete="off"
+        name="volume"
         component={MaskedTokenAmountInput}
-        type='text'
+        type="text"
         validate={validateVolume}
         min={0}
         placeholder={0}
-        disabled={
-          greaterThanZeroValidator(currentFormValues.price) ||
-          disableForm ||
-          globalFormLock
-        }
+        disabled={greaterThanZeroValidator(currentFormValues.price) || disableForm || globalFormLock}
         onChange={this.onVolumeFieldChange}
       />
     );
@@ -232,12 +221,12 @@ export class OfferMakeForm extends React.Component {
         onBlur={this.onTotalFieldSectionBlur}
       >
         <Field
-          autoComplete='off'
+          autoComplete="off"
           min={0}
           onChange={this.onTotalFieldChange}
-          name='total'
+          name="total"
           component={MaskedTokenAmountInput}
-          type='text'
+          type="text"
           validate={validateTotal}
           placeholder={0}
           disabled={
@@ -259,12 +248,7 @@ export class OfferMakeForm extends React.Component {
   }
 
   render() {
-    const {
-      baseToken,
-      quoteToken,
-      handleSubmit,
-      isUserTokenBalanceSufficient,
-    } = this.props;
+    const { baseToken, quoteToken, handleSubmit, isUserTokenBalanceSufficient } = this.props;
 
     return (
       <form onSubmit={handleSubmit} onChange={this.onFormChange}>
@@ -272,23 +256,17 @@ export class OfferMakeForm extends React.Component {
           <tbody>
             <tr>
               <th>Price</th>
-              <td className={tableStyles.withInput}>
-                {this.renderPriceField()}
-              </td>
+              <td className={tableStyles.withInput}>{this.renderPriceField()}</td>
               <td className={tableStyles.currency}> {quoteToken}</td>
             </tr>
             <tr>
               <th>Amount</th>
-              <td className={tableStyles.withInput}>
-                {this.renderAmountField()}
-              </td>
+              <td className={tableStyles.withInput}>{this.renderAmountField()}</td>
               <td className={tableStyles.currency}>
                 {baseToken}
                 <div>
                   {isUserTokenBalanceSufficient && (
-                    <OasisVolumeIsGreaterThanUserBalance
-                      offerMax={isUserTokenBalanceSufficient}
-                    />
+                    <OasisVolumeIsGreaterThanUserBalance offerMax={isUserTokenBalanceSufficient} />
                   )}
                 </div>
               </td>
@@ -333,9 +311,7 @@ export function mapStateToProps(state, props) {
   return {
     currentFormValues: offerMakes.currentFormValues(state)(props.form),
     activeTradingPairPrecision: tokens.precision(state),
-    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(
-      props.offerMakeType,
-    ),
+    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(props.offerMakeType),
     activeBaseTokenBalance: balances.activeBaseTokenBalance(state),
     activeQuoteTokenBalance: balances.activeQuoteTokenBalance(state),
     globalFormLock: platform.globalFormLock(state),
@@ -345,10 +321,8 @@ export function mapStateToProps(state, props) {
 export function mapDispatchToProps(dispatch) {
   const actions = {
     priceFieldValueChanged: offerMakesReducer.actions.priceFieldChangedEpic,
-    volumeFieldValueChanged:
-      offerMakesReducer.actions.volumeFieldValueChangedEpic,
-    totalFieldValueChanged:
-      offerMakesReducer.actions.totalFieldValueChangedEpic,
+    volumeFieldValueChanged: offerMakesReducer.actions.volumeFieldValueChangedEpic,
+    totalFieldValueChanged: offerMakesReducer.actions.totalFieldValueChangedEpic,
     buyMax: offerMakesReducer.actions.buyMaxEpic,
     sellMax: offerMakesReducer.actions.sellMaxEpic,
   };
@@ -358,8 +332,4 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  reduxForm({})(
-    CSSModules(OfferMakeForm, { styles, tableStyles }, { allowMultiple: true }),
-  ),
-);
+)(reduxForm({})(CSSModules(OfferMakeForm, { styles, tableStyles }, { allowMultiple: true })));

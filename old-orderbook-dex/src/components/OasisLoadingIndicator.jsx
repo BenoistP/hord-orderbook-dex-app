@@ -20,7 +20,7 @@ class OasisLoadingIndicator extends PureComponent {
     };
     return (
       <span style={style}>
-        <OasisIcon size={size ? size : 'sm'} icon='loading' />
+        <OasisIcon size={size ? size : 'sm'} icon="loading" />
       </span>
     );
   }

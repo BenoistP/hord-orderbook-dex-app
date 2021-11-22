@@ -12,13 +12,7 @@ export const connectToContracts = () => async (dispatch) => {
       payload: contracts,
     });
   } catch (error) {
-    dispatch(
-      createNotification(
-        'error',
-        'Something went wrong loading contract',
-        4000,
-      ),
-    );
+    dispatch(createNotification('error', 'Something went wrong loading contract', 4000));
   }
 };
 

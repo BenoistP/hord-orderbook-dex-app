@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  TokenAmountInputFieldWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './TokenAmountInputField';
+import { TokenAmountInputFieldWrapper, mapStateToProps, mapDispatchToProps } from './TokenAmountInputField';
 import { shallow } from 'enzyme';
 
 describe('(Container) TokenAmountInputField', () => {

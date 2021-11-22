@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisTokenWrapFormWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTokenWrapForm';
+import { OasisTokenWrapFormWrapper, mapStateToProps, mapDispatchToProps } from './OasisTokenWrapForm';
 import { shallow } from 'enzyme';
 import { TX_STATUS_AWAITING_CONFIRMATION } from '../store/reducers/transactions';
 

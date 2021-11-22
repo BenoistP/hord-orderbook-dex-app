@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  OasisMakeOfferModalWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisMakeOfferModal';
+import { OasisMakeOfferModalWrapper, mapStateToProps, mapDispatchToProps } from './OasisMakeOfferModal';
 import { shallow } from 'enzyme';
 import { MAKE_BUY_OFFER } from '../constants';
 

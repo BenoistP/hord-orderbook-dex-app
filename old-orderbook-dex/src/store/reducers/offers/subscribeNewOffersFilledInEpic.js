@@ -6,16 +6,9 @@ import { createAction } from 'redux-actions';
  * - sync offer
  *
  */
-const newOfferFilledIn = createAction(
-  'OFFERS/NEW_OFFER_FILLED_IN',
-  (offerId) => offerId,
-);
+const newOfferFilledIn = createAction('OFFERS/NEW_OFFER_FILLED_IN', (offerId) => offerId);
 export const subscribeNewOffersFilledInEpic =
-  (
-    fromBlock,
-    filter = {},
-    { doGetMarketContractInstance = getMarketContractInstance } = {},
-  ) =>
+  (fromBlock, filter = {}, { doGetMarketContractInstance = getMarketContractInstance } = {}) =>
   async (dispatch) => {
     doGetMarketContractInstance()
       .LogMake(filter, { fromBlock, toBlock: 'latest' })

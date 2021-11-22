@@ -7,9 +7,7 @@ import { bindActionCreators } from 'redux';
 import OasisWidgetFrame from '../containers/OasisWidgetFrame';
 import OasisTable from '../components/OasisTable';
 import transfers from '../store/selectors/transfers';
-import transferHistoryReducer, {
-  TRANSFER_HISTORY_LOAD_STATUS_COMPLETED,
-} from '../store/reducers/transferHistory';
+import transferHistoryReducer, { TRANSFER_HISTORY_LOAD_STATUS_COMPLETED } from '../store/reducers/transferHistory';
 import platform from '../store/selectors/platform';
 import network from '../store/selectors/network';
 import transferHistory from '../store/selectors/transferHistory';
@@ -28,9 +26,7 @@ const propTypes = PropTypes && {
 
 /* eslint-disable react/prop-types */
 // eslint-disable-next-line react/display-name
-const RecipientAddress = ({ address }) => (
-  <span className={styles.recipientAddress}>{address}</span>
-);
+const RecipientAddress = ({ address }) => <span className={styles.recipientAddress}>{address}</span>;
 
 const amountTemplate = ({ tokenAmount }) => (
   <OasisSignificantDigitsWrapper
@@ -62,13 +58,7 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
   }
 
   componentDidMount() {
-    const {
-      actions,
-      latestBlockNumber,
-      contractsLoaded,
-      selectedToken,
-      hasAccountEntry,
-    } = this.props;
+    const { actions, latestBlockNumber, contractsLoaded, selectedToken, hasAccountEntry } = this.props;
     if (latestBlockNumber && contractsLoaded && !hasAccountEntry) {
       actions.loadTokenTransfersHistory(selectedToken);
     }
@@ -87,16 +77,10 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
     } = this.props;
     return (
       <OasisWidgetFrame
-        isLoadingData={
-          tokenTransferHistoryStatus !== TRANSFER_HISTORY_LOAD_STATUS_COMPLETED
-        }
+        isLoadingData={tokenTransferHistoryStatus !== TRANSFER_HISTORY_LOAD_STATUS_COMPLETED}
         loadingDataText={'Your transfer history'}
-        loadProgressSection={
-          isTokenTransferHistoryLoading ? (
-            <OasisLoadingIndicator size={'md'} />
-          ) : null
-        }
-        heading='History'
+        loadProgressSection={isTokenTransferHistoryLoading ? <OasisLoadingIndicator size={'md'} /> : null}
+        heading="History"
         className={styles.frame}
       >
         <div>
@@ -137,38 +121,24 @@ export class OasisTokenTransferHistoryWrapper extends PureComponent {
 export function mapStateToProps(state) {
   const selectedToken = transfers.selectedToken(state);
   return {
-    hasAccountEntry: transferHistory.hasAccountEntry(
-      state,
-      accounts.defaultAccount(state),
-    ),
+    hasAccountEntry: transferHistory.hasAccountEntry(state, accounts.defaultAccount(state)),
     defaultAccount: accounts.defaultAccount(state),
     selectedToken,
     activeNetworkName: network.activeNetworkName(state),
     contractsLoaded: platform.contractsLoaded(state),
     latestBlockNumber: network.latestBlockNumber(state),
-    tokenTransferHistoryStatus: transferHistory.getTokenTransferHistoryStatus(
-      state,
-      selectedToken,
-    ),
-    transferHistoryList: transferHistory.tokenTransferHistory(
-      state,
-      selectedToken,
-    ),
-    isTokenTransferHistoryLoading:
-      transferHistory.isTokenTransferHistoryLoading(state, selectedToken),
+    tokenTransferHistoryStatus: transferHistory.getTokenTransferHistoryStatus(state, selectedToken),
+    transferHistoryList: transferHistory.tokenTransferHistory(state, selectedToken),
+    isTokenTransferHistoryLoading: transferHistory.isTokenTransferHistoryLoading(state, selectedToken),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    loadTokenTransfersHistory:
-      transferHistoryReducer.actions.loadTokenTransfersHistoryEpic,
+    loadTokenTransfersHistory: transferHistoryReducer.actions.loadTokenTransfersHistoryEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisTokenTransferHistoryWrapper.propTypes = propTypes;
 OasisTokenTransferHistoryWrapper.displayName = 'OasisTokenTransferHistory';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisTokenTransferHistoryWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisTokenTransferHistoryWrapper);

@@ -49,27 +49,15 @@ const init = createAction(INIT, (initData) => initData);
 
 const SetValue = createAction(SET_VALUE, (key, value) => ({ key, value }));
 
-const resetSession = createAction(
-  RESET_SESSION,
-  (key) => initialState.get(key) || null,
-);
+const resetSession = createAction(RESET_SESSION, (key) => initialState.get(key) || null);
 
-const resetToDefault = createAction(
-  RESET_TO_DEFAULT,
-  (key) => initialState.get(key) || null,
-);
+const resetToDefault = createAction(RESET_TO_DEFAULT, (key) => initialState.get(key) || null);
 
 const dismissMessage = createAction(DISMISS_MESSAGE, (msgType) => msgType);
 
-const loadSavedSessionData = createAction(
-  LOAD_SAVED_SESSION_DATA,
-  (msgType) => msgType,
-);
+const loadSavedSessionData = createAction(LOAD_SAVED_SESSION_DATA, (msgType) => msgType);
 
-const loadSavedPersistentData = createAction(
-  LOAD_SAVED_PERSISTENT_DATA,
-  (msgType) => msgType,
-);
+const loadSavedPersistentData = createAction(LOAD_SAVED_PERSISTENT_DATA, (msgType) => msgType);
 
 const actions = {
   init,
@@ -85,12 +73,9 @@ const reducer = handleActions(
   {
     resetSession: (state) => state.set(initialState),
     [init]: (state) => state.setIn(['initialized'], true),
-    [loadSavedPersistentData]: (state, { payload }) =>
-      state.setIn(['persist'], payload),
-    [loadSavedSessionData]: (state, { payload }) =>
-      state.setIn(['session'], payload),
-    [dismissMessage]: (state, { payload }) =>
-      state.setIn(['persist', 'messages', payload, 'dismissed'], true),
+    [loadSavedPersistentData]: (state, { payload }) => state.setIn(['persist'], payload),
+    [loadSavedSessionData]: (state, { payload }) => state.setIn(['session'], payload),
+    [dismissMessage]: (state, { payload }) => state.setIn(['persist', 'messages', payload, 'dismissed'], true),
   },
   initialState,
 );

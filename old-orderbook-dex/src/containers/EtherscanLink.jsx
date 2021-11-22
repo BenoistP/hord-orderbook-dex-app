@@ -14,10 +14,7 @@ const propTypes = PropTypes && {
   networkName: PropTypes.string,
   txHash: PropTypes.string,
   address: PropTypes.string,
-  type: PropTypes.oneOf([
-    ETHERSCAN_LINK_TYPE_ADDRESS,
-    ETHERSCAN_LINK_TYPE_TRANSACTION,
-  ]),
+  type: PropTypes.oneOf([ETHERSCAN_LINK_TYPE_ADDRESS, ETHERSCAN_LINK_TYPE_TRANSACTION]),
 };
 
 export class EtherscanLinkWrapper extends PureComponent {
@@ -38,7 +35,4 @@ export function mapDispatchToProps() {
 EtherscanLinkWrapper.propTypes = propTypes;
 EtherscanLinkWrapper.displayName = 'EtherscanLink';
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EtherscanLinkWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(EtherscanLinkWrapper);

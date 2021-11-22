@@ -6,9 +6,7 @@ const path = require('path');
 
 const env = process.env.NODE_ENV;
 const gitHash = execa.sync('git', ['rev-parse', '--short', 'HEAD']).stdout;
-const gitNumCommits = Number(
-  execa.sync('git', ['rev-list', 'HEAD', '--count']).stdout,
-);
+const gitNumCommits = Number(execa.sync('git', ['rev-list', 'HEAD', '--count']).stdout);
 const gitDirty = execa.sync('git', ['status', '-s', '-uall']).stdout.length > 0;
 const branch = execa.sync(path.join(__dirname, '..', 'branch.sh')).stdout;
 

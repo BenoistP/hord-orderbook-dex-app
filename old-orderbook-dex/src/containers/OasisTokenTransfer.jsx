@@ -157,12 +157,12 @@ export class OasisTokenTransferWrapper extends PureComponent {
     return (
       <OasisWidgetFrame
         className={styles.frame}
-        heading='Transfer'
+        heading="Transfer"
         spaceForContent={true}
         headingChildren={this.selectedToken()}
       >
         <OasisTokenBalanceSummary
-          summary='Wallet'
+          summary="Wallet"
           token={selectedToken}
           decimalPlaces={5}
           className={styles.tokenBalanceSummaryShorter}
@@ -203,10 +203,4 @@ OasisTokenTransferWrapper.displayName = 'OasisTokenTransfer';
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  CSSModules(
-    OasisTokenTransferWrapper,
-    { textStyles, styles },
-    { allowMultiple: true },
-  ),
-);
+)(CSSModules(OasisTokenTransferWrapper, { textStyles, styles }, { allowMultiple: true }));

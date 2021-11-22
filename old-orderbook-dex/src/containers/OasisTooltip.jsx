@@ -51,11 +51,7 @@ export class OasisTooltip extends PureComponent {
         {this.state.showPopup && !isXXS && (
           <Popper placement={placement}>
             {({ ref, style, placement }) => (
-              <div
-                ref={ref}
-                style={popperStyle(style)}
-                data-placement={placement}
-              >
+              <div ref={ref} style={popperStyle(style)} data-placement={placement}>
                 {text}
               </div>
             )}
@@ -77,7 +73,4 @@ export function mapDispatchToProps(dispatch) {
 OasisTooltip.propTypes = propTypes;
 OasisTooltip.displayName = 'OasisTooltip';
 OasisTooltip.defaultProps = defaultProps;
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisTooltip, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisTooltip, styles));

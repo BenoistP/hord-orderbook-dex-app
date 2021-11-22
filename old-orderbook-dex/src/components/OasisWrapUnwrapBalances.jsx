@@ -27,12 +27,7 @@ const colDefinition = [
     heading: 'wrapped',
     // eslint-disable-next-line react/display-name
     template: ({ wrapperToken, wrappedBalance }) => (
-      <OasisInlineTokenBalance
-        inWei={true}
-        token={wrapperToken}
-        balance={wrappedBalance}
-        fractionalZerosGrey={false}
-      />
+      <OasisInlineTokenBalance inWei={true} token={wrapperToken} balance={wrappedBalance} fractionalZerosGrey={false} />
     ),
   },
 ];
@@ -66,7 +61,7 @@ class OasisWrapUnwrapBalances extends PureComponent {
   render() {
     const { wrapUnwrapBalances = fromJS([]) } = this.props;
     return (
-      <OasisWidgetFrame heading='BALANCES'>
+      <OasisWidgetFrame heading="BALANCES">
         <OasisTable
           onRowClick={this.onTableRowClick}
           col={colDefinition}

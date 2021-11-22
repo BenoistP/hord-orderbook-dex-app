@@ -31,9 +31,7 @@ export class OasisStatus extends PureComponent {
         <span className={styles.offersLoadProgress}>
           <OasisLoadingIndicator marginRight={'3px'} />
           <span>offers</span>
-          <span>
-            ({isNumeric(offersLoadProgress) ? offersLoadProgress : '0'}%)
-          </span>
+          <span>({isNumeric(offersLoadProgress) ? offersLoadProgress : '0'}%)</span>
         </span>
       );
     } else {
@@ -43,13 +41,7 @@ export class OasisStatus extends PureComponent {
 
   statusIndicator() {
     const { status } = this.props;
-    return (
-      <div
-        styleName={`StatusIndicator NetworkStatus ${INDICATORS[status].class}`}
-      >
-        {INDICATORS[status].text}
-      </div>
-    );
+    return <div styleName={`StatusIndicator NetworkStatus ${INDICATORS[status].class}`}>{INDICATORS[status].text}</div>;
   }
 
   getTradesLoadProgress() {
@@ -74,8 +66,7 @@ export class OasisStatus extends PureComponent {
     if (name === '-') {
       return (
         <div>
-          <OasisLoadingIndicator size={'sm'} marginRight={'10px'} />{' '}
-          <span>{name}</span>
+          <OasisLoadingIndicator size={'sm'} marginRight={'10px'} /> <span>{name}</span>
         </div>
       );
     } else {
@@ -94,7 +85,7 @@ export class OasisStatus extends PureComponent {
 
   render() {
     return (
-      <div styleName='OasisStatus'>
+      <div styleName="OasisStatus">
         <div>{this.renderNetworkName()}</div>
         <div>{this.renderContent()}</div>
       </div>

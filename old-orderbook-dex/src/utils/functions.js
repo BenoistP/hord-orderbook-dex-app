@@ -29,11 +29,7 @@ const Session = undefined;
 function asToken(addressOrToken, defaultToken) {
   const allTokens = Dapple.getTokens();
 
-  if (
-    !defaultToken ||
-    typeof defaultToken !== 'string' ||
-    !allTokens.includes(defaultToken)
-  ) {
+  if (!defaultToken || typeof defaultToken !== 'string' || !allTokens.includes(defaultToken)) {
     throw Error('Wrong usage of the API. Read documentation');
   }
 
@@ -82,10 +78,7 @@ export function doHashChange() {
   let quoteCurrency = null;
   let baseCurrency = null;
 
-  if (
-    location.hash.indexOf('#wrap') === -1 &&
-    location.hash.indexOf('#transfer') === -1
-  ) {
+  if (location.hash.indexOf('#wrap') === -1 && location.hash.indexOf('#transfer') === -1) {
     if (location.hash.indexOf('#trade') === -1) {
       location.hash =
         `#trade/${localStorage.getItem('baseCurrency') || 'MKR'}` +
@@ -112,10 +105,8 @@ export function doHashChange() {
     // Looking for any existing pair that contains the currencies provided in the URL
     const pair = Dapple.generatePairs().find(
       (currentPair) =>
-        (currentPair.base === baseCurrency &&
-          currentPair.quote === quoteCurrency) ||
-        (currentPair.base === quoteCurrency &&
-          currentPair.quote === baseCurrency),
+        (currentPair.base === baseCurrency && currentPair.quote === quoteCurrency) ||
+        (currentPair.base === quoteCurrency && currentPair.quote === baseCurrency),
     );
 
     // if such pair exists we use it to set the base and quote otherwise we default
@@ -134,14 +125,8 @@ export function doHashChange() {
 
   doTabShow();
 
-  Session.set(
-    'quoteCurrency',
-    quoteCurrency || localStorage.getItem('quoteCurrency'),
-  );
-  Session.set(
-    'baseCurrency',
-    baseCurrency || localStorage.getItem('baseCurrency'),
-  );
+  Session.set('quoteCurrency', quoteCurrency || localStorage.getItem('quoteCurrency'));
+  Session.set('baseCurrency', baseCurrency || localStorage.getItem('baseCurrency'));
 }
 
 export function txHref(tx) {
@@ -204,10 +189,7 @@ export function removeOutliersFromArray(data, fieldName, deviation) {
   const sd = Math.sqrt(varience);
   const newData = []; // uses for data which is 3 standard deviations from the mean
   for (let i = 0; i < l; ++i) {
-    if (
-      data[i][fieldName] > mean - deviation * sd &&
-      data[i][fieldName] < mean + deviation * sd
-    ) {
+    if (data[i][fieldName] > mean - deviation * sd && data[i][fieldName] < mean + deviation * sd) {
       newData.push(data[i]);
     }
   }

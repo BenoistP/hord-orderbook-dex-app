@@ -53,13 +53,7 @@ const handleTransaction = (
     callsNext,
     onCallNextTransaction,
     nextTransactionDelay,
-    withCallbacks: {
-      onCancelCleanup,
-      onStart,
-      onPending,
-      onCompleted,
-      onRejected,
-    } = {},
+    withCallbacks: { onCancelCleanup, onStart, onPending, onCompleted, onRejected } = {},
   },
   { addTransactionEpic = transactions.actions.addTransactionEpic } = {},
 ) => {
@@ -118,10 +112,7 @@ const handleTransaction = (
             onCompleted && onCompleted(to, callsNext);
             if (callsNext) {
               if (nextTransactionDelay) {
-                setTimeout(
-                  () => onCallNextTransaction(to, txMeta),
-                  nextTransactionDelay,
-                );
+                setTimeout(() => onCallNextTransaction(to, txMeta), nextTransactionDelay);
               } else {
                 onCallNextTransaction(to, txMeta);
               }

@@ -49,37 +49,21 @@ const price = (tradeHistoryEntry, baseToken, quoteToken) => {
     return null;
   }
   let price = 0;
-  if (
-    tradeHistoryEntry.buyWhichToken === quoteToken &&
-    tradeHistoryEntry.sellWhichToken === baseToken
-  ) {
-    price = new BigNumber(tradeHistoryEntry.buyHowMuch).div(
-      new BigNumber(tradeHistoryEntry.sellHowMuch),
-    );
-  } else if (
-    tradeHistoryEntry.buyWhichToken === baseToken &&
-    tradeHistoryEntry.sellWhichToken === quoteToken
-  ) {
-    price = new BigNumber(tradeHistoryEntry.sellHowMuch).div(
-      new BigNumber(tradeHistoryEntry.buyHowMuch),
-    );
+  if (tradeHistoryEntry.buyWhichToken === quoteToken && tradeHistoryEntry.sellWhichToken === baseToken) {
+    price = new BigNumber(tradeHistoryEntry.buyHowMuch).div(new BigNumber(tradeHistoryEntry.sellHowMuch));
+  } else if (tradeHistoryEntry.buyWhichToken === baseToken && tradeHistoryEntry.sellWhichToken === quoteToken) {
+    price = new BigNumber(tradeHistoryEntry.sellHowMuch).div(new BigNumber(tradeHistoryEntry.buyHowMuch));
   }
   return price;
 };
 
 const getBaseAndQuoteAmount = (tradeHistoryEntry, baseToken, quoteToken) => {
-  if (
-    tradeHistoryEntry.buyWhichToken === quoteToken &&
-    tradeHistoryEntry.sellWhichToken === baseToken
-  ) {
+  if (tradeHistoryEntry.buyWhichToken === quoteToken && tradeHistoryEntry.sellWhichToken === baseToken) {
     return {
       baseAmount: new BigNumber(tradeHistoryEntry.sellHowMuch),
       quoteAmount: new BigNumber(tradeHistoryEntry.buyHowMuch),
     };
-  } else if (
-    tradeHistoryEntry.buyWhichToken === baseToken &&
-    tradeHistoryEntry.sellWhichToken === quoteToken
-  ) {
+  } else if (tradeHistoryEntry.buyWhichToken === baseToken && tradeHistoryEntry.sellWhichToken === quoteToken) {
     return {
       baseAmount: new BigNumber(tradeHistoryEntry.buyHowMuch),
       quoteAmount: new BigNumber(tradeHistoryEntry.sellHowMuch),
@@ -99,14 +83,12 @@ const formatPrice = (
       return null;
     }
 
-    const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, '');
+    const priceSanitized = isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
-      ? new BigNumber(
-          !fromWei
-            ? priceSanitized
-            : web3.fromWei(priceSanitized, ETH_UNIT_ETHER),
-        ).toFormat(5, BigNumber.ROUND_HALF_UP)
+      ? new BigNumber(!fromWei ? priceSanitized : web3.fromWei(priceSanitized, ETH_UNIT_ETHER)).toFormat(
+          5,
+          BigNumber.ROUND_HALF_UP,
+        )
       : null;
   } catch (e) {
     console.warn(e.toString());
@@ -122,15 +104,13 @@ const formatTokenAmount = (price, fromWei = false, unit, decimalPlaces) => {
     return null;
   }
   try {
-    const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, '');
+    const priceSanitized = isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
       ? String(
-          new BigNumber(
-            !fromWei
-              ? priceSanitized
-              : web3.fromWei(priceSanitized, unit, decimalPlaces),
-          ).toFormat(decimalPlaces, BigNumber.ROUND_DOWN),
+          new BigNumber(!fromWei ? priceSanitized : web3.fromWei(priceSanitized, unit, decimalPlaces)).toFormat(
+            decimalPlaces,
+            BigNumber.ROUND_DOWN,
+          ),
         )
       : null;
   } catch (e) {
@@ -149,15 +129,13 @@ const formatAmount = (
     return null;
   }
   try {
-    const priceSanitized =
-      isNumeric(price) && price.toString().replace(/[,']+/g, '');
+    const priceSanitized = isNumeric(price) && price.toString().replace(/[,']+/g, '');
     return priceSanitized
       ? String(
-          new BigNumber(
-            !fromWei
-              ? priceSanitized
-              : web3.fromWei(priceSanitized, ETH_UNIT_ETHER),
-          ).toFormat(precision, BigNumber.ROUND_DOWN),
+          new BigNumber(!fromWei ? priceSanitized : web3.fromWei(priceSanitized, ETH_UNIT_ETHER)).toFormat(
+            precision,
+            BigNumber.ROUND_DOWN,
+          ),
         )
       : null;
   } catch (e) {
@@ -166,16 +144,9 @@ const formatAmount = (
 };
 
 const formatVolume = (tradingPairVolume) =>
-  web3
-    .fromWei(tradingPairVolume, ETH_UNIT_ETHER)
-    .toFormat(2, BigNumber.ROUND_HALF_UP);
+  web3.fromWei(tradingPairVolume, ETH_UNIT_ETHER).toFormat(2, BigNumber.ROUND_HALF_UP);
 
-const tradeType = (
-  order,
-  baseCurrency,
-  userToTradeBaseRelation,
-  userToTradeAdditionalRelation,
-) => {
+const tradeType = (order, baseCurrency, userToTradeBaseRelation, userToTradeAdditionalRelation) => {
   const checkWithOwnership = (
     userToTradeRelationEnum,
     userToTradeAdditionalRelationEnum,
@@ -184,8 +155,7 @@ const tradeType = (
   ) => {
     switch (userToTradeRelationEnum) {
       case USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER: {
-        return userToTradeAdditionalRelationEnum ===
-          USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE
+        return userToTradeAdditionalRelationEnum === USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE
           ? noRelationType
           : noRelationOtherType;
       }
@@ -196,23 +166,13 @@ const tradeType = (
   };
   if (order.buyWhichToken === baseCurrency) {
     if (userToTradeBaseRelation) {
-      return checkWithOwnership(
-        userToTradeBaseRelation,
-        userToTradeAdditionalRelation,
-        BID,
-        ASK,
-      );
+      return checkWithOwnership(userToTradeBaseRelation, userToTradeAdditionalRelation, BID, ASK);
     } else {
       return ASK;
     }
   } else if (order.sellWhichToken === baseCurrency) {
     if (userToTradeBaseRelation) {
-      return checkWithOwnership(
-        userToTradeBaseRelation,
-        userToTradeAdditionalRelation,
-        ASK,
-        BID,
-      );
+      return checkWithOwnership(userToTradeBaseRelation, userToTradeAdditionalRelation, ASK, BID);
     } else {
       return BID;
     }

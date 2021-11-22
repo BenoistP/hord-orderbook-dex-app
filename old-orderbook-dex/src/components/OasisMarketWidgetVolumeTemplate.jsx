@@ -18,7 +18,7 @@ export const OasisMarketWidgetVolumeTemplate = (row) => {
   } else {
     return (
       <span style={{ position: 'relative', right: '20px' }}>
-        <OasisLoadingIndicator size='sm' />
+        <OasisLoadingIndicator size="sm" />
       </span>
     );
   }

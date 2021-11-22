@@ -110,12 +110,7 @@ describe('sellMaxEpic', () => {
 describe('take offer modal', () => {
   test('setOfferTakeModalOpenEpic', () => {
     const store = configureMockStore([thunk2Data(), thunk])({});
-    store.dispatch(
-      offerTakes.actions.setOfferTakeModalOpenEpic(
-        1,
-        offerTakes.TAKE_BUY_OFFER,
-      ),
-    );
+    store.dispatch(offerTakes.actions.setOfferTakeModalOpenEpic(1, offerTakes.TAKE_BUY_OFFER));
     expect(store.getActions()).toMatchSnapshot();
   });
 

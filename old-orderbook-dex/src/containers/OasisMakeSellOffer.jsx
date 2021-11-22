@@ -38,9 +38,7 @@ export class OasisMakeSellOfferWrapper extends PureComponent {
   }
 
   getModal(formProps) {
-    return (
-      this.props.isModalOpen && <OasisMakeOfferModalWrapper {...formProps} />
-    );
+    return this.props.isModalOpen && <OasisMakeOfferModalWrapper {...formProps} />;
   }
 
   render() {
@@ -62,7 +60,7 @@ export class OasisMakeSellOfferWrapper extends PureComponent {
 
     return (
       <OasisWidgetFrame heading={`Sell ${baseToken}`} spaceForContent={true}>
-        <OasisTokenBalanceSummary summary='Available' token={baseToken} />
+        <OasisTokenBalanceSummary summary="Available" token={baseToken} />
         <div>
           {this.getModal(formProps)}
           <OfferMakeForm {...formProps} shouldFormUpdate={!isModalOpen} />
@@ -70,30 +68,21 @@ export class OasisMakeSellOfferWrapper extends PureComponent {
         <div className={styles.footer}>
           <div className={styles.helpBlock}>
             {isPriceSet && hasSufficientTokenAmount === false && (
-              <OasisInsufficientAmountOfToken
-                noBorder={true}
-                tokenName={baseToken}
-              />
+              <OasisInsufficientAmountOfToken noBorder={true} tokenName={baseToken} />
             )}
             {hasSufficientTokenAmount && (
-              <OasisOfferBelowDustLimitWrapper
-                noBorder
-                tokenName={baseToken}
-                offerType={MAKE_SELL_OFFER}
-              />
+              <OasisOfferBelowDustLimitWrapper noBorder tokenName={baseToken} offerType={MAKE_SELL_OFFER} />
             )}
-            {hasSufficientTokenAmount && isTotalOverTheTokenMax && (
-              <OasisYourOrderExceedsMaxTotalForToken noBorder />
-            )}
-            <InfoBox hidden={isPriceSet} noBorder color='muted'>
+            {hasSufficientTokenAmount && isTotalOverTheTokenMax && <OasisYourOrderExceedsMaxTotalForToken noBorder />}
+            <InfoBox hidden={isPriceSet} noBorder color="muted">
               {!globalFormLock && 'Enter a price to unlock amount and total.'}
             </InfoBox>
           </div>
           <OasisButton
             className={styles.callToAction}
-            color='danger'
-            size='md'
-            disabled='true'
+            color="danger"
+            size="md"
+            disabled="true"
             onClick={this.onModalOpen}
           >
             Sell
@@ -104,10 +93,8 @@ export class OasisMakeSellOfferWrapper extends PureComponent {
   }
 
   UNSAFE_componentWillUpdate(nextProps) {
-    const pairChanged =
-      nextProps.activeTradingPair !== this.props.activeTradingPair;
-    const contractsInitiallyLoaded =
-      !this.props.contractsLoaded && nextProps.contractsLoaded;
+    const pairChanged = nextProps.activeTradingPair !== this.props.activeTradingPair;
+    const contractsInitiallyLoaded = !this.props.contractsLoaded && nextProps.contractsLoaded;
     if (contractsInitiallyLoaded || pairChanged) {
       this.props.actions.initializeOfferMake(MAKE_SELL_OFFER);
     }
@@ -122,12 +109,8 @@ export class OasisMakeSellOfferWrapper extends PureComponent {
 
 export function mapStateToProps(state) {
   return {
-    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(
-      state,
-      MAKE_SELL_OFFER,
-    ),
-    hasSufficientTokenAmount:
-      offerMakes.hasSufficientTokenAmount(state)(MAKE_SELL_OFFER),
+    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(state, MAKE_SELL_OFFER),
+    hasSufficientTokenAmount: offerMakes.hasSufficientTokenAmount(state)(MAKE_SELL_OFFER),
     canMakeOffer:
       tokens.activeTradingPair(state) && platform.contractsLoaded(state)
         ? offerMakes.canMakeOffer(state, MAKE_SELL_OFFER, true)
@@ -150,7 +133,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisMakeSellOfferWrapper.propTypes = propTypes;
 OasisMakeSellOfferWrapper.displayName = 'OasisMakeSellOffer';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisMakeSellOfferWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisMakeSellOfferWrapper, styles));

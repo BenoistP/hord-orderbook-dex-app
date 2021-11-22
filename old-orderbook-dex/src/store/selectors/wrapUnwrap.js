@@ -9,9 +9,7 @@ import accounts from './accounts';
 
 const wrapUnwrap = (state) => state.get('wrapUnwrap');
 
-const wrapperTokenPairs = createSelector(wrapUnwrap, (s) =>
-  s.get('wrapperTokenPairs'),
-);
+const wrapperTokenPairs = createSelector(wrapUnwrap, (s) => s.get('wrapperTokenPairs'));
 
 const wrapUnwrapBalances = createSelector(
   wrapperTokenPairs,
@@ -19,14 +17,8 @@ const wrapUnwrapBalances = createSelector(
   balances.ethBalance,
   (wrapperTokenPairs, tokenBalances, etherBalance) =>
     wrapperTokenPairs.map((wtp) => {
-      const [unwrappedToken, wrapperToken] = [
-        wtp.get('unwrapped'),
-        wtp.get('wrapper'),
-      ];
-      const unwrappedBalance =
-        unwrappedToken !== TOKEN_ETHER
-          ? tokenBalances.get(unwrappedToken)
-          : etherBalance;
+      const [unwrappedToken, wrapperToken] = [wtp.get('unwrapped'), wtp.get('wrapper')];
+      const unwrappedBalance = unwrappedToken !== TOKEN_ETHER ? tokenBalances.get(unwrappedToken) : etherBalance;
       return fromJS({
         unwrappedToken,
         wrapperToken,
@@ -40,25 +32,17 @@ const getBrokerAddress = createSelector(
   wrapUnwrap,
   accounts.defaultAccount,
   reselect.getProps,
-  (s, defaultAccountAddress, tokenName) =>
-    s.getIn(['brokerAddresses', defaultAccountAddress, tokenName]),
+  (s, defaultAccountAddress, tokenName) => s.getIn(['brokerAddresses', defaultAccountAddress, tokenName]),
 );
 
-const activeUnwrappedToken = createSelector(wrapUnwrap, (s) =>
-  s.get('activeUnwrappedToken'),
+const activeUnwrappedToken = createSelector(wrapUnwrap, (s) => s.get('activeUnwrappedToken'));
+
+const activeWrappedToken = createSelector(wrapperTokenPairs, activeUnwrappedToken, (wtp, ut) =>
+  wtp.find((entry) => entry.get('unwrapped') === ut).get('wrapper'),
 );
 
-const activeWrappedToken = createSelector(
-  wrapperTokenPairs,
-  activeUnwrappedToken,
-  (wtp, ut) =>
-    wtp.find((entry) => entry.get('unwrapped') === ut).get('wrapper'),
-);
-
-const getActiveWrapUnwrapPair = createSelector(
-  wrapperTokenPairs,
-  activeUnwrappedToken,
-  (wtp, aut) => wtp.find((item) => item.get('unwrapped') === aut),
+const getActiveWrapUnwrapPair = createSelector(wrapperTokenPairs, activeUnwrappedToken, (wtp, aut) =>
+  wtp.find((item) => item.get('unwrapped') === aut),
 );
 
 const activeUnwrappedTokenBalance = createSelector(
@@ -68,9 +52,7 @@ const activeUnwrappedTokenBalance = createSelector(
     if (!activeUnwrappedToken) {
       return null;
     } else {
-      const balance = wub
-        .find((item) => item.get('unwrappedToken') === activeUnwrappedToken)
-        .get('unwrappedBalance');
+      const balance = wub.find((item) => item.get('unwrappedToken') === activeUnwrappedToken).get('unwrappedBalance');
       if (asBN && balance) {
         return web3.toBigNumber(balance);
       } else {
@@ -87,9 +69,7 @@ const activeWrappedTokenBalance = createSelector(
     if (!activeWrappedToken) {
       return null;
     } else if (wub) {
-      const balances = wub.find(
-        (item) => item.get('wrapperToken') === activeWrappedToken,
-      );
+      const balances = wub.find((item) => item.get('wrapperToken') === activeWrappedToken);
       if (asBN && balances) {
         return web3.toBigNumber(balances.get('wrappedBalance'));
       } else if (balances) {
@@ -101,9 +81,7 @@ const activeWrappedTokenBalance = createSelector(
   },
 );
 
-const loadedBrokerContractsList = createSelector(wrapUnwrap, (s) =>
-  s.get('loadedBrokerContracts'),
-);
+const loadedBrokerContractsList = createSelector(wrapUnwrap, (s) => s.get('loadedBrokerContracts'));
 
 const hasTokenBroker = createSelector(
   wrapUnwrap,
@@ -111,11 +89,7 @@ const hasTokenBroker = createSelector(
   reselect.getProps,
   (s, defaultAccountAddress, tokenName) =>
     s.hasIn(['brokerAddresses', defaultAccountAddress, tokenName])
-      ? web3
-          .toBigNumber(
-            s.getIn(['brokerAddresses', defaultAccountAddress, tokenName]),
-          )
-          .gt(0)
+      ? web3.toBigNumber(s.getIn(['brokerAddresses', defaultAccountAddress, tokenName])).gt(0)
       : false,
 );
 
@@ -123,14 +97,11 @@ const isTokenBrokerInitiallyLoaded = createSelector(
   wrapUnwrap,
   accounts.defaultAccount,
   reselect.getProps,
-  (s, defaultAccountAddress, tokenName) =>
-    s.getIn(['brokerAddresses', defaultAccountAddress, tokenName]) !== null,
+  (s, defaultAccountAddress, tokenName) => s.getIn(['brokerAddresses', defaultAccountAddress, tokenName]) !== null,
 );
 
-const isBrokerContractLoaded = createSelector(
-  loadedBrokerContractsList,
-  reselect.getProps,
-  (lbcl, tokenName) => lbcl.includes(tokenName),
+const isBrokerContractLoaded = createSelector(loadedBrokerContractsList, reselect.getProps, (lbcl, tokenName) =>
+  lbcl.includes(tokenName),
 );
 
 const wrapTokenformSelector = (formName) => formValueSelector(formName);
@@ -142,18 +113,13 @@ const wrapTokenAmount = createSelector(
 );
 
 const unwrapTokenAmount = createSelector(
-  (rootState, formName) =>
-    unwrapTokenformSelector(formName)(rootState, 'amount'),
+  (rootState, formName) => unwrapTokenformSelector(formName)(rootState, 'amount'),
   (wrapAmount) => wrapAmount,
 );
 
-const activeTokenWrapStatus = createSelector(wrapUnwrap, (s) =>
-  s.get('activeTokenWrapStatus'),
-);
+const activeTokenWrapStatus = createSelector(wrapUnwrap, (s) => s.get('activeTokenWrapStatus'));
 
-const activeTokenUnwrapStatus = createSelector(wrapUnwrap, (s) =>
-  s.get('activeTokenUnwrapStatus'),
-);
+const activeTokenUnwrapStatus = createSelector(wrapUnwrap, (s) => s.get('activeTokenUnwrapStatus'));
 
 export default {
   state: wrapUnwrap,

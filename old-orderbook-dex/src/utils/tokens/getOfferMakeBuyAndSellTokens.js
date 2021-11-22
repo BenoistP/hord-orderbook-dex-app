@@ -1,7 +1,4 @@
-import {
-  MAKE_BUY_OFFER,
-  MAKE_SELL_OFFER,
-} from '../../store/reducers/offerMakes';
+import { MAKE_BUY_OFFER, MAKE_SELL_OFFER } from '../../store/reducers/offerMakes';
 
 const getOfferMakeBuyAndSellTokens = (tradingPair, offerMakeType) => {
   switch (offerMakeType) {

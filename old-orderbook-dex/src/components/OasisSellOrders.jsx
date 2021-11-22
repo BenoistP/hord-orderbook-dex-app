@@ -31,10 +31,7 @@ const actionsColumnTemplate = function () {
 };
 
 const priceTemplate = (row) => (
-  <OasisSignificantDigitsWrapper
-    fullPrecisionAmount={row.ask_price_full_precision}
-    amount={row.ask_price}
-  />
+  <OasisSignificantDigitsWrapper fullPrecisionAmount={row.ask_price_full_precision} amount={row.ask_price} />
 );
 const baseTokenTemplate = (row) => (
   <OasisSignificantDigitsWrapper
@@ -91,12 +88,7 @@ class OasisSellOrders extends PureComponent {
         isLoadingData={loadingSellOffers}
         loadingDataText={'sell orders'}
         heading={`SELL ORDERS`}
-        loadProgressSection={
-          <LoadProgressSection
-            loadedOffersList={sellOffers}
-            offersTotalCount={sellOfferCount}
-          />
-        }
+        loadProgressSection={<LoadProgressSection loadedOffersList={sellOffers} offersTotalCount={sellOfferCount} />}
       >
         <OasisTable
           className={styles.table}

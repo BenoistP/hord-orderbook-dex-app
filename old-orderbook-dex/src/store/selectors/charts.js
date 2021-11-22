@@ -9,20 +9,14 @@ import { removeOutliersFromArray } from '../../utils/functions';
 
 const trades = (state) => state.get('trades').get('marketHistory');
 
-const tokenTrades = createSelector(
-  trades,
-  reselect.getProps,
-  (trades, props) => {
-    const tokens = props
-      ? [props.tradingPair.baseToken, props.tradingPair.quoteToken]
-      : [];
-    return (trades || []).filter(
-      (t) =>
-        (t.buyWhichToken == tokens[0] && t.sellWhichToken == tokens[1]) ||
-        (t.buyWhichToken == tokens[1] && t.sellWhichToken == tokens[0]),
-    );
-  },
-);
+const tokenTrades = createSelector(trades, reselect.getProps, (trades, props) => {
+  const tokens = props ? [props.tradingPair.baseToken, props.tradingPair.quoteToken] : [];
+  return (trades || []).filter(
+    (t) =>
+      (t.buyWhichToken == tokens[0] && t.sellWhichToken == tokens[1]) ||
+      (t.buyWhichToken == tokens[1] && t.sellWhichToken == tokens[0]),
+  );
+});
 
 const priceChartTrades = createSelector(tokenTrades, (trades) => {
   const since = moment(Date.now()).startOf('day').subtract(6, 'days').unix();
@@ -34,22 +28,19 @@ const priceChartLabels = createSelector(priceChartTrades, (priceChartTrades) =>
   priceChartTrades.map((trade) => trade.timestamp),
 );
 
-const priceChartValues = createSelector(
-  priceChartTrades,
-  reselect.getProps,
-  (priceChartTrades, props) =>
-    priceChartTrades.map((trade) => {
-      let baseAmount;
-      let quoteAmount;
-      if (trade.buyWhichToken === props.tradingPair.quoteToken) {
-        quoteAmount = new BigNumber(trade.buyHowMuch);
-        baseAmount = new BigNumber(trade.sellHowMuch);
-      } else {
-        baseAmount = new BigNumber(trade.buyHowMuch);
-        quoteAmount = new BigNumber(trade.sellHowMuch);
-      }
-      return quoteAmount.dividedBy(baseAmount).toFixed(4);
-    }),
+const priceChartValues = createSelector(priceChartTrades, reselect.getProps, (priceChartTrades, props) =>
+  priceChartTrades.map((trade) => {
+    let baseAmount;
+    let quoteAmount;
+    if (trade.buyWhichToken === props.tradingPair.quoteToken) {
+      quoteAmount = new BigNumber(trade.buyHowMuch);
+      baseAmount = new BigNumber(trade.sellHowMuch);
+    } else {
+      baseAmount = new BigNumber(trade.buyHowMuch);
+      quoteAmount = new BigNumber(trade.sellHowMuch);
+    }
+    return quoteAmount.dividedBy(baseAmount).toFixed(4);
+  }),
 );
 
 const volumeChartTrades = createSelector(tokenTrades, (trades) => {
@@ -58,14 +49,11 @@ const volumeChartTrades = createSelector(tokenTrades, (trades) => {
 });
 
 const volumeChartPoints = createSelector(() =>
-  [6, 5, 4, 3, 2, 1, 0].map((i) =>
-    moment(Date.now()).startOf('day').subtract(i, 'days'),
-  ),
+  [6, 5, 4, 3, 2, 1, 0].map((i) => moment(Date.now()).startOf('day').subtract(i, 'days')),
 );
 
-const volumeChartLabels = createSelector(
-  volumeChartPoints,
-  (volumeChartPoints) => volumeChartPoints.map((d) => d.unix()),
+const volumeChartLabels = createSelector(volumeChartPoints, (volumeChartPoints) =>
+  volumeChartPoints.map((d) => d.unix()),
 );
 
 const volumeChartData = createSelector(
@@ -81,19 +69,11 @@ const volumeChartData = createSelector(
     volumeChartTrades.forEach((trade) => {
       const day = moment.unix(trade.timestamp).startOf('day').unix();
       if (trade.buyWhichToken === props.tradingPair.quoteToken) {
-        volumes.quote[day] = volumes.quote[day].add(
-          new BigNumber(trade.buyHowMuch),
-        );
-        volumes.base[day] = volumes.base[day].add(
-          new BigNumber(trade.sellHowMuch),
-        );
+        volumes.quote[day] = volumes.quote[day].add(new BigNumber(trade.buyHowMuch));
+        volumes.base[day] = volumes.base[day].add(new BigNumber(trade.sellHowMuch));
       } else {
-        volumes.quote[day] = volumes.quote[day].add(
-          new BigNumber(trade.sellHowMuch),
-        );
-        volumes.base[day] = volumes.base[day].add(
-          new BigNumber(trade.buyHowMuch),
-        );
+        volumes.quote[day] = volumes.quote[day].add(new BigNumber(trade.sellHowMuch));
+        volumes.base[day] = volumes.base[day].add(new BigNumber(trade.buyHowMuch));
       }
     });
     return volumes;
@@ -101,22 +81,13 @@ const volumeChartData = createSelector(
 );
 
 const volumeChartValues = createSelector(volumeChartData, (volumeChartData) =>
-  Object.keys(volumeChartData.quote).map((key) =>
-    web3.fromWei(volumeChartData.quote[key]).toFixed(2),
-  ),
+  Object.keys(volumeChartData.quote).map((key) => web3.fromWei(volumeChartData.quote[key]).toFixed(2)),
 );
 
-const volumeChartTooltips = createSelector(
-  volumeChartData,
-  (volumeChartData) => ({
-    base: Object.values(volumeChartData.base).map((v) =>
-      web3.fromWei(v).toFormat(2),
-    ),
-    quote: Object.values(volumeChartData.quote).map((v) =>
-      web3.fromWei(v).toFormat(2),
-    ),
-  }),
-);
+const volumeChartTooltips = createSelector(volumeChartData, (volumeChartData) => ({
+  base: Object.values(volumeChartData.base).map((v) => web3.fromWei(v).toFormat(2)),
+  quote: Object.values(volumeChartData.quote).map((v) => web3.fromWei(v).toFormat(2)),
+}));
 
 const offers = (state) => state.get('offers').get('offers');
 
@@ -183,19 +154,13 @@ function downSum(array) {
 }
 
 function bigSum(array) {
-  return array.reduce(
-    (sum, bn) => (sum ? sum.add(new BigNumber(bn)) : new BigNumber(bn)),
-    null,
-  );
+  return array.reduce((sum, bn) => (sum ? sum.add(new BigNumber(bn)) : new BigNumber(bn)), null);
 }
 
 function groupBy(array, by = _.identity) {
   let result = [];
   array.forEach((e) => {
-    if (
-      (result[result.length - 1] || [])[0] &&
-      by((result[result.length - 1] || [])[0]) == by(e)
-    )
+    if ((result[result.length - 1] || [])[0] && by((result[result.length - 1] || [])[0]) == by(e))
       result[result.length - 1].push(e);
     else result.push([e]);
   });
@@ -216,39 +181,19 @@ const depthChartData = createSelector(offersBids, offersAsks, (bids, asks) => {
   const askPrices = _.sortedUniq(asks.map((ask) => ask.ask_price_sort));
   const askGroups = groupBy(asks, (ask) => ask.ask_price_sort);
   const askAmounts = {
-    quote: upSum(
-      askGroups.map((group) =>
-        bigSum(group.map((ask) => ask.buyHowMuch.toString())),
-      ),
-    ),
-    base: upSum(
-      askGroups.map((group) =>
-        bigSum(group.map((ask) => ask.sellHowMuch.toString())),
-      ),
-    ),
+    quote: upSum(askGroups.map((group) => bigSum(group.map((ask) => ask.buyHowMuch.toString())))),
+    base: upSum(askGroups.map((group) => bigSum(group.map((ask) => ask.sellHowMuch.toString())))),
   };
 
   const bidPrices = _.sortedUniq(bids.map((bid) => bid.bid_price_sort));
   const bidGroups = groupBy(bids, (bid) => bid.bid_price_sort);
   const bidAmounts = {
-    quote: downSum(
-      bidGroups.map((group) =>
-        bigSum(group.map((bid) => bid.sellHowMuch.toString())),
-      ),
-    ),
-    base: downSum(
-      bidGroups.map((group) =>
-        bigSum(group.map((bid) => bid.buyHowMuch.toString())),
-      ),
-    ),
+    quote: downSum(bidGroups.map((group) => bigSum(group.map((bid) => bid.sellHowMuch.toString())))),
+    base: downSum(bidGroups.map((group) => bigSum(group.map((bid) => bid.buyHowMuch.toString())))),
   };
 
   const vals = _.uniq(
-    bidPrices
-      .concat(askPrices)
-      .sort((a, b) =>
-        new BigNumber(a.toString()).lt(new BigNumber(b.toString())) ? -1 : 1,
-      ),
+    bidPrices.concat(askPrices).sort((a, b) => (new BigNumber(a.toString()).lt(new BigNumber(b.toString())) ? -1 : 1)),
   );
 
   const askAmountsData = mapWithPreviousResult(vals, (val, prevResult) => {
@@ -264,12 +209,8 @@ const depthChartData = createSelector(offersBids, offersAsks, (bids, asks) => {
       };
     } else if (
       askPrices.length === 0 ||
-      new BigNumber(val.toString()).lt(
-        new BigNumber(askPrices[0].toString()),
-      ) ||
-      new BigNumber(val.toString()).gt(
-        new BigNumber(askPrices[askPrices.length - 1].toString()),
-      )
+      new BigNumber(val.toString()).lt(new BigNumber(askPrices[0].toString())) ||
+      new BigNumber(val.toString()).gt(new BigNumber(askPrices[askPrices.length - 1].toString()))
     ) {
       // If the price is lower or higher than the asks range there is not value to print in the graph
       return {
@@ -285,53 +226,43 @@ const depthChartData = createSelector(offersBids, offersAsks, (bids, asks) => {
     }
   });
 
-  const bidAmountsData = mapWithPreviousResult(
-    vals.slice().reverse(),
-    (val, prevResult) => {
-      const index = bidPrices.indexOf(val);
-      if (index !== -1) {
-        // If there is a specific value for the price in bids, we add it
-        return {
-          graph: {
-            x: val,
-            y: web3.fromWei(bidAmounts.quote[index]).toFixed(3),
-          },
-          tooltip: {
-            quote: bidAmounts.quote[index],
-            base: bidAmounts.base[index],
-          },
-        };
-      } else if (
-        bidPrices.length === 0 ||
-        new BigNumber(val.toString()).lt(
-          new BigNumber(bidPrices[0].toString()),
-        ) ||
-        new BigNumber(val.toString()).gt(
-          new BigNumber(bidPrices[bidPrices.length - 1].toString()),
-        )
-      ) {
-        // If the price is lower or higher than the bids range there is not value to print in the graph
-        return {
-          graph: { x: val, y: null },
-          tooltip: { quote: null, base: null },
-        };
-      } else {
-        // If there is not a bid amount for this price, we need to add the next available amount
-        return {
-          graph: { x: val, y: prevResult.graph.y },
-          tooltip: prevResult.tooltip,
-        };
-      }
-    },
-  );
+  const bidAmountsData = mapWithPreviousResult(vals.slice().reverse(), (val, prevResult) => {
+    const index = bidPrices.indexOf(val);
+    if (index !== -1) {
+      // If there is a specific value for the price in bids, we add it
+      return {
+        graph: {
+          x: val,
+          y: web3.fromWei(bidAmounts.quote[index]).toFixed(3),
+        },
+        tooltip: {
+          quote: bidAmounts.quote[index],
+          base: bidAmounts.base[index],
+        },
+      };
+    } else if (
+      bidPrices.length === 0 ||
+      new BigNumber(val.toString()).lt(new BigNumber(bidPrices[0].toString())) ||
+      new BigNumber(val.toString()).gt(new BigNumber(bidPrices[bidPrices.length - 1].toString()))
+    ) {
+      // If the price is lower or higher than the bids range there is not value to print in the graph
+      return {
+        graph: { x: val, y: null },
+        tooltip: { quote: null, base: null },
+      };
+    } else {
+      // If there is not a bid amount for this price, we need to add the next available amount
+      return {
+        graph: { x: val, y: prevResult.graph.y },
+        tooltip: prevResult.tooltip,
+      };
+    }
+  });
 
   return { vals, askAmountsData, bidAmountsData: bidAmountsData.reverse() };
 });
 
-const depthChartLabels = createSelector(
-  depthChartData,
-  (depthChartData) => depthChartData.vals,
-);
+const depthChartLabels = createSelector(depthChartData, (depthChartData) => depthChartData.vals);
 
 const depthChartValues = createSelector(depthChartData, (depthChartData) => ({
   buy: depthChartData.bidAmountsData.map((d) => d.graph),

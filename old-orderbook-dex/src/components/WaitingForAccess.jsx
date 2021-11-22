@@ -7,11 +7,7 @@ import EthereumLogo from './../assets/ethereum-logo.svg';
 const WaitingForAccess = () => {
   return (
     <div className={styles.NoEthereumSection}>
-      <img
-        className={styles.ImgEthereumLogo}
-        alt='Ethereum'
-        src={EthereumLogo}
-      />
+      <img className={styles.ImgEthereumLogo} alt="Ethereum" src={EthereumLogo} />
       <h2>WAITING FOR ACCESS...</h2>
     </div>
   );

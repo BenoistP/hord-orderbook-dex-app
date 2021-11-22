@@ -62,15 +62,12 @@ const SET_DEFAULT_TRADING_PAIR = 'TOKENS/SET_DEFAULT_TRADING_PAIR';
 
 const Init = createAction(INIT, () => null);
 
-const setDefaultTradingPair = createAction(
-  SET_DEFAULT_TRADING_PAIR,
-  (baseToken, quoteToken) => ({ baseToken, quoteToken }),
-);
+const setDefaultTradingPair = createAction(SET_DEFAULT_TRADING_PAIR, (baseToken, quoteToken) => ({
+  baseToken,
+  quoteToken,
+}));
 
-const setActiveTradingPair = createAction(
-  'TOKENS/SET_ACTIVE_TRADING_PAIR',
-  (tradingPair) => tradingPair,
-);
+const setActiveTradingPair = createAction('TOKENS/SET_ACTIVE_TRADING_PAIR', (tradingPair) => tradingPair);
 
 const setActiveTradingPairEpic =
   (args, sync = true) =>
@@ -86,33 +83,19 @@ const setActiveTradingPairEpic =
     ) {
       dispatch(setActiveTradingPair(args));
       const currentActiveTradingPair = tokens.activeTradingPair(getState());
-      if (
-        sync &&
-        offers.activeTradingPairOffersInitialLoadStatus(getState()) ===
-          SYNC_STATUS_PRISTINE
-      ) {
-        dispatch(
-          offersReducer.actions.syncOffersEpic(currentActiveTradingPair),
-        );
+      if (sync && offers.activeTradingPairOffersInitialLoadStatus(getState()) === SYNC_STATUS_PRISTINE) {
+        dispatch(offersReducer.actions.syncOffersEpic(currentActiveTradingPair));
       }
     }
   };
 
-const setPrecision = createAction(
-  'TOKENS/SET_PRECISION',
-  (precision) => precision,
-);
+const setPrecision = createAction('TOKENS/SET_PRECISION', (precision) => precision);
 
 const denotePrecision = () => (dispatch, getState) => {
   const { baseToken, quoteToken } = tokens.activeTradingPair(getState());
-  const basePrecision = tokens
-    .getTokenSpecs(getState())(baseToken)
-    .get('precision');
-  const quotePrecision = tokens
-    .getTokenSpecs(getState())(quoteToken)
-    .get('precision');
-  const precision =
-    basePrecision < quotePrecision ? basePrecision : quotePrecision;
+  const basePrecision = tokens.getTokenSpecs(getState())(baseToken).get('precision');
+  const quotePrecision = tokens.getTokenSpecs(getState())(quoteToken).get('precision');
+  const precision = basePrecision < quotePrecision ? basePrecision : quotePrecision;
   dispatch(setPrecision(precision));
   // Session.set('precision', precision);
   // // TODO: find away to place ROUNDING_MODE in here.
@@ -120,35 +103,21 @@ const denotePrecision = () => (dispatch, getState) => {
   // BigNumber.config({ DECIMAL_PLACES: precision });
 };
 
-const getActiveTradingPairAllowanceStatus$ = createPromiseActions(
-  'TOKENS/GET_ACTIVE_TRADING_PAIR_ALLOWANCE_STATUS',
-);
+const getActiveTradingPairAllowanceStatus$ = createPromiseActions('TOKENS/GET_ACTIVE_TRADING_PAIR_ALLOWANCE_STATUS');
 
-const getActiveTradingPairAllowanceStatus =
-  () => async (dispatch, getState) => {
-    dispatch(getActiveTradingPairAllowanceStatus$.pending());
-    const tradingPair =
-      tokens.activeTradingPair(getState()) !== null
-        ? fromJS(tokens.activeTradingPair(getState()))
-        : tokens.defaultTradingPair(getState());
-    const [baseToken, quoteToken] = [
-      tradingPair.get('baseToken'),
-      tradingPair.get('quoteToken'),
-    ];
+const getActiveTradingPairAllowanceStatus = () => async (dispatch, getState) => {
+  dispatch(getActiveTradingPairAllowanceStatus$.pending());
+  const tradingPair =
+    tokens.activeTradingPair(getState()) !== null
+      ? fromJS(tokens.activeTradingPair(getState()))
+      : tokens.defaultTradingPair(getState());
+  const [baseToken, quoteToken] = [tradingPair.get('baseToken'), tradingPair.get('quoteToken')];
 
-    await dispatch(
-      balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket(
-        baseToken,
-      ),
-    );
-    await dispatch(
-      balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket(
-        quoteToken,
-      ),
-    );
+  await dispatch(balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket(baseToken));
+  await dispatch(balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket(quoteToken));
 
-    dispatch(getActiveTradingPairAllowanceStatus$.fulfilled());
-  };
+  dispatch(getActiveTradingPairAllowanceStatus$.fulfilled());
+};
 
 const actions = {
   Init,
@@ -160,10 +129,8 @@ const actions = {
 
 const reducer = handleActions(
   {
-    [setDefaultTradingPair]: (state, { payload }) =>
-      state.update('defaultTradingPair', () => payload),
-    [setActiveTradingPair]: (state, { payload }) =>
-      state.set('activeTradingPair', payload),
+    [setDefaultTradingPair]: (state, { payload }) => state.update('defaultTradingPair', () => payload),
+    [setActiveTradingPair]: (state, { payload }) => state.set('activeTradingPair', payload),
     [setPrecision]: (state, { payload }) => state.set('precision', payload),
   },
   initialState,

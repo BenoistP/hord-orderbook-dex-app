@@ -14,12 +14,7 @@ class OasisDontWrapAllEther extends PureComponent {
     const { noBorder, ...props } = this.props;
     const tokenName = 'ETH';
     return (
-      <InfoBoxWithIco
-        noBorder={noBorder}
-        color='danger'
-        icon='warning'
-        {...props}
-      >
+      <InfoBoxWithIco noBorder={noBorder} color="danger" icon="warning" {...props}>
         <span className={styles.base}>
           Do not wrap all of your <b>{tokenName}</b>!
         </span>

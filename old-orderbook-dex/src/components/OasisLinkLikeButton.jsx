@@ -17,22 +17,13 @@ const defaultProps = {
 
 class OasisLinkLikeButton extends PureComponent {
   render() {
-    const {
-      disabled,
-      caption,
-      children,
-      color,
-      size,
-      className,
-      href,
-      ...props
-    } = this.props;
+    const { disabled, caption, children, color, size, className, href, ...props } = this.props;
     return (
       <a
-        rel='noopener noreferrer'
-        className={`${styles.button} ${linkStyles.btn} ${styles[color]} ${
-          styles[size]
-        } ${className} ${disabled ? styles.disabled : ''}`}
+        rel="noopener noreferrer"
+        className={`${styles.button} ${linkStyles.btn} ${styles[color]} ${styles[size]} ${className} ${
+          disabled ? styles.disabled : ''
+        }`}
         href={disabled ? null : href}
         {...props}
       >

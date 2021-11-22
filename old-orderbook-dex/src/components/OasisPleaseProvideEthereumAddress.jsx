@@ -16,15 +16,14 @@ class OasisPleaseProvideEthereumAddress extends PureComponent {
   render() {
     const { noBorder } = this.props;
     return (
-      <InfoBoxWithIco noBorder={noBorder} icon='warning' color='danger'>
+      <InfoBoxWithIco noBorder={noBorder} icon="warning" color="danger">
         Please provide <b>Ethereum address</b> !
       </InfoBoxWithIco>
     );
   }
 }
 
-OasisPleaseProvideEthereumAddress.displayName =
-  'OasisPleaseProvideEthereumAddress';
+OasisPleaseProvideEthereumAddress.displayName = 'OasisPleaseProvideEthereumAddress';
 OasisPleaseProvideEthereumAddress.propTypes = propTypes;
 OasisPleaseProvideEthereumAddress.defaultProps = defaultProps;
 export default OasisPleaseProvideEthereumAddress;

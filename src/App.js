@@ -9,13 +9,7 @@ import './App.css';
 import { Header, Notifications } from './components';
 import { connectToContracts } from './store/actions/contractActions';
 
-const App = ({
-  connectToContracts,
-  account,
-  MatchingMarket,
-  setBuyOrders,
-  setSellOrders,
-}) => {
+const App = ({ connectToContracts, account, MatchingMarket, setBuyOrders, setSellOrders }) => {
   useEffect(() => {
     if (account) connectToContracts();
 
@@ -27,14 +21,14 @@ const App = ({
     setSellOrders();
   };
   return (
-    <div className='App'>
+    <div className="App">
       <Header />
-      <header className='App-header'>
+      <header className="App-header">
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
         <button onClick={interactWithContracts}>test</button>
-        <Notifications position='top-right' autoDelete autoDeleteTime={2000} />
+        <Notifications position="top-right" autoDelete autoDeleteTime={2000} />
       </header>
     </div>
   );

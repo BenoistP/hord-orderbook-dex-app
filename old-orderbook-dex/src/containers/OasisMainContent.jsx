@@ -37,9 +37,7 @@ export class OasisMainContentWrapper extends Component {
     }
     return (
       <div hidden={!wrapUnwrapPathMatches}>
-        {this.wrapUnwrapInitiallyLoaded && (
-          <OasisWrapUnwrapWrapper {...rootRouteProps} />
-        )}
+        {this.wrapUnwrapInitiallyLoaded && <OasisWrapUnwrapWrapper {...rootRouteProps} />}
       </div>
     );
   }
@@ -51,9 +49,7 @@ export class OasisMainContentWrapper extends Component {
     }
     return (
       <div hidden={!transferPathMatches}>
-        {this.transferViewInitiallyLoaded && (
-          <OasisTransferWrapper {...rootRouteProps} />
-        )}
+        {this.transferViewInitiallyLoaded && <OasisTransferWrapper {...rootRouteProps} />}
       </div>
     );
   }
@@ -65,7 +61,7 @@ export class OasisMainContentWrapper extends Component {
     } = this.props;
     return (
       this.redirect() || (
-        <div className='OasisMainContent'>
+        <div className="OasisMainContent">
           <OasisTabsContainerWrapper pathname={pathname} />
           <div>
             <Route
@@ -76,10 +72,7 @@ export class OasisMainContentWrapper extends Component {
                     path={'/trade/:baseToken?/:quoteToken?'}
                     render={(props) => (
                       <div>
-                        <OasisTradeWrapper
-                          {...props}
-                          defaultTradingPair={defaultTradingPair}
-                        />
+                        <OasisTradeWrapper {...props} defaultTradingPair={defaultTradingPair} />
                       </div>
                     )}
                   />
@@ -116,7 +109,4 @@ export function mapDispatchToProps(dispatch) {
 OasisMainContentWrapper.propTypes = propTypes;
 OasisMainContentWrapper.displayName = 'OasisMainContentWrapper';
 
-export default compose(
-  withRouter,
-  connect(mapStateToProps, mapDispatchToProps),
-)(OasisMainContentWrapper);
+export default compose(withRouter, connect(mapStateToProps, mapDispatchToProps))(OasisMainContentWrapper);

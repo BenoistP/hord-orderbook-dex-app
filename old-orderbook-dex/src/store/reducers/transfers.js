@@ -19,24 +19,15 @@ const Init = createAction('TRANSFERS/INIT', () => null);
 
 const transferTransaction = createAction(
   'TRANSFERS/TRANSFER_TRANSACTION',
-  (
-    tokenName,
-    recipientAddress,
-    tokenAmountInEther,
-    gasPrice = DEFAULT_GAS_PRICE,
-  ) => {
+  (tokenName, recipientAddress, tokenAmountInEther, gasPrice = DEFAULT_GAS_PRICE) => {
     const contractInstance = getTokenContractInstance(tokenName);
     const tokenAmountInTokenPrecisionWei = convertToTokenPrecision(
       web3.toWei(tokenAmountInEther, ETH_UNIT_ETHER),
       tokenName,
     );
-    return contractInstance.transfer(
-      recipientAddress,
-      tokenAmountInTokenPrecisionWei,
-      {
-        gasPrice,
-      },
-    );
+    return contractInstance.transfer(recipientAddress, tokenAmountInTokenPrecisionWei, {
+      gasPrice,
+    });
   },
 );
 
@@ -44,9 +35,7 @@ const makeTransfer = createPromiseActions('TRANSFERS/MAKE_TRANSFER');
 const makeTransferEpic =
   (withCallbacks = {}) =>
   async (dispatch, getState) => {
-    const { recipient, tokenAmount } = transfers.getMakeTransferFormValues(
-      getState(),
-    );
+    const { recipient, tokenAmount } = transfers.getMakeTransferFormValues(getState());
     dispatch(makeTransfer.pending());
 
     const token = transfers.selectedToken(getState());
@@ -55,8 +44,7 @@ const makeTransferEpic =
 
     return handleTransaction({
       dispatch,
-      transactionDispatcher: () =>
-        dispatch(transferTransaction(token, recipient, tokenAmount)),
+      transactionDispatcher: () => dispatch(transferTransaction(token, recipient, tokenAmount)),
       transactionType: TX__GROUP__TRANSFERS,
       txMeta,
       withCallbacks,
@@ -68,13 +56,7 @@ const setTransferMax = () => (dispatch, getState) => {
     tokenName: transfers.selectedToken(getState()),
   });
   if (maxTransferValueInEther) {
-    dispatch(
-      change(
-        'tokenTransfer',
-        'tokenAmount',
-        maxTransferValueInEther.toString(),
-      ),
-    );
+    dispatch(change('tokenTransfer', 'tokenAmount', maxTransferValueInEther.toString()));
   }
 };
 

@@ -6,45 +6,27 @@ import { subscriptionGroupToKeyMap } from '../../constants';
 
 const platform = (state) => state.get('platform');
 
-const isAccountLocked = createSelector(platform, (state) =>
-  state.get('accountLocked'),
-);
+const isAccountLocked = createSelector(platform, (state) => state.get('accountLocked'));
 
-const defaultPeriod = createSelector(platform, (state) =>
-  state.get('defaultPeriod'),
-);
+const defaultPeriod = createSelector(platform, (state) => state.get('defaultPeriod'));
 
-const activePeriod = createSelector(platform, (state) =>
-  state.get('activePeriod'),
-);
+const activePeriod = createSelector(platform, (state) => state.get('activePeriod'));
 
-const contractsLoaded = createSelector(platform, (state) =>
-  state.get('contractsLoaded'),
-);
+const contractsLoaded = createSelector(platform, (state) => state.get('contractsLoaded'));
 
-const activePeriodAvgBlockNumber = createSelector(platform, (state) =>
-  period.avgBlockPer(state.get('activePeriod')),
-);
+const activePeriodAvgBlockNumber = createSelector(platform, (state) => period.avgBlockPer(state.get('activePeriod')));
 
-const defaultPeriodAvgBlockNumber = createSelector(platform, (state) =>
-  period.avgBlockPer(state.get('defaultPeriod')),
-);
+const defaultPeriodAvgBlockNumber = createSelector(platform, (state) => period.avgBlockPer(state.get('defaultPeriod')));
 
 const globalFormLock = createSelector(platform, (s) => s.get('globalFormLock'));
 
 const isAppLoading = createSelector(platform, (s) => s.get('isAppLoading'));
 
-const isMarketInitialized = createSelector(platform, (s) =>
-  s.get('marketInitialized'),
-);
+const isMarketInitialized = createSelector(platform, (s) => s.get('marketInitialized'));
 
-const allInitialSubscriptionsRegistered = createSelector(platform, (s) =>
-  s.get('allInitialSubscriptionsRegistered'),
-);
+const allInitialSubscriptionsRegistered = createSelector(platform, (s) => s.get('allInitialSubscriptionsRegistered'));
 
-const subscriptionsRegisteredMap = createSelector(platform, (s) =>
-  s.get('subscriptionsRegistered'),
-);
+const subscriptionsRegisteredMap = createSelector(platform, (s) => s.get('subscriptionsRegistered'));
 
 const isSubscriptionRegistered = createSelector(
   subscriptionsRegisteredMap,
@@ -62,11 +44,7 @@ const canRegisterSubscription = createSelector(
   network.isNodeSyncing,
   subscriptionsRegisteredMap,
   reselect.getProps,
-  (
-    isSyncing,
-    subscriptionsRegisteredMap,
-    { subscriptionGroup, subscriptionType },
-  ) =>
+  (isSyncing, subscriptionsRegisteredMap, { subscriptionGroup, subscriptionType }) =>
     !isSyncing &&
     !subscriptionsRegisteredMap.getIn([
       subscriptionGroupToKeyMap[subscriptionGroup],

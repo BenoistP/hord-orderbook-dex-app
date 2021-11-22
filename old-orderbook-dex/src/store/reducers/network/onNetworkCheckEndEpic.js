@@ -22,22 +22,15 @@ import {
 import { registerSubscription } from '../../../utils/subscriptions/registerSubscription';
 import userTradesReducer from '../userTrades';
 
-export const setLastNetworkCheckStartAt = createAction(
-  'NETWORK/SET_LAST_NETWORK_CHECK_START_AT',
-  () => Date.now().toString(),
+export const setLastNetworkCheckStartAt = createAction('NETWORK/SET_LAST_NETWORK_CHECK_START_AT', () =>
+  Date.now().toString(),
 );
 
-export const setLastNetworkCheckEndAt = createAction(
-  'NETWORK/SET_LAST_NETWORK_CHECK_END_AT',
-  () => Date.now().toString(),
+export const setLastNetworkCheckEndAt = createAction('NETWORK/SET_LAST_NETWORK_CHECK_END_AT', () =>
+  Date.now().toString(),
 );
 
-export const onNetworkCheckEndEpic = (
-  dispatch,
-  getState,
-  setInitialSubscriptions,
-  accountChanged,
-) => {
+export const onNetworkCheckEndEpic = (dispatch, getState, setInitialSubscriptions, accountChanged) => {
   // console.log('onNetworkCheckEnd: start')
   /**
    * This should be done only once ( Unless network is changed )!!!
@@ -45,16 +38,11 @@ export const onNetworkCheckEndEpic = (
   if (setInitialSubscriptions) {
     const currentLatestBlock = network.latestBlockNumber(getState());
     dispatch(
-      balancesReducer.actions.getAllTradedTokensBalances(
-        getTokenContractsList(),
-        accounts.defaultAccount(getState()),
-      ),
+      balancesReducer.actions.getAllTradedTokensBalances(getTokenContractsList(), accounts.defaultAccount(getState())),
     );
     // Initial offersReducer sync
 
-    const tradingPair =
-      tokens.activeTradingPair(getState()) ||
-      tokens.defaultTradingPair(getState()).toJSON();
+    const tradingPair = tokens.activeTradingPair(getState()) || tokens.defaultTradingPair(getState()).toJSON();
 
     dispatch(
       tradesReducer.actions.fetchLogTakeEventsEpic({
@@ -66,11 +54,7 @@ export const onNetworkCheckEndEpic = (
       registerSubscription(
         SUBSCRIPTIONS_LOG_TAKE_EVENTS,
         () => {
-          dispatch(
-            tradesReducer.actions.subscribeLogTakeEventsEpic(
-              currentLatestBlock,
-            ),
-          );
+          dispatch(tradesReducer.actions.subscribeLogTakeEventsEpic(currentLatestBlock));
         },
         { dispatch, getState },
         SUBSCRIPTIONS_GROUP_GLOBAL_INITIAL,
@@ -106,25 +90,16 @@ export const onNetworkCheckEndEpic = (
         SUBSCRIPTIONS_ETHER_BALANCE_CHANGE_EVENTS,
         () => {
           dispatch(
-            balancesReducer.actions.subscribeAccountEthBalanceChangeEventEpic(
-              accounts.defaultAccount(getState()),
-            ),
+            balancesReducer.actions.subscribeAccountEthBalanceChangeEventEpic(accounts.defaultAccount(getState())),
           );
         },
         { dispatch, getState },
         SUBSCRIPTIONS_GROUP_ACCOUNT_SPECIFIC_INITIAL,
       );
-      dispatch(
-        userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic(),
-      );
+      dispatch(userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic());
     }
 
-    dispatch(
-      balancesReducer.actions.getAllTradedTokensBalances(
-        getTokenContractsList(),
-        defaultAccount,
-      ),
-    ).then(() => {
+    dispatch(balancesReducer.actions.getAllTradedTokensBalances(getTokenContractsList(), defaultAccount)).then(() => {
       dispatch(offersReducer.actions.getBestOfferIdsForActiveTradingPairEpic());
       dispatch(platformReducer.actions.setGlobalFormLockDisabled());
     });
@@ -146,9 +121,7 @@ export const onNetworkCheckEndEpic = (
   }
 
   if (setInitialSubscriptions) {
-    dispatch(
-      platformReducer.actions.setAllInitialSubscriptionsRegisteredEnabled(),
-    );
+    dispatch(platformReducer.actions.setAllInitialSubscriptionsRegisteredEnabled());
   }
   // console.log(setLastNetworkCheckEndAt(), Date());
   // console.log('onNetworkCheckEnd: end')

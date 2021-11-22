@@ -82,25 +82,17 @@ const state = fromJS({
 });
 
 test('activeOfferMakePure/makeBuyOffer', () => {
-  expect(
-    offerMakes.activeOfferMakePure(state, 'makeBuyOffer'),
-  ).toMatchSnapshot();
+  expect(offerMakes.activeOfferMakePure(state, 'makeBuyOffer')).toMatchSnapshot();
 });
 
 test('activeOfferMakePure/makeSellOffer', () => {
-  expect(
-    offerMakes.activeOfferMakePure(state, 'makeSellOffer'),
-  ).toMatchSnapshot();
+  expect(offerMakes.activeOfferMakePure(state, 'makeSellOffer')).toMatchSnapshot();
 });
 
 test('activeOfferMakeBuyToken/makeBuyOffer', () => {
-  expect(
-    offerMakes.activeOfferMakeBuyToken(state, 'makeBuyOffer'),
-  ).toMatchSnapshot();
+  expect(offerMakes.activeOfferMakeBuyToken(state, 'makeBuyOffer')).toMatchSnapshot();
 });
 
 test('activeOfferMakeBuyToken/makeSellOffer', () => {
-  expect(
-    offerMakes.activeOfferMakeBuyToken(state, 'makeSellOffer'),
-  ).toMatchSnapshot();
+  expect(offerMakes.activeOfferMakeBuyToken(state, 'makeSellOffer')).toMatchSnapshot();
 });

@@ -30,9 +30,7 @@ describe('(Container) OasisIsTokenTradingEnabledByUser', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisIsTokenTradingEnabledByUserWrapper {...props} />,
-    );
+    const wrapper = shallow(<OasisIsTokenTradingEnabledByUserWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

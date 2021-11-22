@@ -19,10 +19,10 @@ export class OasisMarket extends PureComponent {
       address: marketAddress,
     });
     return (
-      <div styleName='OasisMarket'>
-        <span styleName='label'> Market: </span>
-        <div styleName='OasisMarketAddress'>
-          <a target='_blank' rel='noopener noreferrer' href={etherscanLink}>
+      <div styleName="OasisMarket">
+        <span styleName="label"> Market: </span>
+        <div styleName="OasisMarketAddress">
+          <a target="_blank" rel="noopener noreferrer" href={etherscanLink}>
             {marketAddress}
           </a>
         </div>

@@ -115,8 +115,7 @@ export class OasisWrapUnwrapWrapEtherWrapper extends PureComponent {
   }
 
   render() {
-    const { hidden, activeUnwrappedToken, activeUnwrappedTokenBalance } =
-      this.props;
+    const { hidden, activeUnwrappedToken, activeUnwrappedTokenBalance } = this.props;
     const { txStatus, txStartTimestamp, txStartMeta, disableForm } = this.state;
     return (
       <OasisWrapUnwrapWrapEther
@@ -135,10 +134,7 @@ export class OasisWrapUnwrapWrapEtherWrapper extends PureComponent {
   }
 
   componentDidUpdate({ activeUnwrappedToken }) {
-    if (
-      this.props.activeUnwrappedToken &&
-      this.props.activeUnwrappedToken !== activeUnwrappedToken
-    ) {
+    if (this.props.activeUnwrappedToken && this.props.activeUnwrappedToken !== activeUnwrappedToken) {
       if (!this.state.txStatus) {
         this.props.actions.resetActiveWrapForm(WRAP_ETHER);
       }
@@ -166,7 +162,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisWrapUnwrapWrapEtherWrapper.propTypes = propTypes;
 OasisWrapUnwrapWrapEtherWrapper.displayName = 'OasisWrapUnwrapWrapEther';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisWrapUnwrapWrapEtherWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapWrapEtherWrapper);

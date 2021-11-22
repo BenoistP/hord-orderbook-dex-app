@@ -6,9 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import OasisWrapUnwrapUnwrap from '../components/OasisWrapUnwrapUnwrap';
 import wrapUnwrap from '../store/selectors/wrapUnwrap';
-import wrapUnwrapReducer, {
-  UNWRAP_TOKEN_WRAPPER,
-} from '../store/reducers/wrapUnwrap';
+import wrapUnwrapReducer, { UNWRAP_TOKEN_WRAPPER } from '../store/reducers/wrapUnwrap';
 import {
   TX_STATUS_AWAITING_CONFIRMATION,
   TX_STATUS_AWAITING_USER_ACCEPTANCE,
@@ -102,12 +100,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
   }
 
   render() {
-    const {
-      hidden,
-      activeWrappedToken,
-      activeWrappedTokenBalance,
-      wrappedToken,
-    } = this.props;
+    const { hidden, activeWrappedToken, activeWrappedTokenBalance, wrappedToken } = this.props;
     const { txStatus, txStartTimestamp, disableForm } = this.state;
     return (
       <OasisWrapUnwrapUnwrap
@@ -125,10 +118,7 @@ export class OasisWrapUnwrapUnwrapWrapper extends PureComponent {
     );
   }
   componentDidUpdate(prevProps) {
-    if (
-      this.props.activeWrappedToken &&
-      this.props.activeWrappedToken !== prevProps.activeWrappedToken
-    ) {
+    if (this.props.activeWrappedToken && this.props.activeWrappedToken !== prevProps.activeWrappedToken) {
       if (!this.state.txStatus) {
         this.props.actions.resetActiveUnwrapForm(UNWRAP_TOKEN_WRAPPER);
       }
@@ -157,7 +147,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisWrapUnwrapUnwrapWrapper.propTypes = propTypes;
 OasisWrapUnwrapUnwrapWrapper.displayName = 'OasisWrapUnwrapUnwrap';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisWrapUnwrapUnwrapWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapUnwrapWrapper);

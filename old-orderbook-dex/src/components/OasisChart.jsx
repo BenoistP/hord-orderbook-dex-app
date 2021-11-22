@@ -49,11 +49,7 @@ export class OasisChart extends PureComponent {
     const { initialMarketHistoryLoaded } = this.props;
     const types = [CHART_TYPE_PRICE, CHART_TYPE_VOLUME, CHART_TYPE_DEPTH];
     const select = (
-      <OasisSelect
-        value={this.state.chart}
-        onChange={this.chartChanged}
-        className={styles.select}
-      >
+      <OasisSelect value={this.state.chart} onChange={this.chartChanged} className={styles.select}>
         {types.map((t) => (
           <option key={t}>{t}</option>
         ))}
@@ -65,7 +61,7 @@ export class OasisChart extends PureComponent {
         noContentPaddingXXS
         loadingDataText={'loading trades'}
         isLoadingData={!initialMarketHistoryLoaded}
-        heading='Charts'
+        heading="Charts"
         headingChildren={select}
         spaceForContent={true}
       >
@@ -116,9 +112,7 @@ export function tooltipContainer(tooltip, canvas) {
   }
   const position = canvas.getBoundingClientRect();
   tooltipEl.style.left = `${position.left + tooltip.caretX}px`;
-  tooltipEl.style.top = `${
-    position.top + window.pageYOffset + tooltip.caretY
-  }px`;
+  tooltipEl.style.top = `${position.top + window.pageYOffset + tooltip.caretY}px`;
   tooltipEl.style.padding = `${tooltip.yPadding}px${tooltip.xPadding}px`;
   return tooltipEl;
 }

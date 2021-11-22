@@ -115,12 +115,7 @@ export class OasisWrapUnwrapWrapTokenWrapperWrapper extends PureComponent {
   }
 
   render() {
-    const {
-      hidden,
-      activeUnwrappedToken,
-      activeUnwrappedTokenBalance,
-      unwrappedToken,
-    } = this.props;
+    const { hidden, activeUnwrappedToken, activeUnwrappedTokenBalance, unwrappedToken } = this.props;
     const { txStatus, txStartTimestamp, txStartMeta, disableForm } = this.state;
     return (
       <OasisWrapUnwrapWrapTokenWrapper
@@ -139,10 +134,7 @@ export class OasisWrapUnwrapWrapTokenWrapperWrapper extends PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      this.props.activeUnwrappedToken &&
-      this.props.activeUnwrappedToken !== prevProps.activeUnwrappedToken
-    ) {
+    if (this.props.activeUnwrappedToken && this.props.activeUnwrappedToken !== prevProps.activeUnwrappedToken) {
       if (!this.state.txStatus) {
         this.props.actions.resetActiveWrapForm(WRAP_TOKEN_WRAPPER);
       }
@@ -169,9 +161,5 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisWrapUnwrapWrapTokenWrapperWrapper.propTypes = propTypes;
-OasisWrapUnwrapWrapTokenWrapperWrapper.displayName =
-  'OasisWrapUnwrapWrapTokenWrapper';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisWrapUnwrapWrapTokenWrapperWrapper);
+OasisWrapUnwrapWrapTokenWrapperWrapper.displayName = 'OasisWrapUnwrapWrapTokenWrapper';
+export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapWrapTokenWrapperWrapper);

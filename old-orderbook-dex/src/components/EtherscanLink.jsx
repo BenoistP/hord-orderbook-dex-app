@@ -4,8 +4,7 @@ import createEtherscanTransactionLink from '../utils/createEtherscanTransactionL
 // import ImmutablePropTypes from 'react-immutable-proptypes';
 
 export const ETHERSCAN_LINK_TYPE_ADDRESS = 'ETHERSCAN_LINK_TYPE_ADDRESS';
-export const ETHERSCAN_LINK_TYPE_TRANSACTION =
-  'ETHERSCAN_LINK_TYPE_TRANSACTION';
+export const ETHERSCAN_LINK_TYPE_TRANSACTION = 'ETHERSCAN_LINK_TYPE_TRANSACTION';
 
 import styles from './EtherscanLink.scss';
 import CSSModules from 'react-css-modules';
@@ -15,10 +14,7 @@ const propTypes = PropTypes && {
   networkName: PropTypes.string,
   txHash: PropTypes.string,
   address: PropTypes.string,
-  type: PropTypes.oneOf([
-    ETHERSCAN_LINK_TYPE_ADDRESS,
-    ETHERSCAN_LINK_TYPE_TRANSACTION,
-  ]),
+  type: PropTypes.oneOf([ETHERSCAN_LINK_TYPE_ADDRESS, ETHERSCAN_LINK_TYPE_TRANSACTION]),
 };
 const defaultProps = {};
 
@@ -32,26 +28,14 @@ class EtherscanLink extends PureComponent {
     switch (this.props.type) {
       case ETHERSCAN_LINK_TYPE_TRANSACTION: {
         return (
-          <a
-            target='_blank'
-            rel='noreferrer noopener'
-            className={styles.link}
-            href={url}
-            {...props}
-          >
+          <a target="_blank" rel="noreferrer noopener" className={styles.link} href={url} {...props}>
             <span>{label || txHash}</span>
           </a>
         );
       }
       case ETHERSCAN_LINK_TYPE_ADDRESS: {
         return (
-          <a
-            rel='noopener noreferrer'
-            target='_blank'
-            className={styles.link}
-            href={url}
-            {...props}
-          >
+          <a rel="noopener noreferrer" target="_blank" className={styles.link} href={url} {...props}>
             <span>{label || address}</span>
           </a>
         );

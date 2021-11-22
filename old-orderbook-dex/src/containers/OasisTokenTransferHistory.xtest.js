@@ -2,11 +2,7 @@
 /* eslint-disable import/first,no-undef */
 import React from 'react';
 import { fromJS } from 'immutable';
-import {
-  OasisTokenTransferHistoryWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTokenTransferHistory';
+import { OasisTokenTransferHistoryWrapper, mapStateToProps, mapDispatchToProps } from './OasisTokenTransferHistory';
 import { shallow } from 'enzyme';
 import { combineReducers, createStore } from 'redux/index';
 import { reducer as formReducer } from 'redux-form';

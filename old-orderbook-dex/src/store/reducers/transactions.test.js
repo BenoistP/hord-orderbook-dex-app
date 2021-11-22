@@ -1,22 +1,12 @@
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
-import transactions, {
-  TRANSACTION_IS_CONFIRMED,
-  TRANSACTION_IS_REJECTED,
-} from './transactions';
+import transactions, { TRANSACTION_IS_CONFIRMED, TRANSACTION_IS_REJECTED } from './transactions';
 
 import each from 'jest-each';
 
 const testCases = [
-  [
-    'transaction confirmed',
-    () => () =>
-      Promise.resolve({ value: { status: TRANSACTION_IS_CONFIRMED } }),
-  ],
-  [
-    'transaction rejected',
-    () => () => Promise.resolve({ value: { status: TRANSACTION_IS_REJECTED } }),
-  ],
+  ['transaction confirmed', () => () => Promise.resolve({ value: { status: TRANSACTION_IS_CONFIRMED } })],
+  ['transaction rejected', () => () => Promise.resolve({ value: { status: TRANSACTION_IS_REJECTED } })],
   [
     'intermediate error',
     jest
@@ -24,9 +14,7 @@ const testCases = [
       .mockReturnValueOnce(() => Promise.reject('web3js test error!'))
       .mockReturnValueOnce(() => Promise.reject('web3js test error!'))
       .mockReturnValueOnce(() => Promise.reject('web3js test error!'))
-      .mockReturnValue(() =>
-        Promise.resolve({ value: { status: TRANSACTION_IS_CONFIRMED } }),
-      ),
+      .mockReturnValue(() => Promise.resolve({ value: { status: TRANSACTION_IS_CONFIRMED } })),
   ],
 ];
 

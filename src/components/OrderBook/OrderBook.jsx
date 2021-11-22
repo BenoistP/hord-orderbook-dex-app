@@ -9,8 +9,10 @@ const OrderBook = (props) => {
   const orders = props[orderType];
 
   return (
-    <div className='orderbook'>
-      {orders.map((order) => < Order key={nanoid()} order={order} />)}
+    <div className="orderbook">
+      {orders.map((order) => (
+        <Order key={nanoid()} order={order} />
+      ))}
     </div>
   );
 };
@@ -24,7 +26,6 @@ const mapStateToProps = (state) => ({
   sellOrders: state.orderbook.sellOrders,
 });
 
-const mapDispatchToProps = {
-};
+const mapDispatchToProps = {};
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderBook);

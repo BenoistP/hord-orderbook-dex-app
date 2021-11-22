@@ -83,17 +83,12 @@ export class OasisChartVolume extends PureComponent {
   }
 
   showTooltip(tooltip) {
-    const tooltipEl = tooltipContainer(
-      tooltip,
-      document.getElementsByClassName('chartjs-render-monitor')[0],
-    );
+    const tooltipEl = tooltipContainer(tooltip, document.getElementsByClassName('chartjs-render-monitor')[0]);
     if (tooltipEl && tooltip.body) {
       const ts = this.props.volumeChartLabels[tooltip.dataPoints[0].index];
       const date = moment.unix(ts).format('ll');
-      let quoteAmount =
-        this.props.volumeChartTooltips.quote[tooltip.dataPoints[0].index];
-      let baseAmount =
-        this.props.volumeChartTooltips.base[tooltip.dataPoints[0].index];
+      let quoteAmount = this.props.volumeChartTooltips.quote[tooltip.dataPoints[0].index];
+      let baseAmount = this.props.volumeChartTooltips.base[tooltip.dataPoints[0].index];
       tooltipEl.innerHTML = `<div class="row-custom-tooltip">
           <span class="left">Date</span>
           <span class="right">${date}</span>

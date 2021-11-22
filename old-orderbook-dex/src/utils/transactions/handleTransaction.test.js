@@ -1,9 +1,6 @@
 import { handleTransaction } from './handleTransaction';
 import { fromJS } from 'immutable';
-import {
-  TX_STATUS_ERROR,
-  TX_STATUS_CANCELLED_BY_USER,
-} from '../../store/reducers/transactions';
+import { TX_STATUS_ERROR, TX_STATUS_CANCELLED_BY_USER } from '../../store/reducers/transactions';
 
 describe('handleTransaction', () => {
   test('transactionType not set, should throw error', async () => {
@@ -51,14 +48,10 @@ describe('handleTransaction', () => {
     const onCompleted = jest.fn();
 
     const transaction = { value: 'hash' };
-    const transactionDispatcher = jest
-      .fn()
-      .mockReturnValueOnce(Promise.resolve(transaction));
+    const transactionDispatcher = jest.fn().mockReturnValueOnce(Promise.resolve(transaction));
 
     const transactionConfirmation = { _meta: 'transactionConfirmation' };
-    const addTransactionEpic = jest
-      .fn()
-      .mockReturnValueOnce(Promise.resolve(transactionConfirmation));
+    const addTransactionEpic = jest.fn().mockReturnValueOnce(Promise.resolve(transactionConfirmation));
 
     const result = await handleTransaction(
       {
@@ -76,9 +69,7 @@ describe('handleTransaction', () => {
 
     expect(result.transactionHash).toBe(transaction.value);
 
-    expect(result.transactionConfirmationPromise).resolves.toEqual(
-      fromJS(transactionConfirmation),
-    );
+    expect(result.transactionConfirmationPromise).resolves.toEqual(fromJS(transactionConfirmation));
 
     expect(onTransactionPending.mock.calls.length).toBe(1);
     expect(onPending.mock.calls.length).toBe(1);
@@ -96,14 +87,10 @@ describe('handleTransaction', () => {
     const onRejected = jest.fn();
 
     const transaction = { value: 'hash' };
-    const transactionDispatcher = jest
-      .fn()
-      .mockReturnValueOnce(Promise.resolve(transaction));
+    const transactionDispatcher = jest.fn().mockReturnValueOnce(Promise.resolve(transaction));
 
     const transactionRejection = { _meta: 'transactionRejection' };
-    const addTransactionEpic = jest
-      .fn()
-      .mockReturnValueOnce(Promise.reject(transactionRejection));
+    const addTransactionEpic = jest.fn().mockReturnValueOnce(Promise.reject(transactionRejection));
 
     const result = await handleTransaction(
       {

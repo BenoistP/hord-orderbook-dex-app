@@ -17,10 +17,8 @@ const propTypes = PropTypes && {
   onValidityChange: PropTypes.func,
 };
 
-export const VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE =
-  'VALIDATION_ERROR/VALUE_GREATER_THAN_BALANCE';
-export const VALIDATION_ERROR__NON_NUMERIC_VALUE =
-  'VALIDATION_ERROR/NON_NUMERIC_VALUE';
+export const VALIDATION_ERROR__VALUE_GREATER_THAN_BALANCE = 'VALIDATION_ERROR/VALUE_GREATER_THAN_BALANCE';
+export const VALIDATION_ERROR__NON_NUMERIC_VALUE = 'VALIDATION_ERROR/NON_NUMERIC_VALUE';
 
 const validateIsNonZeroNumber = (value) => {
   const parsedValue = parseFloat(value);
@@ -53,7 +51,7 @@ export class TokenAmountInputFieldWrapper extends PureComponent {
     const { selectedToken, maxAmountLimit, fieldName, disabled } = this.props;
     return (
       <Field
-        autoComplete='off'
+        autoComplete="off"
         disabled={!maxAmountLimit || disabled}
         maxAmountLimit={maxAmountLimit}
         required
@@ -83,7 +81,4 @@ export function mapDispatchToProps(dispatch) {
 
 TokenAmountInputFieldWrapper.propTypes = propTypes;
 TokenAmountInputFieldWrapper.displayName = 'TokenAmountInputField';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(TokenAmountInputFieldWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(TokenAmountInputFieldWrapper);

@@ -31,11 +31,7 @@ export class OasisTradeOrdersWrapper extends PureComponent {
   offerTakeModal() {
     const { isOfferTakeModalOpen, activeOfferTakeType } = this.props;
 
-    return (
-      isOfferTakeModalOpen && (
-        <OasisTakeOfferModalWrapper offerTakeType={activeOfferTakeType} />
-      )
-    );
+    return isOfferTakeModalOpen && <OasisTakeOfferModalWrapper offerTakeType={activeOfferTakeType} />;
   }
 
   render() {
@@ -102,8 +98,7 @@ export function mapStateToProps(state) {
     activeTradingPair: tokens.activeTradingPair(state),
     marketData: tradesSelectors.marketsData(state),
     tokenTrades: tradesSelectors.tokenTrades(state),
-    initialMarketHistoryLoaded:
-      tradesSelectors.initialMarketHistoryLoaded(state),
+    initialMarketHistoryLoaded: tradesSelectors.initialMarketHistoryLoaded(state),
     loadingBuyOffers: offers.loadingBuyOffers(state),
     loadingSellOffers: offers.loadingSellOffers(state),
     buyOfferCount: offers.activeTradingPairBuyOfferCount(state),
@@ -122,23 +117,15 @@ export function mapDispatchToProps(dispatch) {
   const actions = {
     cancelOffer: offersReducer.actions.cancelOfferEpic,
     setOfferTakeModalOpen: offerTakesReducer.actions.setOfferTakeModalOpenEpic,
-    setActiveOfferTakeOfferId:
-      offerTakesReducer.actions.setActiveOfferTakeOfferId,
-    checkOfferIsActive:
-      offerTakesReducer.actions.checkIfOfferTakeSubjectStillActiveEpic,
-    resetCompletedOfferCheck:
-      offerTakesReducer.actions.resetCompletedOfferCheck,
-    fetchAndSubscribeUserTradesHistory:
-      userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
-    removeOrderCancelledByTheOwner:
-      offersReducer.actions.removeOrderCancelledByTheOwner,
+    setActiveOfferTakeOfferId: offerTakesReducer.actions.setActiveOfferTakeOfferId,
+    checkOfferIsActive: offerTakesReducer.actions.checkIfOfferTakeSubjectStillActiveEpic,
+    resetCompletedOfferCheck: offerTakesReducer.actions.resetCompletedOfferCheck,
+    fetchAndSubscribeUserTradesHistory: userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
+    removeOrderCancelledByTheOwner: offersReducer.actions.removeOrderCancelledByTheOwner,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisTradeOrdersWrapper.propTypes = propTypes;
 OasisTradeOrdersWrapper.displayName = 'OasisTradeOrders';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisTradeOrdersWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisTradeOrdersWrapper);

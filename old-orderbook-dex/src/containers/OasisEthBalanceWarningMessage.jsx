@@ -22,10 +22,10 @@ export class OasisEthBalanceWarningMessageWrapper extends PureComponent {
         <div>
           <ul>
             <li>
-              <span styleName='Circle Circle--Red'>
-                <span styleName='FilledCircle' />
+              <span styleName="Circle Circle--Red">
+                <span styleName="FilledCircle" />
               </span>
-              <span styleName='Text'>
+              <span styleName="Text">
                 <span>
                   Your current{' '}
                   <b
@@ -36,8 +36,7 @@ export class OasisEthBalanceWarningMessageWrapper extends PureComponent {
                   >
                     ETHER
                   </b>{' '}
-                  balance is {formatAmount('0', false, null, 8)} ETH. You will
-                  not be able to create transaction.
+                  balance is {formatAmount('0', false, null, 8)} ETH. You will not be able to create transaction.
                 </span>
                 <span />
               </span>
@@ -60,9 +59,5 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisEthBalanceWarningMessageWrapper.propTypes = propTypes;
-OasisEthBalanceWarningMessageWrapper.displayName =
-  'OasisEthBalanceWarningMessage';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisEthBalanceWarningMessageWrapper);
+OasisEthBalanceWarningMessageWrapper.displayName = 'OasisEthBalanceWarningMessage';
+export default connect(mapStateToProps, mapDispatchToProps)(OasisEthBalanceWarningMessageWrapper);

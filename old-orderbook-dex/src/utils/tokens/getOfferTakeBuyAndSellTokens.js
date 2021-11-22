@@ -1,7 +1,4 @@
-import {
-  TAKE_BUY_OFFER,
-  TAKE_SELL_OFFER,
-} from '../../store/reducers/offerTakes';
+import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from '../../store/reducers/offerTakes';
 
 const getOfferTakeBuyAndSellTokens = (tradingPair, offerTakeType) => {
   switch (offerTakeType) {

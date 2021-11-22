@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  EthereumAddressInputFieldWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './EthereumAddressInputField';
+import { EthereumAddressInputFieldWrapper, mapStateToProps, mapDispatchToProps } from './EthereumAddressInputField';
 import { shallow } from 'enzyme';
 
 describe('(Container) EthereumAddressInputField', () => {

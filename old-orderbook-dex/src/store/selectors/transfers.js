@@ -5,13 +5,7 @@ import tokenSelectors from './tokenSelectors';
 const transfers = (s) => s.get('transfers');
 
 const getMakeTransferFormValues = createSelector(
-  (rootState) =>
-    formValueSelector('tokenTransfer')(
-      rootState,
-      'token',
-      'tokenAmount',
-      'recipient',
-    ),
+  (rootState) => formValueSelector('tokenTransfer')(rootState, 'token', 'tokenAmount', 'recipient'),
   (formValues) => formValues,
 );
 
@@ -20,9 +14,7 @@ const selectedToken = createSelector(
   (selectedToken) => selectedToken,
 );
 
-const transactionSubjectId = createSelector(transfers, (s) =>
-  s.get('txSubjectId'),
-);
+const transactionSubjectId = createSelector(transfers, (s) => s.get('txSubjectId'));
 
 export default {
   state: transfers,

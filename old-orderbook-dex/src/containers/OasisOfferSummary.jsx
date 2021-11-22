@@ -21,12 +21,7 @@ import OasisOrderExceedsGasLimitInfoWrapper from './OasisOrderExceedsGasLimitInf
 import platform from '../store/selectors/platform';
 
 const propTypes = PropTypes && {
-  offerType: PropTypes.oneOf([
-    TAKE_BUY_OFFER,
-    MAKE_BUY_OFFER,
-    TAKE_SELL_OFFER,
-    MAKE_SELL_OFFER,
-  ]),
+  offerType: PropTypes.oneOf([TAKE_BUY_OFFER, MAKE_BUY_OFFER, TAKE_SELL_OFFER, MAKE_SELL_OFFER]),
   offerFormValues: ImmutablePropTypes.map.isRequired,
   offerBuyAndSellTokens: ImmutablePropTypes.map.isRequired,
   gasEstimateInfo: ImmutablePropTypes.map.isRequired,
@@ -76,18 +71,12 @@ export class OasisOfferSummaryWrapper extends PureComponent {
     ) : null;
   }
   render() {
-    const {
-      offerBuyAndSellTokens,
-      hasSufficientTokenAmount,
-      disableBalanceWarning,
-    } = this.props;
+    const { offerBuyAndSellTokens, hasSufficientTokenAmount, disableBalanceWarning } = this.props;
     return (
       <div>
         {this.renderOfferSummary()}
         {!hasSufficientTokenAmount && !disableBalanceWarning && (
-          <OasisInsufficientAmountOfToken
-            tokenName={offerBuyAndSellTokens.get('sellToken')}
-          />
+          <OasisInsufficientAmountOfToken tokenName={offerBuyAndSellTokens.get('sellToken')} />
         )}
       </div>
     );
@@ -100,10 +89,7 @@ export function mapStateToProps(state, { offerType }) {
     offerFormValues: getOfferFormValuesByOfferType(state, offerType),
     offerBuyAndSellTokens: getOfferBuyAndSellTokenByOfferType(state, offerType),
     gasEstimateInfo: gasEstimateInfo(state, offerType),
-    hasSufficientTokenAmount: hasSufficientTokenAmountByOfferType(
-      state,
-      offerType,
-    ),
+    hasSufficientTokenAmount: hasSufficientTokenAmountByOfferType(state, offerType),
     isVolumeOrPriceEmptyOrZero: isVolumeOrPriceEmptyOrZero(state)(offerType),
     isTokenTradingEnabled: getActiveOfferAllowanceStatus(state, offerType),
   };
@@ -115,7 +101,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisOfferSummaryWrapper.propTypes = propTypes;
 OasisOfferSummaryWrapper.displayName = 'OasisOfferSummary';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisOfferSummaryWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisOfferSummaryWrapper);

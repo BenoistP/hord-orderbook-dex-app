@@ -4,17 +4,9 @@ import balances from './balances';
 import transactions from './transactions';
 import markets from './markets';
 import web3 from '../../bootstrap/web3';
-import {
-  MAKE_BUY_OFFER,
-  MAKE_BUY_OFFER_FORM_NAME,
-  MAKE_SELL_OFFER,
-  MAKE_SELL_OFFER_FORM_NAME,
-} from '../../constants';
+import { MAKE_BUY_OFFER, MAKE_BUY_OFFER_FORM_NAME, MAKE_SELL_OFFER, MAKE_SELL_OFFER_FORM_NAME } from '../../constants';
 import reselect from '../../utils/reselect';
-import {
-  offerMakeToFormName,
-  formNameToOfferMake,
-} from '../../utils/offers/offerMakeToFormName';
+import { offerMakeToFormName, formNameToOfferMake } from '../../utils/offers/offerMakeToFormName';
 import tokens from './tokens';
 import network from './network';
 import { fromJS, Map } from 'immutable';
@@ -27,27 +19,14 @@ import { getOfferPrice } from '../../utils/offers/getOfferPrice';
 const offerMakes = (state) => state.get('offerMakes');
 
 const formFields = createStructuredSelector({
-  [MAKE_BUY_OFFER_FORM_NAME]: reselect.formFieldsSelector(
-    MAKE_BUY_OFFER_FORM_NAME,
-    'volume',
-    'price',
-    'total',
-  ),
-  [MAKE_SELL_OFFER_FORM_NAME]: reselect.formFieldsSelector(
-    MAKE_SELL_OFFER_FORM_NAME,
-    'volume',
-    'price',
-    'total',
-  ),
+  [MAKE_BUY_OFFER_FORM_NAME]: reselect.formFieldsSelector(MAKE_BUY_OFFER_FORM_NAME, 'volume', 'price', 'total'),
+  [MAKE_SELL_OFFER_FORM_NAME]: reselect.formFieldsSelector(MAKE_SELL_OFFER_FORM_NAME, 'volume', 'price', 'total'),
 });
 
-const currentFormValues = createSelector(formFields, (formValues) =>
-  memoize((formName) => formValues[formName]),
-);
+const currentFormValues = createSelector(formFields, (formValues) => memoize((formName) => formValues[formName]));
 
 //TODO: move to utils
-const toWeiString = (amount) =>
-  web3.toBigNumber(web3.toWei(amount)).ceil().toString();
+const toWeiString = (amount) => web3.toBigNumber(web3.toWei(amount)).ceil().toString();
 
 const selector = createSelector(
   (state) => state.a,
@@ -58,9 +37,7 @@ const selector = createSelector(
   }),
 );
 
-const hasExceededGasLimit = createSelector(offerMakes, (s) =>
-  Boolean(s.get('exceededGasLimit')),
-);
+const hasExceededGasLimit = createSelector(offerMakes, (s) => Boolean(s.get('exceededGasLimit')));
 
 const activeTradingPairOffersData = createSelector(
   (rootState) => rootState.get('offers'),
@@ -72,11 +49,7 @@ const getNewOfferRankIndex = createSelector(
   (...args) => args[1],
   currentFormValues,
   activeTradingPairOffersData,
-  (
-    offerFormName,
-    currentFormValues,
-    currentTradingPairOffersData = fromJS({ buyOffers: [], sellOffers: [] }),
-  ) => {
+  (offerFormName, currentFormValues, currentTradingPairOffersData = fromJS({ buyOffers: [], sellOffers: [] })) => {
     const { price } = currentFormValues(offerFormName);
     if (!parseFloat(String(price))) {
       return;
@@ -90,9 +63,7 @@ const getNewOfferRankIndex = createSelector(
         price: getOfferPrice(offer, formMakeType),
         offerId: offer.id,
       }))
-      .sort(({ price: priceA }, { price: priceB }) =>
-        priceA.gte(priceB) ? 1 : -1,
-      )
+      .sort(({ price: priceA }, { price: priceB }) => (priceA.gte(priceB) ? 1 : -1))
       .map((d, idx) => ({ ...d, idx }));
 
     for (const { price, offerId, idx } of offersSortedByPriceAsc) {
@@ -129,24 +100,12 @@ const activeOfferMakePure = createSelector(
   tokens.activeTradingPair,
   network.tokenAddresses,
   currentFormValues,
-  (rootState, offerMakeFormName) =>
-    getNewOfferRankIndex(rootState, offerMakeFormName),
-  (
-    offerMakeFormName,
-    activeTradingPair,
-    tokenAddresses,
-    currentFormValues,
-    newOfferRankIndex,
-  ) => {
+  (rootState, offerMakeFormName) => getNewOfferRankIndex(rootState, offerMakeFormName),
+  (offerMakeFormName, activeTradingPair, tokenAddresses, currentFormValues, newOfferRankIndex) => {
     const { total, volume } = currentFormValues(offerMakeFormName);
-    const { baseToken, quoteToken } = activeTradingPair.toJS
-      ? activeTradingPair.toJS()
-      : activeTradingPair;
+    const { baseToken, quoteToken } = activeTradingPair.toJS ? activeTradingPair.toJS() : activeTradingPair;
     const offerMakeType = formNameToOfferMake(offerMakeFormName);
-    console.assert(
-      offerMakeType,
-      `Wrong offerMakeFormName: ${offerMakeFormName}`,
-    );
+    console.assert(offerMakeType, `Wrong offerMakeFormName: ${offerMakeFormName}`);
     const buyToken = offerMakeType === MAKE_BUY_OFFER ? baseToken : quoteToken;
     const sellToken = offerMakeType === MAKE_BUY_OFFER ? quoteToken : baseToken;
 
@@ -159,12 +118,8 @@ const activeOfferMakePure = createSelector(
       sellTokenAddress: tokenAddresses.get(sellToken),
       buyTokenAddress: tokenAddresses.get(buyToken),
       offerData: {
-        payAmount: toWeiString(
-          offerMakeType === MAKE_BUY_OFFER ? total : volume,
-        ),
-        buyAmount: toWeiString(
-          offerMakeType === MAKE_BUY_OFFER ? volume : total,
-        ),
+        payAmount: toWeiString(offerMakeType === MAKE_BUY_OFFER ? total : volume),
+        buyAmount: toWeiString(offerMakeType === MAKE_BUY_OFFER ? volume : total),
       },
     });
   },
@@ -172,33 +127,20 @@ const activeOfferMakePure = createSelector(
 
 // const activeOfferMake = activeOfferMakePure;
 
-const activeOfferMakeType = createSelector(offerMakes, (state) =>
-  state.get('activeOfferMakeType'),
-);
+const activeOfferMakeType = createSelector(offerMakes, (state) => state.get('activeOfferMakeType'));
 
-const activeOfferMakeOfferData = createSelector(activeOfferMakePure, (state) =>
-  state.getIn('offerData'),
-);
+const activeOfferMakeOfferData = createSelector(activeOfferMakePure, (state) => state.getIn('offerData'));
 
 const activeOfferMakeOfferOwner = createSelector(offerMakes, (state) =>
   state.getIn(['activeOfferMake', 'offerData', 'owner']),
 );
 
-const activeOfferMakeBuyToken = createSelector(activeOfferMakePure, (state) =>
-  state.get('buyToken'),
-);
+const activeOfferMakeBuyToken = createSelector(activeOfferMakePure, (state) => state.get('buyToken'));
 
-const activeOfferMakeSellToken = createSelector(activeOfferMakePure, (state) =>
-  state.get('sellToken'),
-);
+const activeOfferMakeSellToken = createSelector(activeOfferMakePure, (state) => state.get('sellToken'));
 
-const isOfferMakeModalOpen = createSelector(
-  offerMakes,
-  reselect.getProps,
-  (state) =>
-    memoize((offerMakeType) =>
-      state.getIn([offerMakeToFormName(offerMakeType), 'isOfferMakeModalOpen']),
-    ),
+const isOfferMakeModalOpen = createSelector(offerMakes, reselect.getProps, (state) =>
+  memoize((offerMakeType) => state.getIn([offerMakeToFormName(offerMakeType), 'isOfferMakeModalOpen'])),
 );
 
 const makeFormValuesSelector = (formName) => {
@@ -211,23 +153,17 @@ const hasSufficientTokenAmount = createSelector(
   tokens.activeTradingPair,
   (tokenBalances, currentFormValues, { baseToken, quoteToken }) =>
     memoize((activeOfferMakeType) => {
-      const { total, volume } = currentFormValues(
-        offerMakeToFormName(activeOfferMakeType),
-      );
+      const { total, volume } = currentFormValues(offerMakeToFormName(activeOfferMakeType));
       if (!volume) {
         return true;
       } else {
         switch (activeOfferMakeType) {
           case MAKE_BUY_OFFER: {
-            const usersSellTokenBalanceBN = web3.toBigNumber(
-              tokenBalances.get(quoteToken),
-            );
+            const usersSellTokenBalanceBN = web3.toBigNumber(tokenBalances.get(quoteToken));
             return usersSellTokenBalanceBN.gte(web3.toWei(total));
           }
           case MAKE_SELL_OFFER: {
-            const usersSellTokenBalanceBN = web3.toBigNumber(
-              tokenBalances.get(baseToken),
-            );
+            const usersSellTokenBalanceBN = web3.toBigNumber(tokenBalances.get(baseToken));
             return usersSellTokenBalanceBN.gte(web3.toWei(volume));
           }
         }
@@ -235,20 +171,11 @@ const hasSufficientTokenAmount = createSelector(
     }),
 );
 
-const isVolumeOrPriceEmptyOrZero = createSelector(
-  currentFormValues,
-  (currentFormValues) =>
-    memoize((offerMakeType) => {
-      const { volume, price } = currentFormValues(
-        offerMakeToFormName(offerMakeType),
-      );
-      return (
-        !isNumeric(price) ||
-        web3.toBigNumber(price).lte(0) ||
-        !isNumeric(volume) ||
-        web3.toBigNumber(volume).lte(0)
-      );
-    }),
+const isVolumeOrPriceEmptyOrZero = createSelector(currentFormValues, (currentFormValues) =>
+  memoize((offerMakeType) => {
+    const { volume, price } = currentFormValues(offerMakeToFormName(offerMakeType));
+    return !isNumeric(price) || web3.toBigNumber(price).lte(0) || !isNumeric(volume) || web3.toBigNumber(volume).lte(0);
+  }),
 );
 
 const tokenMinSellLimitInWeiByOfferType = createSelector(
@@ -258,10 +185,7 @@ const tokenMinSellLimitInWeiByOfferType = createSelector(
     memoize((offerMakeType) => {
       let tokenName = null;
       const activeTradingPairMap = Map(activeTradingPair);
-      if (
-        !activeTradingPairMap.has('baseToken') &&
-        activeTradingPairMap.has('quoteToken')
-      ) {
+      if (!activeTradingPairMap.has('baseToken') && activeTradingPairMap.has('quoteToken')) {
         return null;
       }
       switch (offerMakeType) {
@@ -283,11 +207,8 @@ const isOfferBelowLimit = createSelector(
   currentFormValues,
   (tokenMinSellLimitInWeiByOfferType, currentFormValues) =>
     memoize((offerMakeType) => {
-      const { total, volume } = currentFormValues(
-        offerMakeToFormName(offerMakeType),
-      );
-      const tokenMinSellLimitInWei =
-        tokenMinSellLimitInWeiByOfferType(offerMakeType);
+      const { total, volume } = currentFormValues(offerMakeToFormName(offerMakeType));
+      const tokenMinSellLimitInWei = tokenMinSellLimitInWeiByOfferType(offerMakeType);
       if (tokenMinSellLimitInWei === null) {
         return null;
       }
@@ -303,33 +224,19 @@ const isOfferBelowLimit = createSelector(
           throw new Error('No offer make type provided!');
       }
 
-      if (
-        isNumeric(tokenMinSellLimitInWei) &&
-        isNumeric(amount) &&
-        parseFloat(amount) > 0
-      ) {
-        return web3
-          .toBigNumber(web3.fromWei(tokenMinSellLimitInWei))
-          .gt(amount);
+      if (isNumeric(tokenMinSellLimitInWei) && isNumeric(amount) && parseFloat(amount) > 0) {
+        return web3.toBigNumber(web3.fromWei(tokenMinSellLimitInWei)).gt(amount);
       }
     }),
 );
 
 const isTotalOverTheTokenLimit = createSelector(
   limits.activeTradingPairQuoteTokenMaxLimitInWei,
-  (rootState, offerMakeType) =>
-    makeFormValuesSelector(offerMakeToFormName(offerMakeType))(
-      rootState,
-      'total',
-    ),
+  (rootState, offerMakeType) => makeFormValuesSelector(offerMakeToFormName(offerMakeType))(rootState, 'total'),
   (tokenMaxSellLimitInWei, total) => {
     if (tokenMaxSellLimitInWei === null) {
       return null;
-    } else if (
-      isNumeric(tokenMaxSellLimitInWei) &&
-      isNumeric(total) &&
-      parseFloat(total) > 0
-    ) {
+    } else if (isNumeric(tokenMaxSellLimitInWei) && isNumeric(total) && parseFloat(total) > 0) {
       return web3.toBigNumber(web3.fromWei(tokenMaxSellLimitInWei)).lte(total);
     }
   },
@@ -343,10 +250,7 @@ const checkTokenEnabled = createSelector(
     return (
       skipTokenEnabledCheck ||
       balances.tokenAllowanceStatusForActiveMarket(rootState, {
-        tokenName: activeOfferMakeSellToken(
-          rootState,
-          offerMakeToFormName(offerType),
-        ),
+        tokenName: activeOfferMakeSellToken(rootState, offerMakeToFormName(offerType)),
       })
     );
   },
@@ -387,29 +291,18 @@ const canMakeOffer = createSelector(
   },
 );
 
-const isOfferActive = createSelector(offerMakes, (state) =>
-  state.get('isOfferActive'),
-);
+const isOfferActive = createSelector(offerMakes, (state) => state.get('isOfferActive'));
 
-const transactionGasCostEstimate = createSelector(offerMakes, (state) =>
-  state.get('transactionGasCostEstimate'),
-);
+const transactionGasCostEstimate = createSelector(offerMakes, (state) => state.get('transactionGasCostEstimate'));
 
-const checkingIfOfferIsActive = createSelector(offerMakes, (state) =>
-  state.get('checkingIfOfferActive'),
-);
+const checkingIfOfferIsActive = createSelector(offerMakes, (state) => state.get('checkingIfOfferActive'));
 
-const gasEstimatePending = createSelector(offerMakes, (state) =>
-  state.get('transactionGasCostEstimatePending'),
-);
+const gasEstimatePending = createSelector(offerMakes, (state) => state.get('transactionGasCostEstimatePending'));
 
 const getActiveOfferMakeAllowanceStatus = createSelector(
   (rootState, offerType) => {
     return balances.tokenAllowanceStatusForActiveMarket(rootState, {
-      tokenName: activeOfferMakeSellToken(
-        rootState,
-        offerMakeToFormName(offerType),
-      ),
+      tokenName: activeOfferMakeSellToken(rootState, offerMakeToFormName(offerType)),
     });
   },
   (status) => Boolean(status),

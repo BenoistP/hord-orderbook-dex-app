@@ -1,30 +1,19 @@
 import network from '../store/selectors/network';
-import {
-  setLastNetworkCheckEndAt,
-  setLastNetworkCheckStartAt,
-} from '../store/reducers/network/onNetworkCheckEndEpic';
+import { setLastNetworkCheckEndAt, setLastNetworkCheckStartAt } from '../store/reducers/network/onNetworkCheckEndEpic';
 import platformReducer from '../store/reducers/platform';
 import networkReducer from '../store/reducers/network';
 import * as Network from './network';
 import { checkIfOutOfSyncEpic } from '../store/reducers/network/checkIfOutOfSync';
 import Raven from 'raven-js';
 import { registerSubscription } from '../utils/subscriptions/registerSubscription';
-import {
-  HAS_ACCOUNTS,
-  SUBSCRIPTIONS_GROUP_GLOBAL_INITIAL,
-  SUBSCRIPTIONS_LATEST_BLOCK,
-} from '../constants';
+import { HAS_ACCOUNTS, SUBSCRIPTIONS_GROUP_GLOBAL_INITIAL, SUBSCRIPTIONS_LATEST_BLOCK } from '../constants';
 import { subscribeLatestBlockFilterEpic } from '../store/reducers/network/subscribeLatestBlockFilterEpic';
 import accounts from '../store/selectors/accounts';
 import accountsReducer from '../store/reducers/accounts';
 import { Session } from '../utils/session';
 import { CheckNetworkAction } from '../store/reducers/network/CheckNetworkAction';
 
-export const healthCheck = async (
-  dispatch,
-  getState,
-  isInitialHealthcheck = false,
-) => {
+export const healthCheck = async (dispatch, getState, isInitialHealthcheck = false) => {
   if (network.isNetworkCheckPending(getState()) === true) {
     return;
   }
@@ -35,9 +24,7 @@ export const healthCheck = async (
   }
   try {
     const providerType = await Network.checkConnectivity().catch();
-    const connectedNetworkId = await dispatch(
-      networkReducer.actions.getConnectedNetworkId(),
-    );
+    const connectedNetworkId = await dispatch(networkReducer.actions.getConnectedNetworkId());
     if (isInitialHealthcheck) {
       await dispatch(checkIfOutOfSyncEpic());
       // console.log("connectedTo:", network.activeNetworkMeta(getState()).get('name'));
@@ -61,18 +48,12 @@ export const healthCheck = async (
         );
       }
       const previousDefaultAccount = accounts.defaultAccount(getState());
-      if (
-        HAS_ACCOUNTS ===
-        (await dispatch(accountsReducer.actions.checkAccountsEpic()))
-      ) {
+      if (HAS_ACCOUNTS === (await dispatch(accountsReducer.actions.checkAccountsEpic()))) {
         try {
           /**
            *  Initialize session on first run of the healthcheck or when default address changes
            */
-          if (
-            isInitialHealthcheck ||
-            previousDefaultAccount !== accounts.defaultAccount(getState())
-          ) {
+          if (isInitialHealthcheck || previousDefaultAccount !== accounts.defaultAccount(getState())) {
             Session.init(dispatch, getState);
           }
         } catch (e) {
@@ -81,9 +62,7 @@ export const healthCheck = async (
         await dispatch(
           isInitialHealthcheck
             ? networkReducer.actions.checkNetworkInitialEpic()
-            : networkReducer.actions.checkNetworkEpic(
-                previousDefaultAccount !== accounts.defaultAccount(getState()),
-              ),
+            : networkReducer.actions.checkNetworkEpic(previousDefaultAccount !== accounts.defaultAccount(getState())),
         );
       } else {
         dispatch(CheckNetworkAction.fulfilled());

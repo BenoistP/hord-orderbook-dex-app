@@ -27,15 +27,10 @@ export class OasisOrderExceedsGasLimitInfoWrapper extends PureComponent {
     const gasLimitInWeiBN = web3.toBigNumber(gasLimit);
     if (gasLimitInWeiBN.lt(transactionGasCostEstimate)) {
       return (
-        <InfoBoxWithIco color='danger' icon='warning'>
-          <div className='exceededGasLimit'>
-            Your order{' '}
-            <span style={{ textDecoration: 'underline' }}>
-              exceeds gas limit of
-            </span>{' '}
-            <b style={{ marginLeft: '10px' }}>
-              {gasLimitInWeiBN.toFormat()} GAS
-            </b>
+        <InfoBoxWithIco color="danger" icon="warning">
+          <div className="exceededGasLimit">
+            Your order <span style={{ textDecoration: 'underline' }}>exceeds gas limit of</span>{' '}
+            <b style={{ marginLeft: '10px' }}>{gasLimitInWeiBN.toFormat()} GAS</b>
           </div>
         </InfoBoxWithIco>
       );
@@ -56,9 +51,5 @@ export function mapDispatchToProps(dispatch) {
 }
 
 OasisOrderExceedsGasLimitInfoWrapper.propTypes = propTypes;
-OasisOrderExceedsGasLimitInfoWrapper.displayName =
-  'OasisOrderExceedsGasLimitInfo';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisOrderExceedsGasLimitInfoWrapper);
+OasisOrderExceedsGasLimitInfoWrapper.displayName = 'OasisOrderExceedsGasLimitInfo';
+export default connect(mapStateToProps, mapDispatchToProps)(OasisOrderExceedsGasLimitInfoWrapper);

@@ -101,28 +101,19 @@ export class OfferTakeForm extends PureComponent {
         : this.props.activeQuoteTokenBalance;
 
     if (web3.toBigNumber(balanceOfTokenToPayWith).gt(0)) {
-      const {
-        disableForm,
-        globalFormLock,
-        activeBaseTokenBalance,
-        activeQuoteTokenBalance,
-      } = this.props;
+      const { disableForm, globalFormLock, activeBaseTokenBalance, activeQuoteTokenBalance } = this.props;
       switch (this.props.offerTakeType) {
         case TAKE_BUY_OFFER:
           return (
             <OasisButton
               className={tableStyles.inputBtn}
-              type='button'
-              color='success'
-              size='xs'
+              type="button"
+              color="success"
+              size="xs"
               onClick={this.onSetSellMax}
               onFocus={this.onSetMaxFocus}
               onBlur={this.onSetMaxBlur}
-              disabled={
-                disableForm ||
-                globalFormLock ||
-                !isNumericAndGreaterThanZero(activeBaseTokenBalance)
-              }
+              disabled={disableForm || globalFormLock || !isNumericAndGreaterThanZero(activeBaseTokenBalance)}
             >
               Sell max
             </OasisButton>
@@ -131,15 +122,11 @@ export class OfferTakeForm extends PureComponent {
           return (
             <OasisButton
               className={tableStyles.inputBtn}
-              type='button'
-              color='danger'
-              size='xs'
+              type="button"
+              color="danger"
+              size="xs"
               onClick={this.onSetBuyMax}
-              disabled={
-                disableForm ||
-                globalFormLock ||
-                !isNumericAndGreaterThanZero(activeQuoteTokenBalance)
-              }
+              disabled={disableForm || globalFormLock || !isNumericAndGreaterThanZero(activeQuoteTokenBalance)}
             >
               Buy max
             </OasisButton>
@@ -157,14 +144,14 @@ export class OfferTakeForm extends PureComponent {
         <th>Price</th>
         <td className={tableStyles.withInput}>
           <Field
-            autoComplete='off'
+            autoComplete="off"
             style={fieldStyle}
-            name='price'
-            component='input'
+            name="price"
+            component="input"
             format={formatValue}
             placeholder={0}
             // normalize={normalize}
-            type='text'
+            type="text"
             disabled={true}
           />
         </td>
@@ -182,11 +169,11 @@ export class OfferTakeForm extends PureComponent {
         <th>Amount</th>
         <td className={tableStyles.withInput}>
           <Field
-            autoComplete='off'
+            autoComplete="off"
             style={fieldStyle}
-            name='volume'
+            name="volume"
             component={MaskedTokenAmountInput}
-            type='text'
+            type="text"
             validate={validateVolume}
             min={0}
             placeholder={0}
@@ -214,12 +201,12 @@ export class OfferTakeForm extends PureComponent {
               onBlur={this.onTotalFieldSectionBlur}
             >
               <Field
-                autoComplete='off'
+                autoComplete="off"
                 style={fieldStyle}
                 min={0}
-                name='total'
+                name="total"
                 component={MaskedTokenAmountInput}
-                type='text'
+                type="text"
                 validate={validateTotal}
                 placeholder={0}
                 disabled={disableForm || globalFormLock}
@@ -295,10 +282,7 @@ export class OfferTakeForm extends PureComponent {
 
   onTotalFieldSectionBlur() {
     if (this.componentIsUnmounted === false) {
-      this.currentSetMaxTimeout = setTimeout(
-        () => this.setState({ showMaxButton: false }),
-        SETMAXBTN_HIDE_DELAY_MS,
-      );
+      this.currentSetMaxTimeout = setTimeout(() => this.setState({ showMaxButton: false }), SETMAXBTN_HIDE_DELAY_MS);
     }
   }
 
@@ -326,10 +310,8 @@ export function mapStateToProps(state) {
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    volumeFieldValueChanged:
-      offerTakesReducer.actions.volumeFieldValueChangedEpic,
-    totalFieldValueChanged:
-      offerTakesReducer.actions.totalFieldValueChangedEpic,
+    volumeFieldValueChanged: offerTakesReducer.actions.volumeFieldValueChangedEpic,
+    totalFieldValueChanged: offerTakesReducer.actions.totalFieldValueChangedEpic,
     buyMax: offerTakesReducer.actions.buyMaxEpic,
     sellMax: offerTakesReducer.actions.sellMaxEpic,
   };
@@ -339,8 +321,4 @@ export function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  reduxForm({ form: 'takeOffer' })(
-    CSSModules(OfferTakeForm, { styles, tableStyles }, { allowMultiple: true }),
-  ),
-);
+)(reduxForm({ form: 'takeOffer' })(CSSModules(OfferTakeForm, { styles, tableStyles }, { allowMultiple: true })));

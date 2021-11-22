@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisWrapUnwrapUnwrapEther,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisWrapUnwrapUnwrapEther';
+import { OasisWrapUnwrapUnwrapEther, mapStateToProps, mapDispatchToProps } from './OasisWrapUnwrapUnwrapEther';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisWrapUnwrapUnwrap', () => {

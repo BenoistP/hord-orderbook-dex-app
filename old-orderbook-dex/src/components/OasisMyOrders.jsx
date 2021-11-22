@@ -15,11 +15,7 @@ import { isOfferOwner } from '../utils/orders';
 import OasisSelect from './OasisSelect';
 import styles from './OasisMyOrders.scss';
 import OasisOfferCancelModalWrapper from '../containers/OasisOfferCancelModal';
-import {
-  OFFER_STATUS_INACTIVE,
-  TYPE_BUY_OFFER,
-  TYPE_SELL_OFFER,
-} from '../store/reducers/offers';
+import { OFFER_STATUS_INACTIVE, TYPE_BUY_OFFER, TYPE_SELL_OFFER } from '../store/reducers/offers';
 import OasisSignificantDigitsWrapper from '../containers/OasisSignificantDigits';
 import OasisButton from './OasisButton';
 import openEtherscanTransactionLink from '../utils/openEtherscanTransactionLink';
@@ -28,10 +24,7 @@ import { toHistoricalTrades } from '../utils/offers/toHistoricalTrades';
 
 const myOpenOffersFilter = (entry) => {
   const myAccountAddress = web3.eth.defaultAccount;
-  return (
-    entry.owner.toString() === myAccountAddress.toString() &&
-    entry.status !== OFFER_STATUS_INACTIVE
-  );
+  return entry.owner.toString() === myAccountAddress.toString() && entry.status !== OFFER_STATUS_INACTIVE;
 };
 
 const tradesHistoryColsDefinition = (baseToken, quoteToken) => [
@@ -40,10 +33,7 @@ const tradesHistoryColsDefinition = (baseToken, quoteToken) => [
   {
     heading: `price`,
     template: (row) => (
-      <OasisSignificantDigitsWrapper
-        fullPrecisionAmount={row.priceFullPrecision}
-        amount={row.price}
-      />
+      <OasisSignificantDigitsWrapper fullPrecisionAmount={row.priceFullPrecision} amount={row.price} />
     ),
   },
   {
@@ -94,10 +84,7 @@ class OasisMyOrders extends PureComponent {
       {
         heading: `price`,
         template: (row) => (
-          <OasisSignificantDigitsWrapper
-            fullPrecisionAmount={row.priceFullPrecision}
-            amount={row.price}
-          />
+          <OasisSignificantDigitsWrapper fullPrecisionAmount={row.priceFullPrecision} amount={row.price} />
         ),
       },
       {
@@ -127,10 +114,7 @@ class OasisMyOrders extends PureComponent {
   actionsColumnTemplate(offer) {
     const { offerToCancel, lastCancelledOfferId } = this.state;
     const { activeTradingPair } = this.props;
-    if (
-      offer.id.toString() === lastCancelledOfferId &&
-      String(lastCancelledOfferId)
-    ) {
+    if (offer.id.toString() === lastCancelledOfferId && String(lastCancelledOfferId)) {
       this.props.removeOrderCancelledByTheOwner({
         offerType: offer.offerType,
         offerId: offer.id,
@@ -141,12 +125,8 @@ class OasisMyOrders extends PureComponent {
     return isOfferOwner(offer) ? (
       <div>
         <OasisButton
-          size='xs'
-          disabled={
-            offerToCancel ||
-            (offer.id.toString() === lastCancelledOfferId &&
-              String(lastCancelledOfferId))
-          }
+          size="xs"
+          disabled={offerToCancel || (offer.id.toString() === lastCancelledOfferId && String(lastCancelledOfferId))}
           onClick={() => {
             this.setState({ offerToCancel: offer });
           }}
@@ -215,9 +195,7 @@ class OasisMyOrders extends PureComponent {
 
     const emptyTableFallback = (
       <div className={styles.info}>
-        {activeTradingPairOffersInitiallyLoaded
-          ? 'You currently have no active offers'
-          : ''}
+        {activeTradingPairOffersInitiallyLoaded ? 'You currently have no active offers' : ''}
       </div>
     );
     return (
@@ -225,11 +203,7 @@ class OasisMyOrders extends PureComponent {
         <OasisTable
           metadata={{ activeNetworkName }}
           rows={myOpenOffers.toArray()}
-          col={this.openOrdersColsDefinition(
-            baseToken,
-            quoteToken,
-            orderActions,
-          )}
+          col={this.openOrdersColsDefinition(baseToken, quoteToken, orderActions)}
           className={styles.openOffers}
           emptyFallback={emptyTableFallback}
         />
@@ -246,22 +220,14 @@ class OasisMyOrders extends PureComponent {
     } = this.props;
     const myTrades = trades.filter((tradeEntry) => {
       if (
-        (baseToken === tradeEntry.buyWhichToken &&
-          tradeEntry.sellWhichToken === quoteToken) ||
-        (quoteToken === tradeEntry.buyWhichToken &&
-          tradeEntry.sellWhichToken === baseToken)
+        (baseToken === tradeEntry.buyWhichToken && tradeEntry.sellWhichToken === quoteToken) ||
+        (quoteToken === tradeEntry.buyWhichToken && tradeEntry.sellWhichToken === baseToken)
       ) {
         return tradeEntry;
       }
     });
-    const marketHistory = orderByTimestamp(myTrades.toJSON(), DESCENDING).map(
-      (tradeHistoryEntry) =>
-        toHistoricalTrades(
-          tradeHistoryEntry,
-          defaultAccount,
-          baseToken,
-          quoteToken,
-        ),
+    const marketHistory = orderByTimestamp(myTrades.toJSON(), DESCENDING).map((tradeHistoryEntry) =>
+      toHistoricalTrades(tradeHistoryEntry, defaultAccount, baseToken, quoteToken),
     );
     return (
       <OasisTable
@@ -292,11 +258,7 @@ class OasisMyOrders extends PureComponent {
 
   renderSelect() {
     return (
-      <OasisSelect
-        onChange={this.onViewTypeChange}
-        value={this.state.viewType}
-        className={styles.select}
-      >
+      <OasisSelect onChange={this.onViewTypeChange} value={this.state.viewType} className={styles.select}>
         <option value={VIEW_TYPE_OPEN_OFFERS}>Open</option>
         <option value={VIEW_TYPE_MARKET_HISTORY}>Closed</option>
       </OasisSelect>
@@ -313,13 +275,10 @@ class OasisMyOrders extends PureComponent {
 
   render() {
     const { offerToCancel } = this.state;
-    const { loadingUserMarketHistory, activeTradingPairOffersInitiallyLoaded } =
-      this.props;
+    const { loadingUserMarketHistory, activeTradingPairOffersInitiallyLoaded } = this.props;
     return (
       <OasisWidgetFrame
-        isLoadingData={
-          !activeTradingPairOffersInitiallyLoaded || loadingUserMarketHistory
-        }
+        isLoadingData={!activeTradingPairOffersInitiallyLoaded || loadingUserMarketHistory}
         loadingDataText={this.getLoadingText()}
         heading={'MY ORDERS'}
         headingChildren={this.renderSelect()}

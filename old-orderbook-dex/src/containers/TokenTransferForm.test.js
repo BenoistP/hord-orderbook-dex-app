@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  TokenTransferFormWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './TokenTransferForm';
+import { TokenTransferFormWrapper, mapStateToProps, mapDispatchToProps } from './TokenTransferForm';
 import { shallow } from 'enzyme';
 
 describe('(Container) TokenTransferForm', () => {

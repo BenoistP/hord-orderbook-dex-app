@@ -1,10 +1,4 @@
-import {
-  TOKEN_DAI,
-  TOKEN_DIGIX,
-  TOKEN_MAKER,
-  TOKEN_RHOC,
-  TOKEN_WRAPPED_ETH,
-} from '../constants';
+import { TOKEN_DAI, TOKEN_DIGIX, TOKEN_MAKER, TOKEN_RHOC, TOKEN_WRAPPED_ETH } from '../constants';
 
 export const generateTradingPairs = () => {
   return [

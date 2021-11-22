@@ -21,6 +21,5 @@ export class OasisTransactionStatusWrapperInfoBox extends PureComponent {
 }
 
 OasisTransactionStatusWrapperInfoBox.propTypes = propTypes;
-OasisTransactionStatusWrapperInfoBox.displayName =
-  'OasisTransactionStatusWrapperInfoBox';
+OasisTransactionStatusWrapperInfoBox.displayName = 'OasisTransactionStatusWrapperInfoBox';
 export default CSSModules(OasisTransactionStatusWrapperInfoBox, textStyles);

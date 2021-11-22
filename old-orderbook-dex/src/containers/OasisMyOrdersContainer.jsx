@@ -30,18 +30,12 @@ export class OasisMyOrdersContainerWrapper extends PureComponent {
       loadingUserMarketHistory,
       defaultAccount,
       activeTradingPairOffersInitiallyLoaded,
-      actions: {
-        cancelOffer,
-        fetchAndSubscribeUserTradesHistory,
-        removeOrderCancelledByTheOwner,
-      },
+      actions: { cancelOffer, fetchAndSubscribeUserTradesHistory, removeOrderCancelledByTheOwner },
     } = this.props;
 
     return (
       <OasisMyOrders
-        activeTradingPairOffersInitiallyLoaded={
-          activeTradingPairOffersInitiallyLoaded
-        }
+        activeTradingPairOffersInitiallyLoaded={activeTradingPairOffersInitiallyLoaded}
         defaultAccount={defaultAccount}
         activeNetworkName={activeNetworkName}
         sellOffers={sellOffers}
@@ -50,9 +44,7 @@ export class OasisMyOrdersContainerWrapper extends PureComponent {
         cancelOffer={cancelOffer}
         activeTradingPair={activeTradingPair}
         initialMarketHistoryLoaded={initialMarketHistoryLoaded}
-        onFetchAndSubscribeUserTradesHistory={
-          fetchAndSubscribeUserTradesHistory
-        }
+        onFetchAndSubscribeUserTradesHistory={fetchAndSubscribeUserTradesHistory}
         loadingUserMarketHistory={loadingUserMarketHistory}
         removeOrderCancelledByTheOwner={removeOrderCancelledByTheOwner}
       />
@@ -64,10 +56,8 @@ export function mapStateToProps(state) {
   return {
     defaultAccount: accounts.defaultAccount(state),
     activeTradingPair: tokens.activeTradingPair(state),
-    activeTradingPairOffersInitiallyLoaded:
-      offers.activeTradingPairOffersInitiallyLoaded(state),
-    initialMarketHistoryLoaded:
-      tradesSelectors.initialMarketHistoryLoaded(state),
+    activeTradingPairOffersInitiallyLoaded: offers.activeTradingPairOffersInitiallyLoaded(state),
+    initialMarketHistoryLoaded: tradesSelectors.initialMarketHistoryLoaded(state),
     buyOfferCount: offers.activeTradingPairBuyOfferCount(state),
     sellOfferCount: offers.activeTradingPairSellOfferCount(state),
     buyOffers: offers.activeTradingPairBuyOffers(state),
@@ -79,17 +69,12 @@ export function mapStateToProps(state) {
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    fetchAndSubscribeUserTradesHistory:
-      userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
-    removeOrderCancelledByTheOwner:
-      offersReducer.actions.removeOrderCancelledByTheOwner,
+    fetchAndSubscribeUserTradesHistory: userTradesReducer.actions.fetchAndSubscribeUserTradesHistoryEpic,
+    removeOrderCancelledByTheOwner: offersReducer.actions.removeOrderCancelledByTheOwner,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisMyOrdersContainerWrapper.propTypes = propTypes;
 OasisMyOrdersContainerWrapper.displayName = 'OasisMyOrdersContainer';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisMyOrdersContainerWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisMyOrdersContainerWrapper);

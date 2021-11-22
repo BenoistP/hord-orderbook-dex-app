@@ -12,9 +12,9 @@ export class OasisAccount extends PureComponent {
   render() {
     const { accounts } = this.props;
     return (
-      <div styleName='OasisAccount'>
-        <span styleName='label'> Account: </span>
-        <div styleName='AccountSelection'>
+      <div styleName="OasisAccount">
+        <span styleName="label"> Account: </span>
+        <div styleName="AccountSelection">
           <select disabled>
             {/*TODO: Get those accounts from the store of web3 directly or passed as a prop*/}
             {accounts.map((account) => (

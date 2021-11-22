@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisYourNodeIsSyncingWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisYourNodeIsSyncing';
+import { OasisYourNodeIsSyncingWrapper, mapStateToProps, mapDispatchToProps } from './OasisYourNodeIsSyncing';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisYourNodeIsSyncing', () => {

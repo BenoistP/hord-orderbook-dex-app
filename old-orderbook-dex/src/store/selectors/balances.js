@@ -15,9 +15,7 @@ import { getMarketContractInstance } from '../../bootstrap/contracts';
 
 const balances = (s) => s.get('balances');
 
-const tokenAllowances = createSelector(balances, (s) =>
-  s.get('tokenAllowances'),
-);
+const tokenAllowances = createSelector(balances, (s) => s.get('tokenAllowances'));
 
 const tokenBalances = createSelector(balances, (s) => s.get('tokenBalances'));
 
@@ -57,16 +55,10 @@ const tokenAllowanceTrustStatus = createSelector(
   balances,
   reselect.getProps,
   (s, { tokenName, allowanceSubjectAddress }) => {
-    const tokenAllowance = s.getIn([
-      'tokenAllowances',
-      tokenName,
-      allowanceSubjectAddress,
-    ]);
+    const tokenAllowance = s.getIn(['tokenAllowances', tokenName, allowanceSubjectAddress]);
     if (tokenAllowance) {
       const tokenAllowanceBN = new BigNumber(tokenAllowance);
-      const tokenTrustEnabledMinBN = new BigNumber(
-        TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN,
-      );
+      const tokenTrustEnabledMinBN = new BigNumber(TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN);
       if (tokenAllowanceBN.gte(tokenTrustEnabledMinBN)) {
         return TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED;
       } else {
@@ -94,10 +86,7 @@ const activeBaseTokenBalance = createSelector(
 );
 
 const ethBalance = createSelector(balances, (s) => s.get('ethBalance'));
-const isUserBalanceZero = createSelector(
-  ethBalance,
-  (balance) => parseInt(balance) === 0,
-);
+const isUserBalanceZero = createSelector(ethBalance, (balance) => parseInt(balance) === 0);
 
 const activeQuoteTokenBalance = createSelector(
   tokenBalances,
@@ -105,13 +94,9 @@ const activeQuoteTokenBalance = createSelector(
   (tokenBalances, quoteToken) => tokenBalances.get(quoteToken),
 );
 
-const latestBalancesSyncBlockNumber = createSelector(balances, (s) =>
-  s.get('latestBalancesSyncBlockNumber'),
-);
+const latestBalancesSyncBlockNumber = createSelector(balances, (s) => s.get('latestBalancesSyncBlockNumber'));
 
-const latestBalancesSyncTimestamp = createSelector(balances, (s) =>
-  s.get('latestBalancesSyncTimestamp'),
-);
+const latestBalancesSyncTimestamp = createSelector(balances, (s) => s.get('latestBalancesSyncTimestamp'));
 
 export default {
   state: balances,

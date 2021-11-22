@@ -28,9 +28,7 @@ describe('(Container) OasisNotTheBestOfferPriceWarning', () => {
   });
 
   it('should render', () => {
-    const wrapper = shallow(
-      <OasisNotTheBestOfferPriceWarningWrapper {...props} />,
-    );
+    const wrapper = shallow(<OasisNotTheBestOfferPriceWarningWrapper {...props} />);
     expect(wrapper).toMatchSnapshot();
   });
 });

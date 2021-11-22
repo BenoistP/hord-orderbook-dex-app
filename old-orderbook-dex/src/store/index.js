@@ -12,13 +12,7 @@ function initStore(defaultState = Map()) {
   const history = createHistory();
   const reactRouterMiddleware = routerMiddleware(history);
 
-  let middleware = applyMiddleware(
-    reactRouterMiddleware,
-    createDebounce(),
-    deferredThunk,
-    thunk,
-    promiseMiddleware(),
-  );
+  let middleware = applyMiddleware(reactRouterMiddleware, createDebounce(), deferredThunk, thunk, promiseMiddleware());
   if (window.devToolsExtension) {
     middleware = compose(
       middleware,

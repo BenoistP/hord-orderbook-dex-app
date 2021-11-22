@@ -46,11 +46,11 @@ export class OasisAppWrapper extends PureComponent {
       return OasisAppWrapper.renderNodeIsSyncing();
     } else {
       return (
-        <div styleName='container' className='container'>
+        <div styleName="container" className="container">
           <OasisHeaderWrapper />
           <OasisMessagesSectionWrapper />
           <OasisMainContentWrapper />
-          <hr styleName='FooterSeparator' />
+          <hr styleName="FooterSeparator" />
           <OasisFooterWrapper />
         </div>
       );
@@ -60,8 +60,8 @@ export class OasisAppWrapper extends PureComponent {
   static versionInfo() {
     return (
       <div style={{ textAlign: 'center' }}>
-        version: {version.version}, branch: {version.branch}, hash:{' '}
-        {version.hash}, build date: {version.buildDate.toUTCString()}
+        version: {version.version}, branch: {version.branch}, hash: {version.hash}, build date:{' '}
+        {version.buildDate.toUTCString()}
       </div>
     );
   }
@@ -86,7 +86,7 @@ export class OasisAppWrapper extends PureComponent {
 
     if (isAccountLocked)
       return (
-        <div styleName='container' className='container'>
+        <div styleName="container" className="container">
           <Locked activeNodeType={activeNodeType} />
         </div>
       );
@@ -121,7 +121,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisAppWrapper.propTypes = propTypes;
 OasisAppWrapper.displayName = 'OasisAppWrapper';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisAppWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisAppWrapper, styles));

@@ -39,22 +39,17 @@ const FETCH_LOG_TAKE_EVENTS = 'TRADES/FETCH_LOG_TAKE_EVENTS';
 export const BID = 'TRADES/TRADE_TYPE_BID';
 export const ASK = 'TRADES/TRADE_TYPE_ASK';
 
-const GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP =
-  'TRADES/GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP';
+const GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP = 'TRADES/GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP';
 
 const Init = createAction(INIT, () => null);
 
-const initMarketHistoryAction = createAction(INIT_MARKET_HISTORY, (imh) =>
-  fromJS(imh),
-);
+const initMarketHistoryAction = createAction(INIT_MARKET_HISTORY, (imh) => fromJS(imh));
 const initMarketHistory = () => (dispatch) => {
   const initialMarketHistoryData = [];
   dispatch(initMarketHistoryAction(initialMarketHistoryData));
 };
 
-const initTradesHistoryAction = createAction(INIT_TRADES_HISTORY, (ith) =>
-  fromJS(ith),
-);
+const initTradesHistoryAction = createAction(INIT_TRADES_HISTORY, (ith) => fromJS(ith));
 const initTradesHistory = () => (dispatch) => {
   const initialTradesData = [];
   dispatch(initTradesHistoryAction(initialTradesData));
@@ -90,29 +85,20 @@ const getTradeHistoryStartingBlockTimestamp = createAction(
   async (blockNumber) => (await web3p.eth.getBlock(blockNumber)).timestamp,
 );
 
-const loadInitialTradeHistory = createAction(
-  'TRADES/LOAD_INITIAL_TRADE_HISTORY',
-  (takeEventsList, limitsList) =>
-    takeEventsList
-      .map(logTakeToTrade)
-      .filter((trade) => !isDustTrade(trade, limitsList)),
+const loadInitialTradeHistory = createAction('TRADES/LOAD_INITIAL_TRADE_HISTORY', (takeEventsList, limitsList) =>
+  takeEventsList.map(logTakeToTrade).filter((trade) => !isDustTrade(trade, limitsList)),
 );
 
 const addTradeHistoryEntry = createAction('TRADES/ADD_HISTORY_ENTRY');
 
-const loadingTradeHistory = createAction(
-  'TRADES/LOADING_TRADE_HISTORY',
-  (loadingStatus) => loadingStatus,
-);
+const loadingTradeHistory = createAction('TRADES/LOADING_TRADE_HISTORY', (loadingStatus) => loadingStatus);
 
-const initialMarketHistoryLoaded = createAction(
-  'TRADES/INITIAL_MARKET_HISTORY_LOADED',
-);
+const initialMarketHistoryLoaded = createAction('TRADES/INITIAL_MARKET_HISTORY_LOADED');
 
-const updateTradingPairVolume = createAction(
-  UPDATE_TOKEN_PAIR_VOLUME,
-  ({ tradingPair, takeAmount }) => ({ tradingPair, takeAmount }),
-);
+const updateTradingPairVolume = createAction(UPDATE_TOKEN_PAIR_VOLUME, ({ tradingPair, takeAmount }) => ({
+  tradingPair,
+  takeAmount,
+}));
 
 const fetchLogTakeEventsAction = createPromiseActions(FETCH_LOG_TAKE_EVENTS);
 const fetchLogTakeEventsEpic =
@@ -132,11 +118,7 @@ const fetchLogTakeEventsEpic =
           dispatch(loadingTradeHistory(false));
           const firstLogTake = first(logTakesList);
           if (firstLogTake) {
-            dispatch(
-              getTradeHistoryStartingBlockTimestamp(
-                first(logTakesList).blockNumber,
-              ),
-            );
+            dispatch(getTradeHistoryStartingBlockTimestamp(first(logTakesList).blockNumber));
           }
           // dispatch(
           //   loadInitialTradeHistory(
@@ -148,25 +130,15 @@ const fetchLogTakeEventsEpic =
     });
   };
 
-const isDustTrade = (
-  { sellWhichToken, buyWhichToken, buyHowMuch, sellHowMuch },
-  limitsList,
-) => {
-  const buyTokenLimitInWei = web3
-    .toBigNumber(limitsList.getIn([buyWhichToken, 'minSell']))
-    .div(10000);
-  const sellTokenLimitInWei = web3
-    .toBigNumber(limitsList.getIn([sellWhichToken, 'minSell']))
-    .div(10000);
+const isDustTrade = ({ sellWhichToken, buyWhichToken, buyHowMuch, sellHowMuch }, limitsList) => {
+  const buyTokenLimitInWei = web3.toBigNumber(limitsList.getIn([buyWhichToken, 'minSell'])).div(10000);
+  const sellTokenLimitInWei = web3.toBigNumber(limitsList.getIn([sellWhichToken, 'minSell'])).div(10000);
   return Boolean(
-    web3.toBigNumber(buyHowMuch).lt(buyTokenLimitInWei) ||
-      web3.toBigNumber(sellHowMuch).lt(sellTokenLimitInWei),
+    web3.toBigNumber(buyHowMuch).lt(buyTokenLimitInWei) || web3.toBigNumber(sellHowMuch).lt(sellTokenLimitInWei),
   );
 };
 
-const subscribeLogTakeEventsAction = createPromiseActions(
-  SUBSCRIBE_LOG_TAKE_EVENTS,
-);
+const subscribeLogTakeEventsAction = createPromiseActions(SUBSCRIBE_LOG_TAKE_EVENTS);
 const subscribeLogTakeEventsEpic = (fromBlock) => (dispatch, getState) => {
   dispatch(subscribeLogTakeEventsAction.pending());
   getMarketContractInstance()
@@ -196,26 +168,18 @@ const actions = {
 const reducer = handleActions(
   {
     [initVolumesAction]: (state, { payload }) => state.set('volumes', payload),
-    [initTradesHistoryAction]: (state, { payload }) =>
-      state.set('trades', payload),
-    [updateTradingPairVolume]: (
-      state,
-      { payload: { tradingPair, takeAmount, latestPrice } },
-    ) =>
+    [initTradesHistoryAction]: (state, { payload }) => state.set('trades', payload),
+    [updateTradingPairVolume]: (state, { payload: { tradingPair, takeAmount, latestPrice } }) =>
       state
         .updateIn(['volumes', tradingPair, 'volume'], (currentVolume) =>
           new BigNumber(currentVolume).add(new BigNumber(takeAmount)),
         )
         .setIn(['volumes', tradingPair, 'latestPrice'], latestPrice),
-    [logTakeEvent]: (state, { payload }) =>
-      state.setIn(['latestEventsBlocks', 'LogTake'], payload.blockNumber),
+    [logTakeEvent]: (state, { payload }) => state.setIn(['latestEventsBlocks', 'LogTake'], payload.blockNumber),
     // [loadInitialTradeHistory]: (state, { payload }) => state.updateIn(['marketHistory'], () => List(payload)),
     [addTradeHistoryEntry]: (state, { payload }) =>
-      state.updateIn(['marketHistory'], (marketHistory) =>
-        marketHistory.push(payload),
-      ),
-    [initialMarketHistoryLoaded]: (state) =>
-      state.set('initialMarketHistoryLoaded', true),
+      state.updateIn(['marketHistory'], (marketHistory) => marketHistory.push(payload)),
+    [initialMarketHistoryLoaded]: (state) => state.set('initialMarketHistoryLoaded', true),
     [fulfilled(getTradeHistoryStartingBlockTimestamp)]: (state, { payload }) =>
       state.set('tradeHistoryStartingBlockTimestamp', payload),
   },

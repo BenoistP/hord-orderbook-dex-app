@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisTransactionStatusWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTransactionStatus';
+import { OasisTransactionStatusWrapper, mapStateToProps, mapDispatchToProps } from './OasisTransactionStatus';
 import { shallow } from 'enzyme';
 import { TAKE_BUY_OFFER } from '../store/reducers/offerTakes';
 

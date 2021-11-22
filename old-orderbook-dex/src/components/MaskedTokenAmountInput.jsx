@@ -24,7 +24,7 @@ class MaskedTokenAmountInput extends PureComponent {
 
     return (
       <MaskedInput
-        autoComplete='off'
+        autoComplete="off"
         mask={createNumberMask({
           allowDecimal: true,
           integerLimit: 15,

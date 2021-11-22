@@ -20,10 +20,10 @@ const OasisWidgetFrame = (properties) => {
   } = properties;
   return (
     <section styleName={'OasisWidgetFrame'} {...props}>
-      <div className='row'>
-        <div className='col-12'>
-          <h4 styleName='Heading' className={headingClassName}>
-            <span styleName='HeadingText'>{heading}</span>
+      <div className="row">
+        <div className="col-12">
+          <h4 styleName="Heading" className={headingClassName}>
+            <span styleName="HeadingText">{heading}</span>
             <span>{loadProgressSection}</span>
             {headingChildren}
           </h4>
@@ -35,9 +35,7 @@ const OasisWidgetFrame = (properties) => {
         styleName={spaceForContent ? 'OasisWidgetContent' : ''}
         className={noContentPaddingXXS ? styles.NoContentPaddingXXS : ''}
       >
-        {isLoadingData && (
-          <OasisLoadingDataOverlay loadingText={loadingDataText} />
-        )}
+        {isLoadingData && <OasisLoadingDataOverlay loadingText={loadingDataText} />}
         {children}
       </div>
     </section>

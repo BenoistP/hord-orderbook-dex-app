@@ -4,11 +4,7 @@ import React from 'react';
 import { fromJS } from 'immutable';
 import { shallow } from 'enzyme';
 
-import {
-  OasisTradeWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTrade';
+import { OasisTradeWrapper, mapStateToProps, mapDispatchToProps } from './OasisTrade';
 import { WEEK } from '../utils/period';
 
 describe('(Container) OasisTrade', () => {

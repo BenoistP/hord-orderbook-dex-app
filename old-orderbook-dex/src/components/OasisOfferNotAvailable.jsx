@@ -9,7 +9,7 @@ const defaultProps = {};
 class OasisOfferNotAvailable extends PureComponent {
   render() {
     return (
-      <InfoBoxWithIco color='danger' icon='failed'>
+      <InfoBoxWithIco color="danger" icon="failed">
         This order is <b>not available anymore</b>
       </InfoBoxWithIco>
     );

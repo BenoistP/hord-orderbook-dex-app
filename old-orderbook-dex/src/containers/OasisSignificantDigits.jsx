@@ -40,22 +40,12 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
     this.state = {};
   }
   render() {
-    const {
-      amount,
-      fullPrecisionAmount,
-      fullPrecisionUnit,
-      fractionalZerosGrey,
-    } = this.props;
+    const { amount, fullPrecisionAmount, fullPrecisionUnit, fractionalZerosGrey } = this.props;
     const matches = amount.toString().match(splitPattern);
     if (!matches) {
       console.log(amount);
     }
-    const [
-      ,
-      integralPart,
-      fractionalPartWitOptionalLeadingZeroes,
-      fractionalPartZeroes,
-    ] = matches;
+    const [, integralPart, fractionalPartWitOptionalLeadingZeroes, fractionalPartZeroes] = matches;
     return (
       <Manager>
         <Reference>
@@ -67,32 +57,18 @@ export class OasisSignificantDigitsWrapper extends PureComponent {
             >
               <span>{integralPart}</span>
               <span>.</span>
-              {fractionalPartWitOptionalLeadingZeroes ? (
-                <span>{fractionalPartWitOptionalLeadingZeroes}</span>
-              ) : null}
-              <span
-                className={
-                  fractionalZerosGrey ? styles.paleSignificantDigit : ''
-                }
-              >
-                {fractionalPartZeroes}
-              </span>
+              {fractionalPartWitOptionalLeadingZeroes ? <span>{fractionalPartWitOptionalLeadingZeroes}</span> : null}
+              <span className={fractionalZerosGrey ? styles.paleSignificantDigit : ''}>{fractionalPartZeroes}</span>
             </span>
           )}
         </Reference>
         {this.state.showPopup && !isXXS() && (
-          <Popper placement='top'>
+          <Popper placement="top">
             {({ ref, style, placement }) => (
-              <div
-                ref={ref}
-                style={popperStyle(style)}
-                data-placement={placement}
-              >
+              <div ref={ref} style={popperStyle(style)} data-placement={placement}>
                 {web3
                   .toBigNumber(
-                    fullPrecisionUnit
-                      ? web3.fromWei(fullPrecisionAmount)
-                      : amount.replace(/,/g, ''), // TODO: Ugly fix, component should never be given formated string
+                    fullPrecisionUnit ? web3.fromWei(fullPrecisionAmount) : amount.replace(/,/g, ''), // TODO: Ugly fix, component should never be given formated string
                   )
                   .toFormat()}
               </div>
@@ -115,7 +91,4 @@ export function mapDispatchToProps(dispatch) {
 OasisSignificantDigitsWrapper.propTypes = propTypes;
 OasisSignificantDigitsWrapper.displayName = 'OasisSignificantDigits';
 OasisSignificantDigitsWrapper.defaultProps = defaultProps;
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisSignificantDigitsWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisSignificantDigitsWrapper, styles));

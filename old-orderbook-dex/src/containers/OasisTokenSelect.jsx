@@ -84,7 +84,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTokenSelectWrapper.propTypes = propTypes;
 OasisTokenSelectWrapper.displayName = 'OasisTokenSelect';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisTokenSelectWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisTokenSelectWrapper);

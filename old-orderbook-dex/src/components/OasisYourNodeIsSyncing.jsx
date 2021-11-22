@@ -43,16 +43,12 @@ class OasisYourNodeIsSyncing extends PureComponent {
       <section className={styles.LockedAccountSection}>
         <div>
           <div style={{ textAlign: 'center' }}>
-            <img
-              src={loading}
-              style={{ width: '400px', position: 'relative' }}
-              alt=''
-            />
+            <img src={loading} style={{ width: '400px', position: 'relative' }} alt="" />
           </div>
           <div className={styles.LogoContainer}>
             <img
               className={styles.OasisLogo}
-              alt='Oasis Logo'
+              alt="Oasis Logo"
               style={{ position: 'relative', bottom: '250px' }}
               src={OasisLogo}
             />

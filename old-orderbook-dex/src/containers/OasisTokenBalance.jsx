@@ -24,19 +24,14 @@ export class OasisTokenBalanceWrapper extends PureComponent {
     if (!balance) {
       return (
         <div className={styles.loading}>
-          <OasisIcon icon='loading' />
+          <OasisIcon icon="loading" />
         </div>
       );
     } else {
       return (
         <div className={styles.available}>
           <span className={styles['available-amount']}>
-            {formatTokenAmount(
-              balance,
-              fromWei,
-              balanceUnit || ETH_UNIT_ETHER,
-              AMOUNT_DECIMALS,
-            )}
+            {formatTokenAmount(balance, fromWei, balanceUnit || ETH_UNIT_ETHER, AMOUNT_DECIMALS)}
           </span>
           <span className={styles['available-currency']}>{tokenName}</span>
         </div>
@@ -57,7 +52,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTokenBalanceWrapper.propTypes = propTypes;
 OasisTokenBalanceWrapper.displayName = 'OasisTokenBalance';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisTokenBalanceWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisTokenBalanceWrapper, styles));

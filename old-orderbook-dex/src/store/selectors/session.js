@@ -8,17 +8,11 @@ const messages = createSelector(session, (state) => {
   }
 });
 
-const sessionData = createSelector(session, (state) =>
-  state.getIn(['session']).toJSON(),
-);
+const sessionData = createSelector(session, (state) => state.getIn(['session']).toJSON());
 
-const persistentData = createSelector(session, (state) =>
-  state.getIn(['persist']).toJSON(),
-);
+const persistentData = createSelector(session, (state) => state.getIn(['persist']).toJSON());
 
-const isSessionInitialized = createSelector(session, (state) =>
-  state.get('initialized'),
-);
+const isSessionInitialized = createSelector(session, (state) => state.get('initialized'));
 
 export default {
   state: session,

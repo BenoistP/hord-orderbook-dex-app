@@ -11,17 +11,17 @@ export const setBuyOrders = () => async (dispatch, getState) => {
   const sellTokenAddress = HPoolToken.address;
   const buyTokenAddress = BUSD.address;
 
-  const buyOffers = await useContractReader(
-    MakerOtcSupportMethods,
-    'getOffers(address,address,address)',
-    [MatchingMarket.address, sellTokenAddress, buyTokenAddress],
-  );
+  const buyOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
+    MatchingMarket.address,
+    sellTokenAddress,
+    buyTokenAddress,
+  ]);
   if (!buyOffers.error) {
     const buyOrders = [];
     let currentId = buyOffers.ids[0]; // to check if we have a valid tradeOrder
     let currentIndex = 0;
 
-      while (currentId !== '0') {
+    while (currentId !== '0') {
       const buyAmt = WeiToEth(buyOffers.buyAmts[currentIndex]);
       const payAmt = WeiToEth(buyOffers.payAmts[currentIndex]);
       const id = buyOffers.ids[currentIndex];
@@ -54,14 +54,14 @@ export const setSellOrders = () => async (dispatch, getState) => {
   const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
-  const sellTokenAddress = BUSD.address; 
+  const sellTokenAddress = BUSD.address;
   const buyTokenAddress = HPoolToken.address;
 
-  const sellOffers = await useContractReader(
-    MakerOtcSupportMethods,
-    'getOffers(address,address,address)',
-    [MatchingMarket.address, sellTokenAddress, buyTokenAddress],
-  );
+  const sellOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
+    MatchingMarket.address,
+    sellTokenAddress,
+    buyTokenAddress,
+  ]);
   if (!sellOffers.error) {
     const sellOrders = [];
     let currentId = sellOffers.ids[0]; // to check if we have a valid tradeOrder
@@ -85,7 +85,7 @@ export const setSellOrders = () => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = sellOffers.ids[currentIndex];
     }
-    console.log("SELL",sellOrders);
+    console.log('SELL', sellOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_SELL_ORDERS,

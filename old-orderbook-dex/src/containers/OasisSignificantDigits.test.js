@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisSignificantDigitsWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisSignificantDigits';
+import { OasisSignificantDigitsWrapper, mapStateToProps, mapDispatchToProps } from './OasisSignificantDigits';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisSignificantDigits', () => {

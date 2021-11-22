@@ -33,20 +33,15 @@ class OasisAccordion extends PureComponent {
 
   toggleSection() {
     return this.state.isOpen ? (
-      <OasisIcon onClick={this.toggle} icon='arrowUp' />
+      <OasisIcon onClick={this.toggle} icon="arrowUp" />
     ) : (
-      <OasisIcon onClick={this.toggle} icon='arrowDown' />
+      <OasisIcon onClick={this.toggle} icon="arrowDown" />
     );
   }
 
   render() {
-    const { disabled, infoBoxSize, heading, children, className, ...props } =
-      this.props;
-    let childrenDiv = (
-      <div className={`${styles.content} ${styles[infoBoxSize]}`}>
-        {children}
-      </div>
-    );
+    const { disabled, infoBoxSize, heading, children, className, ...props } = this.props;
+    let childrenDiv = <div className={`${styles.content} ${styles[infoBoxSize]}`}>{children}</div>;
     return (
       <InfoBox
         className={`${styles.accordion} ${className ? className : ''}`}
@@ -54,7 +49,7 @@ class OasisAccordion extends PureComponent {
         size={infoBoxSize}
         {...props}
       >
-        <FlexBox justifyContent='normal' alignItems='baseline'>
+        <FlexBox justifyContent="normal" alignItems="baseline">
           {!disabled ? this.toggleSection() : null}
           {heading}
         </FlexBox>

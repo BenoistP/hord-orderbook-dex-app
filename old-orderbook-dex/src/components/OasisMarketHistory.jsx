@@ -37,12 +37,7 @@ const quoteTokenTemplate = (row) => (
     amount={row.quoteAmount}
   />
 );
-const priceTemplate = (row) => (
-  <OasisSignificantDigitsWrapper
-    fullPrecisionAmount={row.price}
-    amount={row.price}
-  />
-);
+const priceTemplate = (row) => <OasisSignificantDigitsWrapper fullPrecisionAmount={row.price} amount={row.price} />;
 
 const colsDefinition = (baseToken, quoteToken) => {
   return [
@@ -67,16 +62,10 @@ class OasisMarketHistory extends PureComponent {
     let baseAmount = null,
       quoteAmount = null;
 
-    if (
-      tradeHistoryEntry.buyWhichToken === quoteToken &&
-      tradeHistoryEntry.sellWhichToken === baseToken
-    ) {
+    if (tradeHistoryEntry.buyWhichToken === quoteToken && tradeHistoryEntry.sellWhichToken === baseToken) {
       baseAmount = new BigNumber(tradeHistoryEntry.sellHowMuch);
       quoteAmount = new BigNumber(tradeHistoryEntry.buyHowMuch);
-    } else if (
-      tradeHistoryEntry.buyWhichToken === baseToken &&
-      tradeHistoryEntry.sellWhichToken === quoteToken
-    ) {
+    } else if (tradeHistoryEntry.buyWhichToken === baseToken && tradeHistoryEntry.sellWhichToken === quoteToken) {
       baseAmount = new BigNumber(tradeHistoryEntry.buyHowMuch);
       quoteAmount = new BigNumber(tradeHistoryEntry.sellHowMuch);
     }
@@ -84,9 +73,7 @@ class OasisMarketHistory extends PureComponent {
     return {
       transactionHash: tradeHistoryEntry.transactionHash,
       date: moment.unix(tradeHistoryEntry.timestamp).format('DD-MM HH:mm'),
-      tradeType: (
-        <OasisTradeType order={tradeHistoryEntry} baseCurrency={baseToken} />
-      ),
+      tradeType: <OasisTradeType order={tradeHistoryEntry} baseCurrency={baseToken} />,
       baseAmount: formatAmount(baseAmount, true),
       baseAmountFullPrecision: baseAmount,
       quoteAmount: formatAmount(quoteAmount, true),
@@ -111,9 +98,7 @@ class OasisMarketHistory extends PureComponent {
       <OasisWidgetFrame
         isLoadingData={!initialMarketHistoryLoaded}
         loadingDataText={'loading trades history'}
-        loadProgressSection={
-          !initialMarketHistoryLoaded ? <OasisLoadingIndicator /> : null
-        }
+        loadProgressSection={!initialMarketHistoryLoaded ? <OasisLoadingIndicator /> : null}
         heading={`MARKET HISTORY`}
       >
         <OasisTable

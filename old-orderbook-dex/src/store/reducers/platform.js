@@ -4,11 +4,7 @@ import { push } from 'react-router-redux';
 
 import { Session } from '../../utils/session';
 import { WEEK } from '../../utils/period';
-import {
-  ETH_UNIT_WEI,
-  subscriptionGroupToKeyMap,
-  subscriptionTypeToKeyMap,
-} from '../../constants';
+import { ETH_UNIT_WEI, subscriptionGroupToKeyMap, subscriptionTypeToKeyMap } from '../../constants';
 import web3 from '../../bootstrap/web3';
 import Promise from 'bluebird';
 
@@ -89,37 +85,19 @@ const changeRouteEpic = (route) => (dispatch) => {
 };
 
 const dismissMessage =
-  (
-    msgType,
-    dismissMessageAction = createAction(
-      'PLATFORM/DISMISS_MESSAGE',
-      (msgType) => msgType,
-    ),
-  ) =>
+  (msgType, dismissMessageAction = createAction('PLATFORM/DISMISS_MESSAGE', (msgType) => msgType)) =>
   (dispatch) => {
     Session.dismissMessage(dispatch, msgType);
     dispatch(dismissMessageAction(msgType));
   };
 
-const setGlobalFormLockEnabled = createAction(
-  'PLATFORM/SET_GLOBAL_FORM_LOCK_ENABLED',
-);
-const setGlobalFormLockDisabled = createAction(
-  'PLATFORM/SET_GLOBAL_FORM_LOCK_DISABLED',
-);
-const setIsAppLoadingLockEnabled = createAction(
-  'PLATFORM/IS_APP_LOADING_ENABLED',
-);
-const setIsAppLoadingDisabled = createAction(
-  'PLATFORM/SET_IS_APP_LOADING_DISABLED',
-);
+const setGlobalFormLockEnabled = createAction('PLATFORM/SET_GLOBAL_FORM_LOCK_ENABLED');
+const setGlobalFormLockDisabled = createAction('PLATFORM/SET_GLOBAL_FORM_LOCK_DISABLED');
+const setIsAppLoadingLockEnabled = createAction('PLATFORM/IS_APP_LOADING_ENABLED');
+const setIsAppLoadingDisabled = createAction('PLATFORM/SET_IS_APP_LOADING_DISABLED');
 
-const setAllInitialSubscriptionsRegisteredEnabled = createAction(
-  'PLATFORM/SET_ALL_SUBSCRIPTIONS_REGISTERED_ENABLED',
-);
-const setAllInitialSubscriptionsRegisteredDisabled = createAction(
-  'PLATFORM/SET_ALL_SUBSCRIPTIONS_REGISTERED_DISABLED',
-);
+const setAllInitialSubscriptionsRegisteredEnabled = createAction('PLATFORM/SET_ALL_SUBSCRIPTIONS_REGISTERED_ENABLED');
+const setAllInitialSubscriptionsRegisteredDisabled = createAction('PLATFORM/SET_ALL_SUBSCRIPTIONS_REGISTERED_DISABLED');
 
 const registerSubscriptionByTypeAndGroup = createAction(
   'PLATFORM/REGISTER_SUBSCRIPTION_BY_TYPE_AND_GROUP',
@@ -137,9 +115,7 @@ const unregisterSubscriptionByType = createAction(
   }),
 );
 
-const resetSubscriptionsState = createAction(
-  'PLATFORM/RESET_SUBSCRIPTIONS_STATE',
-);
+const resetSubscriptionsState = createAction('PLATFORM/RESET_SUBSCRIPTIONS_STATE');
 
 const actions = {
   platformInitEpic,
@@ -181,26 +157,12 @@ const reducer = handleActions(
     [setGlobalFormLockDisabled]: (state) => state.set('globalFormLock', false),
     [setIsAppLoadingLockEnabled]: (state) => state.set('isAppLoading', true),
     [setIsAppLoadingDisabled]: (state) => state.set('isAppLoading', false),
-    [registerSubscriptionByTypeAndGroup]: (
-      state,
-      { payload: { subscriptionGroup, subscriptionType } },
-    ) =>
-      state.setIn(
-        ['subscriptionsRegistered', subscriptionGroup, subscriptionType],
-        true,
-      ),
-    [unregisterSubscriptionByType]: (
-      state,
-      { payload: { subscriptionGroup, subscriptionType } },
-    ) =>
-      state.setIn(
-        ['subscriptionsRegistered', subscriptionGroup, subscriptionType],
-        false,
-      ),
-    [setAllInitialSubscriptionsRegisteredEnabled]: (state) =>
-      state.set('allInitialSubscriptionsRegistered', true),
-    [setAllInitialSubscriptionsRegisteredDisabled]: (state) =>
-      state.set('allInitialSubscriptionsRegistered', false),
+    [registerSubscriptionByTypeAndGroup]: (state, { payload: { subscriptionGroup, subscriptionType } }) =>
+      state.setIn(['subscriptionsRegistered', subscriptionGroup, subscriptionType], true),
+    [unregisterSubscriptionByType]: (state, { payload: { subscriptionGroup, subscriptionType } }) =>
+      state.setIn(['subscriptionsRegistered', subscriptionGroup, subscriptionType], false),
+    [setAllInitialSubscriptionsRegisteredEnabled]: (state) => state.set('allInitialSubscriptionsRegistered', true),
+    [setAllInitialSubscriptionsRegisteredDisabled]: (state) => state.set('allInitialSubscriptionsRegistered', false),
     [resetSubscriptionsState]: (state) =>
       state.set(
         'subscriptionsRegistered',
@@ -215,8 +177,7 @@ const reducer = handleActions(
           },
         }),
       ),
-    [setActiveNodeType]: (state, { payload }) =>
-      state.set('activeNodeType', payload),
+    [setActiveNodeType]: (state, { payload }) => state.set('activeNodeType', payload),
   },
   initialState,
 );

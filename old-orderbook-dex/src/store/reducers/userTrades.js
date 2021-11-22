@@ -7,11 +7,7 @@ import tokens from '../selectors/tokens';
 import logTakeToTrade from '../../utils/trades/logTakeToTrade';
 import first from 'lodash/first';
 import { fulfilled } from '../../utils/store';
-import {
-  getSubscriptionsByTypeAndTag,
-  registerAccountSpecificSubscriptions,
-  web3p,
-} from '../../bootstrap/web3';
+import { getSubscriptionsByTypeAndTag, registerAccountSpecificSubscriptions, web3p } from '../../bootstrap/web3';
 import { getMarketContractInstance } from '../../bootstrap/contracts';
 import accounts from '../selectors/accounts';
 import web3 from '../../bootstrap/web3';
@@ -52,22 +48,17 @@ const FETCH_LOG_TAKE_EVENTS = 'USER_TRADES/FETCH_LOG_TAKE_EVENTS';
 export const BID = 'USER_TRADES/TRADE_TYPE_BID';
 export const ASK = 'USER_TRADES/TRADE_TYPE_ASK';
 
-const GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP =
-  'USER_TRADES/GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP';
+const GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP = 'USER_TRADES/GET_TRADE_HISTORY_BLOCK_STARTING_BLOCK_TIMESTAMP';
 
 const Init = createAction(INIT, () => null);
 
-const initMarketHistoryAction = createAction(INIT_MARKET_HISTORY, (imh) =>
-  fromJS(imh),
-);
+const initMarketHistoryAction = createAction(INIT_MARKET_HISTORY, (imh) => fromJS(imh));
 const initMarketHistory = () => (dispatch) => {
   const initialMarketHistoryData = Set([]);
   dispatch(initMarketHistoryAction(initialMarketHistoryData));
 };
 
-const initTradesHistoryAction = createAction(INIT_TRADES_HISTORY, (ith) =>
-  fromJS(ith),
-);
+const initTradesHistoryAction = createAction(INIT_TRADES_HISTORY, (ith) => fromJS(ith));
 const initTradesHistory = () => (dispatch) => {
   const initialTradesData = [];
   dispatch(initTradesHistoryAction(initialTradesData));
@@ -86,12 +77,9 @@ const initializeVolumes = () => (dispatch, getState) => {
   dispatch(initVolumesAction(initialVolumesData));
 };
 
-const logTradeEvent = createAction(
-  'USER_TRADES/EVENT___LOG_TRADE',
-  (logTrade) => {
-    return logTrade;
-  },
-);
+const logTradeEvent = createAction('USER_TRADES/EVENT___LOG_TRADE', (logTrade) => {
+  return logTrade;
+});
 
 const logTakeEvent = createAction('USER_TRADES/EVENT___LOG_TAKE', (logTake) => {
   return logTake;
@@ -106,29 +94,20 @@ const getTradeHistoryStartingBlockTimestamp = createAction(
   async (blockNumber) => (await web3p.eth.getBlock(blockNumber)).timestamp,
 );
 
-const loadInitialTradeHistory = createAction(
-  'USER_TRADES/LOAD_INITIAL_TRADE_HISTORY',
-  (takeEventsList) => takeEventsList.map(logTakeToTrade),
+const loadInitialTradeHistory = createAction('USER_TRADES/LOAD_INITIAL_TRADE_HISTORY', (takeEventsList) =>
+  takeEventsList.map(logTakeToTrade),
 );
 
-const addTradeHistoryEntry = createAction(
-  'USER_TRADES/ADD_HISTORY_ENTRY',
-  (takeEvent) => logTakeToTrade(takeEvent),
-);
+const addTradeHistoryEntry = createAction('USER_TRADES/ADD_HISTORY_ENTRY', (takeEvent) => logTakeToTrade(takeEvent));
 
-const initialMarketHistoryLoaded = createAction(
-  'USER_TRADES/INITIAL_MARKET_HISTORY_LOADED',
-);
+const initialMarketHistoryLoaded = createAction('USER_TRADES/INITIAL_MARKET_HISTORY_LOADED');
 
-const updateTradingPairVolume = createAction(
-  UPDATE_TOKEN_PAIR_VOLUME,
-  ({ tradingPair, takeAmount }) => ({ tradingPair, takeAmount }),
-);
+const updateTradingPairVolume = createAction(UPDATE_TOKEN_PAIR_VOLUME, ({ tradingPair, takeAmount }) => ({
+  tradingPair,
+  takeAmount,
+}));
 
-const loadingUserMarketHistory = createAction(
-  'USER_TRADES/LOADING_USER_MARKET_HISTORY',
-  (isLoading) => isLoading,
-);
+const loadingUserMarketHistory = createAction('USER_TRADES/LOADING_USER_MARKET_HISTORY', (isLoading) => isLoading);
 
 const fetchLogTakeEventsAction = createPromiseActions(FETCH_LOG_TAKE_EVENTS);
 const fetchLogTakeEventsEpic =
@@ -161,11 +140,9 @@ const fetchLogTakeEventsEpic =
               toBlock,
               logTakesList: logTakesList.map((item) => ({
                 ...item,
-                userToTradeBaseRelation:
-                  USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
+                userToTradeBaseRelation: USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
                 userToTradeAdditionalRelation:
-                  item.args.taker.toString() ===
-                  accounts.defaultAccount(getState())
+                  item.args.taker.toString() === accounts.defaultAccount(getState())
                     ? USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE
                     : null,
               })),
@@ -193,50 +170,35 @@ const fetchLogTakeEventsEpic =
             }
             const firstLogTake = first(logTakesList);
             if (firstLogTake) {
-              dispatch(
-                getTradeHistoryStartingBlockTimestamp(
-                  first(logTakesList).blockNumber,
-                ),
-              );
+              dispatch(getTradeHistoryStartingBlockTimestamp(first(logTakesList).blockNumber));
             }
             resolve({
               toBlock,
               logTakesList: logTakesList.map((item) => ({
                 ...item,
-                userToTradeBaseRelation:
-                  USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
+                userToTradeBaseRelation: USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
                 userToTradeAdditionalRelation:
-                  item.args.maker.toString() ===
-                  accounts.defaultAccount(getState())
+                  item.args.maker.toString() === accounts.defaultAccount(getState())
                     ? USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER
                     : null,
               })),
             });
           });
       }),
-    ]).then(
-      ([
-        { logTakesList: userMadeOffers },
-        { logTakesList: userTakenOffers },
-      ]) => {
-        dispatch(
-          loadInitialTradeHistory(userMadeOffers.concat(userTakenOffers)),
-        );
-        dispatch(loadingUserMarketHistory(false));
-        dispatch(initialMarketHistoryLoaded());
-        dispatch(
-          subscribeLogTakeEventsEpic({
-            fromBlock: network.latestBlockNumber(getState()),
-            perTradingPair,
-          }),
-        );
-      },
-    );
+    ]).then(([{ logTakesList: userMadeOffers }, { logTakesList: userTakenOffers }]) => {
+      dispatch(loadInitialTradeHistory(userMadeOffers.concat(userTakenOffers)));
+      dispatch(loadingUserMarketHistory(false));
+      dispatch(initialMarketHistoryLoaded());
+      dispatch(
+        subscribeLogTakeEventsEpic({
+          fromBlock: network.latestBlockNumber(getState()),
+          perTradingPair,
+        }),
+      );
+    });
   };
 
-const subscribeLogTakeEventsAction = createPromiseActions(
-  SUBSCRIBE_LOG_TAKE_EVENTS,
-);
+const subscribeLogTakeEventsAction = createPromiseActions(SUBSCRIBE_LOG_TAKE_EVENTS);
 const subscribeLogTakeEventsEpic =
   ({ fromBlock, perTradingPair }) =>
   (dispatch, getState) => {
@@ -262,11 +224,9 @@ const subscribeLogTakeEventsEpic =
             dispatch(
               addTradeHistoryEntry({
                 ...logTake,
-                userToTradeBaseRelation:
-                  USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
+                userToTradeBaseRelation: USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
                 userToTradeAdditionalRelation:
-                  logTake.args.maker.toString() ===
-                  accounts.defaultAccount(getState())
+                  logTake.args.maker.toString() === accounts.defaultAccount(getState())
                     ? USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE
                     : null,
               }),
@@ -294,11 +254,9 @@ const subscribeLogTakeEventsEpic =
             dispatch(
               addTradeHistoryEntry({
                 ...logTake,
-                userToTradeBaseRelation:
-                  USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
+                userToTradeBaseRelation: USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
                 userToTradeAdditionalRelation:
-                  logTake.args.taker.toString() ===
-                  accounts.defaultAccount(getState())
+                  logTake.args.taker.toString() === accounts.defaultAccount(getState())
                     ? USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER
                     : null,
               }),
@@ -309,57 +267,44 @@ const subscribeLogTakeEventsEpic =
     dispatch(subscribeLogTakeEventsAction.fulfilled());
   };
 
-const fetchAndSubscribeUserTradesHistoryEpic =
-  (perActiveTradingPair) => (dispatch, getState) => {
+const fetchAndSubscribeUserTradesHistoryEpic = (perActiveTradingPair) => (dispatch, getState) => {
+  if (userTrades.loadindUserMarketHistory(getState()) && userTrades.initialMarketHistoryLoaded(getState())) {
+    return;
+  }
+  dispatch(loadingUserMarketHistory(true));
+  if (perActiveTradingPair) {
+    const { baseToken, quoteToken } = tokens.activeTradingPair(getState());
     if (
-      userTrades.loadindUserMarketHistory(getState()) &&
-      userTrades.initialMarketHistoryLoaded(getState())
+      getSubscriptionsByTypeAndTag(
+        SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
+        fromJS({ baseToken, quoteToken, tag: 'makes' }),
+      ) &&
+      getSubscriptionsByTypeAndTag(SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS, fromJS({ baseToken, quoteToken, tag: 'takes' }))
     ) {
       return;
     }
-    dispatch(loadingUserMarketHistory(true));
-    if (perActiveTradingPair) {
-      const { baseToken, quoteToken } = tokens.activeTradingPair(getState());
-      if (
-        getSubscriptionsByTypeAndTag(
-          SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
-          fromJS({ baseToken, quoteToken, tag: 'makes' }),
-        ) &&
-        getSubscriptionsByTypeAndTag(
-          SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
-          fromJS({ baseToken, quoteToken, tag: 'takes' }),
-        )
-      ) {
-        return;
-      }
-    } else {
-      if (
-        getSubscriptionsByTypeAndTag(
-          SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
-          fromJS({ tag: 'makes' }),
-        ) &&
-        getSubscriptionsByTypeAndTag(
-          SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
-          fromJS({ tag: 'takes' }),
-        )
-      ) {
-        return;
-      }
+  } else {
+    if (
+      getSubscriptionsByTypeAndTag(SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS, fromJS({ tag: 'makes' })) &&
+      getSubscriptionsByTypeAndTag(SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS, fromJS({ tag: 'takes' }))
+    ) {
+      return;
     }
+  }
 
-    console.log(
-      'loading user trades history',
-      network.latestBlockNumber(getState()),
-      markets.activeMarketOriginBlock(getState()).get('number'),
-    );
-    dispatch(
-      fetchLogTakeEventsEpic({
-        fromBlock: markets.activeMarketOriginBlock(getState()).get('number'),
-        toBlock: network.latestBlockNumber(getState()),
-        perTradingPair: perActiveTradingPair,
-      }),
-    );
-  };
+  console.log(
+    'loading user trades history',
+    network.latestBlockNumber(getState()),
+    markets.activeMarketOriginBlock(getState()).get('number'),
+  );
+  dispatch(
+    fetchLogTakeEventsEpic({
+      fromBlock: markets.activeMarketOriginBlock(getState()).get('number'),
+      toBlock: network.latestBlockNumber(getState()),
+      perTradingPair: perActiveTradingPair,
+    }),
+  );
+};
 
 const actions = {
   Init,
@@ -377,30 +322,20 @@ const actions = {
 
 const reducer = handleActions(
   {
-    [loadingUserMarketHistory]: (state, { payload }) =>
-      state.set('loadingUserMarketHistory', payload),
+    [loadingUserMarketHistory]: (state, { payload }) => state.set('loadingUserMarketHistory', payload),
     [initVolumesAction]: (state, { payload }) => state.set('volumes', payload),
-    [initTradesHistoryAction]: (state, { payload }) =>
-      state.set('USER_TRADES', payload),
-    [updateTradingPairVolume]: (
-      state,
-      { payload: { tradingPair, takeAmount, latestPrice } },
-    ) =>
+    [initTradesHistoryAction]: (state, { payload }) => state.set('USER_TRADES', payload),
+    [updateTradingPairVolume]: (state, { payload: { tradingPair, takeAmount, latestPrice } }) =>
       state
         .updateIn(['volumes', tradingPair, 'volume'], (currentVolume) =>
           new BigNumber(currentVolume).add(new BigNumber(takeAmount)),
         )
         .setIn(['volumes', tradingPair, 'latestPrice'], latestPrice),
-    [logTakeEvent]: (state, { payload }) =>
-      state.setIn(['latestEventsBlocks', 'LogTake'], payload.blockNumber),
-    [loadInitialTradeHistory]: (state, { payload }) =>
-      state.updateIn(['marketHistory'], () => List(payload)),
+    [logTakeEvent]: (state, { payload }) => state.setIn(['latestEventsBlocks', 'LogTake'], payload.blockNumber),
+    [loadInitialTradeHistory]: (state, { payload }) => state.updateIn(['marketHistory'], () => List(payload)),
     [addTradeHistoryEntry]: (state, { payload }) =>
-      state.updateIn(['marketHistory'], (marketHistory) =>
-        marketHistory.push(payload),
-      ),
-    [initialMarketHistoryLoaded]: (state) =>
-      state.set('initialMarketHistoryLoaded', true),
+      state.updateIn(['marketHistory'], (marketHistory) => marketHistory.push(payload)),
+    [initialMarketHistoryLoaded]: (state) => state.set('initialMarketHistoryLoaded', true),
     [fulfilled(getTradeHistoryStartingBlockTimestamp)]: (state, { payload }) =>
       state.set('tradeHistoryStartingBlockTimestamp', payload),
   },

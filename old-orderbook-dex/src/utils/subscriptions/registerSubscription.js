@@ -1,12 +1,7 @@
 import platform from '../../store/selectors/platform';
 import platformReducer from '../../store/reducers/platform';
 
-export const registerSubscription = (
-  subscriptionType,
-  onRegister,
-  { dispatch, getState },
-  subscriptionsGroup,
-) => {
+export const registerSubscription = (subscriptionType, onRegister, { dispatch, getState }, subscriptionsGroup) => {
   if (
     !platform.isSubscriptionRegistered(getState(), {
       subscriptionsGroup,
@@ -14,17 +9,10 @@ export const registerSubscription = (
     })
   ) {
     onRegister();
-    dispatch(
-      platformReducer.actions.registerSubscriptionByTypeAndGroup(
-        subscriptionsGroup,
-        subscriptionType,
-      ),
-    );
+    dispatch(platformReducer.actions.registerSubscriptionByTypeAndGroup(subscriptionsGroup, subscriptionType));
     return true;
   } else {
-    console.error(
-      `onErrorRegister => ${subscriptionsGroup} ${subscriptionType}`,
-    );
+    console.error(`onErrorRegister => ${subscriptionsGroup} ${subscriptionType}`);
     return false;
   }
 };

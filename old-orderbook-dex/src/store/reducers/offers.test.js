@@ -10,11 +10,7 @@ import { Map, List } from 'immutable';
 
 import config from '../../configs';
 import offers from './offers';
-import {
-  OFFER_SYNC_TYPE_INITIAL,
-  OFFER_SYNC_TYPE_NEW_OFFER,
-  OFFER_SYNC_TYPE_UPDATE,
-} from './offers';
+import { OFFER_SYNC_TYPE_INITIAL, OFFER_SYNC_TYPE_NEW_OFFER, OFFER_SYNC_TYPE_UPDATE } from './offers';
 import { TYPE_BUY_OFFER } from './offers';
 import conversion from '../../utils/conversion';
 import { SYNC_STATUS_PRISTINE } from '../../constants';
@@ -61,9 +57,7 @@ each([
           ],
         }),
         doSetOfferEpic: mockAction('OFFERS/SET_OFFER'),
-        doGetTradingPairOfferCount: mockAction(
-          'OFFERS/GET_TRADING_PAIR_OFFERS_COUNT',
-        ),
+        doGetTradingPairOfferCount: mockAction('OFFERS/GET_TRADING_PAIR_OFFERS_COUNT'),
       }),
     );
 
@@ -79,11 +73,7 @@ each([
   ['initial sync / update', OFFER_SYNC_TYPE_INITIAL],
   ['initial sync / set', OFFER_SYNC_TYPE_INITIAL, { id: 61210 }],
   ['update sync / partial', OFFER_SYNC_TYPE_UPDATE],
-  [
-    'update sync / complete',
-    OFFER_SYNC_TYPE_UPDATE,
-    { buyHowMuch: new BigNumber(0) },
-  ],
+  ['update sync / complete', OFFER_SYNC_TYPE_UPDATE, { buyHowMuch: new BigNumber(0) }],
 ]).describe('setOfferEpic', (description, syncType, overrides = {}) => {
   test(description, async () => {
     const store = configureMockStore([thunk])(
@@ -142,12 +132,7 @@ each([
 });
 
 each([
-  [
-    'buy empty',
-    offers.testActions.loadBuyOffersEpic,
-    [[{ id: 0, sell: 0, buy: 0 }]],
-    [[{ id: 0, sell: 0, buy: 0 }]],
-  ],
+  ['buy empty', offers.testActions.loadBuyOffersEpic, [[{ id: 0, sell: 0, buy: 0 }]], [[{ id: 0, sell: 0, buy: 0 }]]],
   [
     'buy one page',
     offers.testActions.loadBuyOffersEpic,
@@ -215,12 +200,7 @@ each([
       ],
     ],
   ],
-  [
-    'sell empty',
-    offers.testActions.loadSellOffersEpic,
-    [[{ id: 0, sell: 0, buy: 0 }]],
-    [[{ id: 0, sell: 0, buy: 0 }]],
-  ],
+  ['sell empty', offers.testActions.loadSellOffersEpic, [[{ id: 0, sell: 0, buy: 0 }]], [[{ id: 0, sell: 0, buy: 0 }]]],
   [
     'sell one page',
     offers.testActions.loadSellOffersEpic,
@@ -288,73 +268,60 @@ each([
       ],
     ],
   ],
-]).describe(
-  'loadSellOffersEpic',
-  (description, action, firstCalls, nextCalls) => {
-    test(description, async () => {
-      const store = configureMockStore([thunk])(
-        Map({
-          tokens: Map({
-            precision: 18,
-            tokenSpecs: Map({
-              MKR: Map({
-                precision: 18,
-              }),
-              'W-ETH': Map({
-                precision: 18,
-              }),
+]).describe('loadSellOffersEpic', (description, action, firstCalls, nextCalls) => {
+  test(description, async () => {
+    const store = configureMockStore([thunk])(
+      Map({
+        tokens: Map({
+          precision: 18,
+          tokenSpecs: Map({
+            MKR: Map({
+              precision: 18,
             }),
-            tradingPairs: List([
-              Map({
-                base: 'MKR',
-                quote: 'W-ETH',
-              }),
-            ]),
+            'W-ETH': Map({
+              precision: 18,
+            }),
           }),
-          offers: Map({
-            offers: Map().set(
-              Map({ baseToken: 'MKR', quoteToken: 'W-ETH' }),
-              Map({
-                buyOfferCount: 0,
-                buyOffers: List(),
-              }),
-            ),
-          }),
+          tradingPairs: List([
+            Map({
+              base: 'MKR',
+              quote: 'W-ETH',
+            }),
+          ]),
         }),
-      );
-
-      const obj2web3 = (o) =>
-        o.map((c) => [
-          c.map((v) => new BigNumber(v.id)),
-          c.map((v) => new BigNumber(v.sell)),
-          c.map((v) => new BigNumber(v.buy)),
-          [],
-          [],
-        ]);
-      const promise = store.dispatch(
-        action(null, 'MKR', 'W-ETH', {
-          firstPage: asyncMock(
-            obj2web3(firstCalls).reduce(
-              (a, e) => a.mockReturnValueOnce(e),
-              jest.fn(),
-            ),
+        offers: Map({
+          offers: Map().set(
+            Map({ baseToken: 'MKR', quoteToken: 'W-ETH' }),
+            Map({
+              buyOfferCount: 0,
+              buyOffers: List(),
+            }),
           ),
-          nextPage: asyncMock(
-            obj2web3(nextCalls).reduce(
-              (a, e) => a.mockReturnValueOnce(e),
-              jest.fn(),
-            ),
-          ),
-          pageSize: 2,
         }),
-      );
+      }),
+    );
 
-      const result = await promise;
-      expect(result).toMatchSnapshot();
-      expect(store.getActions()).toMatchSnapshot();
-    });
-  },
-);
+    const obj2web3 = (o) =>
+      o.map((c) => [
+        c.map((v) => new BigNumber(v.id)),
+        c.map((v) => new BigNumber(v.sell)),
+        c.map((v) => new BigNumber(v.buy)),
+        [],
+        [],
+      ]);
+    const promise = store.dispatch(
+      action(null, 'MKR', 'W-ETH', {
+        firstPage: asyncMock(obj2web3(firstCalls).reduce((a, e) => a.mockReturnValueOnce(e), jest.fn())),
+        nextPage: asyncMock(obj2web3(nextCalls).reduce((a, e) => a.mockReturnValueOnce(e), jest.fn())),
+        pageSize: 2,
+      }),
+    );
+
+    const result = await promise;
+    expect(result).toMatchSnapshot();
+    expect(store.getActions()).toMatchSnapshot();
+  });
+});
 
 describe('syncOffersEpic', () => {
   test('main', async () => {
@@ -454,9 +421,7 @@ describe('subscribeCancelledOrdersEpic', () => {
           doGetMarketContractInstance: () => ({
             LogKill: LogKill,
           }),
-          doGetTradingPairOfferCount: mockAction(
-            'GET_TRADING_PAIR_OFFERS_COUNT',
-          ),
+          doGetTradingPairOfferCount: mockAction('GET_TRADING_PAIR_OFFERS_COUNT'),
         },
       ),
     );
@@ -475,50 +440,46 @@ each([
   ['passive new', 61212, false],
   ['passive update offerTake', 61211, false, 61211],
   ['passive update', 61211, false],
-]).describe(
-  'subscribeFilledOffersEpic',
-  (description, id, active, offerTake = null) => {
-    test(description, async () => {
-      const store = configureMockStore([thunk])(
-        Map({
-          offers: Map({
-            offers: Map().set(
-              Map({ baseToken: 'MKR', quoteToken: 'W-ETH' }),
-              Map({
-                buyOfferCount: 1,
-                buyOffers: List([{ id: 61211 }]),
-              }),
-            ),
-          }),
-          offerTakes: Map({
-            activeOfferTakeOfferId: String(offerTake),
-          }),
-        }),
-      );
-
-      const LogItemUpdate = jest.fn(() => ({
-        then: (onSuccess) =>
-          onSuccess(null, { args: { id: new BigNumber(id) } }),
-      }));
-      const promise = store.dispatch(
-        offers.testActions.subscribeFilledOffersEpic(
-          1,
-          {},
-          {
-            doGetMarketContractInstance: () => ({
-              LogItemUpdate: LogItemUpdate,
+]).describe('subscribeFilledOffersEpic', (description, id, active, offerTake = null) => {
+  test(description, async () => {
+    const store = configureMockStore([thunk])(
+      Map({
+        offers: Map({
+          offers: Map().set(
+            Map({ baseToken: 'MKR', quoteToken: 'W-ETH' }),
+            Map({
+              buyOfferCount: 1,
+              buyOffers: List([{ id: 61211 }]),
             }),
-            doCheckOfferIsActive: () => async () => ({ value: active }),
-            doSyncOffer: mockAction('SYNC_OFFER'),
-          },
-        ),
-      );
+          ),
+        }),
+        offerTakes: Map({
+          activeOfferTakeOfferId: String(offerTake),
+        }),
+      }),
+    );
 
-      const result = await promise;
+    const LogItemUpdate = jest.fn(() => ({
+      then: (onSuccess) => onSuccess(null, { args: { id: new BigNumber(id) } }),
+    }));
+    const promise = store.dispatch(
+      offers.testActions.subscribeFilledOffersEpic(
+        1,
+        {},
+        {
+          doGetMarketContractInstance: () => ({
+            LogItemUpdate: LogItemUpdate,
+          }),
+          doCheckOfferIsActive: () => async () => ({ value: active }),
+          doSyncOffer: mockAction('SYNC_OFFER'),
+        },
+      ),
+    );
 
-      expect(result).toMatchSnapshot();
-      expect(store.getActions()).toMatchSnapshot();
-      expect(LogItemUpdate.mock.calls).toMatchSnapshot();
-    });
-  },
-);
+    const result = await promise;
+
+    expect(result).toMatchSnapshot();
+    expect(store.getActions()).toMatchSnapshot();
+    expect(LogItemUpdate.mock.calls).toMatchSnapshot();
+  });
+});

@@ -1,8 +1,5 @@
 import { MAKE_BUY_OFFER, MAKE_SELL_OFFER } from '../../constants';
-import {
-  TAKE_BUY_OFFER,
-  TAKE_SELL_OFFER,
-} from '../../store/reducers/offerTakes';
+import { TAKE_BUY_OFFER, TAKE_SELL_OFFER } from '../../store/reducers/offerTakes';
 
 const tokenToBeAllowedForOffer = ({ offerType, sellToken, buyToken }) => {
   // console.log({buyToken, sellToken, offerType})

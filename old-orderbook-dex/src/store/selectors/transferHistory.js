@@ -6,24 +6,18 @@ import accounts from './accounts';
 
 const transferHistory = (s) => s.get('transferHistory');
 
-const getTokenTransferHistoryStatus = createSelector(
-  transferHistory,
-  reselect.getProps,
-  (s, tokeName) => s.getIn(['tokensLoadingStatus', tokeName, 'status']),
+const getTokenTransferHistoryStatus = createSelector(transferHistory, reselect.getProps, (s, tokeName) =>
+  s.getIn(['tokensLoadingStatus', tokeName, 'status']),
 );
 
 const isTokenTransferHistoryLoading = createSelector(
   transferHistory,
   reselect.getProps,
-  (s, tokeName) =>
-    s.getIn(['tokensLoadingStatus', tokeName, 'status']) ===
-    TRANSFER_HISTORY_LOAD_STATUS_PENDING,
+  (s, tokeName) => s.getIn(['tokensLoadingStatus', tokeName, 'status']) === TRANSFER_HISTORY_LOAD_STATUS_PENDING,
 );
 
-const hasAccountEntry = createSelector(
-  transferHistory,
-  reselect.getProps,
-  (s, account) => s.hasIn(['transferHistory', account]),
+const hasAccountEntry = createSelector(transferHistory, reselect.getProps, (s, account) =>
+  s.hasIn(['transferHistory', account]),
 );
 
 const tokenTransferHistory = createSelector(
@@ -39,10 +33,8 @@ const tokenTransferHistory = createSelector(
       : fromJS([]),
 );
 
-const isInitializedForAccount = createSelector(
-  transferHistory,
-  accounts.defaultAccount,
-  (s, accountAddress) => s.getIn(['historyLoadedForAddress', accountAddress]),
+const isInitializedForAccount = createSelector(transferHistory, accounts.defaultAccount, (s, accountAddress) =>
+  s.getIn(['historyLoadedForAddress', accountAddress]),
 );
 
 export default {

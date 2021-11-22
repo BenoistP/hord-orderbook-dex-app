@@ -57,11 +57,7 @@ export class FlexBox extends PureComponent {
       ${className}
     `;
     return (
-      <div
-        hidden={this.props.hidden}
-        style={inlineStyles}
-        className={divClasses}
-      >
+      <div hidden={this.props.hidden} style={inlineStyles} className={divClasses}>
         {this.props.children}
       </div>
     );

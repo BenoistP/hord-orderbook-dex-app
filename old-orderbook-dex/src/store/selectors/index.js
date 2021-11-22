@@ -24,15 +24,9 @@ const isGasEstimatePending = createSelector(
   (rootState, transactionSubjectType) => {
     switch (transactionSubjectType) {
       case TX_OFFER_TAKE:
-        return rootState.getIn([
-          'offerTakes',
-          'transactionGasCostEstimatePending',
-        ]);
+        return rootState.getIn(['offerTakes', 'transactionGasCostEstimatePending']);
       case TX_OFFER_MAKE:
-        return rootState.getIn([
-          'offerMakes',
-          'transactionGasCostEstimatePending',
-        ]);
+        return rootState.getIn(['offerMakes', 'transactionGasCostEstimatePending']);
     }
   },
 );
@@ -43,15 +37,9 @@ const gasEstimateError = createSelector(
   (rootState, transactionSubjectType) => {
     switch (transactionSubjectType) {
       case TX_OFFER_TAKE:
-        return rootState.getIn([
-          'offerTakes',
-          'transactionGasCostEstimateError',
-        ]);
+        return rootState.getIn(['offerTakes', 'transactionGasCostEstimateError']);
       case TX_OFFER_MAKE:
-        return rootState.getIn([
-          'offerMakes',
-          'transactionGasCostEstimateError',
-        ]);
+        return rootState.getIn(['offerMakes', 'transactionGasCostEstimateError']);
     }
   },
 );
@@ -77,34 +65,16 @@ const gasEstimateInfo = createSelector(
       case TAKE_BUY_OFFER:
       case TAKE_SELL_OFFER:
         return fromJS({
-          isGasEstimatePending: rootState.getIn([
-            'offerTakes',
-            'transactionGasCostEstimatePending',
-          ]),
-          transactionGasCostEstimate: rootState.getIn([
-            'offerTakes',
-            'transactionGasCostEstimate',
-          ]),
-          transactionGasCostEstimateError: rootState.getIn([
-            'offerTakes',
-            'transactionGasCostEstimateError',
-          ]),
+          isGasEstimatePending: rootState.getIn(['offerTakes', 'transactionGasCostEstimatePending']),
+          transactionGasCostEstimate: rootState.getIn(['offerTakes', 'transactionGasCostEstimate']),
+          transactionGasCostEstimateError: rootState.getIn(['offerTakes', 'transactionGasCostEstimateError']),
         });
       case MAKE_BUY_OFFER:
       case MAKE_SELL_OFFER:
         return fromJS({
-          isGasEstimatePending: rootState.getIn([
-            'offerMakes',
-            'transactionGasCostEstimatePending',
-          ]),
-          transactionGasCostEstimate: rootState.getIn([
-            'offerMakes',
-            'transactionGasCostEstimate',
-          ]),
-          transactionGasCostEstimateError: rootState.getIn([
-            'offerMakes',
-            'transactionGasCostEstimateError',
-          ]),
+          isGasEstimatePending: rootState.getIn(['offerMakes', 'transactionGasCostEstimatePending']),
+          transactionGasCostEstimate: rootState.getIn(['offerMakes', 'transactionGasCostEstimate']),
+          transactionGasCostEstimateError: rootState.getIn(['offerMakes', 'transactionGasCostEstimateError']),
         });
     }
   },
@@ -120,14 +90,10 @@ const getOfferFormValuesByOfferType = createSelector(
         formValues = offerTakes.takeFormValuesSelector(state, ...fields);
         break;
       case MAKE_BUY_OFFER:
-        formValues = offerMakes.currentFormValues(state)(
-          MAKE_BUY_OFFER_FORM_NAME,
-        );
+        formValues = offerMakes.currentFormValues(state)(MAKE_BUY_OFFER_FORM_NAME);
         break;
       case MAKE_SELL_OFFER:
-        formValues = offerMakes.currentFormValues(state)(
-          MAKE_SELL_OFFER_FORM_NAME,
-        );
+        formValues = offerMakes.currentFormValues(state)(MAKE_SELL_OFFER_FORM_NAME);
         break;
     }
     return fromJS(formValues);
@@ -142,10 +108,7 @@ const getOfferBuyAndSellTokenByOfferType = createSelector(
     switch (offerType) {
       case TAKE_BUY_OFFER:
       case TAKE_SELL_OFFER:
-        [buyToken, sellToken] = [
-          offerTakes.activeOfferTakeBuyToken(state),
-          offerTakes.activeOfferTakeSellToken(state),
-        ];
+        [buyToken, sellToken] = [offerTakes.activeOfferTakeBuyToken(state), offerTakes.activeOfferTakeSellToken(state)];
         break;
       case MAKE_BUY_OFFER:
       case MAKE_SELL_OFFER:
@@ -197,16 +160,10 @@ const getActiveOfferAllowanceStatus = createSelector(
     switch (offerType) {
       case TAKE_SELL_OFFER:
       case TAKE_BUY_OFFER:
-        return offerTakes.getActiveOfferTakeAllowanceStatus(
-          rootState,
-          offerType,
-        );
+        return offerTakes.getActiveOfferTakeAllowanceStatus(rootState, offerType);
       case MAKE_SELL_OFFER:
       case MAKE_BUY_OFFER:
-        return offerMakes.getActiveOfferMakeAllowanceStatus(
-          rootState,
-          offerType,
-        );
+        return offerMakes.getActiveOfferMakeAllowanceStatus(rootState, offerType);
     }
   },
   (allowanceStatus) => Boolean(allowanceStatus),
@@ -229,20 +186,11 @@ const appLoadProgress = createSelector(
   platform.contractsLoaded,
   (rootState) =>
     tokens.activeTradingPair(rootState)
-      ? offers.tradingPairOffersInitialLoadStatus(
-          rootState,
-          tokens.activeTradingPair(rootState),
-        )
+      ? offers.tradingPairOffersInitialLoadStatus(rootState, tokens.activeTradingPair(rootState))
       : null,
   (marketHistoryLoaded, contractsLoaded, offersLoaded) => {
     const statuses = [marketHistoryLoaded, contractsLoaded, offersLoaded];
-    return (
-      (statuses.filter((status) =>
-        [SYNC_STATUS_COMPLETED, true].includes(status),
-      ).length /
-        statuses.length) *
-      100
-    );
+    return (statuses.filter((status) => [SYNC_STATUS_COMPLETED, true].includes(status)).length / statuses.length) * 100;
   },
 );
 

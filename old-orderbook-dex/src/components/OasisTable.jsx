@@ -55,9 +55,7 @@ export class OasisTable extends PureComponent {
       <tr>
         {col.map((colDef, i) => {
           let classNames = colDef.heading === 'date' ? styles.dateHeading : '';
-          classNames += colDef.twoRowsInCell
-            ? ` ${styles.dateHeadingTwoRows}`
-            : '';
+          classNames += colDef.twoRowsInCell ? ` ${styles.dateHeadingTwoRows}` : '';
           return (
             <th className={classNames} key={i}>
               {colDef.heading}
@@ -81,21 +79,11 @@ export class OasisTable extends PureComponent {
     });
   }
   hideRow(i) {
-    return (
-      this.props.collapseEnabled &&
-      this.state.isCollapsed &&
-      this.props.collapseRowNumber < i + 1
-    );
+    return this.props.collapseEnabled && this.state.isCollapsed && this.props.collapseRowNumber < i + 1;
   }
 
   renderRows() {
-    const {
-      rows,
-      onRowClick,
-      isInitializing,
-      isInitializingText,
-      rowHoverText,
-    } = this.props;
+    const { rows, onRowClick, isInitializing, isInitializingText, rowHoverText } = this.props;
     return rows.map((row, i) => {
       let rowClassNames = '';
       rowClassNames += isInitializing ? styles.isInitializing : '';
@@ -120,10 +108,7 @@ export class OasisTable extends PureComponent {
       return null;
     }
     return (
-      <tr
-        className={`${styles.clickable} ${styles.collapseRow}`}
-        onClick={this.toggleCollapse.bind(this)}
-      >
+      <tr className={`${styles.clickable} ${styles.collapseRow}`} onClick={this.toggleCollapse.bind(this)}>
         <td colSpan={col.length} className={styles.collapseCell}>
           {this.state.isCollapsed ? 'Show more' : 'Show less'}
         </td>
@@ -141,9 +126,7 @@ export class OasisTable extends PureComponent {
             {this.renderCollapseRow()}
             {!this.props.rows.length && this.props.emptyFallback && (
               <tr className={styles.emptyFallback}>
-                <td colSpan={this.props.col.length}>
-                  {this.props.emptyFallback}
-                </td>
+                <td colSpan={this.props.col.length}>{this.props.emptyFallback}</td>
               </tr>
             )}
           </tbody>

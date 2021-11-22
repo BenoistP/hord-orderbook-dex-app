@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  OasisFooterWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisFooter';
+import { OasisFooterWrapper, mapStateToProps, mapDispatchToProps } from './OasisFooter';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisFooter', () => {

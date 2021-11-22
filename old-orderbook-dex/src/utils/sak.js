@@ -11,14 +11,10 @@ const toString = (x) => x.toString();
 
 const print = (x) => console.log(x);
 
-const marketAddress = (store) => () =>
-  markets.activeMarketAddress(store.getState());
+const marketAddress = (store) => () => markets.activeMarketAddress(store.getState());
 
 const getTokenAllowance = (store) => (tokenName) => {
-  const x = balances.actions.getDefaultAccountTokenAllowanceForAddress(
-    tokenName,
-    marketAddress(store)(),
-  )(
+  const x = balances.actions.getDefaultAccountTokenAllowanceForAddress(tokenName, marketAddress(store)())(
     (a) => store.dispatch(a),
     () => store.getState(),
   );
@@ -31,14 +27,10 @@ const getTokenAllowance = (store) => (tokenName) => {
 };
 
 const disableTokenTrust = (store) => (tokenName) =>
-  balances.actions
-    .setTokenTrustAddressDisabled(tokenName, marketAddress(store)())
-    .payload.then(watch);
+  balances.actions.setTokenTrustAddressDisabled(tokenName, marketAddress(store)()).payload.then(watch);
 
 const enableTokenTrust = (store) => (tokenName) =>
-  balances.actions
-    .setTokenTrustAddressEnabled(tokenName, marketAddress(store)())
-    .payload.then(watch);
+  balances.actions.setTokenTrustAddressEnabled(tokenName, marketAddress(store)()).payload.then(watch);
 
 const watch = (txHash) => {
   const filter = web3.eth.filter('latest');
@@ -50,12 +42,7 @@ const watch = (txHash) => {
     }
     web3p.eth.getTransactionReceipt(txHash).then((receipt) => {
       if (receipt) {
-        console.log(
-          `Transaction: ${txHash}, status: ${
-            receipt.status === '0x1' ? 'success' : 'failure'
-          }`,
-          receipt,
-        );
+        console.log(`Transaction: ${txHash}, status: ${receipt.status === '0x1' ? 'success' : 'failure'}`, receipt);
         filter.stopWatching();
       }
     });

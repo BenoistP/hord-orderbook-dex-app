@@ -17,52 +17,16 @@ import balances from './balances';
 import each from 'jest-each';
 
 const testCases = [
-  [
-    'MKR',
-    TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
-    TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
-    0,
-    false,
-  ],
-  [
-    'MKR',
-    TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
-    TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
-    1,
-    false,
-  ],
-  [
-    'MKR',
-    TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
-    TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
-    0,
-    false,
-  ],
-  [
-    'MKR',
-    TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
-    TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
-    1,
-    false,
-  ],
-  [
-    'DAI',
-    TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED,
-    TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED,
-    1,
-    true,
-  ],
+  ['MKR', TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED, TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED, 0, false],
+  ['MKR', TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED, TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED, 1, false],
+  ['MKR', TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED, TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED, 0, false],
+  ['MKR', TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED, TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED, 1, false],
+  ['DAI', TOKEN_ALLOWANCE_TRUST_STATUS_DISABLED, TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED, 1, true],
 ];
 
 each(testCases).describe(
   'setTokenAllowanceTrustEpic',
-  (
-    tokenName,
-    previousAllowance,
-    newAllowance,
-    expectedNoCalls,
-    expectedToTrow,
-  ) => {
+  (tokenName, previousAllowance, newAllowance, expectedNoCalls, expectedToTrow) => {
     test(`token: ${tokenName}, status: ${previousAllowance} set to: ${newAllowance}`, () => {
       const store = configureMockStore([thunk2Data(), thunk])({});
 

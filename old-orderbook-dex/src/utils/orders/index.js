@@ -18,10 +18,7 @@ const toDisplayFormat = (offer) => ({
   id: offer.id,
 });
 
-const getOfferType = (
-  baseToken,
-  { sellWhichTokenAddress, buyWhichTokenAddress },
-) => {
+const getOfferType = (baseToken, { sellWhichTokenAddress, buyWhichTokenAddress }) => {
   const baseTokenAddress = getTokenContractInstance(baseToken).address;
   switch (baseTokenAddress) {
     case sellWhichTokenAddress:

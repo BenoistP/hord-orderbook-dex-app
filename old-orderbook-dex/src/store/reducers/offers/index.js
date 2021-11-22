@@ -8,17 +8,9 @@ import offers from '../../selectors/offers';
 import { SYNC_STATUS_PRISTINE } from '../../../constants';
 
 import { setOfferEpic, reducer as setOfferEpicReducer } from './setOfferEpic';
-import {
-  loadBuyOffersEpic,
-  loadSellOffersEpic,
-  reducer as loadOffersReducer,
-} from './loadOffers';
+import { loadBuyOffersEpic, loadSellOffersEpic, reducer as loadOffersReducer } from './loadOffers';
 import { reducer as getTradingPairOfferCountReducer } from './getTradingPairOffersCount';
-import {
-  cancelOfferEpic,
-  syncOffersEpic,
-  reducer as syncOffersEpicReducer,
-} from './syncOffersEpic';
+import { cancelOfferEpic, syncOffersEpic, reducer as syncOffersEpicReducer } from './syncOffersEpic';
 import { syncOffer, reducer as syncOfferEpicReducer } from './syncOfferEpic';
 import {
   removeOrderCancelledByTheOwner,
@@ -67,10 +59,7 @@ const subscribeOffersEventsEpic = () => async (dispatch, getState) => {
   // dispatch(subscribeCancelledOrdersEpic(latestBlockNumber));
 };
 
-const initOffers = createAction(
-  'OFFERS/INIT_OFFERS',
-  (initialOffersState) => initialOffersState,
-);
+const initOffers = createAction('OFFERS/INIT_OFFERS', (initialOffersState) => initialOffersState);
 const initOffersEpic = () => (dispatch, getState) => {
   let initialOffersData = Map({});
   const initialTradingPairData = fromJS({
@@ -124,9 +113,7 @@ const testActions = {
 
 const offersReducer = {
   [initOffers]: (state, { payload }) => {
-    return state
-      .updateIn(['offers'], () => payload)
-      .set('offersInitialized', () => true);
+    return state.updateIn(['offers'], () => payload).set('offersInitialized', () => true);
   },
 };
 

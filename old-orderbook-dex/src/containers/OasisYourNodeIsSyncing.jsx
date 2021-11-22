@@ -14,9 +14,7 @@ const propTypes = PropTypes && {
 export class OasisYourNodeIsSyncingWrapper extends PureComponent {
   render() {
     const { latestBlock, networkId } = this.props;
-    return (
-      <OasisYourNodeIsSyncing latestBlock={latestBlock} networkId={networkId} />
-    );
+    return <OasisYourNodeIsSyncing latestBlock={latestBlock} networkId={networkId} />;
   }
 }
 
@@ -33,7 +31,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisYourNodeIsSyncingWrapper.propTypes = propTypes;
 OasisYourNodeIsSyncingWrapper.displayName = 'OasisYourNodeIsSyncing';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisYourNodeIsSyncingWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisYourNodeIsSyncingWrapper);

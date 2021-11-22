@@ -27,21 +27,9 @@ class Locked extends PureComponent {
     const { activeNodeType } = this.props;
     switch (activeNodeType) {
       case PROVIDER_TYPE_METAMASK:
-        return (
-          <img
-            className={styles.Logo}
-            alt='Metamask Fox Logo'
-            src={MetamaskSVGLogo}
-          />
-        );
+        return <img className={styles.Logo} alt="Metamask Fox Logo" src={MetamaskSVGLogo} />;
       case PROVIDER_TYPE_MIST:
-        return (
-          <img
-            className={styles.Logo}
-            alt='Mist Browser Logo'
-            src={MistSVGLogo}
-          />
-        );
+        return <img className={styles.Logo} alt="Mist Browser Logo" src={MistSVGLogo} />;
     }
   }
 

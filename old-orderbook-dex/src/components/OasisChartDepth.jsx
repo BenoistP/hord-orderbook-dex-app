@@ -111,10 +111,7 @@ export class OasisChartDepth extends PureComponent {
   }
 
   showTooltip(tooltip) {
-    const tooltipEl = tooltipContainer(
-      tooltip,
-      document.getElementsByClassName('chartjs-render-monitor')[0],
-    );
+    const tooltipEl = tooltipContainer(tooltip, document.getElementsByClassName('chartjs-render-monitor')[0]);
     if (tooltipEl && tooltip.body) {
       const price = this.props.depthChartLabels[tooltip.dataPoints[0].index];
       let type = null;
@@ -128,22 +125,16 @@ export class OasisChartDepth extends PureComponent {
       });
       [type, quoteAmount] = tooltip.body[typeIndex].lines[0].split(': ');
       if (type === 'Sell') {
-        quoteAmount =
-          this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].quote;
-        baseAmount =
-          this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].base;
+        quoteAmount = this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].quote;
+        baseAmount = this.props.depthChartTooltips.sell[tooltip.dataPoints[0].index].base;
       } else {
-        quoteAmount =
-          this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].quote;
-        baseAmount =
-          this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].base;
+        quoteAmount = this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].quote;
+        baseAmount = this.props.depthChartTooltips.buy[tooltip.dataPoints[0].index].base;
       }
 
       tooltipEl.innerHTML = `<div class="row-custom-tooltip">
           <span class="left">Price</span>
-          <span class="right">${new BigNumber(price.toString()).toFormat(
-            4,
-          )}</span>
+          <span class="right">${new BigNumber(price.toString()).toFormat(4)}</span>
         </div>
         <div class="row-custom-tooltip middle">
           <span class="left">SUM(${this.props.tradingPair.quoteToken})</span>

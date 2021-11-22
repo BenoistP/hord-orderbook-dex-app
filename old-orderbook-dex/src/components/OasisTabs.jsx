@@ -18,20 +18,14 @@ class OasisTabs extends PureComponent {
   }
   render() {
     const { defaultTradingPair, activeTradingPair } = this.props;
-    const { baseToken, quoteToken } = activeTradingPair
-      ? activeTradingPair
-      : defaultTradingPair;
+    const { baseToken, quoteToken } = activeTradingPair ? activeTradingPair : defaultTradingPair;
     return (
       <div className={styles.rowTabs}>
         <ul className={styles.tabs}>
           <li className={`${styles.tab} ${this.isActive('/trade')}`}>
             <NavLink to={`/trade/${baseToken}/${quoteToken}`}>Trade</NavLink>
           </li>
-          <li
-            className={`${styles.tab} ${styles.tabBig} ${this.isActive(
-              '/wrap-unwrap',
-            )}`}
-          >
+          <li className={`${styles.tab} ${styles.tabBig} ${this.isActive('/wrap-unwrap')}`}>
             <NavLink to={'/wrap-unwrap'}>Wrap / Unwrap</NavLink>
           </li>
           <li className={`${styles.tab} ${this.isActive('/transfer')}`}>

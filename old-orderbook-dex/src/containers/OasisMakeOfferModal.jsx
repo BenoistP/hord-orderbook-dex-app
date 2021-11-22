@@ -176,21 +176,11 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
   }
 
   isTransactionPendingOrAwaitingAcceptance() {
-    return [
-      TX_STATUS_AWAITING_USER_ACCEPTANCE,
-      TX_STATUS_AWAITING_CONFIRMATION,
-    ].includes(this.state.txStatus);
+    return [TX_STATUS_AWAITING_USER_ACCEPTANCE, TX_STATUS_AWAITING_CONFIRMATION].includes(this.state.txStatus);
   }
 
   renderFormAndSummary() {
-    const {
-      baseToken,
-      quoteToken,
-      offerMakeType,
-      form,
-      isTotalOverTheTokenMax,
-      isTokenTradingEnabled,
-    } = this.props;
+    const { baseToken, quoteToken, offerMakeType, form, isTotalOverTheTokenMax, isTokenTradingEnabled } = this.props;
     const { newAllowanceStatus } = this.state;
     return (
       <div>
@@ -247,16 +237,12 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
 
   shouldDisabledOfferMakeButton() {
     const { canMakeOffer, hasExceededGasLimit } = this.props;
-    return (
-      !canMakeOffer || this.state.disableOfferMakeButton || hasExceededGasLimit
-    );
+    return !canMakeOffer || this.state.disableOfferMakeButton || hasExceededGasLimit;
   }
 
   renderOverTheMaxTotalWarning() {
     const { isTotalOverTheTokenMax } = this.props;
-    return isTotalOverTheTokenMax ? (
-      <OasisYourOrderExceedsMaxTotalForToken />
-    ) : null;
+    return isTotalOverTheTokenMax ? <OasisYourOrderExceedsMaxTotalForToken /> : null;
   }
 
   renderOfferTakeWarning() {
@@ -268,32 +254,19 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
     const { baseToken, offerMakeType, sellToken } = this.props;
 
     return (
-      <ReactModal
-        ariaHideApp={false}
-        isOpen={true}
-        className={modalStyles.modal}
-      >
+      <ReactModal ariaHideApp={false} isOpen={true} className={modalStyles.modal}>
         <h4 className={modalStyles.heading}>{getOfferTitle(offerMakeType)}</h4>
         {!this.isTransactionPendingOrAwaitingAcceptance() ? (
           <button className={modalStyles.closeModalBtn} onClick={this.onCancel}>
             ×
           </button>
         ) : null}
-        <OasisTokenBalanceSummary summary='Available' token={sellToken} />
+        <OasisTokenBalanceSummary summary="Available" token={sellToken} />
         <div>
           {this.renderFormAndSummary()}
           <div>
-            {sellToken && (
-              <OasisOfferBelowDustLimitWrapper
-                tokenName={sellToken}
-                offerType={offerMakeType}
-              />
-            )}
-            <InfoBoxWithIco
-              icon='info'
-              fullWidth
-              hidden={this.props.isPriceSet}
-            >
+            {sellToken && <OasisOfferBelowDustLimitWrapper tokenName={sellToken} offerType={offerMakeType} />}
+            <InfoBoxWithIco icon="info" fullWidth hidden={this.props.isPriceSet}>
               Enter a price to unlock amount and total.
             </InfoBoxWithIco>
           </div>
@@ -302,10 +275,7 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
           {this.renderOverTheMaxTotalWarning()}
           {this.renderOfferTakeWarning()}
           <div className={styles.footer}>
-            <OasisButton
-              disabled={this.isTransactionPendingOrAwaitingAcceptance()}
-              onClick={this.onCancel}
-            >
+            <OasisButton disabled={this.isTransactionPendingOrAwaitingAcceptance()} onClick={this.onCancel}>
               {this.askForConfirmationBeforeModalClose() ? 'Close' : 'Cancel'}
             </OasisButton>
             <OasisButton
@@ -313,10 +283,7 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
               onClick={this.onBuyOffer}
               color={getBtnColor(offerMakeType)}
             >
-              {OasisMakeOfferModalWrapper.makeOfferBtnLabel(
-                offerMakeType,
-                baseToken,
-              )}
+              {OasisMakeOfferModalWrapper.makeOfferBtnLabel(offerMakeType, baseToken)}
             </OasisButton>
           </div>
         </div>
@@ -327,33 +294,22 @@ export class OasisMakeOfferModalWrapper extends PureComponent {
 
 export function mapStateToProps(state, props) {
   return {
-    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(
-      state,
-      props.offerMakeType,
-    ),
-    isTokenTradingEnabled: getActiveOfferAllowanceStatus(
-      state,
-      props.offerMakeType,
-    ),
+    isTotalOverTheTokenMax: offerMakes.isTotalOverTheTokenLimit(state, props.offerMakeType),
+    isTokenTradingEnabled: getActiveOfferAllowanceStatus(state, props.offerMakeType),
     marketAddress: markets.activeMarketAddress(state),
     canMakeOffer: offerMakes.canMakeOffer(state, props.offerMakeType),
     buyToken: offerMakes.activeOfferMakeBuyToken(state, props.form),
     sellToken: offerMakes.activeOfferMakeSellToken(state, props.form),
     isPriceSet: isPriceSet(state, props.offerMakeType),
-    hasExceededGasLimit: offerMakes.hasExceededGasLimit(
-      state,
-      props.offerMakeType,
-    ),
+    hasExceededGasLimit: offerMakes.hasExceededGasLimit(state, props.offerMakeType),
   };
 }
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    setOfferMakeModalClosed:
-      offerMakesReducer.actions.setOfferMakeModalClosedEpic,
+    setOfferMakeModalClosed: offerMakesReducer.actions.setOfferMakeModalClosedEpic,
     makeOffer: offerMakesReducer.actions.makeOfferEpic,
-    getTransactionGasCostEstimate:
-      offerMakesReducer.actions.updateTransactionGasCostEstimateEpic,
+    getTransactionGasCostEstimate: offerMakesReducer.actions.updateTransactionGasCostEstimateEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
@@ -363,10 +319,4 @@ OasisMakeOfferModalWrapper.displayName = 'OasisMakeOfferModal';
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  CSSModules(
-    OasisMakeOfferModalWrapper,
-    { modalStyles, styles },
-    { allowMultiple: true },
-  ),
-);
+)(CSSModules(OasisMakeOfferModalWrapper, { modalStyles, styles }, { allowMultiple: true }));

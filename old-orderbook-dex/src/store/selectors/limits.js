@@ -12,10 +12,8 @@ const tokenMinSellLimitInWei = createSelector(tokenLimitsList, (s) =>
   memoize((tokenName) => s.getIn([tokenName, 'minSell'])),
 );
 
-const tokenMaxSellLimitInWei = createSelector(
-  tokenLimitsList,
-  reselect.getProps,
-  (s, tokenName) => s.getIn([tokenName, 'maxSell']),
+const tokenMaxSellLimitInWei = createSelector(tokenLimitsList, reselect.getProps, (s, tokenName) =>
+  s.getIn([tokenName, 'maxSell']),
 );
 
 const activeTradingPairQuoteTokenMaxLimitInWei = createSelector(
@@ -30,10 +28,8 @@ const activeTradingPairQuoteTokenMaxLimitInEther = createSelector(
   (s, tokenName) => web3.fromWei(s.getIn([tokenName, 'maxSell'])),
 );
 
-const tokenMaxSellLimitInEther = createSelector(
-  tokenLimitsList,
-  reselect.getProps,
-  (s, tokenName) => web3.fromWei(s.getIn([tokenName, 'maxSell'])),
+const tokenMaxSellLimitInEther = createSelector(tokenLimitsList, reselect.getProps, (s, tokenName) =>
+  web3.fromWei(s.getIn([tokenName, 'maxSell'])),
 );
 
 const tokenMinSellLimitInEther = createSelector(tokenLimitsList, (s) =>

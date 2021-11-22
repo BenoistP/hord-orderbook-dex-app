@@ -38,7 +38,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisTransferMainWrapper.propTypes = propTypes;
 OasisTransferMainWrapper.displayName = 'OasisTransfer';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisTransferMainWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisTransferMainWrapper);

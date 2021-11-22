@@ -58,25 +58,22 @@ const registerAccountSpecificSubscriptions = ({
   userMarketHistoryEventSubs,
 }) => {
   if (userMarketHistoryEventSubs) {
-    subscriptions.userMarketHistoryEventSubs =
-      subscriptions.transferHistoryEventSubs.set(
-        userMarketHistoryEventSubs.key,
-        userMarketHistoryEventSubs.value,
-      );
+    subscriptions.userMarketHistoryEventSubs = subscriptions.transferHistoryEventSubs.set(
+      userMarketHistoryEventSubs.key,
+      userMarketHistoryEventSubs.value,
+    );
   } else if (tokenTransferEventSubs) {
     subscriptions.tokenTransferEventSubs = tokenTransferEventSubs;
   } else if (transferHistoryEventSub) {
-    subscriptions.transferHistoryEventSubs =
-      subscriptions.transferHistoryEventSubs.set(
-        transferHistoryEventSub.key,
-        transferHistoryEventSub.value,
-      );
+    subscriptions.transferHistoryEventSubs = subscriptions.transferHistoryEventSubs.set(
+      transferHistoryEventSub.key,
+      transferHistoryEventSub.value,
+    );
   } else if (wrapUnwrapHistoryEventSub) {
-    subscriptions.wrapUnwrapHistoryEventSubs =
-      subscriptions.wrapUnwrapHistoryEventSubs.set(
-        wrapUnwrapHistoryEventSub.key,
-        wrapUnwrapHistoryEventSub.value,
-      );
+    subscriptions.wrapUnwrapHistoryEventSubs = subscriptions.wrapUnwrapHistoryEventSubs.set(
+      wrapUnwrapHistoryEventSub.key,
+      wrapUnwrapHistoryEventSub.value,
+    );
   } else if (ethBalanceChangeEventSub) {
     subscriptions.ethBalanceChangeEventSub = ethBalanceChangeEventSub;
   }
@@ -97,35 +94,15 @@ const getSubscriptionsByTypeAndTag = (group, tag) => {
 };
 
 const clearAccountSpecificSubscriptions = ({ dispatch }) => {
-  subscriptions.tokenTransferEventSubs
-    .valueSeq()
-    .forEach((sub) => sub.stopWatching());
-  dispatch(
-    platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS,
-    ),
-  );
+  subscriptions.tokenTransferEventSubs.valueSeq().forEach((sub) => sub.stopWatching());
+  dispatch(platformReducer.actions.unregisterSubscriptionByType(SUBSCRIPTIONS_TOKEN_TRANSFER_EVENTS));
 
-  subscriptions.transferHistoryEventSubs
-    .valueSeq()
-    .forEach((sub) => sub.stopWatching());
-  dispatch(
-    platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_TOKEN_TRANSFER_HISTORY_EVENTS,
-    ),
-  );
-  subscriptions.userMarketHistoryEventSubs
-    .valueSeq()
-    .forEach((sub) => sub.stopWatching());
-  dispatch(
-    platformReducer.actions.unregisterSubscriptionByType(
-      SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS,
-    ),
-  );
+  subscriptions.transferHistoryEventSubs.valueSeq().forEach((sub) => sub.stopWatching());
+  dispatch(platformReducer.actions.unregisterSubscriptionByType(SUBSCRIPTIONS_TOKEN_TRANSFER_HISTORY_EVENTS));
+  subscriptions.userMarketHistoryEventSubs.valueSeq().forEach((sub) => sub.stopWatching());
+  dispatch(platformReducer.actions.unregisterSubscriptionByType(SUBSCRIPTIONS_USER_LOG_TAKE_EVENTS));
 
-  subscriptions.wrapUnwrapHistoryEventSubs
-    .valueSeq()
-    .forEach((sub) => sub.stopWatching());
+  subscriptions.wrapUnwrapHistoryEventSubs.valueSeq().forEach((sub) => sub.stopWatching());
   subscriptions.ethBalanceChangeEventSub.stopWatching();
   subscriptions.tokenTransferEventSubs = fromJS({});
   subscriptions.transferHistoryEventSubs = fromJS({});

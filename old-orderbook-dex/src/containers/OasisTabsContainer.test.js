@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisTabsContainerWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisTabsContainer';
+import { OasisTabsContainerWrapper, mapStateToProps, mapDispatchToProps } from './OasisTabsContainer';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisTabsContainer', () => {

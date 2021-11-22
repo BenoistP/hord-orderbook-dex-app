@@ -4,11 +4,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { fromJS } from 'immutable';
 
-import {
-  OasisChartPrice,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisChartPrice';
+import { OasisChartPrice, mapStateToProps, mapDispatchToProps } from './OasisChartPrice';
 
 describe('(Component) OasisChartPrice', () => {
   const state = fromJS(global.storeMock);

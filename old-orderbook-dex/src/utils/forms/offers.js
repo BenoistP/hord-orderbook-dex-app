@@ -17,9 +17,7 @@ const normalize = (value, previousValue) => {
 };
 
 const formatValue = (value) => {
-  return isNumeric(value)
-    ? web3.toBigNumber(value.replace(/\.$/, '')).toFormat(PRICE_DECIMAL)
-    : '0';
+  return isNumeric(value) ? web3.toBigNumber(value.replace(/\.$/, '')).toFormat(PRICE_DECIMAL) : '0';
 };
 
 const numericFormatValidator = (value) => {
@@ -34,9 +32,4 @@ const greaterThanZeroValidator = (value) => {
   }
 };
 
-export {
-  normalize,
-  formatValue,
-  numericFormatValidator,
-  greaterThanZeroValidator,
-};
+export { normalize, formatValue, numericFormatValidator, greaterThanZeroValidator };

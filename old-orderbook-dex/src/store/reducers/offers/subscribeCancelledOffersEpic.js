@@ -15,13 +15,8 @@ export const removeOrderCancelledByTheOwner = createAction(
     tradingPair,
   }),
 );
-export const offerCancelledEvent = createAction(
-  'OFFERS/EVENT___OFFER_CANCELLED',
-  (data) => data,
-);
-const subscribeCancelledOrders = createPromiseActions(
-  'OFFERS/SUBSCRIBE_CANCELLED_OFFERS',
-);
+export const offerCancelledEvent = createAction('OFFERS/EVENT___OFFER_CANCELLED', (data) => data);
+const subscribeCancelledOrders = createPromiseActions('OFFERS/SUBSCRIBE_CANCELLED_OFFERS');
 export const subscribeCancelledOrdersEpic =
   (
     fromBlock,
@@ -52,12 +47,7 @@ export const subscribeCancelledOrdersEpic =
                 timestamp,
               }),
             );
-            dispatch(
-              doGetTradingPairOfferCount(
-                tradingPair.baseToken,
-                tradingPair.quoteToken,
-              ),
-            );
+            dispatch(doGetTradingPairOfferCount(tradingPair.baseToken, tradingPair.quoteToken));
           }
         });
     } catch (e) {
@@ -67,10 +57,7 @@ export const subscribeCancelledOrdersEpic =
   };
 
 export const reducer = {
-  [offerCancelledEvent]: (
-    state,
-    { payload: { offerId, tradingPair, offerType } },
-  ) =>
+  [offerCancelledEvent]: (state, { payload: { offerId, tradingPair, offerType } }) =>
     state.updateIn(['offers', Map(tradingPair)], (tradingPairOffers) => {
       switch (offerType) {
         case TYPE_BUY_OFFER:
@@ -93,10 +80,7 @@ export const reducer = {
           );
       }
     }),
-  [removeOrderCancelledByTheOwner]: (
-    state,
-    { payload: { offerId, tradingPair, offerType } },
-  ) =>
+  [removeOrderCancelledByTheOwner]: (state, { payload: { offerId, tradingPair, offerType } }) =>
     state.updateIn(['offers', Map(tradingPair)], (tradingPairOffers) => {
       switch (offerType) {
         case TYPE_BUY_OFFER:

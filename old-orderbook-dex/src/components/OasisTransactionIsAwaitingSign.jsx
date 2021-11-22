@@ -13,8 +13,7 @@ class OasisTransactionIsAwaitingSign extends PureComponent {
   render() {
     return (
       <div className={styles.base}>
-        Sign Trans.{' '}
-        <StatusPictogram status={TX_STATUS_AWAITING_USER_ACCEPTANCE} />
+        Sign Trans. <StatusPictogram status={TX_STATUS_AWAITING_USER_ACCEPTANCE} />
       </div>
     );
   }

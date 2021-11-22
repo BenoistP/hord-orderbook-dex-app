@@ -2,16 +2,8 @@ import { fromJS } from 'immutable';
 import { WRAP_UNWRAP_HISTORY_TYPE_WRAP } from '../../store/reducers/wrapUnwrapHistory';
 import { TOKEN_ETHER, TOKEN_GOLEM } from '../../constants';
 
-const createHistoryEntry = ({
-  event,
-  transactionHash,
-  tokenName,
-  timestamp,
-  blockNumber,
-  wrapUnwrapType,
-}) => {
-  const action =
-    wrapUnwrapType === WRAP_UNWRAP_HISTORY_TYPE_WRAP ? 'wrap' : 'unwrap';
+const createHistoryEntry = ({ event, transactionHash, tokenName, timestamp, blockNumber, wrapUnwrapType }) => {
+  const action = wrapUnwrapType === WRAP_UNWRAP_HISTORY_TYPE_WRAP ? 'wrap' : 'unwrap';
   switch (tokenName) {
     case TOKEN_ETHER: {
       const { who, amount } = event.args;

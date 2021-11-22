@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisOfferSummaryWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisOfferSummary';
+import { OasisOfferSummaryWrapper, mapStateToProps, mapDispatchToProps } from './OasisOfferSummary';
 import { shallow } from 'enzyme';
 import { MAKE_BUY_OFFER, TOKEN_MAKER, TOKEN_WRAPPED_ETH } from '../constants';
 

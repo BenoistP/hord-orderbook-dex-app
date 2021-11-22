@@ -42,11 +42,7 @@ const parsePayload = (payload, pageIdx, { sellToken, buyToken }) => {
   }
 };
 
-const parseAndSyncOffersPage = (
-  rawOffersPayload,
-  { dispatch, sellToken, buyToken },
-  { pageSize = PAGE_SIZE } = {},
-) => {
+const parseAndSyncOffersPage = (rawOffersPayload, { dispatch, sellToken, buyToken }, { pageSize = PAGE_SIZE } = {}) => {
   let backtrackOfferId = null;
   let currentParsedOffer = null;
   for (let pageIdx = 0; pageIdx < pageSize; ++pageIdx) {
@@ -90,11 +86,10 @@ export const loadSellOffersEpic =
           getTokenContractInstance(buyToken).address,
         ),
       nextPage = (lastSellOfferId) =>
-        promisify(
-          getOTCSupportMethodsNoProxyContractInstance().getOffers[
-            'address,uint256'
-          ],
-        )(getMarketContractInstance().address, lastSellOfferId.toString()),
+        promisify(getOTCSupportMethodsNoProxyContractInstance().getOffers['address,uint256'])(
+          getMarketContractInstance().address,
+          lastSellOfferId.toString(),
+        ),
       pageSize = PAGE_SIZE,
     } = {},
   ) =>
@@ -109,20 +104,10 @@ export const loadSellOffersEpic =
       let currentOfferId = undefined;
       while (currentOfferId !== null) {
         if (!currentOfferId) dispatch(resetSellOffers(sellOffersTradingPair));
-        const page = currentOfferId
-          ? nextPage(currentOfferId)
-          : firstPage(sellToken, buyToken);
-        const pageResult = parseAndSyncOffersPage(
-          await page,
-          { dispatch, sellToken, buyToken },
-          { pageSize },
-        );
+        const page = currentOfferId ? nextPage(currentOfferId) : firstPage(sellToken, buyToken);
+        const pageResult = parseAndSyncOffersPage(await page, { dispatch, sellToken, buyToken }, { pageSize });
         let { lastOfferId, shouldBacktrack } = pageResult;
-        currentOfferId = !shouldBacktrack
-          ? lastOfferId
-          : currentOfferId
-          ? undefined
-          : null;
+        currentOfferId = !shouldBacktrack ? lastOfferId : currentOfferId ? undefined : null;
       }
 
       dispatch(loadSellOffers.fulfilled(sellOffersTradingPair));
@@ -147,11 +132,10 @@ export const loadBuyOffersEpic =
           getTokenContractInstance(buyToken).address,
         ),
       nextPage = (lastSellOfferId) =>
-        promisify(
-          getOTCSupportMethodsNoProxyContractInstance().getOffers[
-            'address,uint256'
-          ],
-        )(getMarketContractInstance().address, lastSellOfferId.toString()),
+        promisify(getOTCSupportMethodsNoProxyContractInstance().getOffers['address,uint256'])(
+          getMarketContractInstance().address,
+          lastSellOfferId.toString(),
+        ),
       pageSize = PAGE_SIZE,
     } = {},
   ) =>
@@ -166,20 +150,10 @@ export const loadBuyOffersEpic =
       let currentOfferId = undefined;
       while (currentOfferId !== null) {
         if (!currentOfferId) dispatch(resetBuyOffers(buyOffersTradingPair));
-        const page = currentOfferId
-          ? nextPage(currentOfferId)
-          : firstPage(sellToken, buyToken);
-        const pageResult = parseAndSyncOffersPage(
-          await page,
-          { dispatch, sellToken, buyToken },
-          { pageSize },
-        );
+        const page = currentOfferId ? nextPage(currentOfferId) : firstPage(sellToken, buyToken);
+        const pageResult = parseAndSyncOffersPage(await page, { dispatch, sellToken, buyToken }, { pageSize });
         let { lastOfferId, shouldBacktrack } = pageResult;
-        currentOfferId = !shouldBacktrack
-          ? lastOfferId
-          : currentOfferId
-          ? undefined
-          : null;
+        currentOfferId = !shouldBacktrack ? lastOfferId : currentOfferId ? undefined : null;
       }
 
       dispatch(loadBuyOffers.fulfilled(buyOffersTradingPair));
@@ -192,15 +166,9 @@ export const loadBuyOffersEpic =
 
 export const reducer = {
   [loadBuyOffers.pending]: (state, { payload }) =>
-    state.setIn(
-      ['offers', Map(payload), 'loadingBuyOffers'],
-      SYNC_STATUS_PENDING,
-    ),
+    state.setIn(['offers', Map(payload), 'loadingBuyOffers'], SYNC_STATUS_PENDING),
   [loadBuyOffers.fulfilled]: (state, { payload }) =>
-    state.setIn(
-      ['offers', Map(payload), 'loadingBuyOffers'],
-      SYNC_STATUS_COMPLETED,
-    ),
+    state.setIn(['offers', Map(payload), 'loadingBuyOffers'], SYNC_STATUS_COMPLETED),
   [loadBuyOffers.rejected]: (state, { payload }) =>
     // state.setIn(['offers', Map(payload), 'loadingBuyOffers'], SYNC_STATUS_ERROR),
     {
@@ -208,15 +176,9 @@ export const reducer = {
     },
 
   [loadSellOffers.pending]: (state, { payload }) =>
-    state.setIn(
-      ['offers', Map(payload), 'loadingSellOffers'],
-      SYNC_STATUS_PENDING,
-    ),
+    state.setIn(['offers', Map(payload), 'loadingSellOffers'], SYNC_STATUS_PENDING),
   [loadSellOffers.fulfilled]: (state, { payload }) =>
-    state.setIn(
-      ['offers', Map(payload), 'loadingSellOffers'],
-      SYNC_STATUS_COMPLETED,
-    ),
+    state.setIn(['offers', Map(payload), 'loadingSellOffers'], SYNC_STATUS_COMPLETED),
   [loadSellOffers.rejected]: (state, { payload }) =>
     // state.setIn(['offers', Map(payload), 'loadingSellOffers'], SYNC_STATUS_ERROR),
     {

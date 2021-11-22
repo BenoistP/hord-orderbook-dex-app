@@ -16,7 +16,7 @@ class OasisVolumeIsOverTheOfferMax extends PureComponent {
   render() {
     const { offerMax, tokenName } = this.props;
     return (
-      <InfoBoxWithIco icon='warning' color='danger' className={styles.base}>
+      <InfoBoxWithIco icon="warning" color="danger" className={styles.base}>
         Current volume is greater than offer maximum of{' '}
         <b>
           {formatAmount(offerMax)} {tokenName}

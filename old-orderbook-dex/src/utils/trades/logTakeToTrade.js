@@ -11,14 +11,8 @@ export default (logTake) => {
       buyWhichToken,
       sellWhichToken_address: logTake.args.pay_gem,
       sellWhichToken,
-      buyHowMuch: convertTo18Precision(
-        logTake.args.give_amt.toString(10),
-        buyWhichToken,
-      ),
-      sellHowMuch: convertTo18Precision(
-        logTake.args.take_amt.toString(10),
-        sellWhichToken,
-      ),
+      buyHowMuch: convertTo18Precision(logTake.args.give_amt.toString(10), buyWhichToken),
+      sellHowMuch: convertTo18Precision(logTake.args.take_amt.toString(10), sellWhichToken),
       timestamp: logTake.args.timestamp.toNumber(),
       transactionHash: logTake.transactionHash,
       maker: logTake.args.maker,

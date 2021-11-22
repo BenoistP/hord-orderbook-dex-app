@@ -29,11 +29,7 @@ export class OasisWrapUnwrapHistoryWrapper extends PureComponent {
     return <OasisWrapUnwrapHistory {...this.props} />;
   }
 
-  async UNSAFE_componentWillUpdate({
-    latestBlockNumber,
-    contractsLoaded,
-    hasAccountEntry,
-  }) {
+  async UNSAFE_componentWillUpdate({ latestBlockNumber, contractsLoaded, hasAccountEntry }) {
     if (latestBlockNumber && contractsLoaded && !hasAccountEntry) {
       // await this.props.actions.loadGNTBrokerAddress();
       this.props.actions.loadWrapUnwrapsHistory();
@@ -48,18 +44,13 @@ export function mapStateToProps(state) {
     contractsLoaded: platform.contractsLoaded(state),
     latestBlockNumber: network.latestBlockNumber(state),
     wrapUnwrapHistoryList: wrapUnwrapHistory.tokenWrapUnwrapHistory(state),
-    isTokenWrapUnwrapHistoryLoaded:
-      wrapUnwrapHistory.isTokenWrapUnwrapHistoryLoaded(state),
-    hasAccountEntry: wrapUnwrapHistory.hasAccountEntry(
-      state,
-      accounts.defaultAccount(state),
-    ),
+    isTokenWrapUnwrapHistoryLoaded: wrapUnwrapHistory.isTokenWrapUnwrapHistoryLoaded(state),
+    hasAccountEntry: wrapUnwrapHistory.hasAccountEntry(state, accounts.defaultAccount(state)),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    loadWrapUnwrapsHistory:
-      wrapUnwrapHistoryReducer.actions.loadWrapUnwrapsHistoryEpic,
+    loadWrapUnwrapsHistory: wrapUnwrapHistoryReducer.actions.loadWrapUnwrapsHistoryEpic,
     loadGNTBrokerAddress: wrapUnwrapReducer.actions.loadGNTBrokerAddressEpic,
   };
   return { actions: bindActionCreators(actions, dispatch) };
@@ -67,7 +58,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisWrapUnwrapHistoryWrapper.propTypes = propTypes;
 OasisWrapUnwrapHistoryWrapper.displayName = 'OasisWrapUnwrapHistory';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisWrapUnwrapHistoryWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapHistoryWrapper);

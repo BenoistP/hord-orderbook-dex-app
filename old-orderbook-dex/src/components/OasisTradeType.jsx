@@ -5,10 +5,7 @@ import { tradeType, formatTradeType } from '../utils/tokens/pair';
 
 import styles from './OasisTradeType.scss';
 import CSSModules from 'react-css-modules';
-import {
-  USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER,
-  USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE,
-} from '../constants';
+import { USER_TO_LOG_TAKE_OFFER_RELATION_TAKEN_BY_USER, USER_TO_LOG_TAKE_OFFER_RELATION_USER_MADE } from '../constants';
 
 const propTypes = PropTypes && {
   userToTradeBaseRelation: PropTypes.oneOf([
@@ -25,21 +22,9 @@ const defaultProps = {};
 
 export class OasisTradeType extends PureComponent {
   render() {
-    const {
-      order,
-      baseCurrency,
-      type,
-      userToTradeBaseRelation,
-      userToTradeAdditionalRelation,
-    } = this.props;
+    const { order, baseCurrency, type, userToTradeBaseRelation, userToTradeAdditionalRelation } = this.props;
     const tradeTypeEnum =
-      type ||
-      tradeType(
-        order,
-        baseCurrency,
-        userToTradeBaseRelation,
-        userToTradeAdditionalRelation,
-      );
+      type || tradeType(order, baseCurrency, userToTradeBaseRelation, userToTradeAdditionalRelation);
 
     const typeStyle = (type) => {
       if (!type) {
@@ -54,11 +39,7 @@ export class OasisTradeType extends PureComponent {
       }
     };
 
-    return (
-      <span className={`${typeStyle(tradeTypeEnum)}`}>
-        {formatTradeType(tradeTypeEnum)}
-      </span>
-    );
+    return <span className={`${typeStyle(tradeTypeEnum)}`}>{formatTradeType(tradeTypeEnum)}</span>;
   }
 }
 

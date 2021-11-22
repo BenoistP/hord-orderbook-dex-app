@@ -1,9 +1,6 @@
 import { KOVAN } from '../constants';
 
-const createEtherscanTransactionLink = ({
-  activeNetworkName,
-  transactionHash,
-}) => {
+const createEtherscanTransactionLink = ({ activeNetworkName, transactionHash }) => {
   switch (activeNetworkName) {
     case KOVAN:
       return `https://${activeNetworkName}.etherscan.io/tx/${transactionHash}`;

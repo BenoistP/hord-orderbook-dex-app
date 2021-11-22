@@ -24,17 +24,12 @@ export class OasisGasPriceWrapper extends PureComponent {
     const { latestEthereumPrice, transactionGasCostEstimate } = this.props;
     const currentGasPriceBN = web3.toBigNumber(DEFAULT_GAS_PRICE);
     if (transactionGasCostEstimate && latestEthereumPrice) {
-      const cost = web3.fromWei(
-        currentGasPriceBN.mul(transactionGasCostEstimate),
-        ETH_UNIT_ETHER,
-      );
+      const cost = web3.fromWei(currentGasPriceBN.mul(transactionGasCostEstimate), ETH_UNIT_ETHER);
       return (
-        <FlexBox alignItems='baseline'>
+        <FlexBox alignItems="baseline">
           <div className={`${styles.detailsTradingFirstCol}`}>
             <span>gas </span>
-            <span className={styles.bolderText}>
-              {formatAmount(cost, false, null, 5)} ETH
-            </span>
+            <span className={styles.bolderText}>{formatAmount(cost, false, null, 5)} ETH</span>
           </div>
           <div className={styles.detailsTradingSecCol}>
             <span className={styles.estimateUSD}>
@@ -77,7 +72,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisGasPriceWrapper.propTypes = propTypes;
 OasisGasPriceWrapper.displayName = 'OasisGasPrice';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(OasisGasPriceWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(OasisGasPriceWrapper, styles));

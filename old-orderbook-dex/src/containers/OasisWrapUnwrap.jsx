@@ -8,10 +8,7 @@ import OasisWrapUnwrapBalancesWrapper from './OasisWrapUnwrapBalances';
 import OasisWrapUnwrapHistoryWrapper from './OasisWrapUnwrapHistory';
 import OasisWrapUnwrapUnwrapEtherWrapper from './OasisWrapUnwrapUnwrapEther';
 import OasisWrapUnwrapWrapEtherWrapper from './OasisWrapUnwrapWrapEther';
-import wrapUnwrapReducer, {
-  UNWRAP_ETHER,
-  WRAP_ETHER,
-} from '../store/reducers/wrapUnwrap';
+import wrapUnwrapReducer, { UNWRAP_ETHER, WRAP_ETHER } from '../store/reducers/wrapUnwrap';
 import { TOKEN_ETHER } from '../constants';
 import platformReducer from '../store/reducers/platform';
 import { FlexBox } from '../components/FlexBox';
@@ -35,17 +32,11 @@ export class OasisWrapUnwrapWrapper extends PureComponent {
     const { activeUnwrappedToken } = this.props;
     return (
       <FlexBox wrap>
-        <OasisWrapUnwrapBalancesWrapper
-          activeUnwrappedToken={activeUnwrappedToken}
-        />
+        <OasisWrapUnwrapBalancesWrapper activeUnwrappedToken={activeUnwrappedToken} />
         <OasisWrapUnwrapHistoryWrapper />
 
-        <OasisWrapUnwrapWrapEtherWrapper
-          hidden={activeUnwrappedToken !== TOKEN_ETHER}
-        />
-        <OasisWrapUnwrapUnwrapEtherWrapper
-          hidden={activeUnwrappedToken !== TOKEN_ETHER}
-        />
+        <OasisWrapUnwrapWrapEtherWrapper hidden={activeUnwrappedToken !== TOKEN_ETHER} />
+        <OasisWrapUnwrapUnwrapEtherWrapper hidden={activeUnwrappedToken !== TOKEN_ETHER} />
         {/*<OasisWrapUnwrapWrapTokenWrapperWrapper*/}
         {/*unwrappedToken={TOKEN_GOLEM}*/}
         {/*hidden={activeUnwrappedToken === TOKEN_ETHER}*/}
@@ -67,8 +58,7 @@ export function mapStateToProps(state) {
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    setActiveWrapUnwrappedToken:
-      wrapUnwrapReducer.actions.setActiveWrapUnwrappedToken,
+    setActiveWrapUnwrappedToken: wrapUnwrapReducer.actions.setActiveWrapUnwrappedToken,
     changeRoute: platformReducer.actions.changeRouteEpic,
     resetActiveWrapForm: wrapUnwrapReducer.actions.resetActiveWrapForm,
     resetActiveUnwrapForm: wrapUnwrapReducer.actions.resetActiveUnwrapForm,
@@ -78,7 +68,4 @@ export function mapDispatchToProps(dispatch) {
 
 OasisWrapUnwrapWrapper.propTypes = propTypes;
 OasisWrapUnwrapWrapper.displayName = 'OasisWrapUnwrap';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisWrapUnwrapWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(OasisWrapUnwrapWrapper);

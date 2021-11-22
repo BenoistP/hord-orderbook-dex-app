@@ -3,11 +3,7 @@
 import React from 'react';
 import { fromJS } from 'immutable';
 
-import {
-  OasisAppLoadProgressWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisAppLoadProgress';
+import { OasisAppLoadProgressWrapper, mapStateToProps, mapDispatchToProps } from './OasisAppLoadProgress';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisAppLoadProgress', () => {

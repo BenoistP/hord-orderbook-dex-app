@@ -16,7 +16,7 @@ export const OasisMarketWidgetTradingPairPriceTemplate = (row) => {
   } else {
     return (
       <span style={{ position: 'relative', right: '10px' }}>
-        <OasisLoadingIndicator size='sm' />
+        <OasisLoadingIndicator size="sm" />
       </span>
     );
   }

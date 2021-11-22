@@ -42,10 +42,8 @@ export class TokenTransferFormWrapper extends PureComponent {
     this.onTotalFieldSectionFocus = this.onTotalFieldSectionFocus.bind(this);
     this.onSetMaxFocus = this.onSetMaxFocus.bind(this);
     this.onSetMaxBlur = this.onSetMaxBlur.bind(this);
-    this.onEthereumAddressInputValidityChange =
-      this.onEthereumAddressInputValidityChange.bind(this);
-    this.onTokenAmountInputValidityChange =
-      this.onTokenAmountInputValidityChange.bind(this);
+    this.onEthereumAddressInputValidityChange = this.onEthereumAddressInputValidityChange.bind(this);
+    this.onTokenAmountInputValidityChange = this.onTokenAmountInputValidityChange.bind(this);
   }
 
   onFormChange() {
@@ -72,32 +70,19 @@ export class TokenTransferFormWrapper extends PureComponent {
 
   renderWarningSectionContent() {
     const { selectedToken } = this.props;
-    const {
-      showInsufficientTokenAmountWarning,
-      showPleaseProvideEthereumAddressWarning,
-    } = this.state;
+    const { showInsufficientTokenAmountWarning, showPleaseProvideEthereumAddressWarning } = this.state;
 
     return showInsufficientTokenAmountWarning ? (
       <OasisInsufficientAmountOfToken noBorder tokenName={selectedToken} />
     ) : (
-      showPleaseProvideEthereumAddressWarning && (
-        <OasisPleaseProvideEthereumAddress />
-      )
+      showPleaseProvideEthereumAddressWarning && <OasisPleaseProvideEthereumAddress />
     );
   }
   render() {
-    const {
-      handleSubmit,
-      valid,
-      makeTransfer,
-      disabled,
-      actions,
-      transferState,
-      globalFormLock,
-      selectedToken,
-    } = this.props;
+    const { handleSubmit, valid, makeTransfer, disabled, actions, transferState, globalFormLock, selectedToken } =
+      this.props;
     return (
-      <form method='POST' onSubmit={handleSubmit} onChange={this.onFormChange}>
+      <form method="POST" onSubmit={handleSubmit} onChange={this.onFormChange}>
         <table className={`${tableStyles.table} ${styles.transferTable}`}>
           <thead>
             <tr>
@@ -109,7 +94,7 @@ export class TokenTransferFormWrapper extends PureComponent {
           <tbody>
             <tr>
               <th>Recipient</th>
-              <td colSpan='2' className={tableStyles.withInput}>
+              <td colSpan="2" className={tableStyles.withInput}>
                 <EthereumAddressInputFieldWrapper
                   required={true}
                   disabled={disabled || globalFormLock}
@@ -124,16 +109,16 @@ export class TokenTransferFormWrapper extends PureComponent {
                 <div className={tableStyles.inputGroup}>
                   <OasisButton
                     hidden={!this.state.showMaxButton}
-                    type='button'
+                    type="button"
                     onClick={actions.transferMax}
                     onFocus={this.onSetMaxFocus}
                     onBlur={this.onSetMaxBlur}
-                    size='xs'
+                    size="xs"
                     className={tableStyles.inputBtn}
                     disabled={disabled || globalFormLock}
                   >
                     <span className={styles.transferMaxButton}>
-                      <span className='d-none d-sm-block'>transfer</span> max
+                      <span className="d-none d-sm-block">transfer</span> max
                     </span>
                   </OasisButton>
                   <div
@@ -147,13 +132,7 @@ export class TokenTransferFormWrapper extends PureComponent {
                       fieldName={'tokenAmount'}
                     />
                   </div>
-                  <Field
-                    component={'input'}
-                    type={'text'}
-                    name={'token'}
-                    disabled={true}
-                    hidden
-                  />
+                  <Field component={'input'} type={'text'} name={'token'} disabled={true} hidden />
                 </div>
               </td>
               <td className={tableStyles.currency}>{selectedToken}</td>
@@ -162,14 +141,8 @@ export class TokenTransferFormWrapper extends PureComponent {
         </table>
         {transferState}
         <div className={styles.footer}>
-          <div className={styles.validationErrorsBox}>
-            {this.renderWarningSectionContent()}
-          </div>
-          <OasisButton
-            type='submit'
-            onClick={makeTransfer}
-            disabled={!valid || disabled || globalFormLock}
-          >
+          <div className={styles.validationErrorsBox}>{this.renderWarningSectionContent()}</div>
+          <OasisButton type="submit" onClick={makeTransfer} disabled={!valid || disabled || globalFormLock}>
             Transfer
           </OasisButton>
         </div>
@@ -204,10 +177,7 @@ export class TokenTransferFormWrapper extends PureComponent {
 
   onTotalFieldSectionBlur() {
     if (this.componentIsUnmounted === false) {
-      this.currentSetMaxTimeout = setTimeout(
-        () => this.setState({ showMaxButton: false }),
-        SETMAXBTN_HIDE_DELAY_MS,
-      );
+      this.currentSetMaxTimeout = setTimeout(() => this.setState({ showMaxButton: false }), SETMAXBTN_HIDE_DELAY_MS);
     }
   }
 
@@ -237,11 +207,5 @@ export default connect(
 )(
   reduxForm({
     form: 'tokenTransfer',
-  })(
-    CSSModules(
-      TokenTransferFormWrapper,
-      { styles, tableStyles, widgetStyles },
-      { allowMultiple: true },
-    ),
-  ),
+  })(CSSModules(TokenTransferFormWrapper, { styles, tableStyles, widgetStyles }, { allowMultiple: true })),
 );

@@ -37,12 +37,8 @@ export class OasisOfferSummary extends PureComponent {
       );
     } else {
       const gasEstimatePending = gasEstimateInfo.get('isGasEstimatePending');
-      const transactionGasCostEstimate = gasEstimateInfo.get(
-        'transactionGasCostEstimate',
-      );
-      const gasEstimateError = gasEstimateInfo.get(
-        'transactionGasCostEstimateError',
-      );
+      const transactionGasCostEstimate = gasEstimateInfo.get('transactionGasCostEstimate');
+      const gasEstimateError = gasEstimateInfo.get('transactionGasCostEstimateError');
       return (
         <OasisGasPriceWrapper
           gasEstimateError={gasEstimateError}
@@ -64,21 +60,13 @@ export class OasisOfferSummary extends PureComponent {
       <OasisIsTokenTradingEnabledByUserWrapper tokenName={sellToken} />
     ) : (
       <div style={{ marginBottom: '4px' }}>
-        <OasisIcon icon='loading' />
-        <span style={{ marginLeft: '5px', display: 'inline-block' }}>
-          Loading market contracts...
-        </span>
+        <OasisIcon icon="loading" />
+        <span style={{ marginLeft: '5px', display: 'inline-block' }}>Loading market contracts...</span>
       </div>
     );
   }
   render() {
-    const {
-      sellToken,
-      buyToken,
-      amountSold,
-      amountReceived,
-      isTokenTradingEnabled,
-    } = this.props;
+    const { sellToken, buyToken, amountSold, amountReceived, isTokenTradingEnabled } = this.props;
 
     return (
       <div className={styles.base}>
@@ -93,9 +81,7 @@ export class OasisOfferSummary extends PureComponent {
 
           <div className={styles.detailsTradingCol}>
             {this.renderIsTokenEnabledSection()}
-            {isTokenTradingEnabled
-              ? this.renderGasEstimate()
-              : OasisOfferSummary.renderGasEstimateNotEnabledInfo()}
+            {isTokenTradingEnabled ? this.renderGasEstimate() : OasisOfferSummary.renderGasEstimateNotEnabledInfo()}
           </div>
         </InfoBox>
       </div>

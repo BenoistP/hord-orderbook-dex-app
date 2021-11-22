@@ -13,7 +13,7 @@ class OasisYourOrderExceedsMaxTotalForToken extends PureComponent {
   render() {
     const { noBorder } = this.props;
     return (
-      <InfoBoxWithIco noBorder={noBorder} color='danger' icon='warning'>
+      <InfoBoxWithIco noBorder={noBorder} color="danger" icon="warning">
         <span className={`${noBorder ? styles.noBorder : ''}`}>
           Your order total exceeds max order total set for this token
         </span>
@@ -22,8 +22,7 @@ class OasisYourOrderExceedsMaxTotalForToken extends PureComponent {
   }
 }
 
-OasisYourOrderExceedsMaxTotalForToken.displayName =
-  'OasisYourOrderExceedsMaxTotalForToken';
+OasisYourOrderExceedsMaxTotalForToken.displayName = 'OasisYourOrderExceedsMaxTotalForToken';
 OasisYourOrderExceedsMaxTotalForToken.propTypes = propTypes;
 OasisYourOrderExceedsMaxTotalForToken.defaultProps = defaultProps;
 export default OasisYourOrderExceedsMaxTotalForToken;

@@ -43,21 +43,13 @@ export class OasisWrapUnwrapHistory extends PureComponent {
   }
 
   render() {
-    const {
-      wrapUnwrapHistoryList = fromJS([]),
-      activeNetworkName,
-      isTokenWrapUnwrapHistoryLoaded,
-    } = this.props;
+    const { wrapUnwrapHistoryList = fromJS([]), activeNetworkName, isTokenWrapUnwrapHistoryLoaded } = this.props;
     return (
       <OasisWidgetFrame
         isLoadingData={!isTokenWrapUnwrapHistoryLoaded}
         loadingDataText={'wrap & unwrap history'}
-        heading='History'
-        loadProgressSection={
-          !isTokenWrapUnwrapHistoryLoaded ? (
-            <OasisLoadingIndicator size='sm' />
-          ) : null
-        }
+        heading="History"
+        loadProgressSection={!isTokenWrapUnwrapHistoryLoaded ? <OasisLoadingIndicator size="sm" /> : null}
       >
         <div>
           {

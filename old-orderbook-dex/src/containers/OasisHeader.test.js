@@ -3,11 +3,7 @@
 import React from 'react';
 import Immutable from 'immutable';
 
-import {
-  OasisHeaderWrapper,
-  mapStateToProps,
-  mapDispatchToProps,
-} from './OasisHeader';
+import { OasisHeaderWrapper, mapStateToProps, mapDispatchToProps } from './OasisHeader';
 import { shallow } from 'enzyme';
 
 describe('(Container) OasisHeader', () => {

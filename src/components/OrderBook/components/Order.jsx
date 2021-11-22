@@ -3,12 +3,9 @@ import { connect } from 'react-redux';
 import './Order.scss';
 
 const Order = (props) => {
-    const { buyAmt, payAmt, id, owner } = props;
+  const { buyAmt, payAmt, id, owner } = props;
 
-    return <div className='order'>
-        
-      
-  </div>;
+  return <div className="order"></div>;
 };
 
 Order.defaultProps = {

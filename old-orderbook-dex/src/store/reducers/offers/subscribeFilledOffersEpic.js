@@ -26,14 +26,11 @@ export const markOfferAsInactive = createAction(
   }),
 );
 
-export const checkOfferIsActive = createAction(
-  'OFFERS/CHECK_OFFER_IS_ACTIVE',
-  (offerId) => getMarketContractInstance().isActive(offerId),
+export const checkOfferIsActive = createAction('OFFERS/CHECK_OFFER_IS_ACTIVE', (offerId) =>
+  getMarketContractInstance().isActive(offerId),
 );
 
-export const subscribeFilledOrders = createPromiseActions(
-  'OFFERS/SUBSCRIBE_FILLED_OFFERS',
-);
+export const subscribeFilledOrders = createPromiseActions('OFFERS/SUBSCRIBE_FILLED_OFFERS');
 export const subscribeFilledOffersEpic =
   (
     fromBlock,
@@ -51,8 +48,7 @@ export const subscribeFilledOffersEpic =
       .then(
         async (err, LogItemUpdateEvent) => {
           const offerId = LogItemUpdateEvent.args.id.toNumber();
-          const isOfferActive = (await dispatch(doCheckOfferIsActive(offerId)))
-            .value;
+          const isOfferActive = (await dispatch(doCheckOfferIsActive(offerId))).value;
           if (offerId && isOfferActive) {
             /**
              * Check if offer is already in the store:
@@ -62,13 +58,7 @@ export const subscribeFilledOffersEpic =
             const offerSearchResult = findOffer(offerId, getState());
             if (offerSearchResult) {
               // console.log('LogItemUpdate', offerId, LogItemUpdateEvent, OFFER_SYNC_TYPE_UPDATE);
-              dispatch(
-                doSyncOffer(
-                  offerId,
-                  OFFER_SYNC_TYPE_UPDATE,
-                  offerSearchResult.offer,
-                ),
-              );
+              dispatch(doSyncOffer(offerId, OFFER_SYNC_TYPE_UPDATE, offerSearchResult.offer));
             } else {
               // console.log('LogItemUpdate', offerId, LogItemUpdateEvent, OFFER_SYNC_TYPE_NEW_OFFER);
               dispatch(doSyncOffer(offerId, OFFER_SYNC_TYPE_NEW_OFFER));
@@ -77,10 +67,7 @@ export const subscribeFilledOffersEpic =
           else {
             const offerInOrderBook = findOffer(offerId, getState());
             if (offerInOrderBook) {
-              if (
-                offerTakes.activeOfferTakeOfferId(getState()) ===
-                offerId.toString()
-              ) {
+              if (offerTakes.activeOfferTakeOfferId(getState()) === offerId.toString()) {
                 dispatch(markOfferAsInactive(offerInOrderBook));
               } else {
                 dispatch(removeOfferFromTheOrderBook(offerInOrderBook));
@@ -94,29 +81,19 @@ export const subscribeFilledOffersEpic =
   };
 
 export const reducer = {
-  [removeOfferFromTheOrderBook]: (
-    state,
-    { payload: { tradingPair, offerType, offerId } },
-  ) => {
+  [removeOfferFromTheOrderBook]: (state, { payload: { tradingPair, offerType, offerId } }) => {
     switch (offerType) {
       case TYPE_BUY_OFFER:
-        return state.updateIn(
-          ['offers', Map(tradingPair), 'buyOffers'],
-          (buyOfferList) =>
-            buyOfferList.filter((offer) => offer.id !== offerId),
+        return state.updateIn(['offers', Map(tradingPair), 'buyOffers'], (buyOfferList) =>
+          buyOfferList.filter((offer) => offer.id !== offerId),
         );
       case TYPE_SELL_OFFER:
-        return state.updateIn(
-          ['offers', Map(tradingPair), 'sellOffers'],
-          (sellOfferList) =>
-            sellOfferList.filter((offer) => offer.id !== offerId),
+        return state.updateIn(['offers', Map(tradingPair), 'sellOffers'], (sellOfferList) =>
+          sellOfferList.filter((offer) => offer.id !== offerId),
         );
     }
   },
-  [markOfferAsInactive]: (
-    state,
-    { payload: { offerId, tradingPair, offerType } },
-  ) =>
+  [markOfferAsInactive]: (state, { payload: { offerId, tradingPair, offerType } }) =>
     state.updateIn(['offers', Map(tradingPair)], (tradingPairOffers) => {
       switch (offerType) {
         case TYPE_BUY_OFFER:

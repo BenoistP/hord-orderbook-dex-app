@@ -17,10 +17,10 @@ const unregisterTokenSelector = createAction(
   (tokenSelectorName) => tokenSelectorName,
 );
 
-const tokenSelected = createAction(
-  'TOKEN_SELECTORS/TOKEN_SELECTED',
-  (tokenSelectorName, token) => ({ tokenSelectorName, token }),
-);
+const tokenSelected = createAction('TOKEN_SELECTORS/TOKEN_SELECTED', (tokenSelectorName, token) => ({
+  tokenSelectorName,
+  token,
+}));
 
 /**
  * Get min sell limits for all tokens traded.
@@ -35,16 +35,10 @@ const actions = {
 
 const reducer = handleActions(
   {
-    [registerTokenSelector]: (
-      state,
-      { payload: { tokenSelectorName, initialValue } },
-    ) =>
-      state.has(tokenSelectorName)
-        ? state
-        : state.set(tokenSelectorName, initialValue),
+    [registerTokenSelector]: (state, { payload: { tokenSelectorName, initialValue } }) =>
+      state.has(tokenSelectorName) ? state : state.set(tokenSelectorName, initialValue),
     [unregisterTokenSelector]: (state, payload) => state.delete(payload),
-    [tokenSelected]: (state, { payload: { tokenSelectorName, token } }) =>
-      state.set(tokenSelectorName, token),
+    [tokenSelected]: (state, { payload: { tokenSelectorName, token } }) => state.set(tokenSelectorName, token),
   },
   initialState,
 );

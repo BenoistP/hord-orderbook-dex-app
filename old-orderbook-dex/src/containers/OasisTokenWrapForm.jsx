@@ -95,8 +95,7 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
       <div>
         Wrap{' '}
         <b>
-          {formatAmount(wrapTokenAmount, false, null, AMOUNT_DECIMALS)}{' '}
-          {unwrappedToken}
+          {formatAmount(wrapTokenAmount, false, null, AMOUNT_DECIMALS)} {unwrappedToken}
         </b>
       </div>
     );
@@ -137,10 +136,7 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
     return !txStatus
       ? isNumericAndGreaterThanZero(wrapTokenAmount) &&
           web3.fromWei(activeUnwrappedTokenBalance).lt(wrapTokenAmount) && (
-            <OasisInsufficientAmountOfToken
-              tokenName={unwrappedToken}
-              noBorder
-            />
+            <OasisInsufficientAmountOfToken tokenName={unwrappedToken} noBorder />
           )
       : null;
   }
@@ -170,19 +166,13 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
                 <div className={tableStyles.inputGroup}>
                   {this.state.showMaxButton && unwrappedToken !== TOKEN_ETHER && (
                     <OasisButton
-                      type='button'
-                      size='xs'
+                      type="button"
+                      size="xs"
                       className={tableStyles.inputBtn}
                       onClick={this.setWrapMax}
                       onFocus={this.onSetMaxFocus}
                       onBlur={this.onSetMaxBlur}
-                      disabled={
-                        disabled ||
-                        globalFormLock ||
-                        !isNumericAndGreaterThanZero(
-                          activeUnwrappedTokenBalance,
-                        )
-                      }
+                      disabled={disabled || globalFormLock || !isNumericAndGreaterThanZero(activeUnwrappedTokenBalance)}
                     >
                       <span style={{ fontSize: '10px' }}>wrap max</span>
                     </OasisButton>
@@ -196,8 +186,8 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
                       style={inputStyle}
                       required
                       validate={this.validate}
-                      autoComplete='off'
-                      name='amount'
+                      autoComplete="off"
+                      name="amount"
                       component={MaskedTokenAmountInput}
                       placeholder={0}
                       disabled={disabled || globalFormLock}
@@ -211,17 +201,10 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
         </table>
         <div>{this.renderTransactionStatus()}</div>
         <div className={styles.footer}>
-          <div>
-            {this.renderInsufficientBalanceWarning() ||
-              this.renderDoNotWrapAllEtherWarning()}
-          </div>
+          <div>{this.renderInsufficientBalanceWarning() || this.renderDoNotWrapAllEtherWarning()}</div>
           <OasisButton
-            type='submit'
-            disabled={
-              !valid ||
-              disabled ||
-              !isNumericAndGreaterThanZero(wrapTokenAmount)
-            }
+            type="submit"
+            disabled={!valid || disabled || !isNumericAndGreaterThanZero(wrapTokenAmount)}
             className={styles.footerBtn}
           >
             Wrap
@@ -260,10 +243,7 @@ export class OasisTokenWrapFormWrapper extends PureComponent {
 
 export function mapStateToProps(state, { form }) {
   return {
-    activeUnwrappedTokenBalance: wrapUnwrap.activeUnwrappedTokenBalance(
-      state,
-      true,
-    ),
+    activeUnwrappedTokenBalance: wrapUnwrap.activeUnwrappedTokenBalance(state, true),
     wrapTokenAmount: wrapUnwrap.wrapTokenAmount(state, form),
     globalFormLock: platform.globalFormLock(state),
   };
@@ -280,12 +260,4 @@ OasisTokenWrapFormWrapper.displayName = 'OasisTokenWrapForm';
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(
-  reduxForm({})(
-    CSSModules(
-      OasisTokenWrapFormWrapper,
-      { tableStyles, styles, widgetStyles },
-      { allowMultiple: true },
-    ),
-  ),
-);
+)(reduxForm({})(CSSModules(OasisTokenWrapFormWrapper, { tableStyles, styles, widgetStyles }, { allowMultiple: true })));

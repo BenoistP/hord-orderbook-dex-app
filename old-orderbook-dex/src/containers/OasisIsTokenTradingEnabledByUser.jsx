@@ -24,18 +24,12 @@ export class OasisIsTokenTradingEnabledByUserWrapper extends PureComponent {
   render() {
     const { isTokenTradingEnabledByUser, tokenName } = this.props;
     return (
-      <FlexBox
-        className={`${styles.baseText} ${styles.base} ${styles.detailsTradingCol}`}
-      >
+      <FlexBox className={`${styles.baseText} ${styles.base} ${styles.detailsTradingCol}`}>
         <div className={`${styles.detailsTradingFirstCol} ${styles.buying}`}>
           trading of <span className={styles.bolderText}>{tokenName}</span>
         </div>
         <div className={styles.detailsTradingSecCol}>
-          <span
-            className={`${styles.tradingStatus} ${
-              isTokenTradingEnabledByUser ? styles.active : styles.disabled
-            }`}
-          >
+          <span className={`${styles.tradingStatus} ${isTokenTradingEnabledByUser ? styles.active : styles.disabled}`}>
             {isTokenTradingEnabledByUser ? 'enabled' : 'disabled'}
           </span>
         </div>
@@ -46,24 +40,16 @@ export class OasisIsTokenTradingEnabledByUserWrapper extends PureComponent {
 
 export function mapStateToProps(state, { tokenName }) {
   return {
-    isTokenTradingEnabledByUser: balances.tokenAllowanceStatusForActiveMarket(
-      state,
-      { tokenName },
-    ),
+    isTokenTradingEnabledByUser: balances.tokenAllowanceStatusForActiveMarket(state, { tokenName }),
   };
 }
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    getAllowanceStatus:
-      balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket,
+    getAllowanceStatus: balancesReducer.actions.getDefaultAccountTokenAllowanceForMarket,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 OasisIsTokenTradingEnabledByUserWrapper.propTypes = propTypes;
-OasisIsTokenTradingEnabledByUserWrapper.displayName =
-  'OasisIsTokenTradingEnabledByUser';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(OasisIsTokenTradingEnabledByUserWrapper);
+OasisIsTokenTradingEnabledByUserWrapper.displayName = 'OasisIsTokenTradingEnabledByUser';
+export default connect(mapStateToProps, mapDispatchToProps)(OasisIsTokenTradingEnabledByUserWrapper);

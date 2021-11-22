@@ -3,13 +3,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import each from 'jest-each';
-import {
-  wei,
-  mockDate,
-  mockDatePromise,
-  mockAction,
-  dispatchMockAction,
-} from '../../utils/testHelpers';
+import { wei, mockDate, mockDatePromise, mockAction, dispatchMockAction } from '../../utils/testHelpers';
 
 import { Map } from 'immutable';
 
@@ -19,9 +13,7 @@ describe('setActiveWrapUnwrappedToken', () => {
   test('main', () => {
     const store = configureMockStore([thunk])(Map({}));
 
-    const result = store.dispatch(
-      wrapUnwrap.actions.setActiveWrapUnwrappedToken('ETH'),
-    );
+    const result = store.dispatch(wrapUnwrap.actions.setActiveWrapUnwrappedToken('ETH'));
 
     expect(result).toMatchSnapshot();
     expect(store.getActions()).toMatchSnapshot();
@@ -106,10 +98,7 @@ describe('wrapETHTokenEpic', () => {
       store.dispatch(
         wrapUnwrap.testActions.wrapETHTokenEpic(
           {
-            onCancelCleanup: dispatchMockAction(
-              'onCancelCleanup',
-              store.dispatch,
-            ),
+            onCancelCleanup: dispatchMockAction('onCancelCleanup', store.dispatch),
             onStart: dispatchMockAction('onStart', store.dispatch),
             onPending: dispatchMockAction('onPending', store.dispatch),
             onCompleted: dispatchMockAction('onCompleted', store.dispatch),
@@ -141,10 +130,7 @@ describe('unwrapEtherEpic', () => {
       store.dispatch(
         wrapUnwrap.testActions.unwrapEtherEpic(
           {
-            onCancelCleanup: dispatchMockAction(
-              'onCancelCleanup',
-              store.dispatch,
-            ),
+            onCancelCleanup: dispatchMockAction('onCancelCleanup', store.dispatch),
             onStart: dispatchMockAction('onStart', store.dispatch),
             onPending: dispatchMockAction('onPending', store.dispatch),
             onCompleted: dispatchMockAction('onCompleted', store.dispatch),
@@ -193,10 +179,7 @@ each([
       store.dispatch(
         wrapUnwrap.testActions.wrapGNTTokenEpic(
           {
-            onCancelCleanup: dispatchMockAction(
-              'onCancelCleanup',
-              store.dispatch,
-            ),
+            onCancelCleanup: dispatchMockAction('onCancelCleanup', store.dispatch),
             onStart: dispatchMockAction('onStart', store.dispatch),
             onPending: dispatchMockAction('onPending', store.dispatch),
             onCompleted: dispatchMockAction('onCompleted', store.dispatch),
@@ -207,13 +190,10 @@ each([
             doAddTransactionEpic: () => async () => ({ value: '0xcdef' }),
             doCreateGNTDepositBroker: () => async () => ({ value: '0xef01' }),
             nextTransactionDelay: 0,
-            doLoadDepositBrokerContractEpic: mockAction(
-              'loadDepositBrokerContractEpic',
-            ),
+            doLoadDepositBrokerContractEpic: mockAction('loadDepositBrokerContractEpic'),
             doClearDepositBrokerEpic: mockAction('clearDepositBrokerEpic'),
             doLoadGNTBrokerAddressEpic: mockAction('loadGNTBrokerAddressEpic'),
-            nestedDispatch: (...args) =>
-              mockDate('2018-06-06', () => args[0](...args.slice(1))),
+            nestedDispatch: (...args) => mockDate('2018-06-06', () => args[0](...args.slice(1))),
           },
         ),
       ),
@@ -240,10 +220,7 @@ describe('unwrapGNTTokenEpic', () => {
       store.dispatch(
         wrapUnwrap.testActions.unwrapGNTTokenEpic(
           {
-            onCancelCleanup: dispatchMockAction(
-              'onCancelCleanup',
-              store.dispatch,
-            ),
+            onCancelCleanup: dispatchMockAction('onCancelCleanup', store.dispatch),
             onStart: dispatchMockAction('onStart', store.dispatch),
             onPending: dispatchMockAction('onPending', store.dispatch),
             onCompleted: dispatchMockAction('onCompleted', store.dispatch),

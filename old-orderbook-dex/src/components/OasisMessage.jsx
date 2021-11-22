@@ -37,13 +37,10 @@ export class OasisMessage extends PureComponent {
   render() {
     const { dismissible, hidden } = this.props;
     return (
-      <div
-        hidden={hidden}
-        styleName={`MessageBoard ${BOARD_TYPE[this.props.type]}`}
-      >
-        <h3 styleName='Heading'>
+      <div hidden={hidden} styleName={`MessageBoard ${BOARD_TYPE[this.props.type]}`}>
+        <h3 styleName="Heading">
           {this.props.heading}
-          {dismissible && <span onClick={this.onDismiss} styleName='Close' />}
+          {dismissible && <span onClick={this.onDismiss} styleName="Close" />}
         </h3>
         <div>{this.props.children}</div>
       </div>

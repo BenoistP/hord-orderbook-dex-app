@@ -51,11 +51,9 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
       isToggleAllowanceTxPending: false,
     };
 
-    this.onRejectedByUserOrFailedDismissMsg =
-      this.onRejectedByUserOrFailedDismissMsg.bind(this);
+    this.onRejectedByUserOrFailedDismissMsg = this.onRejectedByUserOrFailedDismissMsg.bind(this);
 
-    this.toggleTokenAllowanceTrustStatus =
-      this.toggleTokenAllowanceTrustStatus.bind(this);
+    this.toggleTokenAllowanceTrustStatus = this.toggleTokenAllowanceTrustStatus.bind(this);
     this.getAllowanceStatus();
   }
 
@@ -66,10 +64,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
       allowanceSubjectAddress,
     } = this.props;
     if (this.props.contractsLoaded) {
-      return getDefaultAccountTokenAllowanceForAddress(
-        tokenName,
-        allowanceSubjectAddress,
-      );
+      return getDefaultAccountTokenAllowanceForAddress(tokenName, allowanceSubjectAddress);
     }
   }
 
@@ -124,9 +119,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
       this.props.onTransactionCompleted(false);
     }
 
-    (await this.getAllowanceStatus()).value.gt(
-      TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN,
-    );
+    (await this.getAllowanceStatus()).value.gt(TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED_MIN);
   }
 
   onTransactionRejected() {
@@ -178,9 +171,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
   }
 
   isAllowanceEnabled() {
-    return (
-      this.props.subjectTrustStatus === TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED
-    );
+    return this.props.subjectTrustStatus === TOKEN_ALLOWANCE_TRUST_STATUS_ENABLED;
   }
 
   isAllowanceLoading() {
@@ -200,11 +191,7 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
 
   mainInfoBoxContent() {
     return (
-      <OasisAccordion
-        isOpen={false}
-        heading={this.renderAccordionHeading()}
-        className={styles.smallAccordion}
-      >
+      <OasisAccordion isOpen={false} heading={this.renderAccordionHeading()} className={styles.smallAccordion}>
         {this.renderAccordionContent()}
       </OasisAccordion>
     );
@@ -221,37 +208,21 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
   }
 
   onRejectedByUserOrFailedDismissMsg() {
-    if (
-      [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(
-        this.state.txStatus,
-      )
-    ) {
+    if ([TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(this.state.txStatus)) {
       this.setState({ txStatus: undefined });
     }
   }
 
   transactionTooltip() {
-    return [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(
-      this.state.txStatus,
-    )
-      ? 'click to dismiss'
-      : '';
+    return [TX_STATUS_CANCELLED_BY_USER, TX_STATUS_REJECTED].includes(this.state.txStatus) ? 'click to dismiss' : '';
   }
 
   renderAccordionHeading() {
     const { txStatus } = this.state;
     const isAllowanceEnabled = this.isAllowanceEnabled();
-    const prefix = !this.props.isToggleEnabled
-      ? 'Enable'
-      : isAllowanceEnabled
-      ? 'Disable'
-      : 'Enable';
+    const prefix = !this.props.isToggleEnabled ? 'Enable' : isAllowanceEnabled ? 'Disable' : 'Enable';
     return (
-      <FlexBox
-        justifyContent='space-between'
-        alignItems='center'
-        className={styles.accordionHeading}
-      >
+      <FlexBox justifyContent="space-between" alignItems="center" className={styles.accordionHeading}>
         <div className={styles.infoText}>
           {prefix} <b>{this.props.tokenName}</b> for trading
         </div>
@@ -272,12 +243,8 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
         <div hidden={txStatus}>
           <OasisButton
             onClick={this.toggleTokenAllowanceTrustStatus}
-            size='md'
-            color={
-              isAllowanceEnabled || this.shouldDisableActionDispatch()
-                ? 'default'
-                : 'success'
-            }
+            size="md"
+            color={isAllowanceEnabled || this.shouldDisableActionDispatch() ? 'default' : 'success'}
           >
             {this.getLabel()}
           </OasisButton>
@@ -288,19 +255,16 @@ export class SetTokenAllowanceTrustWrapper extends PureComponent {
 
   yourTransactionFailed() {
     const { txStatus } = this.state;
-    return txStatus === TX_STATUS_REJECTED ? (
-      <OasisYourTransactionFailed />
-    ) : null;
+    return txStatus === TX_STATUS_REJECTED ? <OasisYourTransactionFailed /> : null;
   }
 
   renderAccordionContent() {
     return (
-      <FlexBox alignItems='center'>
-        <OasisIcon icon='idle' />
+      <FlexBox alignItems="center">
+        <OasisIcon icon="idle" />
         <div className={styles.accordingText}>
-          You need first grant access to withdraw from your personal account. To
-          disable {this.props.tokenName} trading use Allowance widget on the
-          funds page.
+          You need first grant access to withdraw from your personal account. To disable {this.props.tokenName} trading
+          use Allowance widget on the funds page.
         </div>
       </FlexBox>
     );
@@ -329,17 +293,12 @@ export function mapStateToProps(state, { allowanceSubjectAddress, tokenName }) {
 
 export function mapDispatchToProps(dispatch) {
   const actions = {
-    setTokenAllowanceTrustStatus:
-      balancesReducer.actions.setTokenAllowanceTrustEpic,
-    getDefaultAccountTokenAllowanceForAddress:
-      balancesReducer.actions.getDefaultAccountTokenAllowanceForAddress,
+    setTokenAllowanceTrustStatus: balancesReducer.actions.setTokenAllowanceTrustEpic,
+    getDefaultAccountTokenAllowanceForAddress: balancesReducer.actions.getDefaultAccountTokenAllowanceForAddress,
   };
   return { actions: bindActionCreators(actions, dispatch) };
 }
 
 SetTokenAllowanceTrustWrapper.propTypes = propTypes;
 SetTokenAllowanceTrustWrapper.displayName = 'SetTokenAllowanceTrust';
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CSSModules(SetTokenAllowanceTrustWrapper, styles));
+export default connect(mapStateToProps, mapDispatchToProps)(CSSModules(SetTokenAllowanceTrustWrapper, styles));

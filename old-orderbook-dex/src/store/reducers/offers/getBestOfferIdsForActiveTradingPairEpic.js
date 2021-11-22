@@ -17,17 +17,10 @@ export const getBestOfferIdsForActiveTradingPairEpic =
       tokens.activeTradingPair(getState()) !== null
         ? fromJS(tokens.activeTradingPair(getState()))
         : tokens.defaultTradingPair(getState());
-    const [baseToken, quoteToken] = [
-      tradingPair.get('baseToken'),
-      tradingPair.get('quoteToken'),
-    ];
-    const bestBuyOfferId = (
-      await dispatch(doGetBestOffer(quoteToken, baseToken))
-    ).value;
+    const [baseToken, quoteToken] = [tradingPair.get('baseToken'), tradingPair.get('quoteToken')];
+    const bestBuyOfferId = (await dispatch(doGetBestOffer(quoteToken, baseToken))).value;
 
-    const bestSellOfferId = (
-      await dispatch(doGetBestOffer(baseToken, quoteToken))
-    ).value;
+    const bestSellOfferId = (await dispatch(doGetBestOffer(baseToken, quoteToken))).value;
 
     dispatch(
       setActiveTradingPairBestOfferIds({
@@ -38,14 +31,8 @@ export const getBestOfferIdsForActiveTradingPairEpic =
   };
 
 export const reducer = {
-  [setActiveTradingPairBestOfferIds]: (
-    state,
-    { payload: { bestBuyOfferId, bestSellOfferId } },
-  ) =>
+  [setActiveTradingPairBestOfferIds]: (state, { payload: { bestBuyOfferId, bestSellOfferId } }) =>
     state
       .setIn(['activeTradingPairBestOfferId', 'bestBuyOfferId'], bestBuyOfferId)
-      .setIn(
-        ['activeTradingPairBestOfferId', 'bestSellOfferId'],
-        bestSellOfferId,
-      ),
+      .setIn(['activeTradingPairBestOfferId', 'bestSellOfferId'], bestSellOfferId),
 };

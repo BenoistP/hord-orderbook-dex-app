@@ -27,15 +27,7 @@ const defaultProps = {
 
 export class InfoBox extends PureComponent {
   render() {
-    const {
-      color,
-      size,
-      className,
-      fullWidth,
-      noBorder,
-      additionalStyles,
-      ...props
-    } = this.props;
+    const { color, size, className, fullWidth, noBorder, additionalStyles, ...props } = this.props;
     return (
       <FlexBox
         additionalStyles={additionalStyles}
