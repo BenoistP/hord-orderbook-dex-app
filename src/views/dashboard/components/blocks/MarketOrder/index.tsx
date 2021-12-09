@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, TabList, TabPanel, Tabs, resetIdCounter } from 'react-tabs';
 
-import Dropdown from 'components/general/Dropdown'
-import DropdownItem from 'components/general/DropdownItem';
-import MarketOrderAction from 'components/general/MarketOrderAction'
+import Dropdown from '../../../../../components/general/Dropdown'
+import DropdownItem from '../../../../../components/general/DropdownItem';
+import MarketOrderAction from '../../../../../components/general/MarketOrderAction'
 import * as S from './styles'
 
 const MarketOrder = ({ setOpenOrder, price, amount, setPrice, setAmount, validAccount, latestTransaction, blockchainApi, setActiveIndex }) => {

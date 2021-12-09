@@ -1,5 +1,5 @@
-import Icon from 'components/general/Icon'
-import Logo from 'components/general/Logo'
+import Icon from '../../../../../components/general/Icon'
+import Logo from '../../../../../components/general/Logo'
 
 import * as S from './styles'
 

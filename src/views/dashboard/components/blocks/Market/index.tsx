@@ -1,8 +1,8 @@
 // import Dropdown from 'components/general/Dropdown'
-import Heading from 'components/general/Heading'
-import Icon from 'components/general/Icon'
-import MarketTable from 'components/general/MarketTable'
-import SearchInput from 'components/general/SearchInput'
+import Heading from '../../../../../components/general/Heading'
+import Icon from '../../../../../components/general/Icon'
+import MarketTable from '../../../../../components/general/MarketTable'
+import SearchInput from '../../../../../components/general/SearchInput'
 
 import * as S from './styles'
 
