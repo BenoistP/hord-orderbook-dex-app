@@ -1,13 +1,13 @@
 import React, { useEffect,useState } from 'react'
 
-import { webSocket } from '../../components/dashboard/CustomChart/api/stream'
+// import { webSocket } from '../../components/dashboard/CustomChart/api/stream'
 import Graph from './blocks/Graph'
 import MarketOrder from './blocks/MarketOrder'
 import Menu from './blocks/Menu'
 import Navbar from './blocks/Navbar'
 import Transactions from './blocks/Transactions'
 import * as S from './styles'
-import Toast from '../../components/general/Toast'
+// import Toast from '../../components/general/Toast'
 
 export default function Dashboard({ account, blockchainApi }) {
 
@@ -104,14 +104,14 @@ export default function Dashboard({ account, blockchainApi }) {
     setOpenOrders(finalOrders);
   }
 
-  useEffect(() => {
-    const webSocketInstance = webSocket;
-    fetchMarketData(webSocketInstance)
-    fetchOrderBookBids(webSocketInstance)
-    fetchOrderBookAsks(webSocketInstance)
-    fetchLastTrade(webSocketInstance);
-    fetchNewTrade(webSocketInstance);
-  }, [])
+  // useEffect(() => {
+  //   const webSocketInstance = webSocket;
+  //   fetchMarketData(webSocketInstance)
+  //   fetchOrderBookBids(webSocketInstance)
+  //   fetchOrderBookAsks(webSocketInstance)
+  //   fetchLastTrade(webSocketInstance);
+  //   fetchNewTrade(webSocketInstance);
+  // }, [])
 
   return (
     <S.Wrapper>
@@ -141,7 +141,7 @@ export default function Dashboard({ account, blockchainApi }) {
           setActiveIndex={(index) => setActiveIndex(index)}
           remove={removeTransactionsOrder}/>
       </S.WrapperMain>
-      <Toast />
+      {/* <Toast /> */}
     </S.Wrapper>
   )
 }
