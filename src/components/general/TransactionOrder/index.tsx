@@ -1,5 +1,5 @@
 import moment from "moment"
-import { ITransactionData,ITransactions } from 'templates/dashboard/blocks/Transactions/ITransactions'
+import { ITransactionData,ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions'
 
 import Icon from '../Icon'
 import * as S from './styles'

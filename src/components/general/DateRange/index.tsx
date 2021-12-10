@@ -1,7 +1,7 @@
 import "react-datepicker/dist/react-datepicker.css";
 
 import { useState } from 'react';
-import DatePicker from "react-datepicker"
+// import DatePicker from "react-datepicker"
 
 import Icon from "../Icon";
 import * as S from './styles'
@@ -24,14 +24,14 @@ const DateRange = ( {position='right'}: Props ) => {
       <Icon source="Transactions" background="Gray" size="Medium" action={()=>setState(!state)} />
       {state &&
         <S.WrapperCalendar position={position}>
-        <DatePicker
+        {/* <DatePicker
           selected={startDate}
           onChange={onChange}
           startDate={startDate}
           endDate={endDate}
           selectsRange
           inline
-        />
+        /> */}
       </S.WrapperCalendar> }
 
     </S.Wrapper>

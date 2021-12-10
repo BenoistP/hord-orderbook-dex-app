@@ -67,57 +67,57 @@ const MarketOrderAction = ({ type = 'Buy', setOpenOrder, price, amount, setPrice
   }
 
   const startTransaction = async () => {
-    if (account.address) {
-      const polkadotExtensionDapp = await import('@polkadot/extension-dapp');
-      const injector = await polkadotExtensionDapp.web3FromSource(account.meta.source);
+    // if (account.address) {
+    //   const polkadotExtensionDapp = await import('@polkadot/extension-dapp');
+    //   const injector = await polkadotExtensionDapp.web3FromSource(account.meta.source);
 
-      toast.success(type + ' initiated');
-      let transferExtrinsic;
+    //   toast.success(type + ' initiated');
+    //   let transferExtrinsic;
 
-      if (getCurrentStatus() === "BidMarket") {
-        transferExtrinsic = blockchainApi.tx.polkadex.submitOrder(
-          getCurrentStatus(),
-          tradingPairID,
-          new BN(cleanString((parseFloat(amount + '') * UNIT).toString()), 10),
-          new BN(cleanString((parseFloat(price + '') * UNIT).toString()), 10)
-        );
-      } else {
-        transferExtrinsic = blockchainApi.tx.polkadex.submitOrder(
-          getCurrentStatus(),
-          tradingPairID,
-          new BN(cleanString((parseFloat(price + '') * UNIT).toString()), 10),
-          new BN(cleanString((parseFloat(amount + '') * UNIT).toString()), 10)
-        );
-      }
+    //   if (getCurrentStatus() === "BidMarket") {
+    //     transferExtrinsic = blockchainApi.tx.polkadex.submitOrder(
+    //       getCurrentStatus(),
+    //       tradingPairID,
+    //       new BN(cleanString((parseFloat(amount + '') * UNIT).toString()), 10),
+    //       new BN(cleanString((parseFloat(price + '') * UNIT).toString()), 10)
+    //     );
+    //   } else {
+    //     transferExtrinsic = blockchainApi.tx.polkadex.submitOrder(
+    //       getCurrentStatus(),
+    //       tradingPairID,
+    //       new BN(cleanString((parseFloat(price + '') * UNIT).toString()), 10),
+    //       new BN(cleanString((parseFloat(amount + '') * UNIT).toString()), 10)
+    //     );
+    //   }
 
-      setActiveIndex(0);
-      transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
-        if (orderType === 'Limit Order') {
-          setOpenOrder({
-            price,
-            amount,
-            tradeAmount: price * amount,
-            status: status.type,
-            fee: (0.2 * price * amount),
-            side: getCurrentStatus()
-          });
-        } else if (orderType === 'Market Order') {
-          setOpenOrder({
-            price: 'Market',
-            amount,
-            tradeAmount: '-',
-            status: status.type,
-            fee: '-',
-            side: getCurrentStatus()
-          });
-        }
-        setPrice('0');
-        orderType === 'Limit Order' && type === 'Buy' && setAmount('0');
-        toast.success(`Transaction status: ${status.type}`);
-      }).catch((error: any) => {
-        toast.success('Transaction failed: ' + error);
-      });
-    }
+    //   setActiveIndex(0);
+    //   transferExtrinsic.signAndSend(account.address, { signer: injector.signer }, ({ status }) => {
+    //     if (orderType === 'Limit Order') {
+    //       setOpenOrder({
+    //         price,
+    //         amount,
+    //         tradeAmount: price * amount,
+    //         status: status.type,
+    //         fee: (0.2 * price * amount),
+    //         side: getCurrentStatus()
+    //       });
+    //     } else if (orderType === 'Market Order') {
+    //       setOpenOrder({
+    //         price: 'Market',
+    //         amount,
+    //         tradeAmount: '-',
+    //         status: status.type,
+    //         fee: '-',
+    //         side: getCurrentStatus()
+    //       });
+    //     }
+    //     setPrice('0');
+    //     orderType === 'Limit Order' && type === 'Buy' && setAmount('0');
+    //     toast.success(`Transaction status: ${status.type}`);
+    //   }).catch((error: any) => {
+    //     toast.success('Transaction failed: ' + error);
+    //   });
+    // }
   }
 
   const validatePrice = (inputPrice) => {

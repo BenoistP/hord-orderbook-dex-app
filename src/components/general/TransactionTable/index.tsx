@@ -1,4 +1,4 @@
-import { ITransactionData, ITransactions } from 'templates/dashboard/blocks/Transactions/ITransactions'
+import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions'
 
 import TransactionOrder from '../TransactionOrder'
 import * as S from './styles'

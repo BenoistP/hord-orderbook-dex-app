@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components/macro'
 import media from "styled-media-query"
 
 export const Wrapper = styled.div``

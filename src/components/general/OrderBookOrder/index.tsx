@@ -1,4 +1,4 @@
-import { IOrderBookData } from 'templates/dashboard/blocks/Graph/IGraph'
+import { IOrderBookData } from '../../../views/dashboard/components/blocks/Graph/IGraph'
 
 import * as S from './styles'
 
