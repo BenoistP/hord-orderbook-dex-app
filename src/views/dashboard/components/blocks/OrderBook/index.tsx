@@ -62,8 +62,8 @@ const OrderBook = ({ orderBookBids, orderBookAsks, latestTransaction, latestTran
           </Dropdown>
         </S.ContainerTitle>
       </S.WrapperTitle>
-      <OrderBookTable orderBookAsks={orderBookAsks}
-                      orderBookBids={orderBookBids}
+      <OrderBookTable orderBookAsks={updateDataSize(orderBookAsks)}
+                      orderBookBids={updateDataSize(orderBookBids)}
                       latestTransaction={Dinero({ amount: Math.round(latestTransaction * 100) }).toFormat('$0,0.00')}
                       latestTransactionType={latestTransactionType}/>
     </S.Wrapper>

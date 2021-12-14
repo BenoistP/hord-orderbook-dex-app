@@ -22,8 +22,8 @@ export const setBuyOrders = () => async (dispatch, getState) => {
     let currentIndex = 0;
 
     while (currentId !== '0') {
-      const buyAmt = WeiToEth(buyOffers.buyAmts[currentIndex]);
-      const payAmt = WeiToEth(buyOffers.payAmts[currentIndex]);
+      const buyAmt = Number(WeiToEth(buyOffers.buyAmts[currentIndex]));
+      const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]));
       const id = buyOffers.ids[currentIndex];
       const owner = buyOffers.owners[currentIndex];
 
@@ -74,8 +74,8 @@ export const setSellOrders = () => async (dispatch, getState) => {
     let currentIndex = 0;
 
     while (currentId !== '0') {
-      const buyAmt = WeiToEth(sellOffers.buyAmts[currentIndex]);
-      const payAmt = WeiToEth(sellOffers.payAmts[currentIndex]);
+      const buyAmt = Number(WeiToEth(sellOffers.buyAmts[currentIndex]));
+      const payAmt = Number(WeiToEth(sellOffers.payAmts[currentIndex]));
       const id = sellOffers.ids[currentIndex];
       const owner = sellOffers.owners[currentIndex];
 
