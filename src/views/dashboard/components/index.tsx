@@ -1,4 +1,5 @@
 import React, { useEffect,useState } from 'react'
+import { connect } from 'react-redux'
 
 // import { webSocket } from '../../components/dashboard/CustomChart/api/stream'
 import Graph from './blocks/Graph'
@@ -8,9 +9,9 @@ import Navbar from './blocks/Navbar'
 import Transactions from './blocks/Transactions'
 import * as S from './styles'
 // import Toast from '../../components/general/Toast'
+import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
 
-export default function Dashboard({ account, blockchainApi }) {
-
+function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, MatchingMarket, buyOrders, sellOrders,  }) {
   const [state, setState] = useState(false)
   const [orderBookBids, setOrderBookBids] = useState([])
   const [orderBookAsks, setOrderBookAsks] = useState([])
@@ -28,24 +29,41 @@ export default function Dashboard({ account, blockchainApi }) {
 
   const removeTransactionsOrder = (id: string) => console.log('remove transaction' + id);
 
-  const fetchOrderBookBids = (socket) => {
-    socket.on('bids_levels', async (bid_levels) => {
-      let currentOrderBook = [];
+  useEffect(() => {
+    if (MatchingMarket) {
+      setBuyOrders()
+      setSellOrders()
+    }
+  },[MatchingMarket])
 
-      bid_levels.map(({ price, quantity }) => {
-        currentOrderBook.push({
-          id: currentOrderBook.length + 1,
-          date: new Date(),
-          pair: "DOT",
-          coin: "BTC",
-          side: "buy",
-          price: price,
-          amount: quantity,
-          total: quantity * price,
-        });
-      });
-      await setOrderBookBids(currentOrderBook.sort((first, second) => second.price - first.price));
-    });
+
+  useEffect(() => {
+    if (sellOrders) {
+      setOrderBookAsks(sellOrders)
+    }
+    if (buyOrders) {
+      setOrderBookBids(buyOrders)
+    }
+  },[buyOrders, sellOrders,])
+
+  const fetchOrderBookBids = () => {
+    // socket.on('bids_levels', async (bid_levels) => {
+    //   let currentOrderBook = [];
+
+    //   bid_levels.map(({ price, quantity }) => {
+    //     currentOrderBook.push({
+    //       id: currentOrderBook.length + 1,
+    //       date: new Date(),
+    //       pair: "DOT",
+    //       coin: "BTC",
+    //       side: "buy",
+    //       price: price,
+    //       amount: quantity,
+    //       total: quantity * price,
+    //     });
+    //   });
+    //   await setOrderBookBids(currentOrderBook.sort((first, second) => second.price - first.price));
+    // });
   }
 
   const fetchOrderBookAsks = (socket) => {
@@ -145,3 +163,18 @@ export default function Dashboard({ account, blockchainApi }) {
     </S.Wrapper>
   )
 }
+
+const mapStateToProps = (state) => {
+  return {
+    account: state.wallet.account,
+    MatchingMarket: state.contracts.MatchingMarket,
+    UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
+    buyOrders: state.orderbook.buyOrders,
+    sellOrders: state.orderbook.sellOrders,
+  };
+};
+
+export default connect(mapStateToProps, {
+  setBuyOrders,
+  setSellOrders
+})(Dashboard);
