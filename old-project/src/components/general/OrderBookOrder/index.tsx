@@ -15,7 +15,7 @@ const OrderBookOrder = ({data, exchangeImg}:Props) => (
       <S.ContainerFlex>
         <S.Span data={data}>{data.amount} {data.coin}</S.Span>
         <S.Image src={exchangeImg} />
-        <span>{data.total} USDT</span>
+        <span>{data.total} BUSD</span>
       </S.ContainerFlex>
     </S.Td>
   </S.Tr>

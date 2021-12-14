@@ -171,7 +171,7 @@ const MarketOrderAction = ({ type = 'Buy', setOpenOrder, price, amount, setPrice
         <Icon source="Wallet" background="DarkGray" size="Medium" />
         <S.WrapperBalance>
           <span>Available</span>
-          <S.Span>{available} { type === 'Buy' ? 'USDT' : 'BTC' }</S.Span>
+          <S.Span>{available} { type === 'Buy' ? 'BUSD' : 'BTC' }</S.Span>
         </S.WrapperBalance>
       </S.ContainerWallet>
       <S.ContainerForm>
@@ -179,12 +179,12 @@ const MarketOrderAction = ({ type = 'Buy', setOpenOrder, price, amount, setPrice
           {
             orderType === 'Limit Order'
               ? <Input label="Price" icon="ArrowVerticalTop" placeholder="0.0000000" value={price}
-                     type="text" inputInfo="USDT" fullWidth={true} setValue={(inputPrice) => validatePrice(inputPrice)}/>
+                     type="text" inputInfo="BUSD" fullWidth={true} setValue={(inputPrice) => validatePrice(inputPrice)}/>
               : <Input label="Price" icon="ArrowVerticalTop" placeholder="0.0000000" value={'Market'}
-                       type="text" inputInfo="USDT" fullWidth={true}/>
+                       type="text" inputInfo="BUSD" fullWidth={true}/>
           }
           <Input label="Amount" icon="ArrowVerticalBottom" placeholder="0.0000000" value={amount}
-                 type="text" inputInfo={orderType === "Market Order" && type === "Buy" ? "USDT" : "BTC"} fullWidth={true} setValue={(inputAmount) => validateAmount(inputAmount)} />
+                 type="text" inputInfo={orderType === "Market Order" && type === "Buy" ? "BUSD" : "BTC"} fullWidth={true} setValue={(inputAmount) => validateAmount(inputAmount)} />
           <S.WrapperActions>
             <p>Equivalent ~
             <span> $0</span>

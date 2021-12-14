@@ -55,7 +55,7 @@ const OpenOrderTable = ({ data }: Props) => (
                 <S.Tag>Pair</S.Tag>
                 <S.ContainerFlex>
                   <S.Image src={`img/cryptocurrencies/BTC.png`}  />
-                  <span>BTC / USDT</span>
+                  <span>BTC / BUSD</span>
                 </S.ContainerFlex>
               </S.Td>
 
