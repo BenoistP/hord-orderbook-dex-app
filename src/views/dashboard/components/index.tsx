@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 // import { webSocket } from '../../components/dashboard/CustomChart/api/stream'
 import Graph from './blocks/Graph'
 import MarketOrder from './blocks/MarketOrder'
-import Menu from './blocks/Menu'
 import Navbar from './blocks/Navbar'
 import Transactions from './blocks/Transactions'
 import * as S from './styles'
@@ -133,7 +132,6 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
 
   return (
     <S.Wrapper>
-      <Menu handleChange={() => setState(!state)} />
       {/*{state && <Market/>}*/}
       <S.WrapperMain >
         <Navbar account={account} lastTradePrice={lastTradePrice} lastTradePriceType={lastTradePriceType}
