@@ -18,7 +18,7 @@ type Props = {
 
 const OrderBook = ({ orderBookBids, orderBookAsks, latestTransaction, latestTransactionType }: Props) => {
   const [filterState, setFilterState] = useState("Order")
-  const [sizeState, setSizeState] = useState(0.001)
+  const [sizeState, setSizeState] = useState(0.01)
   const [dropdownState, setDropdownState] = useState(false)
 
   const handleChange = (select: string) => setFilterState(select)
