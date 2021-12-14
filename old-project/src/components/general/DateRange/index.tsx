@@ -1,19 +1,19 @@
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
 
 import { useState } from 'react';
 // import DatePicker from "react-datepicker"
 
-import Icon from "../Icon";
-import * as S from './styles'
+import Icon from '../Icon';
+import * as S from './styles';
 
 type Props = {
-  position: 'right' | 'left'
-}
-const DateRange = ( {position='right'}: Props ) => {
-  const [state, setState] = useState(false)
+  position: 'right' | 'left';
+};
+const DateRange = ({ position = 'right' }: Props) => {
+  const [state, setState] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(null);
-  const onChange = dates => {
+  const onChange = (dates) => {
     const [start, end] = dates;
     setStartDate(start);
     setEndDate(end);
@@ -21,10 +21,10 @@ const DateRange = ( {position='right'}: Props ) => {
 
   return (
     <S.Wrapper>
-      <Icon source="Transactions" background="Gray" size="Medium" action={()=>setState(!state)} />
-      {state &&
+      <Icon source="Transactions" background="Gray" size="Medium" action={() => setState(!state)} />
+      {state && (
         <S.WrapperCalendar position={position}>
-        {/* <DatePicker
+          {/* <DatePicker
           selected={startDate}
           onChange={onChange}
           startDate={startDate}
@@ -32,10 +32,10 @@ const DateRange = ( {position='right'}: Props ) => {
           selectsRange
           inline
         /> */}
-      </S.WrapperCalendar> }
-
+        </S.WrapperCalendar>
+      )}
     </S.Wrapper>
-  )
-}
+  );
+};
 
-export default DateRange
+export default DateRange;

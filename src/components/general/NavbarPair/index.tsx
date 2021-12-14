@@ -1,61 +1,53 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-import Dropdown from '../Dropdown'
-import DropdownItem from '../DropdownItem'
-import Icon from '../Icon'
-import * as S from './styles'
+import Dropdown from '../Dropdown';
+import DropdownItem from '../DropdownItem';
+import Icon from '../Icon';
+import * as S from './styles';
 
 type IPairs = {
-  id: number
-  name: string
-}
+  id: number;
+  name: string;
+};
 export type NavbarPairProps = {
-  coin?:string
-  pairs?: IPairs[]
-
-}
+  coin?: string;
+  pairs?: IPairs[];
+};
 
 const NavbarPair = ({ coin, pairs }: NavbarPairProps) => {
-  const [state, setState] = useState("BUSD")
-  const [dropdownState, setDropdownState] = useState(false)
+  const [state, setState] = useState('BUSD');
+  const [dropdownState, setDropdownState] = useState(false);
 
   const handleChange = (select: string) => {
     setDropdownState(false);
-    setState(select)
-  }
+    setState(select);
+  };
 
   return (
     <S.Wrapper>
       <S.WrapperCoin>
-        <S.Label>
-          Coin
-      </S.Label>
+        <S.Label>Coin</S.Label>
         <S.Container>
           <S.Image src={`img/cryptocurrencies/${coin}.png`} />
-          <S.Name>
-            {coin}
-          </S.Name>
+          <S.Name>{coin}</S.Name>
         </S.Container>
-
       </S.WrapperCoin>
       <S.WrapperExchange>
         <Icon source="Exchange" />
       </S.WrapperExchange>
       <S.WrapperCoin>
-        <S.Label>
-          Pair
-      </S.Label>
+        <S.Label>Pair</S.Label>
 
         <Dropdown title={state} active={dropdownState} setDropdownState={setDropdownState}>
           <>
-            {pairs.map( ({id, name}) => (
-                <DropdownItem key={id} title={name} handleAction={handleChange} />
+            {pairs.map(({ id, name }) => (
+              <DropdownItem key={id} title={name} handleAction={handleChange} />
             ))}
           </>
         </Dropdown>
       </S.WrapperCoin>
     </S.Wrapper>
-  )
-}
+  );
+};
 
-export default NavbarPair
+export default NavbarPair;

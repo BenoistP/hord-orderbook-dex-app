@@ -1,10 +1,8 @@
-import * as S from './styles'
+import * as S from './styles';
 
 export type HeadingProps = {
-  title: string
-}
-const Heading = ({ title }: HeadingProps) => (
-  <S.Wrapper>{title}</S.Wrapper>
-)
+  title: string;
+};
+const Heading = ({ title }: HeadingProps) => <S.Wrapper>{title}</S.Wrapper>;
 
-export default Heading
+export default Heading;

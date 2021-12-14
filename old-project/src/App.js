@@ -33,7 +33,7 @@ const App = ({ connectToContracts, account, MatchingMarket, setBuyOrders, setSel
     //     <Notifications position="top-right" autoDelete autoDeleteTime={2000} />
     //   </header>
     // </div>
-    <Dashboard/>
+    <Dashboard />
   );
 };
 const mapStateToProps = (state) => {

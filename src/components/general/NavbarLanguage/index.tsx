@@ -1,26 +1,23 @@
-import NavbarSingleCurrency from '../NavbarSingleCurrency'
-import NavbarSingleLanguage from '../NavbarSingleLanguage'
-import * as S from './styles'
+import NavbarSingleCurrency from '../NavbarSingleCurrency';
+import NavbarSingleLanguage from '../NavbarSingleLanguage';
+import * as S from './styles';
 
 const NavbarLanguage = () => {
-
   return (
     <S.Wrapper>
       <S.Header>
-          <S.WrapperFlag>
-            <S.Image src="/img/icons/EN.svg"/>
-          </S.WrapperFlag>
-          <S.Title>EN/USD</S.Title>
-          <S.WrapperImage>
-            <S.Image src="/img/icons/ArrowTop.svg" />
-          </S.WrapperImage>
+        <S.WrapperFlag>
+          <S.Image src="/img/icons/EN.svg" />
+        </S.WrapperFlag>
+        <S.Title>EN/USD</S.Title>
+        <S.WrapperImage>
+          <S.Image src="/img/icons/ArrowTop.svg" />
+        </S.WrapperImage>
       </S.Header>
       <S.WrapperContent className="animation">
         <S.ContainerContent>
           <S.WrapperCountry>
-            <S.TitleLanguage>
-              Language
-            </S.TitleLanguage>
+            <S.TitleLanguage>Language</S.TitleLanguage>
             <NavbarSingleLanguage title="English" flag="EN" />
             <NavbarSingleLanguage title="Français" flag="FR" />
             <NavbarSingleLanguage title="Español" flag="ES" />
@@ -28,9 +25,7 @@ const NavbarLanguage = () => {
             <NavbarSingleLanguage title="Português" flag="PT" />
           </S.WrapperCountry>
           <S.WrapperCurrency>
-            <S.TitleLanguage>
-              Currency
-            </S.TitleLanguage>
+            <S.TitleLanguage>Currency</S.TitleLanguage>
             <NavbarSingleCurrency title="USD" />
             <NavbarSingleCurrency title="EUR" />
             <NavbarSingleCurrency title="BRL" />
@@ -39,7 +34,7 @@ const NavbarLanguage = () => {
         </S.ContainerContent>
       </S.WrapperContent>
     </S.Wrapper>
-  )
-}
+  );
+};
 
-export default NavbarLanguage
+export default NavbarLanguage;

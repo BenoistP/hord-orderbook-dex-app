@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react';
 
-import * as S from '../OrderBookTable/styles'
-import OrderBookOrder from '../OrderBookOrder'
+import * as S from '../OrderBookTable/styles';
+import OrderBookOrder from '../OrderBookOrder';
 
 const OrderBookTableBody = ({ data, isScrollBottom, exchangeImg }) => {
   let tableEndRef = useRef(null);
@@ -11,7 +11,7 @@ const OrderBookTableBody = ({ data, isScrollBottom, exchangeImg }) => {
       const scroll = tableEndRef?.current?.scrollHeight - tableEndRef?.current?.clientHeight;
       tableEndRef.current.scrollTo(0, scroll);
     }
-  }
+  };
 
   useEffect(() => {
     if (isScrollBottom) {
@@ -23,9 +23,11 @@ const OrderBookTableBody = ({ data, isScrollBottom, exchangeImg }) => {
 
   return (
     <S.Tbody ref={tableEndRef}>
-      {data.map(item => <OrderBookOrder key={item.id} data={item} exchangeImg={exchangeImg}/>)}
+      {data.map((item) => (
+        <OrderBookOrder key={item.id} data={item} exchangeImg={exchangeImg} />
+      ))}
     </S.Tbody>
-  )
-}
+  );
+};
 
 export default OrderBookTableBody;

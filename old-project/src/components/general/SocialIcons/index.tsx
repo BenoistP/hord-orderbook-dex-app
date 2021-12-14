@@ -1,8 +1,8 @@
-import * as S from './styles'
-import React from 'react'
+import * as S from './styles';
+import React from 'react';
 
 const SocialIcons = () => (
-  <div style={{ display: 'flex', alignItems: 'flex-end', marginTop: '1rem'}}>
+  <div style={{ display: 'flex', alignItems: 'flex-end', marginTop: '1rem' }}>
     <S.Link href="https://t.me/Polkadex" target="_blank">
       <S.LinkImage src="img/login/telegram.png" alt="Telegram" />
       @Polkadex
@@ -16,8 +16,6 @@ const SocialIcons = () => (
       @Polkadex
     </S.Link>
   </div>
-)
-
-
+);
 
 export default SocialIcons;

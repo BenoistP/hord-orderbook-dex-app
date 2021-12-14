@@ -1,23 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs, resetIdCounter } from 'react-tabs';
 
-import Dropdown from '../../../../../components/general/Dropdown'
+import Dropdown from '../../../../../components/general/Dropdown';
 import DropdownItem from '../../../../../components/general/DropdownItem';
-import MarketOrderAction from '../../../../../components/general/MarketOrderAction'
-import * as S from './styles'
+import MarketOrderAction from '../../../../../components/general/MarketOrderAction';
+import * as S from './styles';
 
-const MarketOrder = ({ setOpenOrder, price, amount, setPrice, setAmount, validAccount, latestTransaction, blockchainApi, setActiveIndex }) => {
-  const [orderType, setOrderType] = useState("Limit Order")
-  const [dropdownState, setDropdownState] = useState(false)
+const MarketOrder = ({
+  setOpenOrder,
+  price,
+  amount,
+  setPrice,
+  setAmount,
+  validAccount,
+  latestTransaction,
+  blockchainApi,
+  setActiveIndex,
+}) => {
+  const [orderType, setOrderType] = useState('Limit Order');
+  const [dropdownState, setDropdownState] = useState(false);
 
   const handleChange = (select: string) => {
     setDropdownState(false);
-    setOrderType(select)
-  }
+    setOrderType(select);
+  };
 
   useEffect(() => {
-    setPrice(latestTransaction.toFixed(4))
-  }, [latestTransaction !== 0])
+    setPrice(latestTransaction.toFixed(4));
+  }, [latestTransaction !== 0]);
 
   resetIdCounter();
 
@@ -38,26 +48,36 @@ const MarketOrder = ({ setOpenOrder, price, amount, setPrice, setAmount, validAc
         </S.Header>
 
         <TabPanel>
-          <MarketOrderAction type="Buy" setOpenOrder={setOpenOrder}
-                             orderType={orderType}
-                             account={validAccount}
-                             blockchainApi={blockchainApi}
-                             setActiveIndex={setActiveIndex}
-                             price={price} setPrice={setPrice}
-                             amount={amount} setAmount={setAmount} />
+          <MarketOrderAction
+            type="Buy"
+            setOpenOrder={setOpenOrder}
+            orderType={orderType}
+            account={validAccount}
+            blockchainApi={blockchainApi}
+            setActiveIndex={setActiveIndex}
+            price={price}
+            setPrice={setPrice}
+            amount={amount}
+            setAmount={setAmount}
+          />
         </TabPanel>
         <TabPanel>
-          <MarketOrderAction type="Sell" setOpenOrder={setOpenOrder}
-                             orderType={orderType}
-                             account={validAccount}
-                             blockchainApi={blockchainApi}
-                             setActiveIndex={setActiveIndex}
-                             price={price} setPrice={setPrice}
-                             amount={amount} setAmount={setAmount} />
+          <MarketOrderAction
+            type="Sell"
+            setOpenOrder={setOpenOrder}
+            orderType={orderType}
+            account={validAccount}
+            blockchainApi={blockchainApi}
+            setActiveIndex={setActiveIndex}
+            price={price}
+            setPrice={setPrice}
+            amount={amount}
+            setAmount={setAmount}
+          />
         </TabPanel>
       </Tabs>
     </S.Section>
-  )
-}
+  );
+};
 
-export default MarketOrder
+export default MarketOrder;
