@@ -46,7 +46,7 @@ function App({ connectToContracts, account, MatchingMarket, setBuyOrders, setSel
                   onConnectError={onWalletConnectError}
                   onDisconnect={onWalletDisconnect}
                 />
-      <Dashboard blockchainApi={'BSC'} account={'0x0'} />
+      <Dashboard blockchainApi={'BSC'} />
        </S.Page>
    </ThemeProvider>
   );
