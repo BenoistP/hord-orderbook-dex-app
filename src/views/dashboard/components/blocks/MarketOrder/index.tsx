@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Tab, TabList, TabPanel, Tabs, resetIdCounter } from 'react-tabs';
-
-import Dropdown from '../../../../../components/general/Dropdown';
-import DropdownItem from '../../../../../components/general/DropdownItem';
 import MarketOrderAction from '../../../../../components/general/MarketOrderAction';
 import * as S from './styles';
 
@@ -17,13 +14,7 @@ const MarketOrder = ({
   blockchainApi,
   setActiveIndex,
 }) => {
-  const [orderType, setOrderType] = useState('Limit Order');
-  const [dropdownState, setDropdownState] = useState(false);
-
-  const handleChange = (select: string) => {
-    setDropdownState(false);
-    setOrderType(select);
-  };
+  const [orderType, setOrderType] = useState('Limit Order'); // currently implementation has market and limit order
 
   useEffect(() => {
     setPrice(latestTransaction.toFixed(4));
@@ -39,12 +30,6 @@ const MarketOrder = ({
             <Tab>Buy BTC</Tab>
             <Tab>Sell BTC</Tab>
           </TabList>
-          <Dropdown title={orderType} active={dropdownState} setDropdownState={setDropdownState}>
-            <>
-              <DropdownItem title="Limit Order" handleAction={handleChange} />
-              <DropdownItem title="Market Order" handleAction={handleChange} />
-            </>
-          </Dropdown>
         </S.Header>
 
         <TabPanel>
