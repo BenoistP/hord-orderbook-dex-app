@@ -32,6 +32,12 @@ export const setBuyOrders = () => async (dispatch, getState) => {
         payAmt,
         id,
         owner,
+        date: new Date(),
+        pair: "DOT",
+        coin: "BTC",
+        price: payAmt,
+        amount: buyAmt,
+        total: buyAmt * payAmt,
       };
 
       buyOrders.push(buyOrder);
@@ -73,14 +79,25 @@ export const setSellOrders = () => async (dispatch, getState) => {
       const id = sellOffers.ids[currentIndex];
       const owner = sellOffers.owners[currentIndex];
 
-      const buyOrder = {
+      // initially:
+      //  buyAmt,
+      //   payAmt,
+      //   id,
+      //   owner,
+      const sellOrder = {
         buyAmt,
         payAmt,
         id,
         owner,
+        date: new Date(),
+        pair: "DOT",
+        coin: "BTC",
+        price: payAmt,
+        amount: buyAmt,
+        total: buyAmt * payAmt,
       };
 
-      sellOrders.push(buyOrder);
+      sellOrders.push(sellOrder);
 
       currentIndex += 1;
       currentId = sellOffers.ids[currentIndex];
