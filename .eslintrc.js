@@ -59,8 +59,8 @@ module.exports = {
     'no-async-promise-executor': 'off',
     'no-plusplus': 'off',
     'jsx-a11y/no-onchange': 'off',
-    indent: 'off',
     'import/no-unresolved': 'off',
+    semi: 'off',
   },
   globals: {
     web3: true,
