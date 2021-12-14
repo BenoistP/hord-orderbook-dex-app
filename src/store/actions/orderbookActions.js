@@ -111,6 +111,115 @@ export const setSellOrders = () => async (dispatch, getState) => {
   }
 };
 
+export const makeBuyOrder = () => async (dispatch, getState) => {
+  const MatchingMarket = getState().contracts.MatchingMarket;
+  const BUSD = getState().contracts.BUSD;
+  const HPoolToken = getState().contracts.HPoolToken;
+  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
+
+  const sellTokenAddress = HPoolToken.address;
+  const buyTokenAddress = BUSD.address;
+
+  const buyOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
+    MatchingMarket.address,
+    sellTokenAddress,
+    buyTokenAddress,
+  ]);
+  if (!buyOffers.error) {
+    const buyOrders = [];
+    let currentId = buyOffers.ids[0]; // to check if we have a valid tradeOrder
+    let currentIndex = 0;
+
+    while (currentId !== '0') {
+      const buyAmt = Number(WeiToEth(buyOffers.buyAmts[currentIndex]));
+      const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]));
+      const id = buyOffers.ids[currentIndex];
+      const owner = buyOffers.owners[currentIndex];
+
+      const buyOrder = {
+        buyAmt,
+        payAmt,
+        id,
+        owner,
+        date: new Date(),
+        pair: "DOT",
+        coin: "BTC",
+        price: payAmt,
+        amount: buyAmt,
+        total: buyAmt * payAmt,
+      };
+
+      buyOrders.push(buyOrder);
+
+      currentIndex += 1;
+      currentId = buyOffers.ids[currentIndex];
+    }
+    console.log(buyOrders);
+
+    dispatch({
+      type: orderbookActionTypes.SET_BUY_ORDERS,
+      payload: buyOrders,
+    });
+  }
+};
+
+export const makeSellOrder = () => async (dispatch, getState) => {
+  const MatchingMarket = getState().contracts.MatchingMarket;
+  const BUSD = getState().contracts.BUSD;
+  const HPoolToken = getState().contracts.HPoolToken;
+  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
+
+  const sellTokenAddress = BUSD.address;
+  const buyTokenAddress = HPoolToken.address;
+
+  const sellOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
+    MatchingMarket.address,
+    sellTokenAddress,
+    buyTokenAddress,
+  ]);
+  if (!sellOffers.error) {
+    const sellOrders = [];
+    let currentId = sellOffers.ids[0]; // to check if we have a valid tradeOrder
+    let currentIndex = 0;
+
+    while (currentId !== '0') {
+      const buyAmt = Number(WeiToEth(sellOffers.buyAmts[currentIndex]));
+      const payAmt = Number(WeiToEth(sellOffers.payAmts[currentIndex]));
+      const id = sellOffers.ids[currentIndex];
+      const owner = sellOffers.owners[currentIndex];
+
+      // initially:
+      //  buyAmt,
+      //   payAmt,
+      //   id,
+      //   owner,
+      const sellOrder = {
+        buyAmt,
+        payAmt,
+        id,
+        owner,
+        date: new Date(),
+        pair: "DOT",
+        coin: "BTC",
+        price: payAmt,
+        amount: buyAmt,
+        total: buyAmt * payAmt,
+      };
+
+      sellOrders.push(sellOrder);
+
+      currentIndex += 1;
+      currentId = sellOffers.ids[currentIndex];
+    }
+    console.log('SELL', sellOrders);
+
+    dispatch({
+      type: orderbookActionTypes.SET_SELL_ORDERS,
+      payload: sellOrders,
+    });
+  }
+};
+
 // const contracts = await loadContracts();
 // debugger;
 // const { signer, provider, signerAddress } = await connectWallet();
