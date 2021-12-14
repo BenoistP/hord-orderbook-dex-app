@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import Checkbox from '../../../../../components/general/Checkbox';
-import Dropdown from '../../../../../components/general/Dropdown';
-import DropdownItem from '../../../../../components/general/DropdownItem';
 import TransactionTable from '../../../../../components/general/TransactionTable';
 import { Tab, TabList, TabPanel, Tabs } from 'react-tabs';
 
@@ -22,14 +20,9 @@ const Transactions = (
   pair = 'DOT',
 ) => {
   const [filters, setFilters] = useState(initialFilters);
-  const [dropdownState, setDropdownState] = useState(false);
 
   // Filters Actions
   const handleChangeHidden = () => setFilters({ ...filters, hiddenPairs: !filters.hiddenPairs });
-  const handleChangeStatus = (status: string) => {
-    setDropdownState(false);
-    setFilters({ ...filters, status });
-  };
   const handleChangeBuy = () => setFilters({ ...filters, onlyBuy: !filters.onlyBuy });
   const handleChangeSell = () => setFilters({ ...filters, onlySell: !filters.onlySell! });
 
@@ -38,10 +31,8 @@ const Transactions = (
       <Tabs selectedIndex={activeIndex} onSelect={(index) => setActiveIndex(index)}>
         <S.Header>
           <TabList>
-            <Tab>Open Orders</Tab>
-            <Tab>Order History</Tab>
-            <Tab>Trade History</Tab>
-            <Tab>New Trade</Tab>
+            <Tab>My Open Orders</Tab>
+            <Tab>My Trade History</Tab>
           </TabList>
           <S.WrapperActions>
             <Checkbox title="Hide Other Pairs" checked={filters.hiddenPairs} action={handleChangeHidden} />
@@ -49,17 +40,6 @@ const Transactions = (
               <Checkbox title="Buy" checked={filters.onlyBuy} action={handleChangeBuy} />
               <Checkbox title="Sell" checked={filters.onlySell} action={handleChangeSell} />
             </S.ContainerActions>
-            <S.ContainerTransactions>
-              <Dropdown title={filters.status} active={dropdownState} setDropdownState={setDropdownState}>
-                <>
-                  <DropdownItem title="All Transactions" handleAction={handleChangeStatus} />
-                  <DropdownItem title="Pending" handleAction={handleChangeStatus} />
-                  <DropdownItem title="Completed" handleAction={handleChangeStatus} />
-                  <DropdownItem title="Canceled" handleAction={handleChangeStatus} />
-                </>
-              </Dropdown>
-              {/*<DateRange /> */}
-            </S.ContainerTransactions>
           </S.WrapperActions>
         </S.Header>
         <TabPanel>
