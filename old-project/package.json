@@ -35,7 +35,6 @@
     "eject": "react-scripts eject",
     "lint-js": "npx eslint src/**/*.js src/**/*.js",
     "lint-jsx": "npx eslint src/**/*.js src/**/*.jsx",
-    "prettier-js": "npx prettier --write '**/*.js'",
     "prettier-jsx": "npx prettier --write '**/*.jsx'"
   },
   "eslintConfig": {
