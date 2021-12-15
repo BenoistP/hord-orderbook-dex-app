@@ -28,10 +28,10 @@ export const contracts = [
     abi: ERC20.abi,
     link: `https://testnet.bscscan.com/address/0x78867bbeef44f2326bf8ddd1941a4439382ef2a7`,
   },
-  {
-    name: 'HPoolToken',
-    address: '0x39a8f0f941bcb56ff0f19371a366496dfc948704',
-    abi: ERC20.abi,
-    link: `https://testnet.bscscan.com/address/0x39a8f0f941bcb56ff0f19371a366496dfc948704`,
-  },
+  // {
+  //   name: 'HPoolToken',
+  //   address: '0x39a8f0f941bcb56ff0f19371a366496dfc948704',
+  //   abi: ERC20.abi,
+  //   link: `https://testnet.bscscan.com/address/0x39a8f0f941bcb56ff0f19371a366496dfc948704`,
+  // },
 ];
