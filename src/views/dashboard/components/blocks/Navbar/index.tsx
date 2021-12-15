@@ -36,13 +36,13 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account }: Pr
         </S.ContainerPair>
         <S.ContainerInfo>
           <NavbarItem
-            label="Last Trade Price (BUSD)"
+            label="Last Trade Price"
             info={Dinero({ amount: Math.round(lastTradePrice * 100) }).toFormat('$0,0.00')}
             type={lastTradePriceType}
           />
-          <NavbarItem label="Block Price %" info={blockValues.blockPrice.toString()} />
+          <NavbarItem label="Price 24h" info={blockValues.blockPrice.toString()} />
           <NavbarItem
-            label="Block Volume (BUSD)"
+            label="Volume 24h (CSTN)"
             info={Dinero({ amount: Math.round(blockValues.volume * 100) })
               .toFormat('$0')
               .toString()
@@ -50,11 +50,11 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account }: Pr
           />
           <S.WrapperVolume>
             <S.VolumeHigh>
-              <S.Span>Block High</S.Span>
+              <S.Span>24h High</S.Span>
               <p>{blockValues.high}</p>
             </S.VolumeHigh>
             <S.VolumeLow>
-              <S.Span>Block Low</S.Span>
+              <S.Span>24h Low</S.Span>
               <p>{blockValues.low}</p>
             </S.VolumeLow>
           </S.WrapperVolume>
