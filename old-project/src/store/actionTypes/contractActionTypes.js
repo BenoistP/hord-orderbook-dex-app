@@ -1,2 +1,0 @@
-export const SET_CONTRACTS = 'SET_CONTRACTS';
-export const REMOVE_CONTRACTS = 'REMOVE_CONTRACTS';
