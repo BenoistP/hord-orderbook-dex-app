@@ -14,3 +14,11 @@ export const setTradingPairsInformation = () => async (dispatch, getState) => {
         payload: hpoolList[0]
     })
 };
+
+export const changeCurrentHPoolToken = (hPoolTokenName) => async (dispatch, getState) => {
+    const hPoolToken = getState().tradingPair.hPoolTokensList.filter((hPoolToken) => hPoolToken.name === hPoolTokenName);
+    dispatch({
+        type: tradingPairActionTypes.SET_CURRENT_HPOOL_TOKEN,
+        payload: hPoolToken[0]
+    })
+};

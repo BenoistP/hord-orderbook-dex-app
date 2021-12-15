@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
+import { changeCurrentHPoolToken } from 'store/actions/tradingPairActions';
 import { IPairs } from 'views/dashboard/components/blocks/Navbar';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
@@ -10,16 +11,17 @@ export type NavbarPairProps = {
   coin?: string;
   pairs?: IPairs[];
   currentHPoolTokenName: string;
+  changeCurrentHPoolToken: (hPoolTokenName: string) => void
 };
 
-const NavbarPair = ({ coin, pairs, currentHPoolTokenName }: NavbarPairProps) => {
+const NavbarPair = ({ coin, pairs, currentHPoolTokenName, changeCurrentHPoolToken }: NavbarPairProps) => {
   const [state, setState] = useState(currentHPoolTokenName);
   const [dropdownState, setDropdownState] = useState(false);
 
   const handleChange = (select: string) => {
-    
     setDropdownState(false);
     setState(select);
+    changeCurrentHPoolToken(select)
   };
 
   return (
@@ -55,4 +57,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(NavbarPair);
+export default connect(mapStateToProps, {
+  changeCurrentHPoolToken
+})(NavbarPair);
