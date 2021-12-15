@@ -12,7 +12,7 @@ import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
 import { connectToCurrentHPoolTokenContract } from 'store/actions/contractActions';
 import { setTradingPairsInformation } from 'store/actions/tradingPairActions';
 
-function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, MatchingMarket, buyOrders, sellOrders, currentHPoolTokenContract, currentHPoolToken, connectToCurrentHPoolTokenContract, setTradingPairsInformation }) {
+function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrders, sellOrders, currentHPoolTokenContract, currentHPoolToken, connectToCurrentHPoolTokenContract, setTradingPairsInformation }) {
   const [state, setState] = useState(false);
   const [volume, setVolume] = useState(0);
   const [blockPrice, setBlockPrice] = useState('0.00');
@@ -31,10 +31,10 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
   }, [setTradingPairsInformation])
 
    useEffect(() => {
-    if (currentHPoolToken) {
-      connectToCurrentHPoolTokenContract()
+     if (currentHPoolToken && account) {
+      connectToCurrentHPoolTokenContract(currentHPoolToken.address)
     }
-   }, [currentHPoolToken, connectToCurrentHPoolTokenContract]);
+   }, [currentHPoolToken, connectToCurrentHPoolTokenContract, account]);
 
   useEffect(() => {
     if (currentHPoolTokenContract) {
@@ -129,8 +129,7 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
 const mapStateToProps = (state) => {
   return {
     account: state.wallet.account,
-    currentHPoolTokenContract: state.contracts.MatchingMarket,
-    MatchingMarket: state.contracts.MatchingMarket,
+    currentHPoolTokenContract: state.contracts.currentHPoolTokenContract,
     UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
     buyOrders: state.orderbook.buyOrders,
     sellOrders: state.orderbook.sellOrders,
