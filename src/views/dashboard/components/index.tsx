@@ -9,11 +9,11 @@ import Transactions from './blocks/Transactions';
 import * as S from './styles';
 // import Toast from '../../components/general/Toast'
 import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
+import { connectToCurrentHPoolTokenContract } from 'store/actions/contractActions';
+import { setTradingPairsInformation } from 'store/actions/tradingPairActions';
 
-function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, MatchingMarket, buyOrders, sellOrders }) {
+function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, MatchingMarket, buyOrders, sellOrders, currentHPoolTokenContract, currentHPoolToken, connectToCurrentHPoolTokenContract, setTradingPairsInformation }) {
   const [state, setState] = useState(false);
-  const [orderBookBids, setOrderBookBids] = useState([]);
-  const [orderBookAsks, setOrderBookAsks] = useState([]);
   const [volume, setVolume] = useState(0);
   const [blockPrice, setBlockPrice] = useState('0.00');
   const [high, setHigh] = useState(0);
@@ -27,59 +27,21 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
   const removeTransactionsOrder = (id: string) => console.log('remove transaction' + id);
 
   useEffect(() => {
-    if (MatchingMarket) {
-      setBuyOrders();
-      setSellOrders();
+    setTradingPairsInformation();
+  }, [setTradingPairsInformation])
+
+   useEffect(() => {
+    if (currentHPoolToken) {
+      connectToCurrentHPoolTokenContract()
     }
-  }, [MatchingMarket]);
+   }, [currentHPoolToken, connectToCurrentHPoolTokenContract]);
 
   useEffect(() => {
-    if (sellOrders) {
-      setOrderBookAsks(sellOrders);
+    if (currentHPoolTokenContract) {
+      setBuyOrders(currentHPoolTokenContract);
+      setSellOrders(currentHPoolTokenContract);
     }
-    if (buyOrders) {
-      setOrderBookBids(buyOrders);
-    }
-  }, [buyOrders, sellOrders]);
-
-  const fetchOrderBookBids = () => {
-    // socket.on('bids_levels', async (bid_levels) => {
-    //   let currentOrderBook = [];
-    //   bid_levels.map(({ price, quantity }) => {
-    //     currentOrderBook.push({
-    //       id: currentOrderBook.length + 1,
-    //       date: new Date(),
-    //       pair: "DOT",
-    //       coin: "BTC",
-    //       side: "buy",
-    //       price: price,
-    //       amount: quantity,
-    //       total: quantity * price,
-    //     });
-    //   });
-    //   await setOrderBookBids(currentOrderBook.sort((first, second) => second.price - first.price));
-    // });
-  };
-
-  const fetchOrderBookAsks = (socket) => {
-    socket.on('asks_levels', async (ask_levels) => {
-      let currentOrderBook = [];
-
-      ask_levels.map(({ price, quantity }) => {
-        currentOrderBook.push({
-          id: currentOrderBook.length + 1,
-          date: new Date(),
-          pair: 'DOT',
-          coin: 'BTC',
-          side: 'sell',
-          price: price,
-          amount: quantity,
-          total: quantity * price,
-        });
-      });
-      await setOrderBookAsks(currentOrderBook.sort((first, second) => second.price - first.price));
-    });
-  };
+  }, [currentHPoolTokenContract, setBuyOrders, setSellOrders]);
 
   const fetchLastTrade = (socket) => {
     socket.on('last-trade', (lastTradeData) => {
@@ -138,8 +100,8 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
         />
         <S.WrapperGraph marketActive={state}>
           <Graph
-            orderBookAsks={orderBookAsks}
-            orderBookBids={orderBookBids}
+            orderBookAsks={sellOrders}
+            orderBookBids={buyOrders}
             latestTransaction={lastTradePrice}
             latestTransactionType={lastTradePriceType}
           />
@@ -167,14 +129,18 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
 const mapStateToProps = (state) => {
   return {
     account: state.wallet.account,
+    currentHPoolTokenContract: state.contracts.MatchingMarket,
     MatchingMarket: state.contracts.MatchingMarket,
     UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
     buyOrders: state.orderbook.buyOrders,
     sellOrders: state.orderbook.sellOrders,
+    currentHPoolToken: state.tradingPair.currentHPoolToken
   };
 };
 
 export default connect(mapStateToProps, {
   setBuyOrders,
   setSellOrders,
+  connectToCurrentHPoolTokenContract,
+  setTradingPairsInformation
 })(Dashboard);
