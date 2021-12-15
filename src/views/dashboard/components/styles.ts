@@ -18,7 +18,7 @@ export const Wrapper = styled.main`
   margin: 0 auto;
   box-shadow: 0px -36px 99px rgba(0, 0, 0, 0.5);
   ${customMedia.lessThan('custom')`
-    display: none;
+    display: block;
   `}
 `
 

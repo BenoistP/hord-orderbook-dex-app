@@ -164,7 +164,7 @@ export const SocialLinks = styled.div`
 
 export const Warning = styled.div`
   ${customMedia.greaterThan('custom')`
-    display: none;
+    display: block;
   `}
   
   ${customMedia.lessThan('custom')`
@@ -178,7 +178,7 @@ export const Page = styled.div`
   `}
   
   ${customMedia.lessThan('custom')`
-    display: none;
+    display: block;
   `}
 `;
 
