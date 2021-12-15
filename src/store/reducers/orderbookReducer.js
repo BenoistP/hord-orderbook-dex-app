@@ -2,8 +2,8 @@ import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes';
 
 const initialState = {
   tradingPair: 'DAI/HPool',
-  buyOrders: false,
-  sellOrders: false,
+  buyOrders: [],
+  sellOrders: [],
   tradeHistory: false,
 };
 
