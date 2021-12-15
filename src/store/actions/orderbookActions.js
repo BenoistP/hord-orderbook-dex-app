@@ -1,6 +1,7 @@
 import { useContractReader } from 'utils/contractReader';
 import { WeiToEth } from 'utils/web3Service';
 import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes';
+import { setOpenOrders } from './transactionActions';
 
 export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
@@ -49,6 +50,7 @@ export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
       type: orderbookActionTypes.SET_BUY_ORDERS,
       payload: buyOrders,
     });
+    dispatch(setOpenOrders(buyOrders));
   }
 };
 
@@ -104,6 +106,7 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
       type: orderbookActionTypes.SET_SELL_ORDERS,
       payload: sellOrders,
     });
+    dispatch(setOpenOrders(sellOrders));
   }
 };
 
