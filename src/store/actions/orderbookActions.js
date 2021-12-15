@@ -44,7 +44,6 @@ export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = buyOffers.ids[currentIndex];
     }
-    console.log(buyOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_BUY_ORDERS,
@@ -100,7 +99,6 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = sellOffers.ids[currentIndex];
     }
-    console.log('SELL', sellOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_SELL_ORDERS,
@@ -151,7 +149,6 @@ export const makeBuyOrder = (HPoolToken) => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = buyOffers.ids[currentIndex];
     }
-    console.log(buyOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_BUY_ORDERS,
@@ -207,7 +204,6 @@ export const makeSellOrder = (HPoolToken) => async (dispatch, getState) => {
       currentIndex += 1;
       currentId = sellOffers.ids[currentIndex];
     }
-    console.log('SELL', sellOrders);
 
     dispatch({
       type: orderbookActionTypes.SET_SELL_ORDERS,
