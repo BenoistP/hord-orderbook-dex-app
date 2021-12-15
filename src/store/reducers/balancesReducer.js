@@ -1,16 +1,17 @@
 import * as balanceActionTypes from '../actionTypes/balanceActionTypes';
 
 const initialState = {
-  bnbBalance: 0,
+  busdBalance: 0,
+  currentHPoolTokenBalance: 0
 };
 
 export default (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
-    case balanceActionTypes.GET_BALANCES:
+    case balanceActionTypes.SET_BALANCE:
       return {
         ...state,
-        ...payload,
+        [payload.tokenName]: payload.balance,
       };
     case balanceActionTypes.REMOVE_BALANCES:
       return {
