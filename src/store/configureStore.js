@@ -20,7 +20,7 @@ export default () => {
       orderbook: orderbookReducer,
       input: inputReducer,
       tradingPair: tradingPairReducer,
-      transaction: transactionReducer,
+      transactions: transactionReducer,
     }),
     composeWithDevTools(applyMiddleware(thunk)),
   );

@@ -48,12 +48,6 @@ const Transactions = (
         <TabPanel>
           <TransactionTable data={data} remove={remove} filters={filters} />
         </TabPanel>
-        <TabPanel>
-          <TransactionTable data={data} remove={remove} filters={filters} />
-        </TabPanel>
-        <TabPanel>
-          <TransactionTable data={newTradeData} remove={remove} filters={filters} />
-        </TabPanel>
       </Tabs>
       <Toast />
     </S.Section>

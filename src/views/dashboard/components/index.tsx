@@ -10,9 +10,10 @@ import * as S from './styles';
 // import Toast from '../../components/general/Toast'
 import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
 import { connectToCurrentHPoolTokenContract } from 'store/actions/contractActions';
+import { setOpenOrders } from 'store/actions/transactionActions';
 import { setTradingPairsInformation } from 'store/actions/tradingPairActions';
 
-function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrders, sellOrders, currentHPoolTokenContract, currentHPoolToken, connectToCurrentHPoolTokenContract, setTradingPairsInformation }) {
+function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrders, sellOrders, currentHPoolTokenContract, currentHPoolToken, connectToCurrentHPoolTokenContract, setTradingPairsInformation, openOrders, setOpenOrders }) {
   const [state, setState] = useState(false);
   const [volume, setVolume] = useState(0);
   const [blockPrice, setBlockPrice] = useState('0.00');
@@ -21,7 +22,6 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrd
   const [lastTradePrice, setLastTradePrice] = useState(0);
   const [lastTradePriceType, setLastTradePriceType] = useState();
   const [newTrade, setNewTrade] = useState();
-  const [openOrders, setOpenOrders] = useState([]);
   const [activeIndex, setActiveIndex] = useState(3);
 
   const removeTransactionsOrder = (id: string) => console.log('remove transaction' + id);
@@ -74,11 +74,6 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrd
     });
   };
 
-  const updateOpenOrders = (order) => {
-    const finalOrders = [...openOrders, order];
-    setOpenOrders(finalOrders);
-  };
-
   // useEffect(() => {
   //   const webSocketInstance = webSocket;
   //   fetchMarketData(webSocketInstance)
@@ -106,7 +101,7 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrd
             latestTransactionType={lastTradePriceType}
           />
           <MarketOrder
-            setOpenOrder={(order) => updateOpenOrders(order)}
+            setOpenOrder={(order) => setOpenOrders([order])}
             setActiveIndex={(index) => setActiveIndex(index)}
             validAccount={account}
             blockchainApi={blockchainApi}
@@ -133,7 +128,8 @@ const mapStateToProps = (state) => {
     UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
     buyOrders: state.orderbook.buyOrders,
     sellOrders: state.orderbook.sellOrders,
-    currentHPoolToken: state.tradingPair.currentHPoolToken
+    currentHPoolToken: state.tradingPair.currentHPoolToken, 
+    openOrders: state.transactions.openOrders
   };
 };
 
@@ -141,5 +137,6 @@ export default connect(mapStateToProps, {
   setBuyOrders,
   setSellOrders,
   connectToCurrentHPoolTokenContract,
-  setTradingPairsInformation
+  setTradingPairsInformation,
+  setOpenOrders
 })(Dashboard);
