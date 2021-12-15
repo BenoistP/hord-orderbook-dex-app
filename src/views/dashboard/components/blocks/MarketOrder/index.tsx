@@ -5,20 +5,11 @@ import * as S from './styles';
 
 const MarketOrder = ({
   setOpenOrder,
-  price,
-  amount,
-  setPrice,
-  setAmount,
   validAccount,
-  latestTransaction,
   blockchainApi,
   setActiveIndex,
 }) => {
   const [orderType, setOrderType] = useState('Limit Order'); // currently implementation has market and limit order
-
-  useEffect(() => {
-    setPrice(latestTransaction.toFixed(4));
-  }, [latestTransaction !== 0]);
 
   resetIdCounter();
 
@@ -40,10 +31,6 @@ const MarketOrder = ({
             account={validAccount}
             blockchainApi={blockchainApi}
             setActiveIndex={setActiveIndex}
-            price={price}
-            setPrice={setPrice}
-            amount={amount}
-            setAmount={setAmount}
           />
         </TabPanel>
         <TabPanel>
@@ -54,10 +41,6 @@ const MarketOrder = ({
             account={validAccount}
             blockchainApi={blockchainApi}
             setActiveIndex={setActiveIndex}
-            price={price}
-            setPrice={setPrice}
-            amount={amount}
-            setAmount={setAmount}
           />
         </TabPanel>
       </Tabs>

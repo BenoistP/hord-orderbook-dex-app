@@ -22,8 +22,6 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
   const [lastTradePriceType, setLastTradePriceType] = useState();
   const [newTrade, setNewTrade] = useState();
   const [openOrders, setOpenOrders] = useState([]);
-  const [price, setPrice] = useState<string>('0');
-  const [amount, setAmount] = useState<string>('0');
   const [activeIndex, setActiveIndex] = useState(3);
 
   const removeTransactionsOrder = (id: string) => console.log('remove transaction' + id);
@@ -150,11 +148,6 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, Matchi
             setActiveIndex={(index) => setActiveIndex(index)}
             validAccount={account}
             blockchainApi={blockchainApi}
-            latestTransaction={lastTradePrice}
-            price={price}
-            setPrice={(inputPrice) => setPrice(inputPrice)}
-            amount={amount}
-            setAmount={(inputAmount) => setAmount(inputAmount)}
           />
         </S.WrapperGraph>
         <Transactions

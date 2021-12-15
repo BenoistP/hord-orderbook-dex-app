@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BN from 'bn.js';
 import { toast } from 'react-toastify';
-
+import { handleInputChange } from 'store/actions/inputActions';
 import Button from '../Button';
 import Dropdown from '../Dropdown';
 import Icon from '../Icon';
@@ -9,26 +9,25 @@ import Input from '../Input';
 import Link from '../Link';
 import Range from '../Range';
 import * as S from './styles';
+import { connect } from 'react-redux';
 
 export type MarketOrderActionProps = {
   type?: 'Sell' | 'Buy';
   setOpenOrder: any;
   price: number;
   amount: number;
-  setPrice: any;
-  setAmount: any;
   account: any;
   blockchainApi: any;
   orderType: string;
   setActiveIndex: any;
+  handleInputChange: (inputName: string, inputValue: number) => void
 };
 const MarketOrderAction = ({
   type = 'Buy',
   setOpenOrder,
   price,
   amount,
-  setPrice,
-  setAmount,
+  handleInputChange,
   account,
   blockchainApi,
   orderType,
@@ -40,16 +39,6 @@ const MarketOrderAction = ({
 
   const tradingPairID = '0xf28a3c76161b8d5723b6b8b092695f418037c747faa2ad8bc33d8871f720aac9';
   const UNIT = 1000000000000;
-
-  useEffect(() => {
-    if (account?.address) {
-      blockchainApi?.query.genericAsset.freeBalance(type === 'Buy' ? 1 : 2, account.address, (data) => {
-        const availableBalance = +data.toString() / UNIT;
-        setAvailable(+availableBalance.toFixed(4));
-        setAmount(getAmountValue(availableBalance, price).toFixed(4));
-      });
-    }
-  }, [blockchainApi]);
 
   const cleanString = (value) => {
     let pos = value.indexOf('.');
@@ -129,14 +118,14 @@ const MarketOrderAction = ({
 
   const validatePrice = (inputPrice) => {
     if (!isNaN(inputPrice)) {
-      setPrice(inputPrice);
+      handleInputChange('price', inputPrice);
     }
   };
 
   const validateAmount = (inputAmount) => {
     let sliderValue = getSliderValue(inputAmount);
     if (!isNaN(inputAmount) && inputAmount >= 0 && sliderValue >= 0 && sliderValue <= 100) {
-      setAmount(inputAmount);
+      handleInputChange('amount', inputAmount);
       setSlider({ values: [+sliderValue.toFixed(2)] });
     }
   };
@@ -152,7 +141,8 @@ const MarketOrderAction = ({
   };
 
   const setSliderValue = (sliderValue: { values: number[] }) => {
-    setAmount(getAmountValue(available, price, sliderValue).toFixed(4));
+    const inputAmount = Number(getAmountValue(available, price, sliderValue).toFixed(4));
+    handleInputChange('amount', inputAmount);
     setSlider(sliderValue);
   };
 
@@ -167,10 +157,6 @@ const MarketOrderAction = ({
     }
     return newAmount;
   };
-
-  useEffect(() => {
-    setAmount(getAmountValue(available, price).toFixed(4));
-  }, [price, orderType]);
 
   return (
     <S.WrapperOrder>
@@ -233,4 +219,14 @@ const MarketOrderAction = ({
   );
 };
 
-export default MarketOrderAction;
+const mapStateToProps = (state) => {
+  return {
+    price: state.input.price,
+    amount: state.input.amount,
+  };
+};
+
+export default connect(mapStateToProps, {
+ handleInputChange
+})(MarketOrderAction);
+
