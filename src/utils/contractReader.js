@@ -12,7 +12,7 @@ export const useContractReader = async (
     result = await callMethod(contract);
   } catch (error) {
     result = { error: error.message };
-    store.dispatch(createNotification('error', 'Something went wrong reading blockchain data.', 4000));
+    store.dispatch(createNotification('error', 'Something went wrong reading data from the blockchain.', 4000));
   }
   return result;
 };
