@@ -2,10 +2,9 @@ import { useContractReader } from 'utils/contractReader';
 import { WeiToEth } from 'utils/web3Service';
 import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes';
 
-export const setBuyOrders = () => async (dispatch, getState) => {
+export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
   const BUSD = getState().contracts.BUSD;
-  const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
   const sellTokenAddress = HPoolToken.address;
@@ -54,10 +53,9 @@ export const setBuyOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const setSellOrders = () => async (dispatch, getState) => {
+export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
   const BUSD = getState().contracts.BUSD;
-  const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
   const sellTokenAddress = BUSD.address;
@@ -111,10 +109,9 @@ export const setSellOrders = () => async (dispatch, getState) => {
   }
 };
 
-export const makeBuyOrder = () => async (dispatch, getState) => {
+export const makeBuyOrder = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
   const BUSD = getState().contracts.BUSD;
-  const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
   const sellTokenAddress = HPoolToken.address;
@@ -163,10 +160,9 @@ export const makeBuyOrder = () => async (dispatch, getState) => {
   }
 };
 
-export const makeSellOrder = () => async (dispatch, getState) => {
+export const makeSellOrder = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
   const BUSD = getState().contracts.BUSD;
-  const HPoolToken = getState().contracts.HPoolToken;
   const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
 
   const sellTokenAddress = BUSD.address;
