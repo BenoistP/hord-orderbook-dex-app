@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import { Tab, TabList, TabPanel, Tabs, resetIdCounter } from 'react-tabs';
 import MarketOrderAction from '../../../../../components/general/MarketOrderAction';
 import * as S from './styles';
@@ -8,6 +9,7 @@ const MarketOrder = ({
   validAccount,
   blockchainApi,
   setActiveIndex,
+  currentHPoolTokenName
 }) => {
   const [orderType, setOrderType] = useState('Limit Order'); // currently implementation has market and limit order
 
@@ -18,8 +20,8 @@ const MarketOrder = ({
       <Tabs>
         <S.Header>
           <TabList>
-            <Tab>Buy BTC</Tab>
-            <Tab>Sell BTC</Tab>
+            <Tab>{`Buy ${currentHPoolTokenName}`}</Tab>
+            <Tab>{`Sell ${currentHPoolTokenName}`}</Tab>
           </TabList>
         </S.Header>
 
@@ -48,4 +50,11 @@ const MarketOrder = ({
   );
 };
 
-export default MarketOrder;
+const mapStateToProps = (state) => {
+  return {
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
+  };
+};
+
+export default connect(mapStateToProps)(MarketOrder);
+

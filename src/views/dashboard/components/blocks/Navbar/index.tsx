@@ -7,12 +7,7 @@ import Dinero from 'dinero.js';
 // import { IMarketToken } from 'utils/Interfaces'
 
 import * as S from './styles';
-const testPairs = [
-  {
-    id: 1,
-    name: 'BUSD',
-  },
-];
+import { connect } from 'react-redux';
 
 type BlockProps = {
   volume: number;
@@ -21,18 +16,21 @@ type BlockProps = {
   blockPrice: string;
 };
 
+export type IPairs = { name: string, image: string, address: string };
+
 type Props = {
   blockValues: BlockProps;
   lastTradePrice: number;
   lastTradePriceType: 'AskLimit' | 'BidLimit';
   account: any;
+  hPoolTokensList: IPairs[];
 };
-const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account }: Props) => {
+const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoolTokensList }: Props) => {
   return (
     <S.Wrapper>
       <S.WrapperInfo>
         <S.ContainerPair>
-          <NavbarPair coin={'BTC'} pairs={testPairs} />
+          {hPoolTokensList && <NavbarPair coin={'BUSD'} pairs={hPoolTokensList} />}
         </S.ContainerPair>
         <S.ContainerInfo>
           <NavbarItem
@@ -72,4 +70,12 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account }: Pr
   );
 };
 
-export default Navbar;
+const mapStateToProps = (state) => {
+  return {
+    hPoolTokensList: state.tradingPair.hPoolTokensList,
+  };
+};
+
+export default connect(mapStateToProps)(Navbar);
+
+

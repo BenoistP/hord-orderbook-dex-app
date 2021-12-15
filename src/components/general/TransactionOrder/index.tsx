@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { connect } from 'react-redux';
 import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions';
 
 import Icon from '../Icon';
@@ -7,9 +8,11 @@ import * as S from './styles';
 type Props = {
   data?: ITransactionData;
   remove?: () => void;
+  currentHPoolTokenName: string;
+  currentHPoolTokenImage: string;
 };
 
-const TransactionOrder = ({ data, remove }: Props) => (
+const TransactionOrder = ({ data, remove, currentHPoolTokenName, currentHPoolTokenImage }: Props) => (
   <S.Tr>
     <S.Td>
       <S.Tag>Date</S.Tag>
@@ -28,8 +31,8 @@ const TransactionOrder = ({ data, remove }: Props) => (
     <S.Td>
       <S.Tag>Pair</S.Tag>
       <S.ContainerFlex>
-        <S.Image src={`img/cryptocurrencies/BTC.png`} />
-        <span>BTC / BUSD</span>
+        <S.Image src={currentHPoolTokenImage} />
+        <span>{`${currentHPoolTokenName}/ BUSD`}</span>
       </S.ContainerFlex>
     </S.Td>
 
@@ -66,4 +69,14 @@ const TransactionOrder = ({ data, remove }: Props) => (
   </S.Tr>
 );
 
-export default TransactionOrder;
+const mapStateToProps = (state) => {
+  return {
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
+    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image
+  };
+};
+
+export default connect(mapStateToProps)(TransactionOrder);
+
+
+

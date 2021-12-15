@@ -23,6 +23,7 @@ export type MarketOrderActionProps = {
   handleInputChange: (inputName: string, inputValue: number) => void;
   busdBalance: number, 
   currentHPoolTokenBalance: number
+  currentHPoolTokenName: string
 };
 const MarketOrderAction = ({
   type = 'Buy',
@@ -35,7 +36,8 @@ const MarketOrderAction = ({
   orderType,
   setActiveIndex,
   busdBalance, 
-  currentHPoolTokenBalance
+  currentHPoolTokenBalance,
+  currentHPoolTokenName
 }: MarketOrderActionProps) => {
   const [slider, setSlider] = useState({ values: [50] });
   const [available, setAvailable] = useState(0);
@@ -178,7 +180,7 @@ const MarketOrderAction = ({
         <S.WrapperBalance>
           <span>Available</span>
           <S.Span>
-            {available.toFixed(2)} {type === 'Buy' ? 'BUSD' : 'BTC'}
+            {available.toFixed(2)} {type === 'Buy' ? 'BUSD' : currentHPoolTokenName}
           </S.Span>
         </S.WrapperBalance>
       </S.ContainerWallet>
@@ -212,7 +214,7 @@ const MarketOrderAction = ({
             placeholder="0.0000000"
             value={amount}
             type="text"
-            inputInfo={orderType === 'Market Order' && type === 'Buy' ? 'BUSD' : 'BTC'}
+            inputInfo={orderType === 'Market Order' && type === 'Buy' ? 'BUSD' : currentHPoolTokenName}
             fullWidth={true}
             setValue={(inputAmount) => validateAmount(inputAmount)}
           />
@@ -238,6 +240,7 @@ const mapStateToProps = (state) => {
     amount: state.input.amount,
     currentHPoolTokenBalance: state.balances.currentHPoolTokenBalance,
     busdBalance: state.balances.busdBalance,
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name
   };
 };
 

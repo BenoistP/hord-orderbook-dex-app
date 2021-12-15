@@ -1,5 +1,6 @@
 import * as S from './styles';
 import Icon from '../Icon';
+import { connect } from 'react-redux';
 
 type OpenOrderProps = {
   price: string;
@@ -19,9 +20,11 @@ type Props = {
     onlySell: boolean;
     status: string;
   };
+  currentHPoolTokenName: string;
+  currentHPoolTokenImage: string;
 };
 
-const OpenOrderTable = ({ data }: Props) => (
+const OpenOrderTable = ({ data, currentHPoolTokenName, currentHPoolTokenImage }: Props) => (
   <>
     {data && (
       <S.Wrapper>
@@ -55,8 +58,8 @@ const OpenOrderTable = ({ data }: Props) => (
                 <S.Td>
                   <S.Tag>Pair</S.Tag>
                   <S.ContainerFlex>
-                    <S.Image src={`img/cryptocurrencies/BTC.png`} />
-                    <span>BTC / BUSD</span>
+                    <S.Image src={currentHPoolTokenImage} />
+                    <span>{`${currentHPoolTokenName}/ BUSD`}</span>
                   </S.ContainerFlex>
                 </S.Td>
 
@@ -98,4 +101,13 @@ const OpenOrderTable = ({ data }: Props) => (
   </>
 );
 
-export default OpenOrderTable;
+const mapStateToProps = (state) => {
+  return {
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
+    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image
+  };
+};
+
+export default connect(mapStateToProps)(OpenOrderTable);
+
+

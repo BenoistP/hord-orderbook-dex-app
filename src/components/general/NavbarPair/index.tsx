@@ -1,24 +1,23 @@
 import { useState } from 'react';
-
+import { connect } from 'react-redux';
+import { IPairs } from 'views/dashboard/components/blocks/Navbar';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
 import Icon from '../Icon';
 import * as S from './styles';
 
-type IPairs = {
-  id: number;
-  name: string;
-};
 export type NavbarPairProps = {
   coin?: string;
   pairs?: IPairs[];
+  currentHPoolTokenName: string;
 };
 
-const NavbarPair = ({ coin, pairs }: NavbarPairProps) => {
-  const [state, setState] = useState('BUSD');
+const NavbarPair = ({ coin, pairs, currentHPoolTokenName }: NavbarPairProps) => {
+  const [state, setState] = useState(currentHPoolTokenName);
   const [dropdownState, setDropdownState] = useState(false);
 
   const handleChange = (select: string) => {
+    
     setDropdownState(false);
     setState(select);
   };
@@ -40,8 +39,8 @@ const NavbarPair = ({ coin, pairs }: NavbarPairProps) => {
 
         <Dropdown title={state} active={dropdownState} setDropdownState={setDropdownState}>
           <>
-            {pairs.map(({ id, name }) => (
-              <DropdownItem key={id} title={name} handleAction={handleChange} />
+            {pairs.map(({ name }) => (
+              <DropdownItem key={name} title={name} handleAction={handleChange} />
             ))}
           </>
         </Dropdown>
@@ -50,4 +49,10 @@ const NavbarPair = ({ coin, pairs }: NavbarPairProps) => {
   );
 };
 
-export default NavbarPair;
+const mapStateToProps = (state) => {
+  return {
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
+  };
+};
+
+export default connect(mapStateToProps)(NavbarPair);
