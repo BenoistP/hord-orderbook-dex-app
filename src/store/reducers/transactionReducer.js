@@ -11,7 +11,7 @@ export default (state = initialState, action) => {
     case transactionActionTypes.SET_OPEN_ORDERS:
       return {
         ...state,
-        buyOrders: [...state.buyOrders, ...payload],
+        openOrders: [...state.openOrders, ...payload],
       };
     default:
       return state;
