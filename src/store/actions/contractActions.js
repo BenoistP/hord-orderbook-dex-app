@@ -17,12 +17,12 @@ export const connectToContracts = () => async (dispatch) => {
   }
 };
 
-export const connectToCurrentHPoolTokenContract = (hPoolTokenInfo) => async (dispatch) => {
+export const connectToCurrentHPoolTokenContract = (hPoolTokenAddress) => async (dispatch) => {
   try {
-    const contract = await createContract(hPoolTokenInfo.address, ERC20.abi)();
+    const contract = await createContract(hPoolTokenAddress, ERC20.abi)();
     const payload = {
-        address: contract._address,
-        ...contract.methods,
+      ...contract.methods,
+      address: hPoolTokenAddress,
       };
 
     dispatch({
