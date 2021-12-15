@@ -5,11 +5,13 @@ import * as balanceActionTypes from '../actionTypes/balanceActionTypes';
 export const setBalance = (contract, tokenName) => async (dispatch, getState) => {
   const signerAddress = getState().wallet.account;
   const weiAmountOfTokens = await useContractReader(contract, 'balanceOf', [signerAddress]);
-  const ethAmountOfTokens = Number(WeiToEth(weiAmountOfTokens));
-  dispatch({
-   type: balanceActionTypes.SET_BALANCE,
-   payload: {balance: ethAmountOfTokens, tokenName},
-  });
+  if (!weiAmountOfTokens.error) {
+    const ethAmountOfTokens = Number(WeiToEth(weiAmountOfTokens));
+    dispatch({
+     type: balanceActionTypes.SET_BALANCE,
+     payload: {balance: ethAmountOfTokens, tokenName},
+    });
+  }
 }
   
 export const unsetBalances = () => ({
