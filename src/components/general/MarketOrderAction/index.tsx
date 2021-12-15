@@ -20,7 +20,9 @@ export type MarketOrderActionProps = {
   blockchainApi: any;
   orderType: string;
   setActiveIndex: any;
-  handleInputChange: (inputName: string, inputValue: number) => void
+  handleInputChange: (inputName: string, inputValue: number) => void;
+  busdBalance: number, 
+  currentHPoolTokenBalance: number
 };
 const MarketOrderAction = ({
   type = 'Buy',
@@ -32,10 +34,19 @@ const MarketOrderAction = ({
   blockchainApi,
   orderType,
   setActiveIndex,
+  busdBalance, 
+  currentHPoolTokenBalance
 }: MarketOrderActionProps) => {
   const [slider, setSlider] = useState({ values: [50] });
   const [available, setAvailable] = useState(0);
   const [dropdownState, setDropdownState] = useState(false);
+
+  useEffect(() => {
+    if (currentHPoolTokenBalance && busdBalance) {
+      if (type === 'Buy') return setAvailable(busdBalance)
+      setAvailable(currentHPoolTokenBalance);
+    }
+  }, [currentHPoolTokenBalance, busdBalance, type])
 
   const tradingPairID = '0xf28a3c76161b8d5723b6b8b092695f418037c747faa2ad8bc33d8871f720aac9';
   const UNIT = 1000000000000;
@@ -124,8 +135,10 @@ const MarketOrderAction = ({
 
   const validateAmount = (inputAmount) => {
     let sliderValue = getSliderValue(inputAmount);
+    debugger
     if (!isNaN(inputAmount) && inputAmount >= 0 && sliderValue >= 0 && sliderValue <= 100) {
       handleInputChange('amount', inputAmount);
+      debugger
       setSlider({ values: [+sliderValue.toFixed(2)] });
     }
   };
@@ -165,7 +178,7 @@ const MarketOrderAction = ({
         <S.WrapperBalance>
           <span>Available</span>
           <S.Span>
-            {available} {type === 'Buy' ? 'BUSD' : 'BTC'}
+            {available.toFixed(2)} {type === 'Buy' ? 'BUSD' : 'BTC'}
           </S.Span>
         </S.WrapperBalance>
       </S.ContainerWallet>
@@ -223,6 +236,8 @@ const mapStateToProps = (state) => {
   return {
     price: state.input.price,
     amount: state.input.amount,
+    currentHPoolTokenBalance: state.balances.currentHPoolTokenBalance,
+    busdBalance: state.balances.busdBalance,
   };
 };
 
