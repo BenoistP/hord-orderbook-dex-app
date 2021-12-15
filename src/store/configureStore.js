@@ -7,6 +7,7 @@ import walletReducer from './reducers/walletReducer';
 import orderbookReducer from './reducers/orderbookReducer';
 import inputReducer from './reducers/inputReducer';
 import tradingPairReducer from './reducers/tradingPairReducer';
+import transactionReducer from './reducers/transactionReducer';
 import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 export default () => {
@@ -18,7 +19,8 @@ export default () => {
       wallet: walletReducer,
       orderbook: orderbookReducer,
       input: inputReducer,
-      tradingPair: tradingPairReducer
+      tradingPair: tradingPairReducer,
+      transaction: transactionReducer,
     }),
     composeWithDevTools(applyMiddleware(thunk)),
   );
