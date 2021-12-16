@@ -2,7 +2,7 @@ import { useContractReader } from 'utils/contractReader';
 import { WeiToEth } from 'utils/web3Service';
 import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes';
 import { setOpenOrders } from './transactionActions';
-
+import moment from 'moment';
 export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
   const MatchingMarket = getState().contracts.MatchingMarket;
   const BUSD = getState().contracts.BUSD;
@@ -26,18 +26,23 @@ export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
       const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]));
       const id = buyOffers.ids[currentIndex];
       const owner = buyOffers.owners[currentIndex];
+      
+      const timestamp = buyOffers.timestamps[currentIndex];
+      const date = moment.unix(timestamp).format("MMM DD YYYY hh:mm:ss");
 
       const buyOrder = {
         buyAmt,
         payAmt,
         id,
         owner,
-        date: new Date(),
-        pair: 'DOT',
-        coin: 'BTC',
+        date,
+        // pair: 'DOT',
+        coin: HPoolToken.name,
+        coinImage: HPoolToken.image,
         price: payAmt,
         amount: buyAmt,
         total: buyAmt * payAmt,
+        side: 'buy'
       };
 
       buyOrders.push(buyOrder);
@@ -78,6 +83,9 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
       const id = sellOffers.ids[currentIndex];
       const owner = sellOffers.owners[currentIndex];
 
+      const timestamp = sellOffers.timestamps[currentIndex];
+      const date = moment.unix(timestamp).format("MMM DD YYYY hh:mm:ss");
+
       // initially:
       //  buyAmt,
       //   payAmt,
@@ -88,12 +96,14 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
         payAmt,
         id,
         owner,
-        date: new Date(),
-        pair: 'DOT',
-        coin: 'BTC',
+        date,
+        // pair: 'DOT',
+        coin: HPoolToken.name,
+        coinImage: HPoolToken.image,
         price: payAmt,
         amount: buyAmt,
         total: buyAmt * payAmt,
+        side: 'sell'
       };
 
       sellOrders.push(sellOrder);
@@ -111,108 +121,9 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
 };
 
 export const makeBuyOrder = (HPoolToken) => async (dispatch, getState) => {
-  const MatchingMarket = getState().contracts.MatchingMarket;
-  const BUSD = getState().contracts.BUSD;
-  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
-
-  const sellTokenAddress = HPoolToken.address;
-  const buyTokenAddress = BUSD.address;
-
-  const buyOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
-    MatchingMarket.address,
-    sellTokenAddress,
-    buyTokenAddress,
-  ]);
-  if (!buyOffers.error) {
-    const buyOrders = [];
-    let currentId = buyOffers.ids[0]; // to check if we have a valid tradeOrder
-    let currentIndex = 0;
-
-    while (currentId !== '0') {
-      const buyAmt = Number(WeiToEth(buyOffers.buyAmts[currentIndex]));
-      const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]));
-      const id = buyOffers.ids[currentIndex];
-      const owner = buyOffers.owners[currentIndex];
-
-      const buyOrder = {
-        buyAmt,
-        payAmt,
-        id,
-        owner,
-        date: new Date(),
-        pair: 'DOT',
-        coin: 'BTC',
-        price: payAmt,
-        amount: buyAmt,
-        total: buyAmt * payAmt,
-      };
-
-      buyOrders.push(buyOrder);
-
-      currentIndex += 1;
-      currentId = buyOffers.ids[currentIndex];
-    }
-
-    dispatch({
-      type: orderbookActionTypes.SET_BUY_ORDERS,
-      payload: buyOrders,
-    });
-  }
 };
 
 export const makeSellOrder = (HPoolToken) => async (dispatch, getState) => {
-  const MatchingMarket = getState().contracts.MatchingMarket;
-  const BUSD = getState().contracts.BUSD;
-  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
-
-  const sellTokenAddress = BUSD.address;
-  const buyTokenAddress = HPoolToken.address;
-
-  const sellOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
-    MatchingMarket.address,
-    sellTokenAddress,
-    buyTokenAddress,
-  ]);
-  if (!sellOffers.error) {
-    const sellOrders = [];
-    let currentId = sellOffers.ids[0]; // to check if we have a valid tradeOrder
-    let currentIndex = 0;
-
-    while (currentId !== '0') {
-      const buyAmt = Number(WeiToEth(sellOffers.buyAmts[currentIndex]));
-      const payAmt = Number(WeiToEth(sellOffers.payAmts[currentIndex]));
-      const id = sellOffers.ids[currentIndex];
-      const owner = sellOffers.owners[currentIndex];
-
-      // initially:
-      //  buyAmt,
-      //   payAmt,
-      //   id,
-      //   owner,
-      const sellOrder = {
-        buyAmt,
-        payAmt,
-        id,
-        owner,
-        date: new Date(),
-        pair: 'DOT',
-        coin: 'BTC',
-        price: payAmt,
-        amount: buyAmt,
-        total: buyAmt * payAmt,
-      };
-
-      sellOrders.push(sellOrder);
-
-      currentIndex += 1;
-      currentId = sellOffers.ids[currentIndex];
-    }
-
-    dispatch({
-      type: orderbookActionTypes.SET_SELL_ORDERS,
-      payload: sellOrders,
-    });
-  }
 };
 
 // const contracts = await loadContracts();
