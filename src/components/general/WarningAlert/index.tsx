@@ -1,5 +1,5 @@
-import React from 'react';
-import * as S from './styles';
+import React from 'react'
+import * as S from './styles'
 
 function WarningAlert() {
   return (
@@ -7,7 +7,7 @@ function WarningAlert() {
       <S.Heading>Warning</S.Heading>
       <S.Message>Polkadex trade is not compatible with your device. Please view it in desktop</S.Message>
     </S.Wrapper>
-  );
+  )
 }
 
-export default WarningAlert;
+export default WarningAlert

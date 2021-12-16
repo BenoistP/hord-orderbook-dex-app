@@ -1,10 +1,10 @@
-import { getTrackBackground, Range as CustomRange } from 'react-range';
+import { getTrackBackground, Range as CustomRange } from 'react-range'
 
-import * as S from './styles';
+import * as S from './styles'
 
-const STEP = 0.1;
-const MIN = 0;
-const MAX = 100;
+const STEP = 0.1
+const MIN = 0
+const MAX = 100
 
 const Range = ({ values, setValues }) => {
   return (
@@ -70,7 +70,7 @@ const Range = ({ values, setValues }) => {
         )}
       />
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default Range;
+export default Range

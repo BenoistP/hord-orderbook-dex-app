@@ -1,37 +1,35 @@
-import Link from '../../../../../components/general/Link';
-import NavbarDropdown from '../../../../../components/general/NavbarDropdown';
-import NavbarItem from '../../../../../components/general/NavbarItem';
-import NavbarLanguage from '../../../../../components/general/NavbarLanguage';
-import NavbarPair from '../../../../../components/general/NavbarPair';
-import Dinero from 'dinero.js';
+import Link from '../../../../../components/general/Link'
+import NavbarDropdown from '../../../../../components/general/NavbarDropdown'
+import NavbarItem from '../../../../../components/general/NavbarItem'
+import NavbarLanguage from '../../../../../components/general/NavbarLanguage'
+import NavbarPair from '../../../../../components/general/NavbarPair'
+import Dinero from 'dinero.js'
 // import { IMarketToken } from 'utils/Interfaces'
 
-import * as S from './styles';
-import { connect } from 'react-redux';
+import * as S from './styles'
+import { connect } from 'react-redux'
 
 type BlockProps = {
-  volume: number;
-  high: number;
-  low: number;
-  blockPrice: string;
-};
+  volume: number
+  high: number
+  low: number
+  blockPrice: string
+}
 
-export type IPairs = { name: string, image: string, address: string };
+export type IPairs = { name: string; image: string; address: string }
 
 type Props = {
-  blockValues: BlockProps;
-  lastTradePrice: number;
-  lastTradePriceType: 'AskLimit' | 'BidLimit';
-  account: any;
-  hPoolTokensList: IPairs[];
-};
+  blockValues: BlockProps
+  lastTradePrice: number
+  lastTradePriceType: 'AskLimit' | 'BidLimit'
+  account: any
+  hPoolTokensList: IPairs[]
+}
 const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoolTokensList }: Props) => {
   return (
     <S.Wrapper>
       <S.WrapperInfo>
-        <S.ContainerPair>
-          {hPoolTokensList && <NavbarPair coin={'BUSD'} pairs={hPoolTokensList} />}
-        </S.ContainerPair>
+        <S.ContainerPair>{hPoolTokensList && <NavbarPair coin={'BUSD'} pairs={hPoolTokensList} />}</S.ContainerPair>
         <S.ContainerInfo>
           <NavbarItem
             label="Last Trade Price"
@@ -67,15 +65,13 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoo
         <S.AccountAddress>{account?.address}</S.AccountAddress>
       </S.WrapperLinks>
     </S.Wrapper>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => {
   return {
     hPoolTokensList: state.tradingPair.hPoolTokensList,
-  };
-};
+  }
+}
 
-export default connect(mapStateToProps)(Navbar);
-
-
+export default connect(mapStateToProps)(Navbar)

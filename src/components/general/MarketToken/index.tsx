@@ -1,8 +1,8 @@
-import Dinero from 'dinero.js';
-import { IMarketToken } from 'utils/Interfaces';
+import Dinero from 'dinero.js'
+import { IMarketToken } from 'utils/Interfaces'
 
-import CoinIcon from '../CoinIcon';
-import * as S from './styles';
+import CoinIcon from '../CoinIcon'
+import * as S from './styles'
 
 const MarketToken = ({ name, symbol, quote }: IMarketToken) => {
   return (
@@ -32,7 +32,7 @@ const MarketToken = ({ name, symbol, quote }: IMarketToken) => {
         </S.ContainerPricing>
       </S.Td>
     </S.Tr>
-  );
-};
+  )
+}
 
-export default MarketToken;
+export default MarketToken

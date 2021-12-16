@@ -1,33 +1,33 @@
-import Dropdown from '../../../../../components/general/Dropdown';
-import DropdownItem from '../../../../../components/general/DropdownItem';
-import Heading from '../../../../../components/general/Heading';
-import OrderBookIcon from '../../../../../components/general/OrderBookIcon';
-import OrderBookTable from '../../../../../components/general/OrderBookTable';
-import { useMemo, useState } from 'react';
+import Dropdown from '../../../../../components/general/Dropdown'
+import DropdownItem from '../../../../../components/general/DropdownItem'
+import Heading from '../../../../../components/general/Heading'
+import OrderBookIcon from '../../../../../components/general/OrderBookIcon'
+import OrderBookTable from '../../../../../components/general/OrderBookTable'
+import { useMemo, useState } from 'react'
 
-import { IOrderBookData } from '../Graph/IGraph';
-import * as S from './styles';
-import Dinero from 'dinero.js';
+import { IOrderBookData } from '../Graph/IGraph'
+import * as S from './styles'
+import Dinero from 'dinero.js'
 
 type Props = {
-  orderBookAsks: IOrderBookData[];
-  orderBookBids: IOrderBookData[];
-  latestTransaction: number;
-  latestTransactionType: string;
-};
+  orderBookAsks: IOrderBookData[]
+  orderBookBids: IOrderBookData[]
+  latestTransaction: number
+  latestTransactionType: string
+}
 
 const OrderBook = ({ orderBookBids, orderBookAsks, latestTransaction, latestTransactionType }: Props) => {
-  const [filterState, setFilterState] = useState('Order');
-  const [sizeState, setSizeState] = useState(0.01);
-  const [dropdownState, setDropdownState] = useState(false);
+  const [filterState, setFilterState] = useState('Order')
+  const [sizeState, setSizeState] = useState(0.01)
+  const [dropdownState, setDropdownState] = useState(false)
 
-  const handleChange = (select: string) => setFilterState(select);
+  const handleChange = (select: string) => setFilterState(select)
   const handleAction = (select: number) => {
-    setDropdownState(false);
-    setSizeState(select);
-  };
+    setDropdownState(false)
+    setSizeState(select)
+  }
 
-  const getDecimalPlaces = () => sizeState.toString().split('.')[1].length || 0;
+  const getDecimalPlaces = () => sizeState.toString().split('.')[1].length || 0
 
   const updateDataSize = (orderBookData) =>
     orderBookData.map((order) => ({
@@ -35,7 +35,7 @@ const OrderBook = ({ orderBookBids, orderBookAsks, latestTransaction, latestTran
       price: order.price.toFixed(getDecimalPlaces()),
       amount: order.amount.toFixed(getDecimalPlaces()),
       total: order.total.toFixed(getDecimalPlaces()),
-    }));
+    }))
 
   // const lastOrderBook = (data) => data.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())[0]
   //
@@ -70,7 +70,7 @@ const OrderBook = ({ orderBookBids, orderBookAsks, latestTransaction, latestTran
         latestTransactionType={latestTransactionType}
       />
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default OrderBook;
+export default OrderBook

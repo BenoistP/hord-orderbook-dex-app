@@ -1,9 +1,9 @@
-import * as S from './styles';
+import * as S from './styles'
 
 export type LogoProps = {
-  size?: 'Small' | 'Medium' | 'Large';
-  href?: string;
-};
+  size?: 'Small' | 'Medium' | 'Large'
+  href?: string
+}
 const Logo = ({ href = '#' }: LogoProps) => (
   <S.Link href={href}>
     <S.Svg xmlns="http://www.w3.org/2000/svg" width="118.516" height="24.013" viewBox="0 0 118.516 24.013">
@@ -68,6 +68,6 @@ const Logo = ({ href = '#' }: LogoProps) => (
       </g>
     </S.Svg>
   </S.Link>
-);
+)
 
-export default Logo;
+export default Logo

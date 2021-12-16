@@ -1,32 +1,32 @@
-import * as uiActionTypes from '../actionTypes/uiActionTypes';
-import successIcon from '../../assets/notifications/success-icon.png';
-import errorIcon from '../../assets/notifications/error-icon.png';
+import * as uiActionTypes from '../actionTypes/uiActionTypes'
+import successIcon from '../../assets/notifications/success-icon.png'
+import errorIcon from '../../assets/notifications/error-icon.png'
 
 export const startAction = () => ({
   type: uiActionTypes.START_ACTION,
-});
+})
 
 export const stopAction = () => ({
   type: uiActionTypes.STOP_ACTION,
-});
+})
 
 export const setContractsLoadedAlready = (contractsLoaded) => ({
   type: uiActionTypes.SET_CONTRACTS_LOADED_ALREADY,
   payload: contractsLoaded,
-});
+})
 
 export const setError = (message) => (dispatch) => {
   dispatch({
     type: uiActionTypes.SET_ERROR,
     payload: message,
-  });
+  })
 
-  return dispatch(stopAction());
-};
+  return dispatch(stopAction())
+}
 
 export const createNotification = (type, text, deleteNotificationInMs) => {
-  const id = Math.floor(Math.random() * 101 + 1);
-  let toastProperties;
+  const id = Math.floor(Math.random() * 101 + 1)
+  let toastProperties
 
   switch (type) {
     case 'success':
@@ -37,8 +37,8 @@ export const createNotification = (type, text, deleteNotificationInMs) => {
         icon: successIcon,
         deleteNotificationInMs,
         type,
-      };
-      break;
+      }
+      break
     case 'error':
       toastProperties = {
         id,
@@ -47,8 +47,8 @@ export const createNotification = (type, text, deleteNotificationInMs) => {
         icon: errorIcon,
         deleteNotificationInMs,
         type,
-      };
-      break;
+      }
+      break
     case 'info':
       toastProperties = {
         id,
@@ -56,8 +56,8 @@ export const createNotification = (type, text, deleteNotificationInMs) => {
         description: text,
         icon: successIcon,
         deleteNotificationInMs,
-      };
-      break;
+      }
+      break
     case 'warning':
       toastProperties = {
         id,
@@ -65,23 +65,23 @@ export const createNotification = (type, text, deleteNotificationInMs) => {
         description: text,
         icon: successIcon,
         deleteNotificationInMs,
-      };
-      break;
+      }
+      break
 
     default:
-      toastProperties = [];
-      break;
+      toastProperties = []
+      break
   }
 
   return {
     type: uiActionTypes.CREATE_NOTIFICATION,
     payload: toastProperties,
-  };
-};
+  }
+}
 
 export const updateNotifications = (updatedNotificationList) => {
   return {
     type: uiActionTypes.UPDATE_NOTIFICATIONS,
     payload: updatedNotificationList,
-  };
-};
+  }
+}

@@ -1,18 +1,18 @@
-import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions';
+import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions'
 
-import TransactionOrder from '../TransactionOrder';
-import * as S from './styles';
+import TransactionOrder from '../TransactionOrder'
+import * as S from './styles'
 
 type Props = {
-  data?: ITransactionData[];
-  remove?: (id: string) => void;
+  data?: ITransactionData[]
+  remove?: (id: string) => void
   filters?: {
-    hiddenPairs: boolean;
-    onlyBuy: boolean;
-    onlySell: boolean;
-    status: string;
-  };
-};
+    hiddenPairs: boolean
+    onlyBuy: boolean
+    onlySell: boolean
+    status: string
+  }
+}
 
 const TransactionTable = ({ data, remove, filters }: Props) => (
   <>
@@ -35,11 +35,11 @@ const TransactionTable = ({ data, remove, filters }: Props) => (
               data
                 .filter((item) => {
                   if (filters.onlyBuy && !filters.onlySell) {
-                    return item.side === 'BidLimit';
+                    return item.side === 'BidLimit'
                   } else if (filters.onlySell && !filters.onlyBuy) {
-                    return item.side === 'AskLimit';
+                    return item.side === 'AskLimit'
                   } else {
-                    return true;
+                    return true
                   }
                 })
                 .map((item, key) => <TransactionOrder key={key} data={item} remove={() => remove(item.id)} />)}
@@ -48,6 +48,6 @@ const TransactionTable = ({ data, remove, filters }: Props) => (
       </S.Wrapper>
     )}
   </>
-);
+)
 
-export default TransactionTable;
+export default TransactionTable

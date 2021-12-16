@@ -1,11 +1,11 @@
-import React from 'react';
-import * as S from './styles';
+import React from 'react'
+import * as S from './styles'
 
 export type NavbarItemPops = {
-  label?: string;
-  info?: string;
-  type?: string;
-};
+  label?: string
+  info?: string
+  type?: string
+}
 const NavbarItem = ({ label, info, type }: NavbarItemPops) => (
   <S.Wrapper>
     <S.Label>{label}</S.Label>
@@ -23,6 +23,6 @@ const NavbarItem = ({ label, info, type }: NavbarItemPops) => (
       <S.Info>{info}</S.Info>
     )}
   </S.Wrapper>
-);
+)
 
-export default NavbarItem;
+export default NavbarItem

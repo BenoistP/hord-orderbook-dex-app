@@ -1,14 +1,14 @@
-import * as S from './styles';
+import * as S from './styles'
 
 export type ButtonProps = {
-  title: string;
-  size?: 'Small' | 'Medium' | 'Large';
-  darkMode?: boolean;
-  fullWidth?: boolean;
-  type?: 'submit' | 'button';
-  click?: any;
-  disabled?: boolean;
-};
+  title: string
+  size?: 'Small' | 'Medium' | 'Large'
+  darkMode?: boolean
+  fullWidth?: boolean
+  type?: 'submit' | 'button'
+  click?: any
+  disabled?: boolean
+}
 
 const Button = ({
   title = 'Button',
@@ -22,6 +22,6 @@ const Button = ({
   <S.Wrapper type={type} size={size} darkMode={darkMode} fullWidth={fullWidth} onClick={click} disabled={disabled}>
     {title}
   </S.Wrapper>
-);
+)
 
-export default Button;
+export default Button

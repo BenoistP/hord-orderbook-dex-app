@@ -1,15 +1,15 @@
-import React from 'react';
-import { IOrderBookData } from '../../../views/dashboard/components/blocks/Graph/IGraph';
+import React from 'react'
+import { IOrderBookData } from '../../../views/dashboard/components/blocks/Graph/IGraph'
 
-import * as S from './styles';
-import OrderBookTableBody from '../OrderBookTableBody';
+import * as S from './styles'
+import OrderBookTableBody from '../OrderBookTableBody'
 
 export type OrderBookTableProps = {
-  orderBookAsks: IOrderBookData[];
-  orderBookBids: IOrderBookData[];
-  latestTransaction: string;
-  latestTransactionType: string;
-};
+  orderBookAsks: IOrderBookData[]
+  orderBookBids: IOrderBookData[]
+  latestTransaction: string
+  latestTransactionType: string
+}
 
 const OrderBookTable = ({
   latestTransaction,
@@ -54,7 +54,7 @@ const OrderBookTable = ({
         <OrderBookTableBody data={orderBookBids} isScrollBottom={false} exchangeImg={'/img/icons/Exchange_A.svg'} />
       </S.Table>
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default OrderBookTable;
+export default OrderBookTable

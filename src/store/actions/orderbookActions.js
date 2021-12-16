@@ -1,34 +1,34 @@
-import { useContractReader } from 'utils/contractReader';
-import { WeiToEth } from 'utils/web3Service';
-import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes';
-import { setOpenOrders } from './transactionActions';
-import moment from 'moment';
+import { useContractReader } from 'utils/contractReader'
+import { WeiToEth } from 'utils/web3Service'
+import * as orderbookActionTypes from '../actionTypes/orderbookActionTypes'
+import { setOpenOrders } from './transactionActions'
+import moment from 'moment'
 export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
-  const MatchingMarket = getState().contracts.MatchingMarket;
-  const BUSD = getState().contracts.BUSD;
-  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
+  const MatchingMarket = getState().contracts.MatchingMarket
+  const BUSD = getState().contracts.BUSD
+  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods
 
-  const sellTokenAddress = HPoolToken.address;
-  const buyTokenAddress = BUSD.address;
+  const sellTokenAddress = HPoolToken.address
+  const buyTokenAddress = BUSD.address
 
   const buyOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
     MatchingMarket.address,
     sellTokenAddress,
     buyTokenAddress,
-  ]);
+  ])
   if (!buyOffers.error) {
-    const buyOrders = [];
-    let currentId = buyOffers.ids[0]; // to check if we have a valid tradeOrder
-    let currentIndex = 0;
+    const buyOrders = []
+    let currentId = buyOffers.ids[0] // to check if we have a valid tradeOrder
+    let currentIndex = 0
 
     while (currentId !== '0') {
-      const buyAmt = Number(WeiToEth(buyOffers.buyAmts[currentIndex]));
-      const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]));
-      const id = buyOffers.ids[currentIndex];
-      const owner = buyOffers.owners[currentIndex];
-      
-      const timestamp = buyOffers.timestamps[currentIndex];
-      const date = moment.unix(timestamp).format("MMM DD YYYY hh:mm:ss");
+      const buyAmt = Number(WeiToEth(buyOffers.buyAmts[currentIndex]))
+      const payAmt = Number(WeiToEth(buyOffers.payAmts[currentIndex]))
+      const id = buyOffers.ids[currentIndex]
+      const owner = buyOffers.owners[currentIndex]
+
+      const timestamp = buyOffers.timestamps[currentIndex]
+      const date = moment.unix(timestamp).format('MMM DD YYYY hh:mm:ss')
 
       const buyOrder = {
         buyAmt,
@@ -42,49 +42,49 @@ export const setBuyOrders = (HPoolToken) => async (dispatch, getState) => {
         price: payAmt,
         amount: buyAmt,
         total: buyAmt * payAmt,
-        side: 'buy'
-      };
+        side: 'buy',
+      }
 
-      buyOrders.push(buyOrder);
+      buyOrders.push(buyOrder)
 
-      currentIndex += 1;
-      currentId = buyOffers.ids[currentIndex];
+      currentIndex += 1
+      currentId = buyOffers.ids[currentIndex]
     }
 
     dispatch({
       type: orderbookActionTypes.SET_BUY_ORDERS,
       payload: buyOrders,
-    });
-    dispatch(setOpenOrders(buyOrders));
+    })
+    dispatch(setOpenOrders(buyOrders))
   }
-};
+}
 
 export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
-  const MatchingMarket = getState().contracts.MatchingMarket;
-  const BUSD = getState().contracts.BUSD;
-  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods;
+  const MatchingMarket = getState().contracts.MatchingMarket
+  const BUSD = getState().contracts.BUSD
+  const MakerOtcSupportMethods = getState().contracts.MakerOtcSupportMethods
 
-  const sellTokenAddress = BUSD.address;
-  const buyTokenAddress = HPoolToken.address;
+  const sellTokenAddress = BUSD.address
+  const buyTokenAddress = HPoolToken.address
 
   const sellOffers = await useContractReader(MakerOtcSupportMethods, 'getOffers(address,address,address)', [
     MatchingMarket.address,
     sellTokenAddress,
     buyTokenAddress,
-  ]);
+  ])
   if (!sellOffers.error) {
-    const sellOrders = [];
-    let currentId = sellOffers.ids[0]; // to check if we have a valid tradeOrder
-    let currentIndex = 0;
+    const sellOrders = []
+    let currentId = sellOffers.ids[0] // to check if we have a valid tradeOrder
+    let currentIndex = 0
 
     while (currentId !== '0') {
-      const buyAmt = Number(WeiToEth(sellOffers.buyAmts[currentIndex]));
-      const payAmt = Number(WeiToEth(sellOffers.payAmts[currentIndex]));
-      const id = sellOffers.ids[currentIndex];
-      const owner = sellOffers.owners[currentIndex];
+      const buyAmt = Number(WeiToEth(sellOffers.buyAmts[currentIndex]))
+      const payAmt = Number(WeiToEth(sellOffers.payAmts[currentIndex]))
+      const id = sellOffers.ids[currentIndex]
+      const owner = sellOffers.owners[currentIndex]
 
-      const timestamp = sellOffers.timestamps[currentIndex];
-      const date = moment.unix(timestamp).format("MMM DD YYYY hh:mm:ss");
+      const timestamp = sellOffers.timestamps[currentIndex]
+      const date = moment.unix(timestamp).format('MMM DD YYYY hh:mm:ss')
 
       // initially:
       //  buyAmt,
@@ -103,28 +103,26 @@ export const setSellOrders = (HPoolToken) => async (dispatch, getState) => {
         price: payAmt,
         amount: buyAmt,
         total: buyAmt * payAmt,
-        side: 'sell'
-      };
+        side: 'sell',
+      }
 
-      sellOrders.push(sellOrder);
+      sellOrders.push(sellOrder)
 
-      currentIndex += 1;
-      currentId = sellOffers.ids[currentIndex];
+      currentIndex += 1
+      currentId = sellOffers.ids[currentIndex]
     }
 
     dispatch({
       type: orderbookActionTypes.SET_SELL_ORDERS,
       payload: sellOrders,
-    });
-    dispatch(setOpenOrders(sellOrders));
+    })
+    dispatch(setOpenOrders(sellOrders))
   }
-};
+}
 
-export const makeBuyOrder = (HPoolToken) => async (dispatch, getState) => {
-};
+export const makeBuyOrder = (HPoolToken) => async (dispatch, getState) => {}
 
-export const makeSellOrder = (HPoolToken) => async (dispatch, getState) => {
-};
+export const makeSellOrder = (HPoolToken) => async (dispatch, getState) => {}
 
 // const contracts = await loadContracts();
 // debugger;

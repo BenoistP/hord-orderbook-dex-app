@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Toast = () => {
-  const warn = (message) => toast.warn(message);
+  const warn = (message) => toast.warn(message)
 
   return (
     <ToastContainer
@@ -18,7 +18,7 @@ const Toast = () => {
       draggable
       pauseOnHover
     />
-  );
-};
+  )
+}
 
-export default Toast;
+export default Toast

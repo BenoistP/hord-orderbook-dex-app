@@ -1,16 +1,16 @@
-import moment from 'moment';
-import { connect } from 'react-redux';
-import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions';
+import moment from 'moment'
+import { connect } from 'react-redux'
+import { ITransactionData, ITransactions } from '../../../views/dashboard/components/blocks/Transactions/ITransactions'
 
-import Icon from '../Icon';
-import * as S from './styles';
+import Icon from '../Icon'
+import * as S from './styles'
 
 type Props = {
-  data?: ITransactionData;
-  remove?: () => void;
-  currentHPoolTokenName: string;
-  currentHPoolTokenImage: string;
-};
+  data?: ITransactionData
+  remove?: () => void
+  currentHPoolTokenName: string
+  currentHPoolTokenImage: string
+}
 
 const TransactionOrder = ({ data, remove, currentHPoolTokenName, currentHPoolTokenImage }: Props) => (
   <S.Tr>
@@ -67,16 +67,13 @@ const TransactionOrder = ({ data, remove, currentHPoolTokenName, currentHPoolTok
       </S.ContainerActions>
     </S.Td>
   </S.Tr>
-);
+)
 
 const mapStateToProps = (state) => {
   return {
     currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
-    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image
-  };
-};
+    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image,
+  }
+}
 
-export default connect(mapStateToProps)(TransactionOrder);
-
-
-
+export default connect(mapStateToProps)(TransactionOrder)

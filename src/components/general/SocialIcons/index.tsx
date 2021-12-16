@@ -1,5 +1,5 @@
-import * as S from './styles';
-import React from 'react';
+import * as S from './styles'
+import React from 'react'
 
 const SocialIcons = () => (
   <div style={{ display: 'flex', alignItems: 'flex-end', marginTop: '1rem' }}>
@@ -16,6 +16,6 @@ const SocialIcons = () => (
       @Polkadex
     </S.Link>
   </div>
-);
+)
 
-export default SocialIcons;
+export default SocialIcons

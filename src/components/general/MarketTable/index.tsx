@@ -1,10 +1,10 @@
-import { IMarketToken } from 'utils/Interfaces';
+import { IMarketToken } from 'utils/Interfaces'
 
-import MarketToken from '../MarketToken';
-import * as S from './styles';
+import MarketToken from '../MarketToken'
+import * as S from './styles'
 type Props = {
-  coins: IMarketToken[];
-};
+  coins: IMarketToken[]
+}
 const MarketTable = ({ coins }: Props) => (
   <S.Wrapper>
     <S.Table>
@@ -23,6 +23,6 @@ const MarketTable = ({ coins }: Props) => (
       </S.Tbody>
     </S.Table>
   </S.Wrapper>
-);
+)
 
-export default MarketTable;
+export default MarketTable

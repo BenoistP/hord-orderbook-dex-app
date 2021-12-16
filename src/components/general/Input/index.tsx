@@ -1,15 +1,15 @@
-import * as S from './styles';
+import * as S from './styles'
 
 export type InputProps = {
-  label?: string;
-  icon?: 'None' | 'ArrowVerticalBottom' | 'ArrowVerticalTop';
-  placeholder?: string;
-  type?: 'text' | 'email' | 'password' | 'url' | 'number';
-  value?: any;
-  inputInfo?: string;
-  fullWidth?: boolean;
-  setValue?: any;
-};
+  label?: string
+  icon?: 'None' | 'ArrowVerticalBottom' | 'ArrowVerticalTop'
+  placeholder?: string
+  type?: 'text' | 'email' | 'password' | 'url' | 'number'
+  value?: any
+  inputInfo?: string
+  fullWidth?: boolean
+  setValue?: any
+}
 
 const Input = ({
   label = 'Label',
@@ -38,7 +38,7 @@ const Input = ({
         </S.Box>
       </S.ContainerInput>
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default Input;
+export default Input

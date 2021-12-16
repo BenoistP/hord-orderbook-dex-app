@@ -1,23 +1,23 @@
-import 'react-datepicker/dist/react-datepicker.css';
+import 'react-datepicker/dist/react-datepicker.css'
 
-import { useState } from 'react';
+import { useState } from 'react'
 // import DatePicker from "react-datepicker"
 
-import Icon from '../Icon';
-import * as S from './styles';
+import Icon from '../Icon'
+import * as S from './styles'
 
 type Props = {
-  position: 'right' | 'left';
-};
+  position: 'right' | 'left'
+}
 const DateRange = ({ position = 'right' }: Props) => {
-  const [state, setState] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [state, setState] = useState(false)
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(null)
   const onChange = (dates) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
+    const [start, end] = dates
+    setStartDate(start)
+    setEndDate(end)
+  }
 
   return (
     <S.Wrapper>
@@ -35,7 +35,7 @@ const DateRange = ({ position = 'right' }: Props) => {
         </S.WrapperCalendar>
       )}
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default DateRange;
+export default DateRange

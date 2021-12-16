@@ -1,6 +1,6 @@
-import NavbarSingleCurrency from '../NavbarSingleCurrency';
-import NavbarSingleLanguage from '../NavbarSingleLanguage';
-import * as S from './styles';
+import NavbarSingleCurrency from '../NavbarSingleCurrency'
+import NavbarSingleLanguage from '../NavbarSingleLanguage'
+import * as S from './styles'
 
 const NavbarLanguage = () => {
   return (
@@ -34,7 +34,7 @@ const NavbarLanguage = () => {
         </S.ContainerContent>
       </S.WrapperContent>
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default NavbarLanguage;
+export default NavbarLanguage

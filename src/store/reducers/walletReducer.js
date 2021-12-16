@@ -1,8 +1,8 @@
-import * as walletActionTypes from '../actionTypes/walletActionTypes';
+import * as walletActionTypes from '../actionTypes/walletActionTypes'
 
-import { LS_ACCOUNT } from '../../utils/constants/general';
+import { LS_ACCOUNT } from '../../utils/constants/general'
 
-localStorage.getItem(LS_ACCOUNT);
+localStorage.getItem(LS_ACCOUNT)
 
 const initialState = {
   connectingWallet: false,
@@ -15,10 +15,10 @@ const initialState = {
   accountType:
     // lsAccountType ||
     '',
-};
+}
 
 export default (state = initialState, action) => {
-  const { type, payload } = action;
+  const { type, payload } = action
 
   switch (type) {
     case walletActionTypes.CONNECT_WALLET_START:
@@ -26,21 +26,21 @@ export default (state = initialState, action) => {
         ...state,
         connectingWallet: true,
         connectingWalletAccountType: payload,
-      };
+      }
 
     case walletActionTypes.CONNECT_WALLET_END:
       return {
         ...state,
         connectingWallet: false,
         connectingWalletAccountType: '',
-      };
+      }
 
     case walletActionTypes.CONNECT_WALLET_PROVIDER:
       return {
         ...state,
         connectingWalletProvider: true,
         connectingWalletProviderError: '',
-      };
+      }
 
     case walletActionTypes.CONNECT_WALLET_PROVIDER_SUCCESS:
       return {
@@ -48,23 +48,23 @@ export default (state = initialState, action) => {
         connectingWalletProvider: false,
         connectingWalletProviderError: '',
         ...payload,
-      };
+      }
 
     case walletActionTypes.CONNECT_WALLET_PROVIDER_FAILURE:
       return {
         ...state,
         connectingWalletProvider: false,
         connectingWalletProviderError: payload,
-      };
+      }
 
     case walletActionTypes.CLEAR_ACCOUNT:
       return {
         ...state,
         account: '',
         accountType: '',
-      };
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}

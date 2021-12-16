@@ -1,8 +1,8 @@
-import * as S from './styles';
+import * as S from './styles'
 
 export type NavbarDropdownProps = {
-  title: string;
-};
+  title: string
+}
 
 const NavbarDropdown = ({ title = 'NavbarDropdown' }: NavbarDropdownProps) => {
   return (
@@ -22,7 +22,7 @@ const NavbarDropdown = ({ title = 'NavbarDropdown' }: NavbarDropdownProps) => {
       {/*</S.WrapperContent>*/}
       {/*}*/}
     </S.Wrapper>
-  );
-};
+  )
+}
 
-export default NavbarDropdown;
+export default NavbarDropdown

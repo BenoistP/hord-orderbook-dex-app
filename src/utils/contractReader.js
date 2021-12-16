@@ -1,5 +1,5 @@
-import { store } from 'index';
-import { createNotification } from 'store/actions/uiActions';
+import { store } from 'index'
+import { createNotification } from 'store/actions/uiActions'
 
 export const useContractReader = async (
   contract,
@@ -7,12 +7,12 @@ export const useContractReader = async (
   parameters = [],
   callMethod = (contractInstance) => contractInstance?.[contractFunction](...parameters)?.call(),
 ) => {
-  let result;
+  let result
   try {
-    result = await callMethod(contract);
+    result = await callMethod(contract)
   } catch (error) {
-    result = { error: error.message };
-    store.dispatch(createNotification('error', 'Something went wrong reading data from the blockchain.', 4000));
+    result = { error: error.message }
+    store.dispatch(createNotification('error', 'Something went wrong reading data from the blockchain.', 4000))
   }
-  return result;
-};
+  return result
+}

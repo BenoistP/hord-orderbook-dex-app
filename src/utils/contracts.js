@@ -1,7 +1,7 @@
-import MatchingMarket from './contracts/MatchingMarket.json';
-import UniswapSimplePriceOracle from './contracts/UniswapSimplePriceOracle.json';
-import ERC20 from './contracts/ERC20.json';
-import MakerOtcSupportMethods from './contracts/MakerOtcSupportMethods.json';
+import MatchingMarket from './contracts/MatchingMarket.json'
+import UniswapSimplePriceOracle from './contracts/UniswapSimplePriceOracle.json'
+import ERC20 from './contracts/ERC20.json'
+import MakerOtcSupportMethods from './contracts/MakerOtcSupportMethods.json'
 
 export const contracts = [
   {
@@ -34,4 +34,4 @@ export const contracts = [
   //   abi: ERC20.abi,
   //   link: `https://testnet.bscscan.com/address/0x39a8f0f941bcb56ff0f19371a366496dfc948704`,
   // },
-];
+]

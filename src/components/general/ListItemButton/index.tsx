@@ -1,12 +1,12 @@
-import * as S from './styles';
+import * as S from './styles'
 
 export type ListItemProps = {
-  title?: string;
-  size?: 'Default' | 'Small' | 'Medium' | 'Large';
-  darkMode?: boolean;
-  fullWidth?: boolean;
-  selected?: boolean;
-};
+  title?: string
+  size?: 'Default' | 'Small' | 'Medium' | 'Large'
+  darkMode?: boolean
+  fullWidth?: boolean
+  selected?: boolean
+}
 
 const ListItemButton = ({
   title,
@@ -18,6 +18,6 @@ const ListItemButton = ({
   <S.Wrapper size={size} darkMode={darkMode} fullWidth={fullWidth} selected={selected}>
     {title}
   </S.Wrapper>
-);
+)
 
-export default ListItemButton;
+export default ListItemButton

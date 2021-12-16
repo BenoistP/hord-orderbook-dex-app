@@ -1,31 +1,31 @@
-import * as S from './styles';
-import Icon from '../Icon';
-import { connect } from 'react-redux';
+import * as S from './styles'
+import Icon from '../Icon'
+import { connect } from 'react-redux'
 
 type OpenOrderProps = {
-  price: string;
-  amount: string;
-  tradeAmount: number;
-  status: string;
-  fee: number;
-  side: 'sell' | 'buy';
-  date: Date;
-  coin: 'string';
-  coinImage: 'image';
-};
+  price: string
+  amount: string
+  tradeAmount: number
+  status: string
+  fee: number
+  side: 'sell' | 'buy'
+  date: Date
+  coin: 'string'
+  coinImage: 'image'
+}
 
 type Props = {
-  data?: OpenOrderProps[];
-  remove?: (id: string) => void;
+  data?: OpenOrderProps[]
+  remove?: (id: string) => void
   filters?: {
-    hiddenPairs: boolean;
-    onlyBuy: boolean;
-    onlySell: boolean;
-    status: string;
-  };
-  currentHPoolTokenName: string;
-  currentHPoolTokenImage: string;
-};
+    hiddenPairs: boolean
+    onlyBuy: boolean
+    onlySell: boolean
+    status: string
+  }
+  currentHPoolTokenName: string
+  currentHPoolTokenImage: string
+}
 
 const OpenOrderTable = ({ data, currentHPoolTokenName, currentHPoolTokenImage }: Props) => (
   <>
@@ -46,9 +46,7 @@ const OpenOrderTable = ({ data, currentHPoolTokenName, currentHPoolTokenImage }:
               <S.Tr key={index}>
                 <S.Td>
                   <S.Tag>Date</S.Tag>
-                  <S.Status>
-                    {order.date}
-                  </S.Status>
+                  <S.Status>{order.date}</S.Status>
                 </S.Td>
 
                 <S.Td>
@@ -61,9 +59,7 @@ const OpenOrderTable = ({ data, currentHPoolTokenName, currentHPoolTokenImage }:
                 <S.Td>
                   <S.Tag>Side</S.Tag>
                   <S.ContainerFlex>
-                    <S.Image
-                      src={`img/icons/${order.side === 'sell' ? 'Sell' : 'Buy'}.svg`}
-                    />
+                    <S.Image src={`img/icons/${order.side === 'sell' ? 'Sell' : 'Buy'}.svg`} />
                     <span>{order.side === 'sell' ? 'Sell' : 'Buy'}</span>
                   </S.ContainerFlex>
                 </S.Td>
@@ -84,15 +80,13 @@ const OpenOrderTable = ({ data, currentHPoolTokenName, currentHPoolTokenImage }:
       </S.Wrapper>
     )}
   </>
-);
+)
 
 const mapStateToProps = (state) => {
   return {
     currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
-    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image
-  };
-};
+    currentHPoolTokenImage: state.tradingPair.currentHPoolToken?.image,
+  }
+}
 
-export default connect(mapStateToProps)(OpenOrderTable);
-
-
+export default connect(mapStateToProps)(OpenOrderTable)

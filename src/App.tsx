@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyles from './styles/global';
-import theme from './styles/theme';
-import Dashboard from './views/dashboard/components';
-import * as S from './views/landing/styles';
-import { connectToContracts } from './store/actions/contractActions';
-import { WalletConnector } from '@dcentralab/web3-wallet-connector';
-import config from './config/config.json';
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
+import { ThemeProvider } from 'styled-components'
+import GlobalStyles from './styles/global'
+import theme from './styles/theme'
+import Dashboard from './views/dashboard/components'
+import * as S from './views/landing/styles'
+import { connectToContracts } from './store/actions/contractActions'
+import { WalletConnector } from '@dcentralab/web3-wallet-connector'
+import config from './config/config.json'
 import {
   onWalletConnectSuccessAction,
   onWalletDisconnectAction,
   onWalletConnectRequestAction,
   onWalletConnectErrorAction,
-} from './store/actions/walletActions';
+} from './store/actions/walletActions'
 
 function App({
   connectToContracts,
@@ -24,16 +24,16 @@ function App({
   onWalletConnectRequest,
   onWalletConnectError,
 }) {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(false)
 
   const closeMenu = () => {
-    if (checked) setChecked(false);
-  };
+    if (checked) setChecked(false)
+  }
   useEffect(() => {
-    if (account) connectToContracts();
+    if (account) connectToContracts()
 
-    setTimeout(() => console.log(MatchingMarket), 5000);
-  }, [account]);
+    setTimeout(() => console.log(MatchingMarket), 5000)
+  }, [account])
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
@@ -50,7 +50,7 @@ function App({
         <Dashboard blockchainApi={'BSC'} />
       </S.Page>
     </ThemeProvider>
-  );
+  )
 }
 
 const mapStateToProps = (state) => {
@@ -58,8 +58,8 @@ const mapStateToProps = (state) => {
     account: state.wallet.account,
     MatchingMarket: state.contracts.MatchingMarket,
     UniswapSimplePriceOracle: state.contracts.UniswapSimplePriceOracle,
-  };
-};
+  }
+}
 
 export default connect(mapStateToProps, {
   connectToContracts,
@@ -67,4 +67,4 @@ export default connect(mapStateToProps, {
   onWalletDisconnect: onWalletDisconnectAction,
   onWalletConnectRequest: onWalletConnectRequestAction,
   onWalletConnectError: onWalletConnectErrorAction,
-})(App);
+})(App)

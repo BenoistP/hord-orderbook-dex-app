@@ -1,30 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import BN from 'bn.js';
-import { toast } from 'react-toastify';
-import { handleInputChange } from 'store/actions/inputActions';
-import Button from '../Button';
-import Dropdown from '../Dropdown';
-import Icon from '../Icon';
-import Input from '../Input';
-import Link from '../Link';
-import Range from '../Range';
-import * as S from './styles';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react'
+import BN from 'bn.js'
+import { toast } from 'react-toastify'
+import { handleInputChange } from 'store/actions/inputActions'
+import Button from '../Button'
+import Dropdown from '../Dropdown'
+import Icon from '../Icon'
+import Input from '../Input'
+import Link from '../Link'
+import Range from '../Range'
+import * as S from './styles'
+import { connect } from 'react-redux'
 
 export type MarketOrderActionProps = {
-  type?: 'Sell' | 'Buy';
-  setOpenOrder: any;
-  price: number;
-  amount: number;
-  account: any;
-  blockchainApi: any;
-  orderType: string;
-  setActiveIndex: any;
-  handleInputChange: (inputName: string, inputValue: number) => void;
-  busdBalance: number, 
+  type?: 'Sell' | 'Buy'
+  setOpenOrder: any
+  price: number
+  amount: number
+  account: any
+  blockchainApi: any
+  orderType: string
+  setActiveIndex: any
+  handleInputChange: (inputName: string, inputValue: number) => void
+  busdBalance: number
   currentHPoolTokenBalance: number
   currentHPoolTokenName: string
-};
+}
 const MarketOrderAction = ({
   type = 'Buy',
   setOpenOrder,
@@ -35,48 +35,48 @@ const MarketOrderAction = ({
   blockchainApi,
   orderType,
   setActiveIndex,
-  busdBalance, 
+  busdBalance,
   currentHPoolTokenBalance,
-  currentHPoolTokenName
+  currentHPoolTokenName,
 }: MarketOrderActionProps) => {
-  const [slider, setSlider] = useState({ values: [50] });
-  const [available, setAvailable] = useState(0);
-  const [dropdownState, setDropdownState] = useState(false);
+  const [slider, setSlider] = useState({ values: [50] })
+  const [available, setAvailable] = useState(0)
+  const [dropdownState, setDropdownState] = useState(false)
 
   useEffect(() => {
     if (currentHPoolTokenBalance && busdBalance) {
       if (type === 'Buy') return setAvailable(busdBalance)
-      setAvailable(currentHPoolTokenBalance);
+      setAvailable(currentHPoolTokenBalance)
     }
   }, [currentHPoolTokenBalance, busdBalance, type])
 
-  const tradingPairID = '0xf28a3c76161b8d5723b6b8b092695f418037c747faa2ad8bc33d8871f720aac9';
-  const UNIT = 1000000000000;
+  const tradingPairID = '0xf28a3c76161b8d5723b6b8b092695f418037c747faa2ad8bc33d8871f720aac9'
+  const UNIT = 1000000000000
 
   const cleanString = (value) => {
-    let pos = value.indexOf('.');
+    let pos = value.indexOf('.')
     if (pos === -1) {
-      return value;
+      return value
     } else {
-      return value.substring(0, pos);
+      return value.substring(0, pos)
     }
-  };
+  }
 
   const getCurrentStatus = () => {
     if (orderType === 'Limit Order') {
       if (type === 'Buy') {
-        return 'BidLimit';
+        return 'BidLimit'
       } else {
-        return 'AskLimit';
+        return 'AskLimit'
       }
     } else if (orderType === 'Market Order') {
       if (type === 'Buy') {
-        return 'BidMarket';
+        return 'BidMarket'
       } else {
-        return 'AskMarket';
+        return 'AskMarket'
       }
     }
-  };
+  }
 
   const startTransaction = async () => {
     // if (account.address) {
@@ -127,51 +127,51 @@ const MarketOrderAction = ({
     //     toast.success('Transaction failed: ' + error);
     //   });
     // }
-  };
+  }
 
   const validatePrice = (inputPrice) => {
     if (!isNaN(inputPrice)) {
-      handleInputChange('price', inputPrice);
+      handleInputChange('price', inputPrice)
     }
-  };
+  }
 
   const validateAmount = (inputAmount) => {
-    let sliderValue = getSliderValue(inputAmount);
+    let sliderValue = getSliderValue(inputAmount)
     debugger
     if (!isNaN(inputAmount) && inputAmount >= 0 && sliderValue >= 0 && sliderValue <= 100) {
-      handleInputChange('amount', inputAmount);
+      handleInputChange('amount', inputAmount)
       debugger
-      setSlider({ values: [+sliderValue.toFixed(2)] });
+      setSlider({ values: [+sliderValue.toFixed(2)] })
     }
-  };
+  }
 
   const getSliderValue = (inputAmount) => {
     if (price === 0 && orderType === 'Limit Order' && type === 'Buy') {
-      return 0;
+      return 0
     } else if (price > 0 && orderType === 'Limit Order' && type === 'Buy') {
-      return (inputAmount * price * 100) / available;
+      return (inputAmount * price * 100) / available
     } else {
-      return (inputAmount * 100) / available;
+      return (inputAmount * 100) / available
     }
-  };
+  }
 
   const setSliderValue = (sliderValue: { values: number[] }) => {
-    const inputAmount = Number(getAmountValue(available, price, sliderValue).toFixed(4));
-    handleInputChange('amount', inputAmount);
-    setSlider(sliderValue);
-  };
+    const inputAmount = Number(getAmountValue(available, price, sliderValue).toFixed(4))
+    handleInputChange('amount', inputAmount)
+    setSlider(sliderValue)
+  }
 
   const getAmountValue = (availableBalance, updatedPrice, sliderValue = slider) => {
-    let newAmount = 0;
+    let newAmount = 0
     if (+updatedPrice === 0 && orderType === 'Limit Order' && type === 'Buy') {
-      newAmount = 0;
+      newAmount = 0
     } else if (updatedPrice > 0 && orderType === 'Limit Order' && type === 'Buy') {
-      newAmount = (availableBalance * +sliderValue.values[0].toFixed(2)) / (updatedPrice * 100);
+      newAmount = (availableBalance * +sliderValue.values[0].toFixed(2)) / (updatedPrice * 100)
     } else {
-      newAmount = (availableBalance * +sliderValue.values[0].toFixed(2)) / 100;
+      newAmount = (availableBalance * +sliderValue.values[0].toFixed(2)) / 100
     }
-    return newAmount;
-  };
+    return newAmount
+  }
 
   return (
     <S.WrapperOrder>
@@ -231,8 +231,8 @@ const MarketOrderAction = ({
         </form>
       </S.ContainerForm>
     </S.WrapperOrder>
-  );
-};
+  )
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -240,11 +240,10 @@ const mapStateToProps = (state) => {
     amount: state.input.amount,
     currentHPoolTokenBalance: state.balances.currentHPoolTokenBalance,
     busdBalance: state.balances.busdBalance,
-    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name
-  };
-};
+    currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
+  }
+}
 
 export default connect(mapStateToProps, {
- handleInputChange
-})(MarketOrderAction);
-
+  handleInputChange,
+})(MarketOrderAction)
