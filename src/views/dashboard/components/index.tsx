@@ -22,7 +22,7 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrd
   const [lastTradePrice, setLastTradePrice] = useState(0);
   const [lastTradePriceType, setLastTradePriceType] = useState();
   const [newTrade, setNewTrade] = useState();
-  const [activeIndex, setActiveIndex] = useState(3);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const removeTransactionsOrder = (id: string) => console.log('remove transaction' + id);
 
@@ -38,8 +38,8 @@ function Dashboard({ account, blockchainApi, setBuyOrders, setSellOrders, buyOrd
 
   useEffect(() => {
     if (currentHPoolTokenContract) {
-      setBuyOrders(currentHPoolTokenContract);
-      setSellOrders(currentHPoolTokenContract);
+      setBuyOrders(currentHPoolToken);
+      setSellOrders(currentHPoolToken);
     }
   }, [currentHPoolTokenContract, setBuyOrders, setSellOrders]);
 
