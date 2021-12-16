@@ -4,7 +4,7 @@ import { Tab, TabList, TabPanel, Tabs, resetIdCounter } from 'react-tabs'
 import MarketOrderAction from '../../../../../components/general/MarketOrderAction'
 import * as S from './styles'
 
-const MarketOrder = ({ setOpenOrder, validAccount, blockchainApi, setActiveIndex, currentHPoolTokenName }) => {
+const MarketOrder = ({ setOpenOrder, blockchainApi, setActiveIndex, currentHPoolTokenName }) => {
   const [orderType, setOrderType] = useState('Limit Order') // currently implementation has market and limit order
 
   resetIdCounter()
@@ -24,7 +24,6 @@ const MarketOrder = ({ setOpenOrder, validAccount, blockchainApi, setActiveIndex
             type="Buy"
             setOpenOrder={setOpenOrder}
             orderType={orderType}
-            account={validAccount}
             blockchainApi={blockchainApi}
             setActiveIndex={setActiveIndex}
           />
@@ -34,7 +33,6 @@ const MarketOrder = ({ setOpenOrder, validAccount, blockchainApi, setActiveIndex
             type="Sell"
             setOpenOrder={setOpenOrder}
             orderType={orderType}
-            account={validAccount}
             blockchainApi={blockchainApi}
             setActiveIndex={setActiveIndex}
           />

@@ -116,7 +116,6 @@ function Dashboard({
           <MarketOrder
             setOpenOrder={(order) => setOpenOrders([order])}
             setActiveIndex={(index) => setActiveIndex(index)}
-            validAccount={account}
             blockchainApi={blockchainApi}
           />
         </S.WrapperGraph>
