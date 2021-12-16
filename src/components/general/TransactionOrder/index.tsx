@@ -31,16 +31,16 @@ const TransactionOrder = ({ data, remove, currentHPoolTokenName, currentHPoolTok
     <S.Td>
       <S.Tag>Pair</S.Tag>
       <S.ContainerFlex>
-        <S.Image src={currentHPoolTokenImage} />
-        <span>{`${currentHPoolTokenName}/ BUSD`}</span>
+        <S.Image src={data.coinImage} />
+        <span>{data.coin}</span>
       </S.ContainerFlex>
     </S.Td>
 
     <S.Td>
       <S.Tag>Side</S.Tag>
       <S.ContainerFlex>
-        <S.Image src={`img/icons/${data.side === 'AskLimit' ? 'Sell' : 'Buy'}.svg`} />
-        <span>{data.side === 'AskLimit' ? 'Sell' : 'Buy'}</span>
+        <S.Image src={`img/icons/${data.side === 'sell' ? 'Sell' : 'Buy'}.svg`} />
+        <span>{data.side === 'sell' ? 'Sell' : 'Buy'}</span>
       </S.ContainerFlex>
     </S.Td>
 
