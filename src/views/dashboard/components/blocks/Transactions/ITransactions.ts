@@ -3,7 +3,8 @@ export type ITransactionData = {
   date: Date
   pair: string
   coin: string
-  side: 'AskLimit' | 'BidLimit'
+  coinImage: string
+  side: 'AskLimit' | 'BidLimit' | 'buy' | 'sell'
   price: number
   quantity: number
   total: number
