@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { setBuyOrders, setSellOrders } from 'store/actions/orderbookActions';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from './styles/global';
 import theme from './styles/theme';
@@ -20,8 +19,6 @@ function App({
   connectToContracts,
   account,
   MatchingMarket,
-  setBuyOrders,
-  setSellOrders,
   onWalletConnectSuccess,
   onWalletDisconnect,
   onWalletConnectRequest,
@@ -66,8 +63,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   connectToContracts,
-  setBuyOrders,
-  setSellOrders,
   onWalletConnectSuccess: onWalletConnectSuccessAction,
   onWalletDisconnect: onWalletDisconnectAction,
   onWalletConnectRequest: onWalletConnectRequestAction,
