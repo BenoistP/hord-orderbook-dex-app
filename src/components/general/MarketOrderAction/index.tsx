@@ -10,13 +10,14 @@ import Link from '../Link'
 import Range from '../Range'
 import * as S from './styles'
 import { connect } from 'react-redux'
+import { makeBuyOrder, makeSellOrder } from 'store/actions/orderbookActions'
 
 export type MarketOrderActionProps = {
   type?: 'Sell' | 'Buy'
   setOpenOrder: any
   price: number
   amount: number
-  account: any
+  account: string
   blockchainApi: any
   orderType: string
   setActiveIndex: any
@@ -24,6 +25,8 @@ export type MarketOrderActionProps = {
   busdBalance: number
   currentHPoolTokenBalance: number
   currentHPoolTokenName: string
+  makeBuyOrder: (busdAmount: number, hPoolTokenAmount: number) => void
+  makeSellOrder: (busdAmount: number, hPoolTokenAmount: number) => void
 }
 const MarketOrderAction = ({
   type = 'Buy',
@@ -38,6 +41,8 @@ const MarketOrderAction = ({
   busdBalance,
   currentHPoolTokenBalance,
   currentHPoolTokenName,
+  makeSellOrder,
+  makeBuyOrder,
 }: MarketOrderActionProps) => {
   const [slider, setSlider] = useState({ values: [50] })
   const [available, setAvailable] = useState(0)
@@ -127,6 +132,10 @@ const MarketOrderAction = ({
     //     toast.success('Transaction failed: ' + error);
     //   });
     // }
+    if (type === 'Buy') {
+      return makeBuyOrder(price, amount)
+    } 
+    makeSellOrder(price, amount)
   }
 
   const validatePrice = (inputPrice) => {
@@ -137,10 +146,8 @@ const MarketOrderAction = ({
 
   const validateAmount = (inputAmount) => {
     let sliderValue = getSliderValue(inputAmount)
-    debugger
     if (!isNaN(inputAmount) && inputAmount >= 0 && sliderValue >= 0 && sliderValue <= 100) {
       handleInputChange('amount', inputAmount)
-      debugger
       setSlider({ values: [+sliderValue.toFixed(2)] })
     }
   }
@@ -227,7 +234,7 @@ const MarketOrderAction = ({
             </Dropdown>
           </S.WrapperActions>
           <Range values={slider.values} setValues={(value) => setSliderValue(value)} />
-          <Button type="button" title={type} fullWidth={true} click={startTransaction} disabled={!account?.address} />
+          <Button type="button" title={type} fullWidth={true} click={startTransaction} disabled={!account} />
         </form>
       </S.ContainerForm>
     </S.WrapperOrder>
@@ -238,6 +245,7 @@ const mapStateToProps = (state) => {
   return {
     price: state.input.price,
     amount: state.input.amount,
+    account: state.wallet.account,
     currentHPoolTokenBalance: state.balances.currentHPoolTokenBalance,
     busdBalance: state.balances.busdBalance,
     currentHPoolTokenName: state.tradingPair.currentHPoolToken?.name,
@@ -246,4 +254,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   handleInputChange,
+  makeBuyOrder,
+  makeSellOrder
 })(MarketOrderAction)
