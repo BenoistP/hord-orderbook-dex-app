@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+import { handleInputChange } from 'store/actions/inputActions';
 import { IOrderBookData } from '../../../views/dashboard/components/blocks/Graph/IGraph';
 
 import * as S from './styles';
@@ -5,9 +7,13 @@ import * as S from './styles';
 export type Props = {
   data: IOrderBookData;
   exchangeImg: string;
+  handleInputChange: (inputName: string, value: number) => void;
 };
-const OrderBookOrder = ({ data, exchangeImg }: Props) => (
-  <S.Tr>
+const OrderBookOrder = ({ data, exchangeImg, handleInputChange }: Props) => {
+  return <S.Tr onClick={() => {
+    handleInputChange('amount', data.amount)
+    handleInputChange('price', data.total)
+  }} >
     <S.Td>{data.price}</S.Td>
     <S.Td>
       <S.ContainerFlex>
@@ -19,6 +25,8 @@ const OrderBookOrder = ({ data, exchangeImg }: Props) => (
       </S.ContainerFlex>
     </S.Td>
   </S.Tr>
-);
+};
 
-export default OrderBookOrder;
+export default connect(null, {
+  handleInputChange
+})(OrderBookOrder);

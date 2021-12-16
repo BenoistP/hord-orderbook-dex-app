@@ -7,6 +7,7 @@ export const Tr = styled.tr`
 `
 export const Td = styled.td`
   font-weight: bold;
+  cursor: pointer;
 `
 export const ContainerFlex = styled.div`
   display: flex;
