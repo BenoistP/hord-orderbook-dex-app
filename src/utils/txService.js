@@ -1,7 +1,5 @@
-import t from 'translate'
-import { requireAddress } from './utilsService'
-
-const BASE_TX_MULTIPLIER = 1.1
+import { createNotification } from "store/actions/uiActions"
+import { store } from '../index';
 
 const handleError = (err, reject) => {
   let errorMessage = 'errors.error_occurred'
@@ -16,7 +14,7 @@ const handleError = (err, reject) => {
     err?.stack?.includes('User denied transaction signature') ||
     errorMessage.includes('User denied transaction signature')
   ) {
-    errorMessage = t('errors.denied_transaction')
+    errorMessage = 'errors.denied_transaction'
   }
 
   reject(new Error(errorMessage))
@@ -57,9 +55,8 @@ const callTx = (contract, contractFunc, funcParams, _txParams) =>
   new Promise(async (resolve, reject) => {
     // eslint-disable-line
     try {
-      requireAddress(contract.options.address)
 
-      const method = contract.methods[contractFunc](...funcParams)
+      const method = contract[contractFunc](...funcParams)
 
       const txParams = { ..._txParams }
 
@@ -73,8 +70,10 @@ const callTx = (contract, contractFunc, funcParams, _txParams) =>
         send: method.send,
       })
 
+      store.dispatch(createNotification('success', 'Transaction success', 4000))
       resolve(res)
     } catch (err) {
+      store.dispatch(createNotification('error', 'Transaction failed', 4000))
       reject(err)
     }
   })
