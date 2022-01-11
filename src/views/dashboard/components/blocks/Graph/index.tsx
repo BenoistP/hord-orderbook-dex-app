@@ -3,7 +3,7 @@
 // import ListItemButton from 'components/general/ListItemButton'
 // import dynamic from 'next/dynamic'
 import { useState } from 'react'
-
+import Chart from '../Chart/Chart'
 import OrderBook from '../OrderBook'
 import { IGraph } from './IGraph'
 import * as S from './styles'
@@ -15,6 +15,7 @@ const Graph = ({ orderBookAsks, orderBookBids, latestTransaction, latestTransact
   })
   return (
     <S.Wrapper>
+      <Chart />
       {/* <S.WrapperGraph>
         <S.Header>
           <S.FlexWrapper>
