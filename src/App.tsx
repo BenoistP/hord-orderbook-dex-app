@@ -14,6 +14,7 @@ import {
   onWalletConnectRequestAction,
   onWalletConnectErrorAction,
 } from './store/actions/walletActions'
+import Header from 'components/general/Header/Header'
 
 function App({
   connectToContracts,
@@ -38,6 +39,7 @@ function App({
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <S.Page>
+        <Header />
         <WalletConnector
           networkId={config.network}
           rpcUrl={config.rpcUrl}
