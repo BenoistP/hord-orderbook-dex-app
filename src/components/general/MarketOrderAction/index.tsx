@@ -229,7 +229,7 @@ const MarketOrderAction = ({
             <p>
               Equivalent ~<span> $0</span>
             </p>
-            <Dropdown title="Fee 0 PDX" active={dropdownState} setDropdownState={setDropdownState}>
+            <Dropdown title="Fee" active={dropdownState} setDropdownState={setDropdownState}>
               <Link title="Custom Fee" />
             </Dropdown>
           </S.WrapperActions>
