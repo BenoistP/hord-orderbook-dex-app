@@ -56,14 +56,6 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoo
           </S.WrapperVolume>
         </S.ContainerInfo>
       </S.WrapperInfo>
-      <S.WrapperLinks>
-        {/*<Link title="Market" href="#" />*/}
-        {/*<NavbarDropdown title="Trade" />*/}
-        {/*<NavbarDropdown title="Derivatives" />*/}
-        {/*<NavbarDropdown title="Finance" />*/}
-        {/*<NavbarLanguage />*/}
-        <S.AccountAddress>{account?.address}</S.AccountAddress>
-      </S.WrapperLinks>
     </S.Wrapper>
   )
 }
