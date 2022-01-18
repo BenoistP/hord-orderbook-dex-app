@@ -9,6 +9,9 @@ export const Wrapper = styled.section`
   grid-template-columns: auto auto;
   padding-left: 2rem;
   margin-bottom: 1rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   ${customMedia.lessThan('custom')`
     grid-template-columns: 1fr;
     padding-left: 0;
@@ -35,6 +38,9 @@ export const ContainerInfo = styled.div`
   border-radius:0 0 1.9rem 1.9rem;
   width: -webkit-fill-available;
   margin-bottom: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   
   ${media.lessThan('medium')`
     grid-template-columns: 1fr 1fr;
@@ -46,7 +52,9 @@ export const WrapperInfo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content:space-between;
-
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
   `
 export const WrapperLinks = styled.div`
   display: flex;
