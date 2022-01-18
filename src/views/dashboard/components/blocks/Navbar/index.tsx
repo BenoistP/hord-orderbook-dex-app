@@ -44,7 +44,17 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoo
               .toString()
               .slice(0, 6)}
           />
-          <S.WrapperVolume>
+          <NavbarItem
+            label="24h High"
+            info={blockValues?.high?.toString()}
+            type={lastTradePriceType}
+          />
+          <NavbarItem
+            label="24h Low"
+            info={blockValues?.low?.toString()}
+            type={lastTradePriceType}
+          />
+          {/* <S.WrapperVolume>
             <S.VolumeHigh>
               <S.Span>24h High</S.Span>
               <p>{blockValues.high}</p>
@@ -53,7 +63,7 @@ const Navbar = ({ blockValues, lastTradePrice, lastTradePriceType, account, hPoo
               <S.Span>24h Low</S.Span>
               <p>{blockValues.low}</p>
             </S.VolumeLow>
-          </S.WrapperVolume>
+          </S.WrapperVolume> */}
         </S.ContainerInfo>
       </S.WrapperInfo>
     </S.Wrapper>
