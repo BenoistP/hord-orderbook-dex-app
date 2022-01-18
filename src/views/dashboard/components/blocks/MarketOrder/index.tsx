@@ -13,7 +13,7 @@ const MarketOrder = ({ setOpenOrder, blockchainApi, setActiveIndex, currentHPool
     <S.Section>
       <Tabs>
         <S.Header>
-          <TabList>
+          <TabList style={{display: "flex", listStyleType: "none"}}>
             <Tab>{`Buy ${currentHPoolTokenName}`}</Tab>
             <Tab>{`Sell ${currentHPoolTokenName}`}</Tab>
           </TabList>
