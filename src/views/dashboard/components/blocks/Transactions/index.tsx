@@ -30,7 +30,7 @@ const Transactions = (
     <S.Section>
       <Tabs selectedIndex={activeIndex} onSelect={(index) => setActiveIndex(index)}>
         <S.Header>
-          <TabList>
+          <TabList style={{display: "flex", listStyleType: "none"}}>
             <Tab>My Open Orders</Tab>
             <Tab>My Trade History</Tab>
           </TabList>
