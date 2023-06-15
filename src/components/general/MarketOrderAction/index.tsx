@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BN from 'bn.js'
+// import BN from 'bn.js'
 import { toast } from 'react-toastify'
 import { handleInputChange } from 'store/actions/inputActions'
 import Button from '../Button'

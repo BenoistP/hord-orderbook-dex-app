@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useEffect } from 'react';
-import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+// import { Link, NavLink, useHistory, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { WalletConnector } from '@dcentralab/web3-wallet-connector';
@@ -26,7 +27,7 @@ const Header = ({
   onWalletConnectRequest,
   onWalletConnectError,
 }) => {
-  const history = useHistory();
+  // const history = useHistory();
   const [checked, setChecked] = useState(false);
   const { pathname } = useLocation();
 
